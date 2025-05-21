@@ -53,3 +53,8 @@ delete:
 
 detect-package-manager:
 	@echo "$(PACKAGE_MANAGER)"
+
+commit:
+	git add .
+	git commit -m $(m)
+	git push origin main
