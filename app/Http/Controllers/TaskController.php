@@ -3,34 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DTO\TaskDTO;
-use App\Validators\TaskValidator;
+use App\Services\TaskService;
 
 class TaskController extends Controller
 {
     public function index(Request $request): void
     {
-        $dto = new TaskDTO($request);
-        $validator = new TaskValidator();
-        $validator->validate($dto);
-        print_r($dto);
+        $service = new TaskService();
+        $service->index($request);
     }
 
     public function store(Request $request): void
     {
-        $dto = new TaskDTO($request);
-        print_r($dto);
+        $service = new TaskService();
+        $service->store($request);
     }
 
     public function update(Request $request): void
     {
-        $dto = new TaskDTO($request);
-        print_r($dto);
+        $service = new TaskService();
+        $service->update($request);
     }
 
     public function delete(Request $request): void
     {
-        $dto = new TaskDTO($request);
-        print_r($dto);
+        $service = new TaskService();
+        $service->delete($request);
     }
 }

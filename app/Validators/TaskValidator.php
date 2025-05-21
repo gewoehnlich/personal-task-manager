@@ -10,7 +10,7 @@ class TaskValidator
     {
         $this->validateUserId($dto->userId);
         $this->validateTitle($dto->title);
-        $this->validateText($dto->text);
+        $this->validateDescription($dto->description);
         $this->validateTaskStatus($dto->taskStatus);
         $this->validateDeadline($dto->deadline);
     }
@@ -53,10 +53,10 @@ class TaskValidator
         }
     }
 
-    private function validateText(string $text): void
+    private function validateDescription(string $description): void
     {
-        if (empty($text)) {
-            throw new \Exception('Text can\'t be empty.');
+        if (empty($description)) {
+            throw new \Exception('Description can\'t be empty.');
         }
     }
 
