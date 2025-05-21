@@ -11,6 +11,8 @@ class TaskController extends Controller
     public function index(Request $request): void
     {
         $dto = new TaskDTO($request);
+        $validator = new TaskValidator();
+        $validator->validate($dto);
         print_r($dto);
     }
 

@@ -26,17 +26,17 @@ Route::get(
     [TaskController::class, 'index']
 )->name('tasks.index');
 
-Route::get(
+Route::post(
     '/api/tasks/create',
     [TaskController::class, 'store']
 )->name('tasks.store');
 
-Route::get(
+Route::put(
     '/api/tasks/update/{id}',
     [TaskController::class, 'update']
 )->name('tasks.update');
 
-Route::get(
+Route::delete(
     '/api/tasks/delete/{id}',
     [TaskController::class, 'delete']
 )->name('tasks.delete');

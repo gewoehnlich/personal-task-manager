@@ -17,10 +17,10 @@ services:
       - mysql
     command: >
       sh -c "
-      php artisan migrate &&
       chown -R www-data:www-data /var/www/html/storage/ &&
       chmod -R 775 /var/www/html/storage/ &&
-      php-fpm
+      php-fpm &&
+      php artisan migrate
       "
 
   # nginx
