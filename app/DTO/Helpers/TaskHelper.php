@@ -11,8 +11,7 @@ class TaskHelper
         TaskDTO $dto,
         Request $request,
         array $parameters
-    ): void
-    {
+    ): void {
         foreach ($parameters as $key) {
             $value = $request->input($key);
             if (!is_null($value)) {
