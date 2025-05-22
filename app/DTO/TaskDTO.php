@@ -3,7 +3,6 @@
 namespace App\DTO;
 
 use Illuminate\Http\Request;
-use App\DTO\Helpers\TaskHelper;
 
 class TaskDTO
 {
@@ -46,9 +45,7 @@ class TaskDTO
 
     public function fromIndexRequest(Request $request): void
     {
-        $helper = new TaskHelper();
-        $helper->assignParameters(
-            $this,
+        $this->assignParameters(
             $request,
             self::KEYS_INDEX
         );
@@ -56,9 +53,7 @@ class TaskDTO
 
     public function fromStoreRequest(Request $request): void
     {
-        $helper = new TaskHelper();
-        $helper->assignParameters(
-            $this,
+        $this->assignParameters(
             $request,
             self::KEYS_STORE
         );
@@ -66,9 +61,7 @@ class TaskDTO
 
     public function fromUpdateRequest(Request $request): void
     {
-        $helper = new TaskHelper();
-        $helper->assignParameters(
-            $this,
+        $this->assignParameters(
             $request,
             self::KEYS_UPDATE
         );
@@ -76,11 +69,19 @@ class TaskDTO
 
     public function fromDeleteRequest(Request $request): void
     {
-        $helper = new TaskHelper();
-        $helper->assignParameters(
-            $this,
+        $this->assignParameters(
             $request,
             self::KEYS_DELETE
         );
+    }
+
+    public function assignParameters(Request $request, array $fields): void
+    {
+        foreach ($fields as $key) {
+            $value = $request->input($key);
+            if (!is_null($value)) {
+                $this->{$key} = $value;
+            }
+        }
     }
 }

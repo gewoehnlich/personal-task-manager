@@ -33,7 +33,8 @@ class TaskService
     {
         $this->dto->fromStoreRequest($request);
         $this->validator->validateStoreRequest($this->dto);
-        $this->repository->create($this->dto);
+        $result = $this->repository->create($this->dto);
+        print_r($result);
         print_r($this->dto);
     }
 
@@ -41,7 +42,8 @@ class TaskService
     {
         $this->dto->fromUpdateRequest($request);
         $this->validator->validateUpdateRequest($this->dto);
-        $this->repository->update($this->dto);
+        $result = $this->repository->update($this->dto);
+        print_r($result);
         print_r($this->dto);
     }
 
@@ -49,7 +51,8 @@ class TaskService
     {
         $this->dto->fromDeleteRequest($request);
         $this->validator->validateDeleteRequest($this->dto);
-        $this->repository->delete($this->dto);
+        $result = $this->repository->delete($this->dto);
+        print_r($result);
         print_r($this->dto);
     }
 }

@@ -2,52 +2,45 @@
 
 namespace App\Validators;
 
+use Illuminate\Support\Facades\Auth;
 use App\DTO\TaskDTO;
 
 class TaskValidator
 {
     private const HASHMAP = [
-        'id' => 'validateId',
-        'userId' => 'validateUserId',
-        'title' => 'validateTitle',
-        'description' => 'validateDescription',
-        'taskStatus' => 'validateTaskStatus',
-        'deadline' => 'validateDeadline',
-        'startTimestamp' => 'validateStartTimestamp',
-        'endTimestamp' => 'validateEndTimestamp'
+        'id'              =>  'validateId',
+        'userId'          =>  'validateUserId',
+        'title'           =>  'validateTitle',
+        'description'     =>  'validateDescription',
+        'taskStatus'      =>  'validateTaskStatus',
+        'deadline'        =>  'validateDeadline',
+        'startTimestamp'  =>  'validateStartTimestamp',
+        'endTimestamp'    =>  'validateEndTimestamp'
     ];
 
     public function validateIndexRequest(TaskDTO $dto): void
     {
-        foreach ($dto::KEYS_INDEX as $key) {
-            $method = self::HASHMAP[$key] ?? null;
-            if (is_null($method)) {
-                throw new \Exception(
-                    'Не найден метод для поля: {$key}'
-                );
-            }
-
-            $this->{$method}($dto->{$key});
-        }
+        $this->validate($dto, $dto::KEYS_INDEX);
     }
 
     public function validateStoreRequest(TaskDTO $dto): void
     {
-        foreach ($dto::KEYS_STORE as $key) {
-            $method = self::HASHMAP[$key] ?? null;
-            if (is_null($method)) {
-                throw new \Exception(
-                    'Не найден метод для поля: {$key}'
-                );
-            }
-
-            $this->{$method}($dto->{$key});
-        }
+        $this->validate($dto, $dto::KEYS_STORE);
     }
 
     public function validateUpdateRequest(TaskDTO $dto): void
     {
-        foreach ($dto::KEYS_UPDATE as $key) {
+        $this->validate($dto, $dto::KEYS_UPDATE);
+    }
+
+    public function validateDeleteRequest(TaskDTO $dto): void
+    {
+        $this->validate($dto, $dto::KEYS_DELETE);
+    }
+
+    private function validate(TaskDTO $dto, array $fields): void
+    {
+        foreach ($fields as $key) {
             $method = self::HASHMAP[$key] ?? null;
             if (is_null($method)) {
                 throw new \Exception(
@@ -55,17 +48,15 @@ class TaskValidator
                 );
             }
 
-            $this->{$method}($dto->{$key});
-        }
-    }
-
-    public function validateDeleteRequest(TaskDTO $dto): void
-    {
-        foreach ($dto::KEYS_DELETE as $key) {
-            $method = self::HASHMAP[$key] ?? null;
-            if (is_null($method)) {
+            if (!method_exists($this, $method)) {
                 throw new \Exception(
-                    'Не найден метод для поля: {$key}'
+                    'Не найден метод {$method} в классе.'
+                );
+            }
+
+            if (is_null($dto->{$key})) {
+                throw new \Exception(
+                    'Пустое поле {$key} в TaskDTO.'
                 );
             }
 
@@ -99,6 +90,12 @@ class TaskValidator
         if ($userId <= 0) {
             throw new \Exception(
                 'User ID can\'t be lower than or equal to 0.'
+            );
+        }
+
+        if ($userId != Auth::id()) {
+            throw new \Exception(
+                'User IDs doesn\'t match!'
             );
         }
     }

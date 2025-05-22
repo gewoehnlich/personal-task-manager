@@ -20,26 +20,27 @@ Route::get('/kanban', function () {
     return view('kanban');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get(
+        '/api/tasks',
+        [TaskController::class, 'index']
+    )->name('tasks.index');
 
-Route::get(
-    '/api/tasks',
-    [TaskController::class, 'index']
-)->name('tasks.index');
+    Route::post(
+        '/api/tasks/create',
+        [TaskController::class, 'store']
+    )->name('tasks.store');
 
-Route::post(
-    '/api/tasks/create',
-    [TaskController::class, 'store']
-)->name('tasks.store');
+    Route::put(
+        '/api/tasks/edit/{id}',
+        [TaskController::class, 'update']
+    )->name('tasks.update');
 
-Route::put(
-    '/api/tasks/update/{id}',
-    [TaskController::class, 'update']
-)->name('tasks.update');
-
-Route::delete(
-    '/api/tasks/delete/{id}',
-    [TaskController::class, 'delete']
-)->name('tasks.delete');
+    Route::delete(
+        '/api/tasks/delete/{id}',
+        [TaskController::class, 'delete']
+    )->name('tasks.delete');
+});
 
 
 require __DIR__ . '/settings.php';
