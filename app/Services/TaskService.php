@@ -20,25 +20,28 @@ class TaskService
     public function index(Request $request): void
     {
         $this->dto->fromIndexRequest($request);
+        $this->validator->validateIndexRequest($this->dto);
         print_r($this->dto);
-        /*$this->validator->validateIndexRequest();*/
     }
 
     public function store(Request $request): void
     {
         $this->dto->fromStoreRequest($request);
-        /*$this->validator->validateStoreRequest();*/
+        $this->validator->validateStoreRequest($this->dto);
+        print_r($this->dto);
     }
 
     public function update(Request $request): void
     {
         $this->dto->fromUpdateRequest($request);
-        /*$this->validator->validateUpdateRequest();*/
+        $this->validator->validateUpdateRequest($this->dto);
+        print_r($this->dto);
     }
 
     public function delete(Request $request): void
     {
         $this->dto->fromDeleteRequest($request);
-        /*$this->validator->validateDeleteRequest();*/
+        $this->validator->validateDeleteRequest($this->dto);
+        print_r($this->dto);
     }
 }

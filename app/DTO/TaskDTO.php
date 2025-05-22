@@ -41,8 +41,8 @@ class TaskDTO
     public string $description;
     public string $taskStatus;
     public int $deadline;
-    public int $start;
-    public int $end;
+    public int $startTimestamp;
+    public int $endTimestamp;
 
     public function fromIndexRequest(Request $request): void
     {
