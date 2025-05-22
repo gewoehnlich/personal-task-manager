@@ -7,13 +7,13 @@ use App\DTO\Helpers\TaskHelper;
 
 class TaskDTO
 {
-    private const KEYS_INDEX = [
+    public const KEYS_INDEX = [
         'userId',
-        'start',
-        'end'
+        'startTimestamp',
+        'endTimestamp'
     ];
 
-    private const KEYS_STORE = [
+    public const KEYS_STORE = [
         'userId',
         'title',
         'description',
@@ -21,7 +21,7 @@ class TaskDTO
         'deadline'
     ];
 
-    private const KEYS_UPDATE = [
+    public const KEYS_UPDATE = [
         'id',
         'userId',
         'title',
@@ -30,7 +30,7 @@ class TaskDTO
         'deadline'
     ];
 
-    private const KEYS_DELETE = [
+    public const KEYS_DELETE = [
         'id',
         'userId'
     ];
@@ -38,7 +38,7 @@ class TaskDTO
     public int $id;
     public int $userId;
     public string $title;
-    public string $text;
+    public string $description;
     public string $taskStatus;
     public int $deadline;
     public int $start;

@@ -6,29 +6,66 @@ use App\DTO\TaskDTO;
 
 class TaskValidator
 {
-    public function validate(TaskDTO $dto): void
+    private const HASHMAP = [
+        'id' => 'validateId',
+        'userId' => 'validateUserId',
+        'title' => 'validateTitle',
+        'description' => 'validateDescription',
+        'taskStatus' => 'validateTaskStatus',
+        'deadline' => 'validateDeadline',
+        'startTimestamp' => 'validateStartTimestamp',
+        'endTimestamp' => 'validateEndTimestamp'
+    ];
+
+    public function validateIndexRequest(TaskDTO $dto): void
     {
-        $this->validateUserId($dto->userId);
-        $this->validateTitle($dto->title);
-        $this->validateDescription($dto->description);
-        $this->validateTaskStatus($dto->taskStatus);
-        $this->validateDeadline($dto->deadline);
+        foreach ($dto::KEYS_INDEX as $key) {
+            call_user_func(
+                self::HASHMAP[$key],
+                $dto->{$key}
+            );
+        }
     }
 
-    public function index(TaskDTO $dto): void
+    public function validateStoreRequest(TaskDTO $dto): void
     {
+        foreach ($dto::KEYS_STORE as $key) {
+            call_user_func(
+                self::HASHMAP[$key],
+                $dto->{$key}
+            );
+        }
     }
 
-    public function store(TaskDTO $dto): void
+    public function validateUpdateRequest(TaskDTO $dto): void
     {
+        foreach ($dto::KEYS_UPDATE as $key) {
+            call_user_func(
+                self::HASHMAP[$key],
+                $dto->{$key}
+            );
+        }
     }
 
-    public function update(TaskDTO $dto): void
+    public function validateDeleteRequest(TaskDTO $dto): void
     {
+        foreach ($dto::KEYS_DELETE as $key) {
+            call_user_func(
+                self::HASHMAP[$key],
+                $dto->{$key}
+            );
+        }
     }
 
-    public function delete(TaskDTO $dto): void
+    private function validateId(int $id): void
     {
+        if (is_null($id)) {
+            throw new \Exception('ID can\'t be null.');
+        }
+
+        if ($id <= 0) {
+            throw new \Exception('ID can\'t be lower than or equal to 0.');
+        }
     }
 
     private function validateUserId(int $userId): void
@@ -37,8 +74,8 @@ class TaskValidator
             throw new \Exception('User ID can\'t be null.');
         }
 
-        if ($userId < 0) {
-            throw new \Exception('User ID can\'t be lower than 0.');
+        if ($userId <= 0) {
+            throw new \Exception('User ID can\'t be lower than or equal to 0.');
         }
     }
 
@@ -66,8 +103,8 @@ class TaskValidator
             throw new \Exception('Task status can\'t be empty.');
         }
 
-        $valid_statuses = ['in_progress', 'completed', 'overdue'];
-        if (!in_array($taskStatus, $valid_statuses)) {
+        $validStatuses = ['in_progress', 'completed', 'overdue'];
+        if (!in_array($taskStatus, $validStatuses)) {
             throw new \Exception('Task status is not valid.');
         }
     }
@@ -78,9 +115,37 @@ class TaskValidator
             throw new \Exception('Deadline can\'t be empty.');
         }
 
-        $current_timestamp = time();
-        if ($current_timestamp > $deadline) {
+        $currentTimestamp = time();
+        if ($currentTimestamp > $deadline) {
             throw new \Exception('Deadline can\' be less than current time.');
+        }
+    }
+
+    private function validateStartTimestamp(int $startTimestamp): void
+    {
+        if (empty($startTimestamp)) {
+            throw new \Exception('Start timestamp can\'t be empty.');
+        }
+
+        $currentTimestamp = time();
+        if ($currentTimestamp < $startTimestamp) {
+            throw new \Exception(
+                'Start timestamp can\' be more than current time.'
+            );
+        }
+    }
+
+    private function validateEndTimestamp(int $endTimestamp): void
+    {
+        if (empty($endTimestamp)) {
+            throw new \Exception('End timestamp can\'t be empty.');
+        }
+
+        $currentTimestamp = time();
+        if ($currentTimestamp > $endTimestamp) {
+            throw new \Exception(
+                'End timestamp can\' be more than current time.'
+            );
         }
     }
 }
