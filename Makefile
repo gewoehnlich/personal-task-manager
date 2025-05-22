@@ -58,3 +58,6 @@ commit:
 	git add .
 	git commit -m "$(m)"
 	git push origin main
+
+enter-db:
+	docker exec -it $(MYSQL_CONTAINER) mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) $(DB_DATABASE)
