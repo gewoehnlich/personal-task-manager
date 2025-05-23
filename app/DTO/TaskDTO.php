@@ -75,7 +75,7 @@ class TaskDTO
         );
     }
 
-    public function assignParameters(Request $request, array $fields): void
+    private function assignParameters(Request $request, array $fields): void
     {
         foreach ($fields as $key) {
             $value = $request->input($key);
