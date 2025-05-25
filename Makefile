@@ -1,4 +1,5 @@
-MYSQL_CONTAINER = mysql-to-do-app
+MYSQL_CONTAINER = mysql.personal-task-manager
+LARAVEL_CONTAINER = laravel.personal-task-manager
 PACKAGE_MANAGER := $(shell \
 	if command -v apt-get > /dev/null; then echo apt; \
 	elif command -v dnf > /dev/null; then echo dnf; \
@@ -61,3 +62,6 @@ commit:
 
 enter-db:
 	docker exec -it $(MYSQL_CONTAINER) mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) $(DB_DATABASE)
+
+migrations:
+	docker exec -i $(LARAVEL_CONTAINER) php artisan migrate

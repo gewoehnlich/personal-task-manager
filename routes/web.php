@@ -20,7 +20,7 @@ Route::get('/kanban', function () {
     return view('kanban');
 });
 
-Route::middleware(['auth'])->group(function () {
+/*Route::middleware(['auth'])->group(function () {*/
     Route::get(
         '/api/tasks',
         [TaskController::class, 'index']
@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
         '/api/tasks/delete/{id}',
         [TaskController::class, 'delete']
     )->name('tasks.delete');
-});
+/*});*/
 
 
 require __DIR__ . '/settings.php';

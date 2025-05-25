@@ -75,10 +75,40 @@ class TaskDTO
         );
     }
 
-    private function assignParameters(Request $request, array $fields): void
-    {
+    private function assignParameters(
+        Request $request,
+        array $fields
+    ): void {
         foreach ($fields as $key) {
             $value = $request->input($key);
+            if (
+                in_array(
+                    $key,
+                    [
+                        'title',
+                        'description',
+                        'taskStatus'
+                    ],
+                    true
+                )
+            ) {
+                $value = trim($value);
+            }
+
+            /*if (*/
+            /*    in_array(*/
+            /*        $key,*/
+            /*        [*/
+            /*            'startTimestamp',*/
+            /*            'endTimestamp',*/
+            /*            'deadline'*/
+            /*        ],*/
+            /*        true*/
+            /*    )*/
+            /*) {*/
+            /*    $value = date($value);*/
+            /*}*/
+
             if (!is_null($value)) {
                 $this->{$key} = $value;
             }

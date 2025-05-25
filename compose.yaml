@@ -1,7 +1,7 @@
 services:
   # php
   app:
-    container_name: laravel-to-do-app
+    container_name: laravel.personal-task-manager
     build:
       context: .
     volumes:
@@ -19,14 +19,13 @@ services:
       sh -c "
       chown -R www-data:www-data /var/www/html/storage/ &&
       chmod -R 775 /var/www/html/storage/ &&
-      php-fpm &&
-      php artisan migrate
+      php-fpm
       "
 
   # nginx
   webserver:
     image: nginx:latest
-    container_name: nginx-to-do-app
+    container_name: nginx.personal-task-manager
     ports:
       - "8000:80"
     volumes:
@@ -38,7 +37,7 @@ services:
   # mysql
   mysql:
     image: mysql:latest
-    container_name: mysql-to-do-app
+    container_name: mysql.personal-task-manager
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}

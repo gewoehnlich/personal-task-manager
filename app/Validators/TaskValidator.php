@@ -4,9 +4,15 @@ namespace App\Validators;
 
 use Illuminate\Support\Facades\Auth;
 use App\DTO\TaskDTO;
-use App\Exceptions\Validation\KeyNotFoundInHashmap;
-use App\Exceptions\Validation\MethodNotFound;
-use App\Exceptions\Validation\PropertyValueIsNull;
+use App\Exceptions\Validation\Common\HashmapKeyNotFound;
+use App\Exceptions\Validation\Common\MethodNotFound;
+use App\Exceptions\Validation\Common\PropertyValueIsNull;
+use App\Exceptions\Validation\BigIntUnsigned\UnsignedIntegerFieldValueIsZeroOrLess;
+use App\Exceptions\Validation\Common\AuthorizedUserIdDoesNotEqualToInputtedUserId;
+use App\Exceptions\Validation\Common\StringFieldIsEmpty;
+use App\Exceptions\Validation\Varchar255\Varchar255FieldValueTooLong;
+use App\Exceptions\Validation\Enum\NotValidTaskStatus;
+use App\Exceptions\Validation\Timestamp\DeadlineTimestampLessThanCurrentTimestamp;
 
 class TaskValidator
 {
@@ -46,7 +52,7 @@ class TaskValidator
         foreach ($fields as $key) {
             $method = self::HASHMAP[$key] ?? null;
             if (is_null($method)) {
-                throw new KeyNotFoundInHashmap(
+                throw new HashmapKeyNotFound(
                     'Не найден ключ {$key} ' .
                     'в SELF::HASHMAP в классе {__CLASS__}.'
                 );
@@ -73,8 +79,8 @@ class TaskValidator
         }
 
         if ($id <= 0) {
-            throw new \Exception(
-                'ID can\'t be lower than or equal to 0.'
+            throw new UnsignedIntegerFieldValueIsZeroOrLess(
+                '\'id\' не может быть меньше или равно 0.'
             );
         }
     }
@@ -88,16 +94,16 @@ class TaskValidator
         }
 
         if ($userId <= 0) {
-            throw new \Exception(
-                'User ID can\'t be lower than or equal to 0.'
+            throw new UnsignedIntegerFieldValueIsZeroOrLess(
+                '\'userId\' не может быть меньше или равно 0.'
             );
         }
 
-        if ($userId != Auth::id()) {
-            throw new \Exception(
-                'User IDs doesn\'t match!'
-            );
-        }
+        /*if ($userId != Auth::id()) {*/
+        /*    throw new AuthorizedUserIdDoesNotEqualToInputtedUserId(*/
+        /*        '\'userId\' не соответствует ID авторизованного пользователя.'*/
+        /*    );*/
+        /*}*/
     }
 
     private function validateTitle(string $title): void
@@ -108,9 +114,15 @@ class TaskValidator
             );
         }
 
+        if ($title === '') {
+            throw new StringFieldIsEmpty(
+                '\'title\' не может быть пустым.'
+            );
+        }
+
         if (strlen($title) > 255) {
-            throw new \Exception(
-                'Title can\'t be longer than 255 symbols.'
+            throw new Varchar255FieldValueTooLong(
+                '\'title\' не может быть длиннее 255 символов.'
             );
         }
     }
@@ -123,9 +135,9 @@ class TaskValidator
             );
         }
 
-        if (empty($description)) {
-            throw new \Exception(
-                'Description can\'t be empty.'
+        if ($description === '') {
+            throw new StringFieldIsEmpty(
+                '\'description\' не может быть пустым.'
             );
         }
     }
@@ -138,16 +150,11 @@ class TaskValidator
             );
         }
 
-        if (empty($taskStatus)) {
-            throw new \Exception(
-                'Task status can\'t be empty.'
-            );
-        }
-
         $validStatuses = ['inProgress', 'completed', 'overdue'];
         if (!in_array($taskStatus, $validStatuses)) {
-            throw new \Exception(
-                'Task status is not valid.'
+            throw new NotValidTaskStatus(
+                '\'taskStatus\' значение {$taskStatus} неправильное.\n' .
+                'Допустимые значения: {$validStatuses}.'
             );
         }
     }
@@ -160,16 +167,10 @@ class TaskValidator
             );
         }
 
-        if (empty($deadline)) {
-            throw new \Exception(
-                'Deadline can\'t be empty.'
-            );
-        }
-
         $currentTimestamp = time();
         if ($currentTimestamp > $deadline) {
-            throw new \Exception(
-                'Deadline can\' be less than current time.'
+            throw new DeadlineTimestampLessThanCurrentTimestamp(
+                '\'deadline\' не может быть меньше, чем текущее время.'
             );
         }
     }
@@ -182,18 +183,12 @@ class TaskValidator
             );
         }
 
-        if (empty($startTimestamp)) {
-            throw new \Exception(
-                'Start timestamp can\'t be empty.'
-            );
-        }
-
-        $currentTimestamp = time();
-        if ($currentTimestamp < $startTimestamp) {
-            throw new \Exception(
-                'Start timestamp can\' be more than current time.'
-            );
-        }
+        /*$currentTimestamp = time();*/
+        /*if ($currentTimestamp < $startTimestamp) {*/
+        /*    throw new \Exception(*/
+        /*        'Start timestamp can\' be more than current time.'*/
+        /*    );*/
+        /*}*/
     }
 
     private function validateEndTimestamp(int $endTimestamp): void
@@ -204,17 +199,11 @@ class TaskValidator
             );
         }
 
-        if (empty($endTimestamp)) {
-            throw new \Exception(
-                'End timestamp can\'t be empty.'
-            );
-        }
-
-        $currentTimestamp = time();
-        if ($currentTimestamp > $endTimestamp) {
-            throw new \Exception(
-                'End timestamp can\' be more than current time.'
-            );
-        }
+        /*$currentTimestamp = time();*/
+        /*if ($currentTimestamp > $endTimestamp) {*/
+        /*    throw new \Exception(*/
+        /*        'End timestamp can\' be more than current time.'*/
+        /*    );*/
+        /*}*/
     }
 }

@@ -22,7 +22,11 @@ return new class extends Migration
             $table->text('description');
             $table->enum(
                 'taskStatus',
-                ['inProgress', 'completed', 'overdue']
+                [
+                    'inProgress',
+                    'completed',
+                    'overdue'
+                ]
             );
             $table->timestamp('deadline');
             $table->timestamps();
