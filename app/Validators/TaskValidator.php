@@ -17,14 +17,14 @@ use App\Exceptions\Validation\Timestamp\DeadlineTimestampLessThanCurrentTimestam
 class TaskValidator
 {
     private const HASHMAP = [
-        'id'              =>  'validateId',
-        'userId'          =>  'validateUserId',
-        'title'           =>  'validateTitle',
-        'description'     =>  'validateDescription',
-        'taskStatus'      =>  'validateTaskStatus',
-        'deadline'        =>  'validateDeadline',
-        'startTimestamp'  =>  'validateStartTimestamp',
-        'endTimestamp'    =>  'validateEndTimestamp'
+        'id'           =>  'validateId',
+        'userId'       =>  'validateUserId',
+        'title'        =>  'validateTitle',
+        'description'  =>  'validateDescription',
+        'taskStatus'   =>  'validateTaskStatus',
+        'deadline'     =>  'validateDeadline',
+        'start'        =>  'validateStart',
+        'end'          =>  'validateEnd'
     ];
 
     public function validateIndexRequest(TaskDTO $dto): void
@@ -159,7 +159,7 @@ class TaskValidator
         }
     }
 
-    private function validateDeadline(int $deadline): void
+    private function validateDeadline(string $deadline): void
     {
         if (is_null($deadline)) {
             throw new PropertyValueIsNull(
@@ -167,40 +167,40 @@ class TaskValidator
             );
         }
 
-        $currentTimestamp = time();
-        if ($currentTimestamp > $deadline) {
+        $current = time();
+        if ($current > $deadline) {
             throw new DeadlineTimestampLessThanCurrentTimestamp(
                 '\'deadline\' не может быть меньше, чем текущее время.'
             );
         }
     }
 
-    private function validateStartTimestamp(int $startTimestamp): void
+    private function validateStart(string $start): void
     {
-        if (is_null($startTimestamp)) {
+        if (is_null($start)) {
             throw new PropertyValueIsNull(
-                '\'startTimestamp\' не может быть null.'
+                '\'start\' не может быть null.'
             );
         }
 
-        /*$currentTimestamp = time();*/
-        /*if ($currentTimestamp < $startTimestamp) {*/
+        /*$current = time();*/
+        /*if ($current < $start) {*/
         /*    throw new \Exception(*/
         /*        'Start timestamp can\' be more than current time.'*/
         /*    );*/
         /*}*/
     }
 
-    private function validateEndTimestamp(int $endTimestamp): void
+    private function validateEnd(string $end): void
     {
-        if (is_null($endTimestamp)) {
+        if (is_null($end)) {
             throw new PropertyValueIsNull(
-                '\'endTimestamp\' не может быть null.'
+                '\'end\' не может быть null.'
             );
         }
 
-        /*$currentTimestamp = time();*/
-        /*if ($currentTimestamp > $endTimestamp) {*/
+        /*$current = time();*/
+        /*if ($current > $end) {*/
         /*    throw new \Exception(*/
         /*        'End timestamp can\' be more than current time.'*/
         /*    );*/

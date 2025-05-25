@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -19,29 +18,6 @@ Route::get('/test', function () {
 Route::get('/kanban', function () {
     return view('kanban');
 });
-
-/*Route::middleware(['auth'])->group(function () {*/
-    Route::get(
-        '/api/tasks',
-        [TaskController::class, 'index']
-    )->name('tasks.index');
-
-    Route::post(
-        '/api/tasks/create',
-        [TaskController::class, 'store']
-    )->name('tasks.store');
-
-    Route::put(
-        '/api/tasks/edit/{id}',
-        [TaskController::class, 'update']
-    )->name('tasks.update');
-
-    Route::delete(
-        '/api/tasks/delete/{id}',
-        [TaskController::class, 'delete']
-    )->name('tasks.delete');
-/*});*/
-
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

@@ -8,8 +8,8 @@ class TaskDTO
 {
     public const KEYS_INDEX = [
         'userId',
-        'startTimestamp',
-        'endTimestamp'
+        'start',
+        'end'
     ];
 
     public const KEYS_STORE = [
@@ -39,9 +39,9 @@ class TaskDTO
     public string $title;
     public string $description;
     public string $taskStatus;
-    public int $deadline;
-    public int $startTimestamp;
-    public int $endTimestamp;
+    public string $deadline;
+    public string $start;
+    public string $end;
 
     public function fromIndexRequest(Request $request): void
     {
@@ -87,27 +87,16 @@ class TaskDTO
                     [
                         'title',
                         'description',
-                        'taskStatus'
+                        'taskStatus',
+                        'start',
+                        'end',
+                        'deadline'
                     ],
                     true
                 )
             ) {
                 $value = trim($value);
             }
-
-            /*if (*/
-            /*    in_array(*/
-            /*        $key,*/
-            /*        [*/
-            /*            'startTimestamp',*/
-            /*            'endTimestamp',*/
-            /*            'deadline'*/
-            /*        ],*/
-            /*        true*/
-            /*    )*/
-            /*) {*/
-            /*    $value = date($value);*/
-            /*}*/
 
             if (!is_null($value)) {
                 $this->{$key} = $value;
