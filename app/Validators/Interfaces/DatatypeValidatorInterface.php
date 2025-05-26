@@ -2,7 +2,7 @@
 
 namespace App\Validators\Interfaces;
 
-interface DatatypeInterface
+interface DatatypeValidatorInterface
 {
     public function validate();
 }
