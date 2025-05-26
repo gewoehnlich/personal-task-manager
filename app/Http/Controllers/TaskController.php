@@ -7,27 +7,35 @@ use App\Services\TaskService;
 
 class TaskController extends Controller
 {
-    public function index(Request $request): void
-    {
-        $service = new TaskService();
-        $service->index($request);
+    public function create(
+        Request $request
+    ): void {
+        TaskService::create(
+            $request
+        );
     }
 
-    public function store(Request $request): void
-    {
-        $service = new TaskService();
-        $service->store($request);
+    public function read(
+        Request $request
+    ): void {
+        TaskService::read(
+            $request
+        );
     }
 
-    public function update(Request $request): void
-    {
-        $service = new TaskService();
-        $service->update($request);
+    public function update(
+        Request $request
+    ): void {
+        TaskService::update(
+            $request
+        );
     }
 
-    public function delete(Request $request): void
-    {
-        $service = new TaskService();
-        $service->delete($request);
+    public function delete(
+        Request $request
+    ): void {
+        TaskService::delete(
+            $request
+        );
     }
 }

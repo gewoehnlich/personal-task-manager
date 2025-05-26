@@ -8,22 +8,42 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get(
-    'tasks',
-    [TaskController::class, 'index']
-)->name('tasks.index');
-
 Route::post(
     'tasks/create',
-    [TaskController::class, 'store']
-)->name('tasks.store');
+    [
+        TaskController::class,
+        'create'
+    ]
+)->name(
+    'tasks.create'
+);
+
+Route::get(
+    'tasks',
+    [
+        TaskController::class,
+        'read'
+    ]
+)->name(
+    'tasks.read'
+);
 
 Route::put(
     'tasks/edit/{id}',
-    [TaskController::class, 'update']
-)->name('tasks.update');
+    [
+        TaskController::class,
+        'update'
+    ]
+)->name(
+    'tasks.update'
+);
 
 Route::delete(
     'tasks/delete/{id}',
-    [TaskController::class, 'delete']
-)->name('tasks.delete');
+    [
+        TaskController::class,
+        'delete'
+    ]
+)->name(
+    'tasks.delete'
+);

@@ -9,50 +9,74 @@ use App\Repositories\TaskRepository;
 
 class TaskService
 {
-    private TaskDTO $dto;
-    private TaskValidator $validator;
-    private TaskRepository $repository;
+    public static function create(
+        Request $request
+    ): void {
+        $dto = TaskDTO::fromCreateRequest(
+            $request
+        );
 
-    public function __construct()
-    {
-        $this->dto = new TaskDTO();
-        $this->validator = new TaskValidator();
-        $this->repository = new TaskRepository();
+        TaskValidator::validateCreateRequest(
+            $dto
+        );
+
+        /*$result = $this->repository->create($this->dto);*/
+        /*print_r($result);*/
+        /*print_r($this->dto);*/
     }
 
-    public function index(Request $request): void
-    {
-        $this->dto->fromIndexRequest($request);
-        $this->validator->validateIndexRequest($this->dto);
-        $result = $this->repository->read($this->dto);
-        print_r($result);
-        print_r($this->dto);
+    public static function read(
+        Request $request
+    ): void {
+        $dto = TaskDTO::fromReadRequest(
+            $request
+        );
+
+        TaskValidator::validateReadRequest(
+            $dto
+        );
+
+        /*$repository = new TaskRepository();*/
+        /*$this->dto->fromIndexRequest($request);*/
+        /*$this->validator->validateIndexRequest($this->dto);*/
+        /*$result = $this->repository->read($this->dto);*/
+        /*print_r($result);*/
+        /*print_r($this->dto);*/
     }
 
-    public function store(Request $request): void
-    {
-        $this->dto->fromStoreRequest($request);
-        $this->validator->validateStoreRequest($this->dto);
-        $result = $this->repository->create($this->dto);
-        print_r($result);
-        print_r($this->dto);
+    public static function update(
+        Request $request
+    ): void {
+        $dto = TaskDTO::fromUpdateRequest(
+            $request
+        );
+
+        TaskValidator::validateUpdateRequest(
+            $dto
+        );
+
+        /*$this->dto->fromUpdateRequest($request);*/
+        /*$this->validator->validateUpdateRequest($this->dto);*/
+        /*$result = $this->repository->update($this->dto);*/
+        /*print_r($result);*/
+        /*print_r($this->dto);*/
     }
 
-    public function update(Request $request): void
-    {
-        $this->dto->fromUpdateRequest($request);
-        $this->validator->validateUpdateRequest($this->dto);
-        $result = $this->repository->update($this->dto);
-        print_r($result);
-        print_r($this->dto);
-    }
+    public static function delete(
+        Request $request
+    ): void {
+        $dto = TaskDTO::fromDeleteRequest(
+            $request
+        );
 
-    public function delete(Request $request): void
-    {
-        $this->dto->fromDeleteRequest($request);
-        $this->validator->validateDeleteRequest($this->dto);
-        $result = $this->repository->delete($this->dto);
-        print_r($result);
-        print_r($this->dto);
+        TaskValidator::validateDeleteRequest(
+            $dto
+        );
+
+        /*$this->dto->fromDeleteRequest($request);*/
+        /*$this->validator->validateDeleteRequest($this->dto);*/
+        /*$result = $this->repository->delete($this->dto);*/
+        /*print_r($result);*/
+        /*print_r($this->dto);*/
     }
 }

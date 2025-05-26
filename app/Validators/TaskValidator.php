@@ -4,7 +4,8 @@ namespace App\Validators;
 
 use Illuminate\Support\Facades\Auth;
 use App\DTO\TaskDTO;
-use App\Exceptions\Validation\Common\HashmapKeyNotFound;
+use App\Validators\Datatypes\Timestamp;
+use App\Exceptions\Validation\Common\KeyNotFound;
 use App\Exceptions\Validation\Common\MethodNotFound;
 use App\Exceptions\Validation\Common\PropertyValueIsNull;
 use App\Exceptions\Validation\BigIntUnsigned\UnsignedIntegerFieldValueIsZeroOrLess;
@@ -27,34 +28,51 @@ class TaskValidator
         'end'          =>  'validateEnd'
     ];
 
-    public function validateIndexRequest(TaskDTO $dto): void
-    {
-        $this->validate($dto, $dto::KEYS_INDEX);
+    public static function validateCreateRequest(
+        TaskDTO $dto
+    ): void {
+        (new self())->validate(
+            $dto,
+            $dto::KEYS_STORE
+        );
     }
 
-    public function validateStoreRequest(TaskDTO $dto): void
-    {
-        $this->validate($dto, $dto::KEYS_STORE);
+    public static function validateReadRequest(
+        TaskDTO $dto
+    ): void {
+        (new self())->validate(
+            $dto,
+            $dto::KEYS_INDEX
+        );
     }
 
-    public function validateUpdateRequest(TaskDTO $dto): void
-    {
-        $this->validate($dto, $dto::KEYS_UPDATE);
+    public static function validateUpdateRequest(
+        TaskDTO $dto
+    ): void {
+        (new self())->validate(
+            $dto,
+            $dto::KEYS_UPDATE
+        );
     }
 
-    public function validateDeleteRequest(TaskDTO $dto): void
-    {
-        $this->validate($dto, $dto::KEYS_DELETE);
+    public static function validateDeleteRequest(
+        TaskDTO $dto
+    ): void {
+        (new self())->validate(
+            $dto,
+            $dto::KEYS_DELETE
+        );
     }
 
-    private function validate(TaskDTO $dto, array $fields): void
-    {
+    private function validate(
+        TaskDTO $dto,
+        array $fields
+    ): void {
         foreach ($fields as $key) {
             $method = self::HASHMAP[$key] ?? null;
             if (is_null($method)) {
-                throw new HashmapKeyNotFound(
-                    'Не найден ключ {$key} ' .
-                    'в SELF::HASHMAP в классе {__CLASS__}.'
+                throw new KeyNotFound(
+                    $key
                 );
             }
 
@@ -70,8 +88,9 @@ class TaskValidator
         }
     }
 
-    private function validateId(int $id): void
-    {
+    private function validateId(
+        int $id
+    ): void {
         if (is_null($id)) {
             throw new PropertyValueIsNull(
                 '\'id\' не может быть null.'
@@ -85,8 +104,9 @@ class TaskValidator
         }
     }
 
-    private function validateUserId(int $userId): void
-    {
+    private function validateUserId(
+        int $userId
+    ): void {
         if (is_null($userId)) {
             throw new PropertyValueIsNull(
                 '\'userId\' не может быть null.'
@@ -106,8 +126,9 @@ class TaskValidator
         /*}*/
     }
 
-    private function validateTitle(string $title): void
-    {
+    private function validateTitle(
+        string $title
+    ): void {
         if (is_null($title)) {
             throw new PropertyValueIsNull(
                 '\'title\' не может быть null.'
@@ -127,8 +148,9 @@ class TaskValidator
         }
     }
 
-    private function validateDescription(string $description): void
-    {
+    private function validateDescription(
+        string $description
+    ): void {
         if (is_null($description)) {
             throw new PropertyValueIsNull(
                 '\'description\' не может быть null.'
@@ -142,8 +164,9 @@ class TaskValidator
         }
     }
 
-    private function validateTaskStatus(string $taskStatus): void
-    {
+    private function validateTaskStatus(
+        string $taskStatus
+    ): void {
         if (is_null($taskStatus)) {
             throw new PropertyValueIsNull(
                 '\'taskStatus\' не может быть null.'
@@ -159,14 +182,18 @@ class TaskValidator
         }
     }
 
-    private function validateDeadline(string $deadline): void
-    {
+    private function validateDeadline(
+        string $deadline
+    ): void {
         if (is_null($deadline)) {
             throw new PropertyValueIsNull(
                 '\'deadline\' не может быть null.'
             );
         }
 
+        Timestamp::validate($deadline);
+
+        // finish this part later
         $current = time();
         if ($current > $deadline) {
             throw new DeadlineTimestampLessThanCurrentTimestamp(
@@ -175,8 +202,9 @@ class TaskValidator
         }
     }
 
-    private function validateStart(string $start): void
-    {
+    private function validateStart(
+        string $start
+    ): void {
         if (is_null($start)) {
             throw new PropertyValueIsNull(
                 '\'start\' не может быть null.'
@@ -191,8 +219,9 @@ class TaskValidator
         /*}*/
     }
 
-    private function validateEnd(string $end): void
-    {
+    private function validateEnd(
+        string $end
+    ): void {
         if (is_null($end)) {
             throw new PropertyValueIsNull(
                 '\'end\' не может быть null.'

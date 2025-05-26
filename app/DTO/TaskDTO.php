@@ -43,33 +43,37 @@ class TaskDTO
     public string $start;
     public string $end;
 
-    public function fromIndexRequest(Request $request): void
-    {
-        $this->assignParameters(
-            $request,
-            self::KEYS_INDEX
-        );
-    }
-
-    public function fromStoreRequest(Request $request): void
-    {
-        $this->assignParameters(
+    public static function fromCreateRequest(
+        Request $request
+    ): TaskDTO {
+        return (new self())->assignParameters(
             $request,
             self::KEYS_STORE
         );
     }
 
-    public function fromUpdateRequest(Request $request): void
-    {
-        $this->assignParameters(
+    public static function fromReadRequest(
+        Request $request
+    ): TaskDTO {
+        return (new self())->assignParameters(
+            $request,
+            self::KEYS_INDEX
+        );
+    }
+
+    public static function fromUpdateRequest(
+        Request $request
+    ): TaskDTO {
+        return (new self())->assignParameters(
             $request,
             self::KEYS_UPDATE
         );
     }
 
-    public function fromDeleteRequest(Request $request): void
-    {
-        $this->assignParameters(
+    public static function fromDeleteRequest(
+        Request $request
+    ): TaskDTO {
+        return (new self())->assignParameters(
             $request,
             self::KEYS_DELETE
         );
@@ -78,29 +82,20 @@ class TaskDTO
     private function assignParameters(
         Request $request,
         array $fields
-    ): void {
+    ): TaskDTO {
         foreach ($fields as $key) {
             $value = $request->input($key);
-            if (
-                in_array(
-                    $key,
-                    [
-                        'title',
-                        'description',
-                        'taskStatus',
-                        'start',
-                        'end',
-                        'deadline'
-                    ],
-                    true
-                )
-            ) {
+            if (is_null($value)) {
+                continue;
+            }
+
+            if (is_string($key)) {
                 $value = trim($value);
             }
 
-            if (!is_null($value)) {
-                $this->{$key} = $value;
-            }
+            $this->{$key} = $value;
         }
+
+        return $this;
     }
 }

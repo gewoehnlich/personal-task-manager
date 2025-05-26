@@ -18,7 +18,7 @@ class Timestamp implements DatatypeValidatorInterface
         $this->timestamp = $timestamp;
     }
 
-    public function validate()
+    public static function validate()
     {
         $this->isMySQLTimestampFormatValid();
         $this->isDateTimeValid();
