@@ -17,7 +17,7 @@ use App\Exceptions\Validation\Timestamp\DeadlineTimestampLessThanCurrentTimestam
 
 class TaskValidator
 {
-    private const HASHMAP = [
+    private const array HASHMAP = [
         'id'           =>  'validateId',
         'userId'       =>  'validateUserId',
         'title'        =>  'validateTitle',
@@ -28,47 +28,12 @@ class TaskValidator
         'end'          =>  'validateEnd'
     ];
 
-    public static function validateCreateRequest(
+    public static function validate(
         TaskDTO $dto
     ): void {
-        (new self())->validate(
-            $dto,
-            $dto::KEYS_STORE
-        );
-    }
+        $validator = new self();
 
-    public static function validateReadRequest(
-        TaskDTO $dto
-    ): void {
-        (new self())->validate(
-            $dto,
-            $dto::KEYS_INDEX
-        );
-    }
-
-    public static function validateUpdateRequest(
-        TaskDTO $dto
-    ): void {
-        (new self())->validate(
-            $dto,
-            $dto::KEYS_UPDATE
-        );
-    }
-
-    public static function validateDeleteRequest(
-        TaskDTO $dto
-    ): void {
-        (new self())->validate(
-            $dto,
-            $dto::KEYS_DELETE
-        );
-    }
-
-    private function validate(
-        TaskDTO $dto,
-        array $fields
-    ): void {
-        foreach ($fields as $key) {
+        foreach ($dto::FIELDS as $key) {
             $method = self::HASHMAP[$key] ?? null;
             if (is_null($method)) {
                 throw new KeyNotFound(
@@ -76,7 +41,7 @@ class TaskValidator
                 );
             }
 
-            if (!method_exists($this, $method)) {
+            if (!method_exists($validator, $method)) {
                 throw new MethodNotFound(
                     'Не найден метод {$method} в классе {__CLASS__}.\n' .
                     'Проверьте правильность указанного метода ' .
@@ -84,7 +49,7 @@ class TaskValidator
                 );
             }
 
-            $this->{$method}($dto->{$key});
+            $validator->{$method}($dto->{$key});
         }
     }
 

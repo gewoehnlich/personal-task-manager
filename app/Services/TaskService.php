@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-use App\DTO\TaskDTO;
+use App\DTO\TaskDTO\CreateTaskDTO;
+use App\DTO\TaskDTO\ReadTaskDTO;
+use App\DTO\TaskDTO\UpdateTaskDTO;
+use App\DTO\TaskDTO\DeleteTaskDTO;
 use App\Validators\TaskValidator;
 use App\Repositories\TaskRepository;
 
@@ -12,11 +15,11 @@ class TaskService
     public static function create(
         Request $request
     ): void {
-        $dto = TaskDTO::fromCreateRequest(
+        $dto = CreateTaskDTO::fromRequest(
             $request
         );
 
-        TaskValidator::validateCreateRequest(
+        TaskValidator::validate(
             $dto
         );
 
@@ -28,11 +31,11 @@ class TaskService
     public static function read(
         Request $request
     ): void {
-        $dto = TaskDTO::fromReadRequest(
+        $dto = ReadTaskDTO::fromRequest(
             $request
         );
 
-        TaskValidator::validateReadRequest(
+        TaskValidator::validate(
             $dto
         );
 
@@ -47,11 +50,11 @@ class TaskService
     public static function update(
         Request $request
     ): void {
-        $dto = TaskDTO::fromUpdateRequest(
+        $dto = UpdateTaskDTO::fromRequest(
             $request
         );
 
-        TaskValidator::validateUpdateRequest(
+        TaskValidator::validate(
             $dto
         );
 
@@ -65,11 +68,11 @@ class TaskService
     public static function delete(
         Request $request
     ): void {
-        $dto = TaskDTO::fromDeleteRequest(
+        $dto = DeleteTaskDTO::fromRequest(
             $request
         );
 
-        TaskValidator::validateDeleteRequest(
+        TaskValidator::validate(
             $dto
         );
 
