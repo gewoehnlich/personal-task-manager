@@ -13,13 +13,15 @@ use App\Exceptions\Validation\Common\StringFieldIsEmpty;
 use App\Exceptions\Validation\Varchar255\Varchar255FieldValueTooLong;
 use App\Exceptions\Validation\Enum\NotValidTaskStatus;
 use App\Exceptions\Validation\Timestamp\DeadlineTimestampLessThanCurrentTimestamp;
-
 use App\Validators\Datatypes\PHP\Common;
 use App\Validators\Datatypes\MySQL\Timestamp;
 use App\Validators\Datatypes\MySQL\UnsignedInteger;
-use App\Validators\Interfaces\ValidatorInterface;
+use App\Validators\User;
+use App\Validators\Datatypes\PHP\Str;
+use App\Interfaces\Validators\ValidatorInterface;
+use App\Validators\Datatypes\MySQL\Enum\TaskStatus;
 
-class TaskValidator // implements ValidatorInterface
+class TaskValidator implements ValidatorInterface
 {
     private const array HASHMAP = [
         'id'           =>  'validateId',
@@ -91,13 +93,10 @@ class TaskValidator // implements ValidatorInterface
             $field
         );
 
-        $authorizedUserId = Auth::id();
-        if ($userId != $authorizedUserId) {
-            throw new AuthorizedUserIdDoesNotEqualToInputtedUserId(
-                $userId,
-                $authorizedUserId
-            );
-        }
+        /*User::validate(*/
+        /*    $userId,*/
+        /*    $field*/
+        /*);*/
     }
 
     private function validateTitle(
@@ -110,17 +109,10 @@ class TaskValidator // implements ValidatorInterface
             $field
         );
 
-        if ($title === '') {
-            throw new StringFieldIsEmpty(
-                $field
-            );
-        }
-
-        if (strlen($title) > 255) {
-            throw new Varchar255FieldValueTooLong(
-                $field
-            );
-        }
+        Str::validate(
+            $title,
+            $field
+        );
     }
 
     private function validateDescription(
@@ -133,11 +125,10 @@ class TaskValidator // implements ValidatorInterface
             $field
         );
 
-        if ($description === '') {
-            throw new StringFieldIsEmpty(
-                $field
-            );
-        }
+        Str::validate(
+            $description,
+            $field
+        );
     }
 
     private function validateTaskStatus(
@@ -150,13 +141,10 @@ class TaskValidator // implements ValidatorInterface
             $field
         );
 
-        $validStatuses = ['inProgress', 'completed', 'overdue'];
-        if (!in_array($taskStatus, $validStatuses)) {
-            throw new NotValidTaskStatus(
-                $taskStatus,
-                $validStatuses
-            );
-        }
+        TaskStatus::validate(
+            $taskStatus,
+            $field
+        );
     }
 
     private function validateDeadline(
@@ -169,7 +157,10 @@ class TaskValidator // implements ValidatorInterface
             $field
         );
 
-        Timestamp::validate($deadline);
+        Timestamp::validate(
+            $deadline,
+            $field
+        );
 
         // finish this part later
         $current = time();

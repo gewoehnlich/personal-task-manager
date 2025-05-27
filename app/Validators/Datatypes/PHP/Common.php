@@ -3,8 +3,11 @@
 namespace App\Validators\Datatypes\PHP;
 
 use App\Exceptions\Validation\Common\PropertyValueIsNull;
+use App\Interfaces\Validators\Datatypes\DatatypeValidatorInterfaces\{
+    IntDatatypeValidatorInterface
+};
 
-class Common
+class Common implements IntDatatypeValidatorInterface
 {
     public static function validate(
         mixed $value,
