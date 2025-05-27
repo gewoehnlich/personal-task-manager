@@ -2,7 +2,10 @@
 
 namespace App\Validators\Interfaces;
 
-interface DatatypeValidatorInterface
+interface DatatypeValidatorInterface // extends ValidatorInterface
 {
-    public function validate();
+    public static function validate(
+        $value,
+        string $field
+    );
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Validators\Datatypes;
+namespace App\Validators\Datatypes\MySQL;
 
 use App\Validators\Interfaces\DatatypeValidatorInterface;
 use App\Exceptions\Datatypes\Timestamp\TimestampBoundariesException;
 use App\Helpers\Cast;
 
-class Timestamp implements DatatypeValidatorInterface
+class Timestamp // implements DatatypeValidatorInterface
 {
     private const string MYSQL_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:MM:SS';
     private const string PHP_DATETIME_FORMAT    = 'Y-m-d H:i:s';
@@ -18,8 +18,10 @@ class Timestamp implements DatatypeValidatorInterface
         $this->timestamp = $timestamp;
     }
 
-    public static function validate()
-    {
+    public static function validate(
+        string $value,
+        string $field
+    ): void {
         $this->isMySQLTimestampFormatValid();
         $this->isDateTimeValid();
     }

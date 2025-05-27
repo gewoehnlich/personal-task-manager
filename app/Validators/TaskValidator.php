@@ -4,7 +4,6 @@ namespace App\Validators;
 
 use Illuminate\Support\Facades\Auth;
 use App\DTO\TaskDTO;
-use App\Validators\Datatypes\Timestamp;
 use App\Exceptions\Validation\Common\KeyNotFound;
 use App\Exceptions\Validation\Common\MethodNotFound;
 use App\Exceptions\Validation\Common\PropertyValueIsNull;
@@ -15,7 +14,12 @@ use App\Exceptions\Validation\Varchar255\Varchar255FieldValueTooLong;
 use App\Exceptions\Validation\Enum\NotValidTaskStatus;
 use App\Exceptions\Validation\Timestamp\DeadlineTimestampLessThanCurrentTimestamp;
 
-class TaskValidator
+use App\Validators\Datatypes\PHP\Common;
+use App\Validators\Datatypes\MySQL\Timestamp;
+use App\Validators\Datatypes\MySQL\UnsignedInteger;
+use App\Validators\Interfaces\ValidatorInterface;
+
+class TaskValidator // implements ValidatorInterface
 {
     private const array HASHMAP = [
         'id'           =>  'validateId',
@@ -37,124 +41,133 @@ class TaskValidator
             $method = self::HASHMAP[$key] ?? null;
             if (is_null($method)) {
                 throw new KeyNotFound(
-                    $key
+                    $key,
+                    __CLASS__
                 );
             }
 
             if (!method_exists($validator, $method)) {
                 throw new MethodNotFound(
-                    'Не найден метод {$method} в классе {__CLASS__}.\n' .
-                    'Проверьте правильность указанного метода ' .
-                    'в self::HASHMAP для поля {$key}.'
+                    $method,
+                    __CLASS__
                 );
             }
 
-            $validator->{$method}($dto->{$key});
+            $validator->{$method}(
+                $dto->{$key},
+                $key
+            );
         }
     }
 
     private function validateId(
-        int $id
+        int $id,
+        string $field
     ): void {
-        if (is_null($id)) {
-            throw new PropertyValueIsNull(
-                '\'id\' не может быть null.'
-            );
-        }
 
-        if ($id <= 0) {
-            throw new UnsignedIntegerFieldValueIsZeroOrLess(
-                '\'id\' не может быть меньше или равно 0.'
-            );
-        }
+        Common::validate(
+            $id,
+            $field
+        );
+
+        UnsignedInteger::validate(
+            $id,
+            $field
+        );
     }
 
     private function validateUserId(
-        int $userId
+        int $userId,
+        string $field
     ): void {
-        if (is_null($userId)) {
-            throw new PropertyValueIsNull(
-                '\'userId\' не может быть null.'
+
+        Common::validate(
+            $userId,
+            $field
+        );
+
+        UnsignedInteger::validate(
+            $userId,
+            $field
+        );
+
+        $authorizedUserId = Auth::id();
+        if ($userId != $authorizedUserId) {
+            throw new AuthorizedUserIdDoesNotEqualToInputtedUserId(
+                $userId,
+                $authorizedUserId
             );
         }
-
-        if ($userId <= 0) {
-            throw new UnsignedIntegerFieldValueIsZeroOrLess(
-                '\'userId\' не может быть меньше или равно 0.'
-            );
-        }
-
-        /*if ($userId != Auth::id()) {*/
-        /*    throw new AuthorizedUserIdDoesNotEqualToInputtedUserId(*/
-        /*        '\'userId\' не соответствует ID авторизованного пользователя.'*/
-        /*    );*/
-        /*}*/
     }
 
     private function validateTitle(
-        string $title
+        string $title,
+        string $field
     ): void {
-        if (is_null($title)) {
-            throw new PropertyValueIsNull(
-                '\'title\' не может быть null.'
-            );
-        }
+
+        Common::validate(
+            $title,
+            $field
+        );
 
         if ($title === '') {
             throw new StringFieldIsEmpty(
-                '\'title\' не может быть пустым.'
+                $field
             );
         }
 
         if (strlen($title) > 255) {
             throw new Varchar255FieldValueTooLong(
-                '\'title\' не может быть длиннее 255 символов.'
+                $field
             );
         }
     }
 
     private function validateDescription(
-        string $description
+        string $description,
+        string $field
     ): void {
-        if (is_null($description)) {
-            throw new PropertyValueIsNull(
-                '\'description\' не может быть null.'
-            );
-        }
+
+        Common::validate(
+            $description,
+            $field
+        );
 
         if ($description === '') {
             throw new StringFieldIsEmpty(
-                '\'description\' не может быть пустым.'
+                $field
             );
         }
     }
 
     private function validateTaskStatus(
-        string $taskStatus
+        string $taskStatus,
+        string $field
     ): void {
-        if (is_null($taskStatus)) {
-            throw new PropertyValueIsNull(
-                '\'taskStatus\' не может быть null.'
-            );
-        }
+
+        Common::validate(
+            $taskStatus,
+            $field
+        );
 
         $validStatuses = ['inProgress', 'completed', 'overdue'];
         if (!in_array($taskStatus, $validStatuses)) {
             throw new NotValidTaskStatus(
-                '\'taskStatus\' значение {$taskStatus} неправильное.\n' .
-                'Допустимые значения: {$validStatuses}.'
+                $taskStatus,
+                $validStatuses
             );
         }
     }
 
     private function validateDeadline(
-        string $deadline
+        string $deadline,
+        string $field
     ): void {
-        if (is_null($deadline)) {
-            throw new PropertyValueIsNull(
-                '\'deadline\' не может быть null.'
-            );
-        }
+
+        Common::validate(
+            $deadline,
+            $field
+        );
 
         Timestamp::validate($deadline);
 
@@ -168,13 +181,14 @@ class TaskValidator
     }
 
     private function validateStart(
-        string $start
+        string $start,
+        string $field
     ): void {
-        if (is_null($start)) {
-            throw new PropertyValueIsNull(
-                '\'start\' не может быть null.'
-            );
-        }
+
+        Common::validate(
+            $start,
+            $field
+        );
 
         /*$current = time();*/
         /*if ($current < $start) {*/
@@ -185,13 +199,14 @@ class TaskValidator
     }
 
     private function validateEnd(
-        string $end
+        string $end,
+        string $field
     ): void {
-        if (is_null($end)) {
-            throw new PropertyValueIsNull(
-                '\'end\' не может быть null.'
-            );
-        }
+
+        Common::validate(
+            $end,
+            $field
+        );
 
         /*$current = time();*/
         /*if ($current > $end) {*/
