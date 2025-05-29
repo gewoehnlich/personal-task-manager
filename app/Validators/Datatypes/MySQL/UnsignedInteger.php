@@ -2,6 +2,7 @@
 
 namespace App\Validators\Datatypes\MySQL;
 
+use App\Validators\Datatypes\PHP\Common;
 use App\Exceptions\Validation\BigIntUnsigned\{
     UnsignedIntegerFieldValueIsLessThanZero,
     UnsignedIntegerFieldValueIsEqualToZero
@@ -12,7 +13,12 @@ class UnsignedInteger
     public static function validate(
         int $value,
         string $field
-    ) {
+    ): void {
+        Common::isNotNull(
+            $value,
+            $field
+        );
+
         self::isNotLowerThanZero(
             $value,
             $field
@@ -38,7 +44,7 @@ class UnsignedInteger
     private static function isNotLowerThanZero(
         int $value,
         string $field
-    ) {
+    ): void {
         if ($value < 0) {
             throw new UnsignedIntegerFieldValueIsLessThanZero(
                 $field
@@ -49,7 +55,7 @@ class UnsignedInteger
     private static function isNotEqualToZero(
         int $value,
         string $field
-    ) {
+    ): void {
         if ($value === 0) {
             throw new UnsignedIntegerFieldValueIsEqualToZero(
                 $field

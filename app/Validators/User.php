@@ -15,7 +15,12 @@ class User implements IntDatatypeValidatorInterface
     public static function validate(
         int $userId,
         string $field
-    ) {
+    ): void {
+        IntValidator::validate(
+            $userId,
+            $field
+        );
+
         self::isUserIdEqualToAuthorizedUserId(
             $userId
         );
@@ -23,7 +28,7 @@ class User implements IntDatatypeValidatorInterface
 
     private static function isUserIdEqualToAuthorizedUserId(
         int $userId
-    ) {
+    ): void {
         $authorizedUserId = Auth::id();
         if ($userId != $authorizedUserId) {
             throw new AuthorizedUserIdDoesNotEqualToInputtedUserId(

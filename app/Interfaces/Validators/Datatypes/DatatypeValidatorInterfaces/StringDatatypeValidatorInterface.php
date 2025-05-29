@@ -9,5 +9,5 @@ interface StringDatatypeValidatorInterface extends DatatypeValidatorInterface
     public static function validate(
         string $value,
         string $field
-    );
+    ): void;
 }

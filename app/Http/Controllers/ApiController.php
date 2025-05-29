@@ -3,39 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\TaskService;
 
-class TaskController extends ApiController
+abstract class ApiController extends Controller
 {
     public static function create(
         Request $request
     ): void {
-        TaskService::create(
-            $request
-        );
     }
 
     public static function read(
         Request $request
     ): void {
-        TaskService::read(
-            $request
-        );
     }
 
     public static function update(
         Request $request
     ): void {
-        TaskService::update(
-            $request
-        );
     }
 
     public static function delete(
         Request $request
     ): void {
-        TaskService::delete(
-            $request
-        );
     }
 }

@@ -8,6 +8,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// add auth
 Route::post(
     'tasks/create',
     [

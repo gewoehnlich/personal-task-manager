@@ -19,7 +19,7 @@ class Common implements IntDatatypeValidatorInterface
         );
     }
 
-    private static function isNotNull(
+    public static function isNotNull(
         mixed $value,
         string $field
     ) {

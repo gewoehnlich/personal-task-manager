@@ -2,6 +2,7 @@
 
 namespace App\Validators\Datatypes\PHP;
 
+use App\Validators\Datatypes\PHP\Common;
 use App\Exceptions\Validation\Common\StringFieldValueIsEmpty;
 use App\Interfaces\Validators\Datatypes\DatatypeValidatorInterfaces\{
     StringDatatypeValidatorInterface
@@ -14,7 +15,12 @@ class Str implements StringDatatypeValidatorInterface
     public static function validate(
         string $value,
         string $field
-    ) {
+    ): void {
+        Common::isNotNull(
+            $value,
+            $field
+        );
+
         self::isNotEmpty(
             $value,
             $field
@@ -38,7 +44,7 @@ class Str implements StringDatatypeValidatorInterface
     private static function isNotEmpty(
         string $value,
         string $field
-    ) {
+    ): void {
         if ($value === '') {
             throw new StringFieldValueIsEmpty(
                 $field
@@ -49,7 +55,7 @@ class Str implements StringDatatypeValidatorInterface
     private static function isLengthLessOrEqualTo255(
         string $value,
         string $field
-    ) {
+    ): void {
         if (strlen($value) > 255) {
             throw new Varchar255FieldValueTooLong(
                 $field
@@ -60,7 +66,7 @@ class Str implements StringDatatypeValidatorInterface
     private static function isLengthLessOrEqualTo65535(
         string $value,
         string $field
-    ) {
+    ): void {
         if (strlen($value) > 65535) {
             throw new TextFieldValueTooLong(
                 $field

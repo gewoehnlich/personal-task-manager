@@ -6,14 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\DTO\TaskDTO;
 use App\Exceptions\Validation\Common\KeyNotFound;
 use App\Exceptions\Validation\Common\MethodNotFound;
-use App\Exceptions\Validation\Common\PropertyValueIsNull;
-use App\Exceptions\Validation\BigIntUnsigned\UnsignedIntegerFieldValueIsZeroOrLess;
-use App\Exceptions\Validation\Common\AuthorizedUserIdDoesNotEqualToInputtedUserId;
-use App\Exceptions\Validation\Common\StringFieldIsEmpty;
-use App\Exceptions\Validation\Varchar255\Varchar255FieldValueTooLong;
-use App\Exceptions\Validation\Enum\NotValidTaskStatus;
 use App\Exceptions\Validation\Timestamp\DeadlineTimestampLessThanCurrentTimestamp;
-use App\Validators\Datatypes\PHP\Common;
 use App\Validators\Datatypes\MySQL\Timestamp;
 use App\Validators\Datatypes\MySQL\UnsignedInteger;
 use App\Validators\User;
@@ -66,12 +59,6 @@ class TaskValidator implements ValidatorInterface
         int $id,
         string $field
     ): void {
-
-        Common::validate(
-            $id,
-            $field
-        );
-
         UnsignedInteger::validate(
             $id,
             $field
@@ -82,12 +69,6 @@ class TaskValidator implements ValidatorInterface
         int $userId,
         string $field
     ): void {
-
-        Common::validate(
-            $userId,
-            $field
-        );
-
         UnsignedInteger::validate(
             $userId,
             $field
@@ -103,12 +84,6 @@ class TaskValidator implements ValidatorInterface
         string $title,
         string $field
     ): void {
-
-        Common::validate(
-            $title,
-            $field
-        );
-
         Str::validate(
             $title,
             $field
@@ -119,12 +94,6 @@ class TaskValidator implements ValidatorInterface
         string $description,
         string $field
     ): void {
-
-        Common::validate(
-            $description,
-            $field
-        );
-
         Str::validate(
             $description,
             $field
@@ -135,12 +104,6 @@ class TaskValidator implements ValidatorInterface
         string $taskStatus,
         string $field
     ): void {
-
-        Common::validate(
-            $taskStatus,
-            $field
-        );
-
         TaskStatus::validate(
             $taskStatus,
             $field
@@ -151,12 +114,6 @@ class TaskValidator implements ValidatorInterface
         string $deadline,
         string $field
     ): void {
-
-        Common::validate(
-            $deadline,
-            $field
-        );
-
         Timestamp::validate(
             $deadline,
             $field
@@ -175,12 +132,6 @@ class TaskValidator implements ValidatorInterface
         string $start,
         string $field
     ): void {
-
-        Common::validate(
-            $start,
-            $field
-        );
-
         /*$current = time();*/
         /*if ($current < $start) {*/
         /*    throw new \Exception(*/
@@ -193,12 +144,6 @@ class TaskValidator implements ValidatorInterface
         string $end,
         string $field
     ): void {
-
-        Common::validate(
-            $end,
-            $field
-        );
-
         /*$current = time();*/
         /*if ($current > $end) {*/
         /*    throw new \Exception(*/
