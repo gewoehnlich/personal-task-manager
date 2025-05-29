@@ -6,10 +6,9 @@ use App\Exceptions\Validation\ValidationException;
 
 class UnsignedIntegerFieldValueIsEqualToZero extends ValidationException
 {
-    public function __construct(
-        string $field
-    ) {
-        $message = "{$field} не может быть равно 0.";
+    public function __construct()
+    {
+        $message = "Значение не может быть равно 0.";
         parent::__construct($message);
     }
 }

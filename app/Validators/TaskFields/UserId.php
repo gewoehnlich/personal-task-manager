@@ -1,28 +1,40 @@
 <?php
 
-namespace App\Validators;
+namespace App\Validators\TaskFields;
 
+use App\Validators\Datatypes\MySQL\UnsignedIntegerValidator;
+use App\Exceptions\Validation\BigIntUnsigned\{
+    UnsignedIntegerFieldValueIsEqualToZero
+};
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\Validation\Common\{
     AuthorizedUserIdDoesNotEqualToInputtedUserId
 };
-use App\Interfaces\Validators\Datatypes\DatatypeValidatorInterfaces\{
-    IntDatatypeValidatorInterface
-};
-use App\Validators\Datatypes\PHP\IntValidator;
 
-class User implements IntDatatypeValidatorInterface
+abstract class UserId extends UnsignedIntegerValidator
 {
     public static function validate(
         int $userId
     ): void {
-        IntValidator::validate(
+        UnsignedIntegerValidator::validate(
             $userId
         );
 
-        self::isUserIdEqualToAuthorizedUserId(
+        self::isNotEqualToZero(
             $userId
         );
+
+        /*self::isUserIdEqualToAuthorizedUserId(*/
+        /*    $userId*/
+        /*);*/
+    }
+
+    private static function isNotEqualToZero(
+        int $userId
+    ): void {
+        if ($userId === 0) {
+            throw new UnsignedIntegerFieldValueIsEqualToZero();
+        }
     }
 
     private static function isUserIdEqualToAuthorizedUserId(

@@ -6,10 +6,9 @@ use App\Exceptions\Validation\ValidationException;
 
 class Varchar255FieldValueTooLong extends ValidationException
 {
-    public function __construct(
-        string $field
-    ) {
-        $message = "{$field} не может быть длиннее 255 символов.";
+    public function __construct()
+    {
+        $message = "Значение не может быть длиннее 255 символов.";
         parent::__construct($message);
     }
 }

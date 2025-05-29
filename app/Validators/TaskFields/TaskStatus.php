@@ -2,21 +2,16 @@
 
 namespace App\Validators\Datatypes\MySQL\Enum;
 
-use App\Validators\Datatypes\PHP\Common;
 use App\Exceptions\Validation\Enum\NotValidTaskStatus;
-use App\Interfaces\Validators\Datatypes\DatatypeValidatorInterfaces\{
-    StringDatatypeValidatorInterface
-};
+use App\Validators\Datatypes\PHP\StringValidator;
 
-class TaskStatus implements StringDatatypeValidatorInterface
+abstract class TaskStatus extends StringValidator
 {
     public static function validate(
-        string $taskStatus,
-        string $field
+        string $taskStatus
     ): void {
-        Common::isNotNull(
-            $taskStatus,
-            $field
+        TaskStatus::validate(
+            $taskStatus
         );
 
         self::isValidStatus(

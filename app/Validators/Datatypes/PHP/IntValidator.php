@@ -1,15 +1,16 @@
 <?php
 
-namespace App\AbstractClasses\Validators\Datatypes\DatatypeValidators;
+namespace App\Validators\Datatypes\PHP;
 
 use App\AbstractClasses\Validators\Datatypes\DatatypeValidator;
 
 abstract class IntValidator extends DatatypeValidator
 {
     public static function validate(
-        int $value,
-        string $field
+        int $value
     ): void {
-        //
+        self::isNotNull(
+            $value
+        );
     }
 }

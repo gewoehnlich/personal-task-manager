@@ -4,17 +4,17 @@ namespace App\Validators;
 
 use Illuminate\Support\Facades\Auth;
 use App\DTO\TaskDTO;
-use App\Exceptions\Validation\Common\KeyNotFound;
-use App\Exceptions\Validation\Common\MethodNotFound;
-use App\Exceptions\Validation\Timestamp\DeadlineTimestampLessThanCurrentTimestamp;
-use App\Validators\Datatypes\MySQL\Timestamp;
-use App\Validators\Datatypes\MySQL\UnsignedInteger;
-use App\Validators\User;
-use App\Validators\Datatypes\PHP\Str;
 use App\Interfaces\Validators\ValidatorInterface;
-use App\Validators\Datatypes\MySQL\Enum\TaskStatus;
+use App\Validators\TaskFields\Id;
+use App\Validators\TaskFields\UserId;
+use App\Validators\TaskFields\Title;
+use App\Validators\TaskFields\Description;
+use App\Validators\TaskFields\TaskStatus;
+use App\Validators\TaskFields\Deadline;
+use App\Validators\TaskFields\Start;
+use App\Validators\TaskFields\End;
 
-class TaskValidator implements ValidatorInterface
+abstract class TaskValidator implements ValidatorInterface
 {
     private const array HASHMAP = [
         'id'           =>  'validateId',
@@ -30,125 +30,75 @@ class TaskValidator implements ValidatorInterface
     public static function validate(
         TaskDTO $dto
     ): void {
-        $validator = new self();
-
         foreach ($dto::FIELDS as $key) {
             $method = self::HASHMAP[$key] ?? null;
-            if (is_null($method)) {
-                throw new KeyNotFound(
-                    $key,
-                    __CLASS__
-                );
-            }
-
-            if (!method_exists($validator, $method)) {
-                throw new MethodNotFound(
-                    $method,
-                    __CLASS__
-                );
-            }
-
-            $validator->{$method}(
-                $dto->{$key},
-                $key
+            self::{$method}(
+                $dto->{$key}
             );
         }
     }
 
-    private function validateId(
-        int $id,
-        string $field
+    private static function validateId(
+        int $id
     ): void {
-        UnsignedInteger::validate(
-            $id,
-            $field
+        Id::validate(
+            $id
         );
     }
 
-    private function validateUserId(
-        int $userId,
-        string $field
+    private static function validateUserId(
+        int $userId
     ): void {
-        UnsignedInteger::validate(
-            $userId,
-            $field
-        );
-
-        /*User::validate(*/
-        /*    $userId,*/
-        /*    $field*/
-        /*);*/
-    }
-
-    private function validateTitle(
-        string $title,
-        string $field
-    ): void {
-        Str::validate(
-            $title,
-            $field
+        UserId::validate(
+            $userId
         );
     }
 
-    private function validateDescription(
-        string $description,
-        string $field
+    private static function validateTitle(
+        string $title
     ): void {
-        Str::validate(
-            $description,
-            $field
+        Title::validate(
+            $title
         );
     }
 
-    private function validateTaskStatus(
-        string $taskStatus,
-        string $field
+    private static function validateDescription(
+        string $description
+    ): void {
+        Description::validate(
+            $description
+        );
+    }
+
+    private static function validateTaskStatus(
+        string $taskStatus
     ): void {
         TaskStatus::validate(
-            $taskStatus,
-            $field
+            $taskStatus
         );
     }
 
-    private function validateDeadline(
-        string $deadline,
-        string $field
+    private static function validateDeadline(
+        string $deadline
     ): void {
-        Timestamp::validate(
-            $deadline,
-            $field
+        Deadline::validate(
+            $deadline
         );
-
-        // finish this part later
-        $current = time();
-        if ($current > $deadline) {
-            throw new DeadlineTimestampLessThanCurrentTimestamp(
-                '\'deadline\' не может быть меньше, чем текущее время.'
-            );
-        }
     }
 
-    private function validateStart(
-        string $start,
-        string $field
+    private static function validateStart(
+        string $start
     ): void {
-        /*$current = time();*/
-        /*if ($current < $start) {*/
-        /*    throw new \Exception(*/
-        /*        'Start timestamp can\' be more than current time.'*/
-        /*    );*/
-        /*}*/
+        Start::validate(
+            $start
+        );
     }
 
-    private function validateEnd(
-        string $end,
-        string $field
+    private static function validateEnd(
+        string $end
     ): void {
-        /*$current = time();*/
-        /*if ($current > $end) {*/
-        /*    throw new \Exception(*/
-        /*        'End timestamp can\' be more than current time.'*/
-        /*    );*/
-        /*}*/
+        End::validate(
+            $end
+        );
     }
 }

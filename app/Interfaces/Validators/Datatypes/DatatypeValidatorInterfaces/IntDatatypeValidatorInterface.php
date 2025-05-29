@@ -7,7 +7,6 @@ use App\Interfaces\Validators\Datatypes\DatatypeValidatorInterface;
 interface IntDatatypeValidatorInterface extends DatatypeValidatorInterface
 {
     public static function validate(
-        int $value,
-        string $field
+        int $value
     ): void;
 }

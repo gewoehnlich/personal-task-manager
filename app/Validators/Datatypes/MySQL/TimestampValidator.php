@@ -2,68 +2,65 @@
 
 namespace App\Validators\Datatypes\MySQL;
 
-use App\Interfaces\Validators\Datatypes\DatatypeValidatorInterface;
+use App\AbstractClasses\Validators\Datatypes\DatatypeValidator;
 use App\Exceptions\Datatypes\Timestamp\TimestampBoundariesException;
 use App\Helpers\Cast;
-use App\Validators\Datatypes\PHP\Common;
 
-class Timestamp implements DatatypeValidatorInterface
+class TimestampValidator extends DatatypeValidator
 {
     private const string MYSQL_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:MM:SS';
     private const string PHP_DATETIME_FORMAT    = 'Y-m-d H:i:s';
 
-    private string $timestamp;
-
-    public function __construct(string $timestamp)
-    {
-        $this->timestamp = $timestamp;
-    }
-
     public static function validate(
-        string $value,
-        string $field
+        string $timestamp
     ): void {
-        Common::isNotNull(
-            $value,
-            $field
+        self::isNotNull(
+            $timestamp
         );
 
-        $this->isMySQLTimestampFormatValid();
-        $this->isDateTimeValid();
+        self::isMySQLTimestampFormatValid(
+            $timestamp
+        );
+
+        self::isDateTimeValid(
+            $timestamp
+        );
     }
 
-    private function isMySQLTimestampFormatValid(): void
-    {
+    private static function isMySQLTimestampFormatValid(
+        string $timestamp
+    ): void {
         $isValid = preg_match(
             '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/',
-            $this->timestamp
-        ) === true;
+            $timestamp
+        ) === 1;
 
         if (!$isValid) {
             throw new \Exception(
-                'Неправильный формат {self::DATATYPE}.\n' .
-                'Ожидаемый формат: {self::MYSQL_TIMESTAMP_FORMAT}'
+                "Неправильный формат {$timestamp}.\n" .
+                "Ожидаемый формат: {self::MYSQL_TIMESTAMP_FORMAT}"
             );
         }
     }
 
-    private function isDateTimeValid(): void
-    {
+    private static function isDateTimeValid(
+        string $timestamp
+    ): void {
         $date = \DateTime::createFromFormat(
             self::PHP_DATETIME_FORMAT,
-            $this->timestamp
+            $timestamp
         );
 
         $errors = \DateTime::getLastErrors();
 
         if (
-            $date === false ||
-            $errors['warning_count'] > 0 ||
-            $errors['error_count'] > 0
+            $date === false // ||
+            /*$errors['warning_count'] > 0 ||*/
+            /*$errors['error_count'] > 0*/
         ) {
             throw new \Exception(
-                'Неправильный формат TIMESTAMP.\n' .
-                'Ожидаемый формат: {self::PHP_DATETIME_FORMAT}'
+                "Неправильный формат TIMESTAMP {$timestamp}.\n" .
+                "Ожидаемый формат: {self::PHP_DATETIME_FORMAT}"
             );
         }
 
@@ -75,16 +72,17 @@ class Timestamp implements DatatypeValidatorInterface
         $minutes = $date->format('i');
         $seconds = $date->format('s');
 
-        $this->validateYear($year);
-        $this->validateMonth($month);
-        $this->validateDay($day);
-        $this->validateHours($hours);
-        $this->validateMinutes($minutes);
-        $this->validateSeconds($seconds);
+        self::validateYear($year);
+        self::validateMonth($month);
+        self::validateDay($day);
+        self::validateHours($hours);
+        self::validateMinutes($minutes);
+        self::validateSeconds($seconds);
     }
 
-    private function validateYear(string $year): void
-    {
+    private static function validateYear(
+        string $year
+    ): void {
         $unit          = 'year';
         $lowerBoundary = 1970;
         $upperBoundary = 2038;
@@ -103,8 +101,9 @@ class Timestamp implements DatatypeValidatorInterface
         }
     }
 
-    private function validateMonth(string $month): void
-    {
+    private static function validateMonth(
+        string $month
+    ): void {
         $unit          = 'month';
         $lowerBoundary = 1;
         $upperBoundary = 12;
@@ -123,8 +122,9 @@ class Timestamp implements DatatypeValidatorInterface
         }
     }
 
-    private function validateDay(string $day): void
-    {
+    private static function validateDay(
+        string $day
+    ): void {
         $unit          = 'day';
         $lowerBoundary = 1;
         $upperBoundary = 31;
@@ -143,8 +143,9 @@ class Timestamp implements DatatypeValidatorInterface
         }
     }
 
-    private function validateHours(string $hours): void
-    {
+    private static function validateHours(
+        string $hours
+    ): void {
         $unit          = 'hours';
         $lowerBoundary = 0;
         $upperBoundary = 23;
@@ -163,8 +164,9 @@ class Timestamp implements DatatypeValidatorInterface
         }
     }
 
-    private function validateMinutes(string $minutes): void
-    {
+    private static function validateMinutes(
+        string $minutes
+    ): void {
         $unit          = 'minutes';
         $lowerBoundary = 0;
         $upperBoundary = 59;
@@ -183,8 +185,9 @@ class Timestamp implements DatatypeValidatorInterface
         }
     }
 
-    private function validateSeconds(string $seconds): void
-    {
+    private static function validateSeconds(
+        string $seconds
+    ): void {
         $unit          = 'seconds';
         $lowerBoundary = 0;
         $upperBoundary = 59;
