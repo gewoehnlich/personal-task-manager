@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Validators\TaskFields;
+namespace App\Validators\API\Tasks\Fields;
 
 use App\Validators\Datatypes\MySQL\TimestampValidator;
 
-abstract class End extends TimestampValidator
+abstract class Start extends TimestampValidator
 {
     public static function validate(
-        string $end
+        string $start
     ): void {
         TimestampValidator::validate(
-            $end
+            $start
         );
     }
 }

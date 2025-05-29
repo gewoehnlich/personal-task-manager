@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validators\Datatypes\MySQL\Enum;
+namespace App\Validators\API\Tasks\Fields;
 
 use App\Exceptions\Validation\Enum\NotValidTaskStatus;
 use App\Validators\Datatypes\PHP\StringValidator;
@@ -10,7 +10,7 @@ abstract class TaskStatus extends StringValidator
     public static function validate(
         string $taskStatus
     ): void {
-        TaskStatus::validate(
+        StringValidator::validate(
             $taskStatus
         );
 

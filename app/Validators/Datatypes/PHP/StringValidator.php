@@ -2,7 +2,7 @@
 
 namespace App\Validators\Datatypes\PHP;
 
-use App\AbstractClasses\Validators\Datatypes\DatatypeValidator;
+use App\Validators\Datatypes\DatatypeValidator;
 use App\Exceptions\Validation\Common\StringFieldValueIsEmpty;
 
 class StringValidator extends DatatypeValidator

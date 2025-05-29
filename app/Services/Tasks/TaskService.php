@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Tasks;
 
 use Illuminate\Http\Request;
 use App\DTO\TaskDTO\CreateTaskDTO;
 use App\DTO\TaskDTO\ReadTaskDTO;
 use App\DTO\TaskDTO\UpdateTaskDTO;
 use App\DTO\TaskDTO\DeleteTaskDTO;
-use App\Validators\TaskValidator;
-use App\Repositories\TaskRepository;
+use App\Validators\API\Tasks\TaskValidator;
+use App\Repositories\API\Tasks\TaskRepository;
+use App\Services\Service;
 
-class TaskService
+abstract class TaskService extends Service
 {
     public static function create(
         Request $request
@@ -19,13 +20,23 @@ class TaskService
             $request
         );
 
+        print_r(
+            $dto
+        );
+
         TaskValidator::validate(
             $dto
         );
 
-        /*$result = $this->repository->create($this->dto);*/
+        print_r(
+            $dto
+        );
+
+        /*$result = TaskRepository::create(*/
+        /*    $dto*/
+        /*);*/
+        /**/
         /*print_r($result);*/
-        /*print_r($this->dto);*/
     }
 
     public static function read(
@@ -39,12 +50,15 @@ class TaskService
             $dto
         );
 
-        /*$repository = new TaskRepository();*/
-        /*$this->dto->fromIndexRequest($request);*/
-        /*$this->validator->validateIndexRequest($this->dto);*/
-        /*$result = $this->repository->read($this->dto);*/
-        /*print_r($result);*/
-        /*print_r($this->dto);*/
+        print_r(
+            $dto
+        );
+
+        $result = TaskRepository::read(
+            $dto
+        );
+
+        print_r($result);
     }
 
     public static function update(
@@ -58,11 +72,15 @@ class TaskService
             $dto
         );
 
-        /*$this->dto->fromUpdateRequest($request);*/
-        /*$this->validator->validateUpdateRequest($this->dto);*/
-        /*$result = $this->repository->update($this->dto);*/
-        /*print_r($result);*/
-        /*print_r($this->dto);*/
+        print_r(
+            $dto
+        );
+
+        $result = TaskRepository::update(
+            $dto
+        );
+
+        print_r($result);
     }
 
     public static function delete(
@@ -76,10 +94,14 @@ class TaskService
             $dto
         );
 
-        /*$this->dto->fromDeleteRequest($request);*/
-        /*$this->validator->validateDeleteRequest($this->dto);*/
-        /*$result = $this->repository->delete($this->dto);*/
-        /*print_r($result);*/
-        /*print_r($this->dto);*/
+        print_r(
+            $dto
+        );
+
+        $result = TaskRepository::delete(
+            $dto
+        );
+
+        print_r($result);
     }
 }

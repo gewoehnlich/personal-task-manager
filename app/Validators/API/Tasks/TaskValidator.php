@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Validators;
+namespace App\Validators\API\Tasks;
 
-use Illuminate\Support\Facades\Auth;
 use App\DTO\TaskDTO;
-use App\Interfaces\Validators\ValidatorInterface;
-use App\Validators\TaskFields\Id;
-use App\Validators\TaskFields\UserId;
-use App\Validators\TaskFields\Title;
-use App\Validators\TaskFields\Description;
-use App\Validators\TaskFields\TaskStatus;
-use App\Validators\TaskFields\Deadline;
-use App\Validators\TaskFields\Start;
-use App\Validators\TaskFields\End;
+use App\Validators\Validator;
+use App\Validators\API\Tasks\Fields\Id;
+use App\Validators\API\Tasks\Fields\UserId;
+use App\Validators\API\Tasks\Fields\Title;
+use App\Validators\API\Tasks\Fields\Description;
+use App\Validators\API\Tasks\Fields\TaskStatus;
+use App\Validators\API\Tasks\Fields\Deadline;
+use App\Validators\API\Tasks\Fields\Start;
+use App\Validators\API\Tasks\Fields\End;
+use App\Exceptions\Validation\Common\KeyNotFound;
+use App\Exceptions\Validation\Common\MethodNotFound;
 
-abstract class TaskValidator implements ValidatorInterface
+abstract class TaskValidator extends Validator
 {
     private const array HASHMAP = [
         'id'           =>  'validateId',
@@ -32,6 +33,20 @@ abstract class TaskValidator implements ValidatorInterface
     ): void {
         foreach ($dto::FIELDS as $key) {
             $method = self::HASHMAP[$key] ?? null;
+            if (is_null($method)) {
+                throw new KeyNotFound(
+                    $key,
+                    __CLASS__
+                );
+            }
+
+            if (!method_exists(self::class, $method)) {
+                throw new MethodNotFound(
+                    $method,
+                    __CLASS__
+                );
+            }
+
             self::{$method}(
                 $dto->{$key}
             );

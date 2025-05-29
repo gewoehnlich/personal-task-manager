@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Validators\TaskFields;
+namespace App\Validators\API\Tasks\Fields;
 
+use Illuminate\Support\Facades\Auth;
 use App\Validators\Datatypes\MySQL\UnsignedIntegerValidator;
 use App\Exceptions\Validation\BigIntUnsigned\{
     UnsignedIntegerFieldValueIsEqualToZero
 };
-use Illuminate\Support\Facades\Auth;
 use App\Exceptions\Validation\Common\{
     AuthorizedUserIdDoesNotEqualToInputtedUserId
 };

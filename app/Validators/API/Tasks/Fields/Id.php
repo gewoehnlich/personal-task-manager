@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Validators\TaskFields;
+namespace App\Validators\API\Tasks\Fields;
 
-use App\Validators\Datatypes\MySQL\UnsignedInteger;
+use App\Validators\Datatypes\MySQL\UnsignedIntegerValidator;
 use App\Exceptions\Validation\BigIntUnsigned\{
     UnsignedIntegerFieldValueIsEqualToZero
 };
 
-abstract class Id extends UnsignedInteger
+abstract class Id extends UnsignedIntegerValidator
 {
     public static function validate(
         int $id
     ): void {
-        UnsignedInteger::validate(
+        UnsignedIntegerValidator::validate(
             $id
         );
 

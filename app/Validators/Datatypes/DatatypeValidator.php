@@ -1,8 +1,8 @@
 <?php
 
-namespace App\AbstractClasses\Validators\Datatypes;
+namespace App\Validators\Datatypes;
 
-use App\AbstractClasses\Validators\Validator;
+use App\Validators\Validator;
 use App\Exceptions\Validation\Common\PropertyValueIsNull;
 
 abstract class DatatypeValidator extends Validator

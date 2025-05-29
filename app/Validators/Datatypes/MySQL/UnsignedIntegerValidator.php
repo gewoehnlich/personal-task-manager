@@ -2,11 +2,10 @@
 
 namespace App\Validators\Datatypes\MySQL;
 
-use App\Exceptions\Validation\BigIntUnsigned\{
-    UnsignedIntegerFieldValueIsLessThanZero,
-    UnsignedIntegerFieldValueIsEqualToZero
-};
 use App\Validators\Datatypes\PHP\IntValidator;
+use App\Exceptions\Validation\BigIntUnsigned\{
+    UnsignedIntegerFieldValueIsLessThanZero
+};
 
 abstract class UnsignedIntegerValidator extends IntValidator
 {

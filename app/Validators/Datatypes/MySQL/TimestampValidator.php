@@ -2,7 +2,7 @@
 
 namespace App\Validators\Datatypes\MySQL;
 
-use App\AbstractClasses\Validators\Datatypes\DatatypeValidator;
+use App\Validators\Datatypes\DatatypeValidator;
 use App\Exceptions\Datatypes\Timestamp\TimestampBoundariesException;
 use App\Helpers\Cast;
 

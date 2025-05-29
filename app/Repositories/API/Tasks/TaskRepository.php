@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\API\Tasks;
 
 use PDO;
 use App\Core\Database;
@@ -8,16 +8,11 @@ use App\DTO\TaskDTO;
 
 class TaskRepository
 {
-    private PDO $db;
-
-    public function __construct()
+    public static function create(TaskDTO $dto): ?array
     {
-        $this->db = Database::getConnection();
-    }
+        $db = Database::getConnection();
 
-    public function create(TaskDTO $dto): ?array
-    {
-        $stmt = $this->db->prepare("
+        $stmt = $db->prepare("
             INSERT INTO tasks (
                 userId,
                 title,
@@ -41,12 +36,14 @@ class TaskRepository
             ':deadline' => $dto->deadline
         ]);
 
-        return $this->findById($this->db->lastInsertId());
+        return self::findById($db->lastInsertId());
     }
 
-    public function read(TaskDTO $dto): ?array
+    public static function read(TaskDTO $dto): ?array
     {
-        $stmt = $this->db->prepare("
+        $db = Database::getConnection();
+
+        $stmt = $db->prepare("
             SELECT * FROM tasks
             WHERE userId = :userId
         ");
@@ -60,9 +57,11 @@ class TaskRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function update(TaskDTO $dto): ?array
+    public static function update(TaskDTO $dto): ?array
     {
-        $stmt = $this->db->prepare("
+        $db = Database::getConnection();
+
+        $stmt = $db->prepare("
             UPDATE tasks
             SET userId = :userId,
                 title = :title,
@@ -81,12 +80,14 @@ class TaskRepository
             ':deadline' => $dto->deadline
         ]);
 
-        return $this->findById($dto->id);
+        return self::findById($dto->id);
     }
 
-    public function delete(TaskDTO $dto): bool
+    public static function delete(TaskDTO $dto): bool
     {
-        $stmt = $this->db->prepare("
+        $db = Database::getConnection();
+
+        $stmt = $db->prepare("
             DELETE FROM tasks
             WHERE id = :id
         ");
@@ -97,9 +98,11 @@ class TaskRepository
         ]);
     }
 
-    public function findById(int $id): ?array
+    public static function findById(int $id): ?array
     {
-        $stmt = $this->db->prepare("SELECT * FROM tasks WHERE id = :id");
+        $db = Database::getConnection();
+
+        $stmt = $db->prepare("SELECT * FROM tasks WHERE id = :id");
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }

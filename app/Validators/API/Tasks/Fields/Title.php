@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validators\TaskFields;
+namespace App\Validators\API\Tasks\Fields;
 
 use App\Validators\Datatypes\PHP\StringValidator;
 use App\Exceptions\Validation\Varchar255\Varchar255FieldValueTooLong;

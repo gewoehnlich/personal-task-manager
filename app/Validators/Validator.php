@@ -2,7 +2,7 @@
 
 namespace App\Validators;
 
-class Validator
+abstract class Validator
 {
     //
 }

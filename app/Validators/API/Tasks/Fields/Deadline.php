@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validators\TaskFields;
+namespace App\Validators\API\Tasks\Fields;
 
 use App\Validators\Datatypes\MySQL\TimestampValidator;
 use App\Exceptions\Validation\Timestamp\{
