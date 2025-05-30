@@ -36,15 +36,15 @@ use App\Http\Controllers\API\Tasks\TaskController;
 /*    }*/
 /*);*/
 
-/*Route::middleware(*/
-/*    'auth:sanctum'*/
-/*)->group(*/
-/*    function () {*/
-/*        Route::resource(*/
-/*            'tasks',*/
-/*            TaskController::class*/
-/*        );*/
-/**/
+Route::middleware(
+    'auth:sanctum'
+)->group(
+    function () {
+        /*Route::resource(*/
+        /*    'tasks',*/
+        /*    TaskController::class*/
+        /*);*/
+
         Route::post(
             '/tasks/create',
             [
@@ -84,5 +84,5 @@ use App\Http\Controllers\API\Tasks\TaskController;
         )->name(
             'tasks.delete'
         );
-/*    }*/
-/*);*/
+    }
+);

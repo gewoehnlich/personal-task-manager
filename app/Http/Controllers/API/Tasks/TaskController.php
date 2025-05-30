@@ -4,8 +4,7 @@ namespace App\Http\Controllers\API\Tasks;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\ApiController;
-use App\Services\Tasks\TaskService;
-use Illuminate\Http\Resources\Json\JsonResource;
+use App\Services\API\Tasks\TaskService;
 use Illuminate\Http\JsonResponse;
 use App\Exceptions\API\APIException;
 
@@ -13,24 +12,60 @@ class TaskController extends ApiController
 {
     public static function create(
         Request $request
-    ): JsonResource {
-        $result = TaskService::create(
-            $request
+    ): JsonResponse {
+        return self::handler(
+            $request,
+            [
+                TaskService::class, 'create'
+            ]
         );
     }
 
     public static function read(
         Request $request
     ): JsonResponse {
+        return self::handler(
+            $request,
+            [
+                TaskService::class, 'read'
+            ]
+        );
+    }
+
+    public static function update(
+        Request $request
+    ): JsonResponse {
+        return self::handler(
+            $request,
+            [
+                TaskService::class, 'update'
+            ]
+        );
+    }
+
+    public static function delete(
+        Request $request
+    ): JsonResponse {
+        return self::handler(
+            $request,
+            [
+                TaskService::class, 'delete'
+            ]
+        );
+    }
+
+    private static function handler(
+        Request $request,
+        callable $callback
+    ): JsonResponse {
         try {
-            $result = TaskService::read(
+            $result = $callback(
                 $request
             );
 
             return response()->json(
                 $result
             );
-            return $result;
         } catch (
             APIException $exception
         ) {
@@ -42,21 +77,5 @@ class TaskController extends ApiController
                 404
             );
         }
-    }
-
-    public static function update(
-        Request $request
-    ): JsonResource {
-        $result = TaskService::update(
-            $request
-        );
-    }
-
-    public static function delete(
-        Request $request
-    ): JsonResource {
-        $result = TaskService::delete(
-            $request
-        );
     }
 }

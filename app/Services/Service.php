@@ -3,30 +3,32 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Task;
 
 abstract class Service
 {
     public static function create(
         Request $request
-    ): void {
+    ): Task {
         //
     }
 
     public static function read(
         Request $request
-    ): void {
+    ): JsonResource {
         //
     }
 
     public static function update(
         Request $request
-    ): void {
+    ): bool {
         //
     }
 
     public static function delete(
         Request $request
-    ): void {
+    ): bool {
         //
     }
 

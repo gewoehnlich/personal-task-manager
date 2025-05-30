@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Tasks;
+namespace App\Services\API\Tasks;
 
 use Illuminate\Http\Request;
 use App\DTO\TaskDTO\CreateTaskDTO;
@@ -13,11 +13,11 @@ use App\Services\Service;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Task;
 
-abstract class TaskService // extends Service
+abstract class TaskService extends Service
 {
     public static function create(
         Request $request
-    ): JsonResource {
+    ): Task {
         $dto = CreateTaskDTO::fromRequest(
             $request
         );
@@ -30,10 +30,7 @@ abstract class TaskService // extends Service
             $dto
         );
 
-        print_r(
-            $result
-        );
-        /*return $result;*/
+        return $result;
     }
 
     public static function read(
@@ -56,7 +53,7 @@ abstract class TaskService // extends Service
 
     public static function update(
         Request $request
-    ): JsonResource {
+    ): bool {
         $dto = UpdateTaskDTO::fromRequest(
             $request
         );
@@ -69,15 +66,12 @@ abstract class TaskService // extends Service
             $dto
         );
 
-        print_r(
-            $result
-        );
-        /*return $result;*/
+        return $result;
     }
 
     public static function delete(
         Request $request
-    ): JsonResource {
+    ): bool {
         $dto = DeleteTaskDTO::fromRequest(
             $request
         );
@@ -90,9 +84,6 @@ abstract class TaskService // extends Service
             $dto
         );
 
-        print_r(
-            $result
-        );
-        /*return $result;*/
+        return $result;
     }
 }
