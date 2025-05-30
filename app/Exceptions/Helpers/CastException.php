@@ -2,6 +2,9 @@
 
 namespace App\Exceptions\Helpers;
 
-class CastException extends \Exception
+use App\Exceptions\API\APIException;
+
+class CastException extends APIException
 {
+    //
 }

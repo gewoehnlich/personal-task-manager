@@ -2,6 +2,9 @@
 
 namespace App\Exceptions\Datatypes;
 
-class DatatypeException extends \Exception
+use App\Exceptions\API\APIException;
+
+class DatatypeException extends APIException
 {
+    //
 }

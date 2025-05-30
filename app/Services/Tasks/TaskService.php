@@ -10,12 +10,14 @@ use App\DTO\TaskDTO\DeleteTaskDTO;
 use App\Validators\API\Tasks\TaskValidator;
 use App\Repositories\API\Tasks\TaskRepository;
 use App\Services\Service;
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Task;
 
-abstract class TaskService extends Service
+abstract class TaskService // extends Service
 {
     public static function create(
         Request $request
-    ): void {
+    ): JsonResource {
         $dto = CreateTaskDTO::fromRequest(
             $request
         );
@@ -36,7 +38,7 @@ abstract class TaskService extends Service
 
     public static function read(
         Request $request
-    ): void {
+    ): JsonResource {
         $dto = ReadTaskDTO::fromRequest(
             $request
         );
@@ -49,15 +51,12 @@ abstract class TaskService extends Service
             $dto
         );
 
-        print_r(
-            $result
-        );
-        /*return $result;*/
+        return $result;
     }
 
     public static function update(
         Request $request
-    ): void {
+    ): JsonResource {
         $dto = UpdateTaskDTO::fromRequest(
             $request
         );
@@ -78,7 +77,7 @@ abstract class TaskService extends Service
 
     public static function delete(
         Request $request
-    ): void {
+    ): JsonResource {
         $dto = DeleteTaskDTO::fromRequest(
             $request
         );

@@ -5,11 +5,14 @@ namespace App\Repositories\API\Tasks;
 use PDO;
 use App\Core\Database;
 use App\DTO\TaskDTO;
+use App\Models\Task;
+use App\Http\Resources\TaskResource;
 
 class TaskRepository
 {
-    public static function create(TaskDTO $dto): ?array
-    {
+    public static function create(
+        TaskDTO $dto
+    ): ?array {
         $db = Database::getConnection();
 
         $stmt = $db->prepare("
@@ -39,22 +42,11 @@ class TaskRepository
         return self::findById($db->lastInsertId());
     }
 
-    public static function read(TaskDTO $dto): ?array
-    {
-        $db = Database::getConnection();
-
-        $stmt = $db->prepare("
-            SELECT * FROM tasks
-            WHERE userId = :userId
-        ");
-
-        $stmt->execute([
-            ':userId' => $dto->userId,
-            /*':start' => $dto->start,*/
-            /*':end' => $dto->end,*/
-        ]);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public static function read(
+        TaskDTO $dto
+    ): TaskResource {
+        $result = Task::all();
+        return new TaskResource($result);
     }
 
     public static function update(TaskDTO $dto): ?array

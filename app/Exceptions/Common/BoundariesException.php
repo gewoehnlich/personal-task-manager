@@ -2,6 +2,8 @@
 
 namespace App\Exceptions\Common;
 
-class BoundariesException extends \Exception
+use App\Exceptions\API\APIException;
+
+class BoundariesException extends APIException
 {
 }

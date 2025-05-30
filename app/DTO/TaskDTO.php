@@ -8,6 +8,15 @@ abstract class TaskDTO
 {
     public const array FIELDS = [];
 
+    public int $id;
+    public int $userId;
+    public string $title;
+    public string $description;
+    public string $taskStatus;
+    public string $deadline;
+    public string $start;
+    public string $end;
+
     public static function fromRequest(
         Request $request
     ): TaskDTO {

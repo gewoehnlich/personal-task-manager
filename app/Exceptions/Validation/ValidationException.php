@@ -2,6 +2,9 @@
 
 namespace App\Exceptions\Validation;
 
-class ValidationException extends \Exception
+use App\Exceptions\API\APIException;
+
+class ValidationException extends APIException
 {
+    //
 }
