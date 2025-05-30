@@ -20,23 +20,18 @@ abstract class TaskService extends Service
             $request
         );
 
-        print_r(
-            $dto
-        );
-
         TaskValidator::validate(
             $dto
         );
 
-        print_r(
+        $result = TaskRepository::create(
             $dto
         );
 
-        /*$result = TaskRepository::create(*/
-        /*    $dto*/
-        /*);*/
-        /**/
-        /*print_r($result);*/
+        print_r(
+            $result
+        );
+        /*return $result;*/
     }
 
     public static function read(
@@ -50,15 +45,14 @@ abstract class TaskService extends Service
             $dto
         );
 
-        print_r(
-            $dto
-        );
-
         $result = TaskRepository::read(
             $dto
         );
 
-        print_r($result);
+        print_r(
+            $result
+        );
+        /*return $result;*/
     }
 
     public static function update(
@@ -72,15 +66,14 @@ abstract class TaskService extends Service
             $dto
         );
 
-        print_r(
-            $dto
-        );
-
         $result = TaskRepository::update(
             $dto
         );
 
-        print_r($result);
+        print_r(
+            $result
+        );
+        /*return $result;*/
     }
 
     public static function delete(
@@ -94,14 +87,13 @@ abstract class TaskService extends Service
             $dto
         );
 
-        print_r(
-            $dto
-        );
-
         $result = TaskRepository::delete(
             $dto
         );
 
-        print_r($result);
+        print_r(
+            $result
+        );
+        /*return $result;*/
     }
 }

@@ -50,8 +50,8 @@ class TaskRepository
 
         $stmt->execute([
             ':userId' => $dto->userId,
-            /*':startTimestamp' => $dto->startTimestamp,*/
-            /*':endTimestamp' => $dto->endTimestamp,*/
+            /*':start' => $dto->start,*/
+            /*':end' => $dto->end,*/
         ]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -94,7 +94,6 @@ class TaskRepository
 
         return $stmt->execute([
             ':id' => $dto->id,
-            /*':userId' => $dto->userId,*/
         ]);
     }
 
@@ -102,8 +101,14 @@ class TaskRepository
     {
         $db = Database::getConnection();
 
-        $stmt = $db->prepare("SELECT * FROM tasks WHERE id = :id");
-        $stmt->execute([':id' => $id]);
+        $stmt = $db->prepare(
+            "SELECT * FROM tasks WHERE id = :id"
+        );
+
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 }
