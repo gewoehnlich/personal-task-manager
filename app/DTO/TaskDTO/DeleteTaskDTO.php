@@ -7,10 +7,8 @@ use App\DTO\TaskDTO;
 class DeleteTaskDTO extends TaskDTO
 {
     public const array FIELDS = [
-        'id',
-        'userId'
+        'id'
     ];
 
     public int $id;
-    public int $userId;
 }

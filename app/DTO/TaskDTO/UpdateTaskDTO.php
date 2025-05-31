@@ -8,7 +8,6 @@ class UpdateTaskDTO extends TaskDTO
 {
     public const array FIELDS = [
         'id',
-        'userId',
         'title',
         'description',
         'taskStatus',
@@ -16,10 +15,8 @@ class UpdateTaskDTO extends TaskDTO
     ];
 
     public int $id;
-    public int $userId;
     public string $title;
     public string $description;
     public string $taskStatus;
     public string $deadline;
 }
-

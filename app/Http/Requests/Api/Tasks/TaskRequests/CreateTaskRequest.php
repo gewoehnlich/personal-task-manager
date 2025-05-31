@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Tasks;
+namespace App\Http\Requests\Api\Tasks\TaskRequests;
 
-class UpdateTaskRequest extends TaskRequest
+use App\Http\Requests\Api\Tasks\TaskRequest;
+
+class CreateTaskRequest extends TaskRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,7 +22,10 @@ class UpdateTaskRequest extends TaskRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|max:255',
+            'description' => 'nullable|max:65535',
+            'taskStatus' => 'enum',
+            'deadline'
         ];
     }
 }

@@ -18,17 +18,11 @@ abstract class TaskService extends Service
     public static function create(
         Request $request
     ): Task {
-        $dto = CreateTaskDTO::fromRequest(
-            $request
-        );
+        $dto = CreateTaskDTO::fromRequest($request);
 
-        TaskValidator::validate(
-            $dto
-        );
+        TaskValidator::validate($dto);
 
-        $result = TaskRepository::create(
-            $dto
-        );
+        $result = TaskRepository::create($dto);
 
         return $result;
     }
@@ -36,17 +30,11 @@ abstract class TaskService extends Service
     public static function read(
         Request $request
     ): JsonResource {
-        $dto = ReadTaskDTO::fromRequest(
-            $request
-        );
+        $dto = ReadTaskDTO::fromRequest($request);
 
-        TaskValidator::validate(
-            $dto
-        );
+        TaskValidator::validate($dto);
 
-        $result = TaskRepository::read(
-            $dto
-        );
+        $result = TaskRepository::read($dto);
 
         return $result;
     }
@@ -54,17 +42,11 @@ abstract class TaskService extends Service
     public static function update(
         Request $request
     ): bool {
-        $dto = UpdateTaskDTO::fromRequest(
-            $request
-        );
+        $dto = UpdateTaskDTO::fromRequest($request);
 
-        TaskValidator::validate(
-            $dto
-        );
+        TaskValidator::validate($dto);
 
-        $result = TaskRepository::update(
-            $dto
-        );
+        $result = TaskRepository::update($dto);
 
         return $result;
     }
@@ -72,17 +54,11 @@ abstract class TaskService extends Service
     public static function delete(
         Request $request
     ): bool {
-        $dto = DeleteTaskDTO::fromRequest(
-            $request
-        );
+        $dto = DeleteTaskDTO::fromRequest($request);
 
-        TaskValidator::validate(
-            $dto
-        );
+        TaskValidator::validate($dto);
 
-        $result = TaskRepository::delete(
-            $dto
-        );
+        $result = TaskRepository::delete($dto);
 
         return $result;
     }

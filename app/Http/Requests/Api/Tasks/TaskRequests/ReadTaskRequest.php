@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Api\Tasks;
+namespace App\Http\Requests\Api\Tasks\TaskRequests;
 
 use Illuminate\Validation\Validator;
+use App\Http\Requests\Api\Tasks\TaskRequest;
 
 class ReadTaskRequest extends TaskRequest
 {
@@ -30,14 +31,16 @@ class ReadTaskRequest extends TaskRequest
     public function after(): array
     {
         return [
-            function (Validator $validator) {
+            function (
+                Validator $validator
+            ) {
                 if (
                     $this->start && ! $this->end ||
                     ! $this->start && $this->end
                 ) {
                     $validator->errors()->add(
-                        '\'Start\' и \'End\'',
-                        'Поля \'Start\' и \'End\' должны быть либо оба пустыми, либо оба заполнеными.'
+                        '\'start\' и \'end\'',
+                        'Поля \'start\' и \'end\' должны быть либо оба пустыми, либо оба заполнеными.'
                     );
                 }
 
@@ -47,8 +50,8 @@ class ReadTaskRequest extends TaskRequest
                     $this->start > $this->end
                 ) {
                     $validator->errors()->add(
-                        '\'Start\' и \'End\'',
-                        'Поле \'Start\' не может быть позднее \'End\'.'
+                        '\'start\' и \'end\'',
+                        'Поле \'start\' не может быть позднее \'end\'.'
                     );
                 }
             }

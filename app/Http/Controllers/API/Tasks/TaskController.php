@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\API\Tasks;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\Api\Tasks\TaskRequest;
-use App\Http\Requests\Api\Tasks\CreateTaskRequest;
-use App\Http\Requests\Api\Tasks\ReadTaskRequest;
-use App\Http\Requests\Api\Tasks\UpdateTaskRequest;
-use App\Http\Requests\Api\Tasks\DeleteTaskRequest;
+use App\Http\Requests\Api\Tasks\TaskRequests\CreateTaskRequest;
+use App\Http\Requests\Api\Tasks\TaskRequests\ReadTaskRequest;
+use App\Http\Requests\Api\Tasks\TaskRequests\UpdateTaskRequest;
+use App\Http\Requests\Api\Tasks\TaskRequests\DeleteTaskRequest;
 use App\Http\Controllers\API\ApiController;
 use App\Services\API\Tasks\TaskService;
 use Illuminate\Http\JsonResponse;
