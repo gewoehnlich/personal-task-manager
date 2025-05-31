@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\API\Tasks;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Api\Tasks\TaskRequest;
+use App\Http\Requests\Api\Tasks\CreateTaskRequest;
+use App\Http\Requests\Api\Tasks\ReadTaskRequest;
+use App\Http\Requests\Api\Tasks\UpdateTaskRequest;
+use App\Http\Requests\Api\Tasks\DeleteTaskRequest;
 use App\Http\Controllers\API\ApiController;
 use App\Services\API\Tasks\TaskService;
 use Illuminate\Http\JsonResponse;
@@ -11,7 +16,7 @@ use App\Exceptions\API\APIException;
 class TaskController extends ApiController
 {
     public static function create(
-        Request $request
+        CreateTaskRequest $request
     ): JsonResponse {
         return self::handler(
             $request,
@@ -22,7 +27,7 @@ class TaskController extends ApiController
     }
 
     public static function read(
-        Request $request
+        ReadTaskRequest $request
     ): JsonResponse {
         return self::handler(
             $request,
@@ -33,7 +38,7 @@ class TaskController extends ApiController
     }
 
     public static function update(
-        Request $request
+        UpdateTaskRequest $request
     ): JsonResponse {
         return self::handler(
             $request,
@@ -44,7 +49,7 @@ class TaskController extends ApiController
     }
 
     public static function delete(
-        Request $request
+        DeleteTaskRequest $request
     ): JsonResponse {
         return self::handler(
             $request,
@@ -55,7 +60,7 @@ class TaskController extends ApiController
     }
 
     private static function handler(
-        Request $request,
+        TaskRequest $request,
         callable $callback
     ): JsonResponse {
         try {
