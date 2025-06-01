@@ -4,18 +4,20 @@ namespace App\DTO;
 
 use App\Http\Requests\Api\Tasks\TaskRequest;
 use App\Enums\TaskStatus;
+use Illuminate\Support\Facades\Auth;
 
 abstract class TaskDTO
 {
     private const array FIELDS = [];
     private const array FIELD_METHODS = [
-        'id' => 'setId',
-        'title' => 'setTitle',
-        'description' => 'setDescription',
-        'taskStatus' => 'setTaskStatus',
-        'deadline' => 'setDeadline',
-        'start' => 'setStart',
-        'end' => 'setEnd'
+        'id'           =>  'setId',
+        'userId'       =>  'setUserId',
+        'title'        =>  'setTitle',
+        'description'  =>  'setDescription',
+        'taskStatus'   =>  'setTaskStatus',
+        'deadline'     =>  'setDeadline',
+        'start'        =>  'setStart',
+        'end'          =>  'setEnd'
     ];
 
     public static function fromRequest(
@@ -48,6 +50,17 @@ abstract class TaskDTO
     public function getId(): int
     {
         return $this->id;
+    }
+
+    private function setUserId(
+        TaskRequest $request
+    ): void {
+        $this->userId = Auth::id();
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
     }
 
     private function setTitle(

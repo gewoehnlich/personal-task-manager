@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Api\Tasks\TaskRequests;
 
 use App\Http\Requests\Api\Tasks\TaskRequest;
+use App\Enums\TaskStatus;
+use Illuminate\Validation\Rules\Enum;
 
 class UpdateTaskRequest extends TaskRequest
 {
@@ -22,7 +24,11 @@ class UpdateTaskRequest extends TaskRequest
     public function rules(): array
     {
         return [
-            //
+            'id' => 'integer',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:65535',
+            'taskStatus' => ['required', new Enum(TaskStatus::class)],
+            'deadline' => 'date|date_format:Y-m-d H:i:s'
         ];
     }
 }

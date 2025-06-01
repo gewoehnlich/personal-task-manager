@@ -22,7 +22,7 @@ class DeleteTaskRequest extends TaskRequest
     public function rules(): array
     {
         return [
-            //
+            'id' => 'integer'
         ];
     }
 }
