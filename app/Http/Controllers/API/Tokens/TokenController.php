@@ -14,15 +14,9 @@ class TokenController extends ApiController
         return $result;
     }
 
-    public static function read(): string
+    public static function renew(): string
     {
-        $result = TokenService::read();
-        return $result;
-    }
-
-    public static function update(): string
-    {
-        $result = TokenService::update();
+        $result = TokenService::renew();
         return $result;
     }
 
@@ -31,5 +25,4 @@ class TokenController extends ApiController
         $result = TokenService::delete();
         return $result;
     }
-
 }

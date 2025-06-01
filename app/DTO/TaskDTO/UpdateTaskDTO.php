@@ -3,6 +3,7 @@
 namespace App\DTO\TaskDTO;
 
 use App\DTO\TaskDTO;
+use Illuminate\Support\Carbon;
 
 class UpdateTaskDTO extends TaskDTO
 {
@@ -14,9 +15,9 @@ class UpdateTaskDTO extends TaskDTO
         'deadline'
     ];
 
-    public int $id;
-    public string $title;
-    public string $description;
-    public string $taskStatus;
-    public string $deadline;
+    public readonly int $id;
+    public readonly string $title;
+    public readonly string $description;
+    public readonly string $taskStatus;
+    public readonly Carbon $deadline;
 }

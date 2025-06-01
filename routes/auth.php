@@ -20,9 +20,7 @@ Route::middleware(
             RegisteredUserController::class,
             'create'
         ]
-    )->name(
-        'register'
-    );
+    )->name('register');
 
     Route::post(
         'register',
@@ -38,9 +36,7 @@ Route::middleware(
             AuthenticatedSessionController::class,
             'create'
         ]
-    )->name(
-        'login'
-    );
+    )->name('login');
 
     Route::post(
         'login',
@@ -56,9 +52,7 @@ Route::middleware(
             PasswordResetLinkController::class,
             'create'
         ]
-    )->name(
-        'password.request'
-    );
+    )->name('password.request');
 
     Route::post(
         'forgot-password',
@@ -66,9 +60,7 @@ Route::middleware(
             PasswordResetLinkController::class,
             'store'
         ]
-    )->name(
-        'password.email'
-    );
+    )->name('password.email');
 
     Route::get(
         'reset-password/{token}',
@@ -76,9 +68,7 @@ Route::middleware(
             NewPasswordController::class,
             'create'
         ]
-    )->name(
-        'password.reset'
-    );
+    )->name('password.reset');
 
     Route::post(
         'reset-password',
@@ -86,9 +76,7 @@ Route::middleware(
             NewPasswordController::class,
             'store'
         ]
-    )->name(
-        'password.store'
-    );
+    )->name('password.store');
 });
 
 Route::middleware(
@@ -97,9 +85,7 @@ Route::middleware(
     Route::get(
         'verify-email',
         EmailVerificationPromptController::class
-    )->name(
-        'verification.notice'
-    );
+    )->name('verification.notice');
 
     Route::get(
         'verify-email/{id}/{hash}',
@@ -107,9 +93,7 @@ Route::middleware(
     )->middleware([
         'signed',
         'throttle:6,1'
-    ])->name(
-        'verification.verify'
-    );
+    ])->name('verification.verify');
 
     Route::post(
         'email/verification-notification',
@@ -117,11 +101,9 @@ Route::middleware(
             EmailVerificationNotificationController::class,
             'store'
         ]
-    )->middleware(
-        'throttle:6,1'
-    )->name(
-        'verification.send'
-    );
+    )
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
 
     Route::get(
         'confirm-password',
@@ -129,9 +111,7 @@ Route::middleware(
             ConfirmablePasswordController::class,
             'show'
         ]
-    )->name(
-        'password.confirm'
-    );
+    )->name('password.confirm');
 
     Route::post(
         'confirm-password',
@@ -147,35 +127,29 @@ Route::middleware(
             AuthenticatedSessionController::class,
             'destroy'
         ]
-    )->name(
-        'logout'
-    );
+    )->name('logout');
 
     Route::get(
-        'api/token/create',
+        'api/tokens/create',
         [
-            TokenController::class, 'create'
+            TokenController::class,
+            'create'
         ]
     );
 
     Route::get(
-        'api/token/get',
+        'api/tokens/renew',
         [
-            TokenController::class, 'read'
+            TokenController::class,
+            'renew'
         ]
     );
 
-    /*Route::update(*/
-    /*    'api/token/update',*/
-    /*    [*/
-    /*        TokenController::class, 'update'*/
-    /*    ]*/
-    /*);*/
-    /**/
-    /*Route::delete(*/
-    /*    'api/token/delete',*/
-    /*    [*/
-    /*        TokenController::class, 'delete'*/
-    /*    ]*/
-    /*);*/
+    Route::get(
+        'api/tokens/delete',
+        [
+            TokenController::class,
+            'delete'
+        ]
+    );
 });

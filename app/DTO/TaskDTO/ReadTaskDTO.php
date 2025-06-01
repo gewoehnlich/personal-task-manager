@@ -3,6 +3,7 @@
 namespace App\DTO\TaskDTO;
 
 use App\DTO\TaskDTO;
+use Illuminate\Support\Carbon;
 
 class ReadTaskDTO extends TaskDTO
 {
@@ -11,6 +12,6 @@ class ReadTaskDTO extends TaskDTO
         'end'
     ];
 
-    public string $start;
-    public string $end;
+    public readonly Carbon $start;
+    public readonly Carbon $end;
 }

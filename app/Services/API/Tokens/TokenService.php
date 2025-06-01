@@ -11,14 +11,52 @@ class TokenService // extends Service
     public static function create(): string
     {
         $user = self::getUserModel();
-        /*$existingToken = self::getExistingToken(*/
-        /*    $user*/
-        /*);*/
-        /**/
-        /*if ($existingToken) {*/
-        /*    return $existingToken;*/
-        /*}*/
+        $tokenExists = self::hasToken($user);
+        if ($tokenExists) {
+            self::deleteExistingTokens($user);
+        }
 
+        return self::createToken($user);
+    }
+
+    public static function renew(): string | null
+    {
+        $user = self::getUserModel();
+        $tokenExists = self::hasToken($user);
+        if (!$tokenExists) {
+            return null;
+        }
+
+        self::deleteExistingTokens($user);
+
+        return self::createToken($user);
+    }
+
+    public static function delete(): bool
+    {
+        $user = self::getUserModel();
+        self::deleteExistingTokens($user);
+
+        return true;
+    }
+
+    private static function getUserModel(): User
+    {
+        $id = Auth::id();
+        $user = User::find($id);
+
+        return $user;
+    }
+
+    private static function hasToken(
+        User $user
+    ): string | null {
+        return !empty($user->tokens);
+    }
+
+    private static function createToken(
+        User $user
+    ): string {
         $token = $user->createToken(
             'personal-task-manager'
         )->plainTextToken;
@@ -26,56 +64,9 @@ class TokenService // extends Service
         return $token;
     }
 
-    public static function read(): string | null
-    {
-        $user = self::getUserModel();
-        $existingToken = self::getExistingToken(
-            $user
-        );
-
-        if (!$existingToken) {
-            return null;
-        }
-
-        return $existingToken;
-    }
-
-    public static function update(): string | null
-    {
-        $user = self::getUserModel();
-        $existingToken = self::getExistingToken(
-            $user
-        );
-
-        if (!$existingToken) {
-            return null;
-        }
-
-        $token = $user->tokens()->update([
-
-        ]);
-    }
-
-    public static function delete(): string
-    {
-        $user = self::getUserModel();
-        $existingToken = self::getExistingToken(
-            $user
-        );
-    }
-
-    private static function getUserModel(): User
-    {
-        $user = User::find(
-            Auth::id()
-        );
-
-        return $user;
-    }
-
-    private static function getExistingToken(
+    private static function deleteExistingTokens(
         User $user
-    ): string | null {
-        /*return $user->plai*/
+    ): void {
+        $user->tokens()->delete();
     }
 }

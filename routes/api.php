@@ -3,9 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Tasks\TaskController;
+use App\Http\Middleware\EnsureAcceptHeaderIsJson;
 
 Route::middleware(
-    'auth:sanctum'
+    'auth:sanctum',
+    EnsureAcceptHeaderIsJson::class
 )->group(
     function () {
         /*Route::resource(*/
@@ -19,9 +21,7 @@ Route::middleware(
                 TaskController::class,
                 'create'
             ]
-        )->name(
-            'tasks.create'
-        );
+        )->name('tasks.create');
 
         Route::get(
             '/tasks',
@@ -29,9 +29,7 @@ Route::middleware(
                 TaskController::class,
                 'read'
             ]
-        )->name(
-            'tasks.read'
-        );
+        )->name('tasks.read');
 
         Route::put(
             '/tasks/edit/{id}',
@@ -39,9 +37,7 @@ Route::middleware(
                 TaskController::class,
                 'update'
             ]
-        )->name(
-            'tasks.update'
-        );
+        )->name('tasks.update');
 
         Route::delete(
             '/tasks/delete/{id}',
@@ -49,8 +45,6 @@ Route::middleware(
                 TaskController::class,
                 'delete'
             ]
-        )->name(
-            'tasks.delete'
-        );
+        )->name('tasks.delete');
     }
 );
