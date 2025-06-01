@@ -8,7 +8,6 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\API\Tokens\TokenController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(
@@ -128,28 +127,4 @@ Route::middleware(
             'destroy'
         ]
     )->name('logout');
-
-    Route::get(
-        'api/tokens/create',
-        [
-            TokenController::class,
-            'create'
-        ]
-    );
-
-    Route::get(
-        'api/tokens/renew',
-        [
-            TokenController::class,
-            'renew'
-        ]
-    );
-
-    Route::get(
-        'api/tokens/delete',
-        [
-            TokenController::class,
-            'delete'
-        ]
-    );
 });

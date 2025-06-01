@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature\Tasks;
+namespace Tests\Feature\Api\Tasks;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class Delete extends TestCase
+class TasksTest extends TestCase
 {
     /**
      * A basic feature test example.
