@@ -47,20 +47,10 @@ abstract class TaskDTO
         $this->id = $request->integer('id');
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
     private function setUserId(
         TaskRequest $request
     ): void {
         $this->userId = Auth::id();
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 
     private function setTitle(
@@ -69,20 +59,10 @@ abstract class TaskDTO
         $this->title = $request->string('title')->trim();
     }
 
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
     private function setDescription(
         TaskRequest $request
     ): void {
         $this->description = $request->string('description')->trim();
-    }
-
-    public function getDescription(): string
-    {
-        return $this->description;
     }
 
     private function setTaskStatus(
@@ -91,20 +71,10 @@ abstract class TaskDTO
         $this->taskStatus = $request->enum('taskStatus', TaskStatus::class);
     }
 
-    public function getTaskStatus(): string
-    {
-        return $this->taskStatus;
-    }
-
     private function setDeadline(
         TaskRequest $request
     ): void {
         $this->deadline = $request->date('deadline');
-    }
-
-    public function getDeadline(): string
-    {
-        return $this->deadline;
     }
 
     private function setStart(
@@ -113,19 +83,9 @@ abstract class TaskDTO
         $this->start = $request->date('start');
     }
 
-    public function getStart(): string
-    {
-        return $this->start;
-    }
-
     private function setEnd(
         TaskRequest $request
     ): void {
         $this->end = $request->date('end');
-    }
-
-    public function getEnd(): string
-    {
-        return $this->end;
     }
 }

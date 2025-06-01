@@ -10,7 +10,6 @@ use App\Http\Requests\Api\Tasks\TaskRequests\DeleteTaskRequest;
 use App\Http\Controllers\API\ApiController;
 use App\Services\API\Tasks\TaskService;
 use Illuminate\Http\JsonResponse;
-use App\Exceptions\API\APIException;
 
 class TaskController extends ApiController
 {
@@ -34,6 +33,11 @@ class TaskController extends ApiController
                 TaskService::class, 'read'
             ]
         );
+
+        /*$result = TaskService::read($request);*/
+        /*return response()->json([*/
+        /*    'result' => $result*/
+        /*]);*/
     }
 
     public static function update(
@@ -45,6 +49,11 @@ class TaskController extends ApiController
                 TaskService::class, 'update'
             ]
         );
+
+        /*$result = TaskService::update($request);*/
+        /*return response()->json([*/
+        /**/
+        /*])*/
     }
 
     public static function delete(
@@ -63,13 +72,11 @@ class TaskController extends ApiController
         callable $callback
     ): JsonResponse {
         try {
-            $result = $callback(
-                $request
-            );
+            $result = $callback($request);
 
-            return response()->json(
-                $result
-            );
+            return response()->json([
+                'result' => $result
+            ]);
         } catch (
             APIException $exception
         ) {

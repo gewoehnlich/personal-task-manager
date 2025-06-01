@@ -2,7 +2,10 @@
 
 namespace App\Services\API\Tasks;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Api\Tasks\TaskRequests\CreateTaskRequest;
+use App\Http\Requests\Api\Tasks\TaskRequests\ReadTaskRequest;
+use App\Http\Requests\Api\Tasks\TaskRequests\UpdateTaskRequest;
+use App\Http\Requests\Api\Tasks\TaskRequests\DeleteTaskRequest;
 use App\DTO\TaskDTO\CreateTaskDTO;
 use App\DTO\TaskDTO\ReadTaskDTO;
 use App\DTO\TaskDTO\UpdateTaskDTO;
@@ -12,10 +15,10 @@ use App\Services\Service;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Task;
 
-abstract class TaskService extends Service
+abstract class TaskService // extends Service
 {
     public static function create(
-        Request $request
+        CreateTaskRequest $request
     ): Task {
         $dto = CreateTaskDTO::fromRequest($request);
         $result = TaskRepository::create($dto);
@@ -24,7 +27,7 @@ abstract class TaskService extends Service
     }
 
     public static function read(
-        Request $request
+        ReadTaskRequest $request
     ): JsonResource {
         $dto = ReadTaskDTO::fromRequest($request);
         $result = TaskRepository::read($dto);
@@ -33,7 +36,7 @@ abstract class TaskService extends Service
     }
 
     public static function update(
-        Request $request
+        UpdateTaskRequest $request
     ): bool {
         $dto = UpdateTaskDTO::fromRequest($request);
         $result = TaskRepository::update($dto);
@@ -42,7 +45,7 @@ abstract class TaskService extends Service
     }
 
     public static function delete(
-        Request $request
+        DeleteTaskRequest $request
     ): bool {
         $dto = DeleteTaskDTO::fromRequest($request);
         $result = TaskRepository::delete($dto);

@@ -25,7 +25,7 @@ class TaskRepository
     public static function read(
         TaskDTO $dto
     ): TaskResource {
-        $result = Task::all();
+        $result = Task::where('userId', $dto->userId)->get();
         return new TaskResource($result);
     }
 

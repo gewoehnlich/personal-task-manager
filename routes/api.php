@@ -32,7 +32,7 @@ Route::middleware(
         )->name('tasks.read');
 
         Route::put(
-            '/tasks/edit/{id}',
+            '/tasks/update',
             [
                 TaskController::class,
                 'update'
@@ -40,7 +40,7 @@ Route::middleware(
         )->name('tasks.update');
 
         Route::delete(
-            '/tasks/delete/{id}',
+            '/tasks/delete',
             [
                 TaskController::class,
                 'delete'
