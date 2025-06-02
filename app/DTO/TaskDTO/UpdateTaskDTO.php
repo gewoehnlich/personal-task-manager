@@ -17,10 +17,10 @@ class UpdateTaskDTO extends TaskDTO
         'deadline'
     ];
 
-    public readonly int $id;
-    public readonly int $userId;
-    public readonly string $title;
-    public readonly string $description;
-    public readonly TaskStatus $taskStatus;
-    public readonly Carbon $deadline;
+    public /*readonly*/ int $id;
+    public /*readonly*/ int $userId;
+    public /*readonly*/ string $title;
+    public /*readonly*/ string $description;
+    public /*readonly*/ TaskStatus $taskStatus;
+    public /*readonly*/ Carbon $deadline;
 }

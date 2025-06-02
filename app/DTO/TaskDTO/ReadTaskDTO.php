@@ -13,7 +13,7 @@ class ReadTaskDTO extends TaskDTO
         'end'
     ];
 
-    public readonly int $userId;
-    public readonly Carbon $start;
-    public readonly Carbon $end;
+    public /*readonly*/ int $userId;
+    public /*readonly*/ Carbon $start;
+    public /*readonly*/ Carbon $end;
 }

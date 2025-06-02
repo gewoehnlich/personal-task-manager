@@ -11,6 +11,6 @@ class DeleteTaskDTO extends TaskDTO
         'userId'
     ];
 
-    public readonly int $id;
-    public readonly int $userId;
+    public /*readonly*/ int $id;
+    public /*readonly*/ int $userId;
 }
