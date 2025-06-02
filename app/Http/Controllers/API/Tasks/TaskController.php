@@ -16,77 +16,44 @@ class TaskController extends ApiController
     public static function create(
         CreateTaskRequest $request
     ): JsonResponse {
-        return self::handler(
-            $request,
-            [
-                TaskService::class, 'create'
-            ]
-        );
+        $result = TaskService::create($request);
+        return response()->json([
+            'error' => false,
+            'message' => "Успешно cоздана новая задача № {$result->id}!",
+            'result' => $result
+        ]);
     }
 
     public static function read(
         ReadTaskRequest $request
     ): JsonResponse {
-        return self::handler(
-            $request,
-            [
-                TaskService::class, 'read'
-            ]
-        );
-
-        /*$result = TaskService::read($request);*/
-        /*return response()->json([*/
-        /*    'result' => $result*/
-        /*]);*/
+        $result = TaskService::read($request);
+        return response()->json([
+            'error' => false,
+            'message' => 'Успешный запрос на чтение задач!',
+            'result' => $result
+        ]);
     }
 
     public static function update(
         UpdateTaskRequest $request
     ): JsonResponse {
-        return self::handler(
-            $request,
-            [
-                TaskService::class, 'update'
-            ]
-        );
-
-        /*$result = TaskService::update($request);*/
-        /*return response()->json([*/
-        /**/
-        /*])*/
+        $result = TaskService::update($request);
+        return response()->json([
+            'error' => false,
+            'message' => "Успешно обновлена задача № {$request->id}",
+            'result' => $result
+        ]);
     }
 
     public static function delete(
         DeleteTaskRequest $request
     ): JsonResponse {
-        return self::handler(
-            $request,
-            [
-                TaskService::class, 'delete'
-            ]
-        );
-    }
-
-    private static function handler(
-        TaskRequest $request,
-        callable $callback
-    ): JsonResponse {
-        try {
-            $result = $callback($request);
-
-            return response()->json([
-                'result' => $result
-            ]);
-        } catch (
-            APIException $exception
-        ) {
-            return response()->json(
-                [
-                    'error' => true,
-                    'message' => $exception->getMessage()
-                ],
-                404
-            );
-        }
+        $result = TaskService::delete($request);
+        return response()->json([
+            'error' => false,
+            'message' => "Успешно удалена задача № {$request->id}",
+            'result' => $result
+        ]);
     }
 }
