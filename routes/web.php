@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\API\Tokens\TokenController;
+use App\Models\Task;
 
 Route::get(
     '/',
@@ -14,7 +15,9 @@ Route::get(
 Route::get(
     'dashboard',
     function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard', [
+            'tasks' => Task::all()
+        ]);
     }
 )->middleware([
     'auth',

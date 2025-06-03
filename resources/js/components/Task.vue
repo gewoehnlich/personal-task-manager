@@ -2,19 +2,26 @@
 import { computed } from 'vue';
 import Task from './Task.vue';
 
-const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);
+const props = defineProps<{
+    task: {
+        id: number;
+        userId: number;
+        title: string;
+        description?: string;
+        taskStatus: string;
+        deadline: string;
+        updated_at: string;
+        created_at: string;
+    };
+}>();
+
 </script>
 
 <template>
-    <div class="task bg-sky-50 h-50 p-px rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-        <svg class="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" fill="none">
-            <defs>
-                <pattern :id="patternId" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-                    <path d="M-1 5L5 -1M3 9L8.5 3.5" stroke-width="0.5"></path>
-                </pattern>
-            </defs>
-            <rect stroke="none" :fill="`url(#${patternId})`" width="100%" height="100%"></rect>
-        </svg>
+    <div class="task w-full break-words rounded-xl border border-sidebar-border/70 dark:border-sidebar-border p-4">
+        <h2 class="font-bold text-2xl">{{ task.title }}</h2>
+        <div class="my-1 h-px w-full bg-gradient-to-r from-transparent via-gray-400 to-transparent dark:via-gray-600"></div>
+        <p class="text-md text-gray-700 dark:text-gray-300">{{ task.description }}</p>
     </div>
 </template>
 

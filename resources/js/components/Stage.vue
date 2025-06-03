@@ -2,21 +2,38 @@
 import { computed } from 'vue';
 import Task from './Task.vue';
 
-const patternId = computed(() => `pattern-${Math.random().toString(36).substring(2, 9)}`);
+const props = defineProps<{
+    title: string;
+    tasks: Array<{
+        id: number;
+        userId: number;
+        title: string;
+        description?: string;
+        taskStatus: string;
+        deadline: string;
+        updated_at: string;
+        created_at: string;
+    }>;
+}>();
+
+const length = computed(() => props.tasks.length);
+
 </script>
 
 <template>
-    <div class="stage h-full">
-        <svg class="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" width="100%" height="100%" fill="none">
-            <defs>
-                <pattern :id="patternId" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-                    <path d="M-1 5L5 -1M3 9L8.5 3.5" stroke-width="0.5"></path>
-                </pattern>
-            </defs>
-            <rect stroke="none" :fill="`url(#${patternId})`" width="100%" height="100%"></rect>
-        </svg>
+    <div class="stage h-dvh overflow-hidden">
+        <div class="relative flex flex-col gap-2">
+            <div class="flex justify-between py-2 px-5">
+                <h2 class="text-2xl font-bold mb-2 text-center">{{ title }}</h2>
+                <h2 class="font-bold text-2xl text-center">{{ length }}</h2>
+            </div>
 
-        <Task />
+            <div class="w-full p-1">
+                <div class="grid grid-cols-1 gap-1">
+                    <Task v-for="task in tasks" :key="task.id" :task="task" />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

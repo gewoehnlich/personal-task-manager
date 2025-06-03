@@ -6,20 +6,18 @@ import Kanban from '../components/Kanban.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'tasks',
         href: '/dashboard',
     },
 ];
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="personaltaskmanager" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min">
-                <Kanban />
-            </div>
+        <div class="flex h-dvh flex-1 flex-col rounded-xl p-15">
+            <Kanban />
         </div>
     </AppLayout>
 </template>
