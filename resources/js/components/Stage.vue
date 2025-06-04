@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import Task from './Task.vue';
+import TaskForm from './TaskForm.vue';
 
 const props = defineProps<{
     title: string;
@@ -59,50 +60,23 @@ function submitForm() {
 </script>
 
 <template>
-    <div class="stage h-full flex flex-col gap-2" @dragover.prevent @drop="handleDrop">
+    <div class="stage h-full flex flex-col gap-1" @dragover.prevent @drop="handleDrop">
         <div class="flex justify-between py-2 px-5 gap-5">
             <h2 class="text-2xl font-bold mb-2 text-center">{{ title }}</h2>
             <h2 class="font-bold text-2xl text-center">{{ length }}</h2>
         </div>
 
         <div class="px-1">
-            <button class="bg-input hover:bg-popover text-popover-foreground w-full px-4 py-2 rounded-xl" @click="showForm = !showForm">Добавить новую задачу</button>
+            <button class="bg-input hover:bg-popover text-popover-foreground w-full px-4 py-3 rounded-xl" @click="showForm = !showForm">
+                Добавить новую задачу
+            </button>
         </div>
 
-        <div v-if="showForm" class="px-5">
-            <form @submit.prevent="submitForm" class="flex flex-col gap-2 bg-gray-100 p-4 rounded">
-                <input
-                    v-model="newTitle"
-                    type="text"
-                    placeholder="название"
-                    class="border p-2 rounded"
-                    required
-                />
-
-                <textarea
-                    v-model="newDescription"
-                    placeholder="описание"
-                    class="border p-2 rounded"
-                ></textarea>
-
-                <input
-                    v-model="newDeadline"
-                    type="text"
-                    placeholder="крайний срок"
-                    class="border p-2 rounded"
-                    required
-                />
-
-                <button
-                    type="submit"
-                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-                >
-                    сохранить
-                </button>
-            </form>
+        <div v-if="showForm" class="px-1">
+            <TaskForm />
         </div>
 
-        <div class="grid grid-cols-1 gap-1 p-1 overflow-y-auto">
+        <div class="grid grid-cols-1 gap-1 px-1 overflow-y-auto">
             <Task v-for="task in tasks" :key="task.id" :task="task" />
         </div>
     </div>

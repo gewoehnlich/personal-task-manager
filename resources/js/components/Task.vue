@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import Task from './Task.vue';
 
 const props = defineProps<{
     task: {
