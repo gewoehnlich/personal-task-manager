@@ -23,9 +23,10 @@ return new class extends Migration
             $table->enum(
                 'taskStatus',
                 [
+                    'backlog',
                     'inProgress',
-                    'completed',
-                    'overdue'
+                    'overdue',
+                    'done',
                 ]
             );
             $table->timestamp('deadline');

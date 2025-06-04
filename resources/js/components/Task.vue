@@ -22,7 +22,7 @@ function handleDragStart(event: DragEvent) {
 </script>
 
 <template>
-    <div class="task break-words rounded-xl border border-sidebar-border/70 dark:border-sidebar-border p-4" draggable="true" @dragstart="handleDragStart">
+    <div class="task bg-card break-words rounded-xl border border-sidebar-border/70 dark:border-sidebar-border p-4" draggable="true" @dragstart="handleDragStart">
         <h2 class="font-bold text-2xl">{{ task.title }}</h2>
         <div class="my-1 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent dark:via-gray-600"></div>
         <p class="text-md text-gray-700 dark:text-gray-300">{{ task.description }}</p>

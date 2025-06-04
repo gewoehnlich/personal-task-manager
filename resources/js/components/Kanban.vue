@@ -6,9 +6,10 @@ import Stage from './Stage.vue';
 const page = usePage();
 const tasks = computed(() => page.props.tasks);
 
-const inProgressTasks = computed(() => tasks.value.filter(task => task.taskStatus === 'inProgress'));
-const completedTasks = computed(() => tasks.value.filter(task => task.taskStatus === 'completed'));
-const deadlineTasks = computed(() => tasks.value.filter(task => task.taskStatus === 'deadline'));
+const backlog = computed(() => tasks.value.filter(task => task.taskStatus === 'backlog'));
+const inProgress = computed(() => tasks.value.filter(task => task.taskStatus === 'inProgress'));
+const overdue = computed(() => tasks.value.filter(task => task.taskStatus === 'overdue'));
+const done = computed(() => tasks.value.filter(task => task.taskStatus === 'done'));
 
 function handleTaskDrop(taskId: number, newStatus: string) {
     const task = tasks.value.find(t => t.id === taskId);
@@ -17,18 +18,26 @@ function handleTaskDrop(taskId: number, newStatus: string) {
     }
 }
 
+function handleCreateTask(newTask) {
+    const id = Math.max(...tasks.value.map(t => t.id) + 1);
+    tasks.value.push({ id, ...newTask });
+}
+
 </script>
 
 <template>
-    <div class="kanban grid grid-cols-3 h-full gap-10">
+    <div class="kanban grid grid-cols-4 h-full gap-10">
         <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-            <Stage title="inProgress" :tasks="inProgressTasks" @task-drop="handleTaskDrop"/>
+            <Stage title="backlog" :tasks="backlog" @task-drop="handleTaskDrop" @create-task="handleCreateTask"/>
         </div>
         <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-            <Stage title="completed" :tasks="completedTasks" @task-drop="handleTaskDrop"/>
+            <Stage title="inProgress" :tasks="inProgress" @task-drop="handleTaskDrop" @create-task="handleCreateTask"/>
         </div>
         <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-            <Stage title="deadline" :tasks="deadlineTasks" @task-drop="handleTaskDrop"/>
+            <Stage title="overdue" :tasks="overdue" @task-drop="handleTaskDrop" @create-task="handleCreateTask"/>
+        </div>
+        <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+            <Stage title="done" :tasks="done" @task-drop="handleTaskDrop" @create-task="handleCreateTask"/>
         </div>
     </div>
 </template>
