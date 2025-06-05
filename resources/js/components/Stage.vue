@@ -3,18 +3,20 @@ import { ref, computed } from 'vue';
 import Task from './Task.vue';
 import TaskForm from './TaskForm.vue';
 
+interface Task {
+    id: number;
+    userId: number;
+    title: string;
+    description?: string;
+    taskStatus: string;
+    deadline: string;
+    updated_at: string;
+    created_at: string;
+}
+
 const props = defineProps<{
     title: string;
-    tasks: Array<{
-        id: number;
-        userId: number;
-        title: string;
-        description?: string;
-        taskStatus: string;
-        deadline: string;
-        updated_at: string;
-        created_at: string;
-    }>;
+    tasks: Array<Task>;
 }>();
 
 const emit = defineEmits<{
@@ -25,6 +27,8 @@ const emit = defineEmits<{
         taskStatus: string;
         deadline: string;
     }): void;
+    (e: 'reorder-task', draggedId: number, targetId: number): void;
+    (e: 'task-clicked', task: Task): void;
 }>();
 
 const showForm = ref(false);
@@ -77,7 +81,13 @@ function submitForm() {
         </div>
 
         <div class="grid grid-cols-1 gap-1 px-1 overflow-y-auto">
-            <Task v-for="task in tasks" :key="task.id" :task="task" />
+            <Task
+                v-for="task in tasks"
+                :key="task.id"
+                :task="task"
+                @reorder-task="(draggedId, targetId) => emit('reorder-task', draggedId, targetId)"
+                @task-clicked="(task) => emit('task-clicked', task)"
+            />
         </div>
     </div>
 </template>
