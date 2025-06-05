@@ -36,12 +36,17 @@ function handleTaskReorder(draggedId: number, targetId: number) {
 }
 
 function openTaskModal(task: Task) {
-    console.log(123);
     selectedTask.value = task;
 }
 
 function closeTaskModal() {
     selectedTask.value = null;
+}
+
+function updateTask(updatedTask: Task) {
+    const index = tasks.value.findIndex(t => t.id == updatedTask.id);
+    if (index === -1) return;
+    tasks.value[index] = updatedTask;
 }
 
 </script>
@@ -90,6 +95,11 @@ function closeTaskModal() {
         </div>
     </div>
 
-    <TaskModal v-if="selectedTask" :task="selectedTask" @close="closeTaskModal" />
+    <TaskModal
+        v-if="selectedTask"
+        :task="selectedTask"
+        @close="closeTaskModal"
+        @update="updateTask"
+    />
 </template>
 
