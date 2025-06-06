@@ -21,9 +21,9 @@ class TaskFactory extends Factory
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'taskStatus' => $this->faker->randomElement([
-                'backlog',
-                'inProgress',
-                'overdue',
+                'pending',
+                'active',
+                'delayed',
                 'done'
             ]),
             'deadline' => $this->faker->dateTimeBetween('now', '+10 days'),
