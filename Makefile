@@ -7,15 +7,17 @@ include .env
 export
 
 help:
-	@echo "make install  - Установить проект локально"
-	@echo "make db       - Инициализировать базу данных с тестовыми данными"
-	@echo "make up       - Запустить проект"
-	@echo "make down     - Остановить проект"
-	@echo "make delete   - Удалить проект"
+	@echo "make build  - Установить образ локально"
+	@echo "make up     - Запустить образ"
+	@echo "make down   - Остановить образ"
+	@echo "make delete - Удалить образ"
 
 build:
 	composer update
 	composer install
+	php artisan key:generate
+	npm install
+	npm run build
 	docker compose build
 
 up:
