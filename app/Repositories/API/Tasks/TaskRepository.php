@@ -12,10 +12,10 @@ class TaskRepository
         TaskDTO $dto
     ): Task {
         $result = Task::create([
-            'userId'       =>  $dto->userId,
+            'user_id'      =>  $dto->userId,
             'title'        =>  $dto->title,
             'description'  =>  $dto->description,
-            'taskStatus'   =>  $dto->taskStatus,
+            'stage'        =>  $dto->taskStatus,
             'deadline'     =>  $dto->deadline
         ]);
 
@@ -25,7 +25,7 @@ class TaskRepository
     public static function read(
         TaskDTO $dto
     ): TaskResource {
-        $result = Task::where('userId', $dto->userId)->get();
+        $result = Task::where('user_id', $dto->userId)->get();
         return new TaskResource($result);
     }
 
@@ -38,10 +38,10 @@ class TaskRepository
 
         $result = $task->update([
             'id'           =>  $dto->id,
-            'userId'       =>  $dto->userId,
+            'user_id'      =>  $dto->userId,
             'title'        =>  $dto->title,
             'description'  =>  $dto->description,
-            'taskStatus'   =>  $dto->taskStatus,
+            'stage'        =>  $dto->taskStatus,
             'deadline'     =>  $dto->deadline
         ]);
 

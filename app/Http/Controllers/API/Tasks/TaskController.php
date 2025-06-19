@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\Tasks;
 
-use App\Http\Requests\Api\Tasks\TaskRequest;
 use App\Http\Requests\Api\Tasks\TaskRequests\CreateTaskRequest;
 use App\Http\Requests\Api\Tasks\TaskRequests\ReadTaskRequest;
 use App\Http\Requests\Api\Tasks\TaskRequests\UpdateTaskRequest;

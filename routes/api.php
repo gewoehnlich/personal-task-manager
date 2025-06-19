@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\Tasks\TaskController;
+// use App\Http\Controllers\API\Tasks\TaskController;
+use App\Http\Controllers\API\TaskController;
 use App\Http\Middleware\EnsureAcceptHeaderIsJson;
 
 Route::middleware(
@@ -10,41 +11,40 @@ Route::middleware(
     EnsureAcceptHeaderIsJson::class
 )->group(
     function () {
-        /*Route::resource(*/
-        /*    'tasks',*/
-        /*    TaskController::class*/
-        /*);*/
+        Route::resources([
+            'tasks' => TaskController::class
+        ]);
 
-        Route::post(
-            '/tasks/create',
-            [
-                TaskController::class,
-                'create'
-            ]
-        )->name('tasks.create');
-
-        Route::get(
-            '/tasks',
-            [
-                TaskController::class,
-                'read'
-            ]
-        )->name('tasks.read');
-
-        Route::put(
-            '/tasks/update',
-            [
-                TaskController::class,
-                'update'
-            ]
-        )->name('tasks.update');
-
-        Route::delete(
-            '/tasks/delete',
-            [
-                TaskController::class,
-                'delete'
-            ]
-        )->name('tasks.delete');
+        // Route::post(
+        //     '/tasks/create',
+        //     [
+        //         TaskController::class,
+        //         'create'
+        //     ]
+        // )->name('tasks.create');
+        //
+        // Route::get(
+        //     '/tasks',
+        //     [
+        //         TaskController::class,
+        //         'read'
+        //     ]
+        // )->name('tasks.read');
+        //
+        // Route::put(
+        //     '/tasks/update',
+        //     [
+        //         TaskController::class,
+        //         'update'
+        //     ]
+        // )->name('tasks.update');
+        //
+        // Route::delete(
+        //     '/tasks/delete',
+        //     [
+        //         TaskController::class,
+        //         'delete'
+        //     ]
+        // )->name('tasks.delete');
     }
 );
