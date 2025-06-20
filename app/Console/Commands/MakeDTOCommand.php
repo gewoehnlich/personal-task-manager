@@ -33,32 +33,41 @@ final class MakeDTOCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): bool
     {
-        $input = $this->argument('input');
+        try {
+            $input  = self::input($this->argument('class'));
+            $path   = self::path($input);
+            $result = self::file($path);
 
-        if (!self::validateInput($input)) {
+            $this->info("DTO created: {$result}");
+            return Command::SUCCESS;
+        } catch (\Exception $e) {
             $this->error("Invalid input for DTO class.");
             return Command::FAILURE;
         }
+    }
 
-        $directory = self::directory();
-        $path      = self::path($directory, $class);
+    private static function input(string $input): string
+    {
+        $input = self::strip($input);
 
-        if (File::exists($path)) {
-            $this->error("DTO already exists at: {$path}");
-            return Command::FAILURE;
+        if (!self::validateInput($input)) {
+            throw new \Exception('not valid input.');
         }
 
-        $folder    = self::folder();
-        $namespace = self::namespace();
-        $class     = self::class();
-        $stub      = self::stub();
+        return $input;
+    }
 
-        File::put($path, $stub);
-        $this->info("DTO created: {$path}");
+    private static function strip(string $input): string
+    {
+        $input = trim($input);
 
-        return Command::SUCCESS;
+        if (str_ends_with($input, '.php')) {
+            $input = substr($input, 0, strlen($input) - 4);
+        }
+
+        return $input;
     }
 
     private static function validateInput(string $input): bool
@@ -68,7 +77,7 @@ final class MakeDTOCommand extends Command
             return false;
         }
 
-        return $true;
+        return true;
     }
 
     private static function directory(): string
@@ -82,32 +91,106 @@ final class MakeDTOCommand extends Command
         return $directory;
     }
 
-    private static function path(string $directory, string $class): string
+    private static function path(string $input): array // string
     {
-        $path = $directory . '/' . $class . '.php';
+        $directory = self::parts(self::directory());
+
+        $input = self::parts($input);
+
+        if (
+            count($input) >= count($directory) &&
+            self::inputStartsWithDirectoryPath($directory, $input)
+        ) {
+            $input = self::stripDirectoryPath($directory, $input);
+        }
+
+        // $path = self::formPath($directory, $input);
+        //
+        // if (File::exists($path)) {
+        //     throw new \Exception('file already exists');
+        // }
+        //
+        // return $path;
+
+        return array_merge($directory, $input);
+    }
+
+    private static function parts(string $path): array | false
+    {
+        return preg_split('#/#', $path, -1, PREG_SPLIT_NO_EMPTY);
+    }
+
+    private static function inputStartsWithDirectoryPath(
+        array $directory,
+        array $input
+    ): bool {
+        for ($i = 0; $i < count($directory); ++$i) {
+            if ($directory[$i] != $input[$i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static function stripDirectoryPath(
+        array $directory,
+        array $input
+    ): array {
+        return array_slice($input, count($directory));
+    }
+
+    private static function formPath(array ...$argv): string
+    {
+        $path = '';
+
+        foreach ($argv as $array) {
+            foreach ($array as $folder) {
+                $path .= $folder . '/';
+            }
+        }
+
+        $path = rtrim($path, '/') . '.php';
 
         return $path;
     }
 
-    private static function folder(string $class): string
+    private static function file(array $path): bool
     {
-        $parts = preg_split('#/#', $class, -1, PREG_SPLIT_NO_EMPTY);
+        $namespace = self::namespace($path);
+        $class = self::class($path);
+
+        $stub = self::stub($namespace, $class);
+
+        File::put($path, $stub);
+
+        return true;
     }
 
-    private static function namespace(string $folder): string
+    private static function namespace(array $path): string
     {
-        //
+        if (count($path) === 0) {
+            throw new \Exception('namespace');
+        }
+
+        $copy = $path;
+
+        $copy[0] = ucfirst($copy[0]);
+
+        return self::formPath([$copy]);
     }
 
-    private static function class(): string
+    private static function class(array $path): string
     {
-        //
+        return end($path);
     }
 
     private static function stub(string $namespace, string $class): string
     {
         $stub = File::get(base_path('stubs/dto.base.stub'));
+
         $stub = str_replace('{{ namespace }}', $namespace, $stub);
+
         $stub = str_replace('{{ class }}', $class, $stub);
 
         return $stub;
