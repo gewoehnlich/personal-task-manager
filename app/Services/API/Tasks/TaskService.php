@@ -6,10 +6,11 @@ use App\Http\Requests\Api\Tasks\TaskRequests\CreateTaskRequest;
 use App\Http\Requests\Api\Tasks\TaskRequests\ReadTaskRequest;
 use App\Http\Requests\Api\Tasks\TaskRequests\UpdateTaskRequest;
 use App\Http\Requests\Api\Tasks\TaskRequests\DeleteTaskRequest;
-use App\DTO\TaskDTO\CreateTaskDTO;
-use App\DTO\TaskDTO\ReadTaskDTO;
-use App\DTO\TaskDTO\UpdateTaskDTO;
-use App\DTO\TaskDTO\DeleteTaskDTO;
+use App\DTO\API\Tasks\TaskDTO;
+use App\DTO\API\Tasks\CreateTaskDTO;
+use App\DTO\API\Tasks\ReadTaskDTO;
+use App\DTO\API\Tasks\UpdateTaskDTO;
+use App\DTO\API\Tasks\DeleteTaskDTO;
 use App\Repositories\API\Tasks\TaskRepository;
 use App\Services\Service;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,7 +21,7 @@ abstract class TaskService // extends Service
     public static function create(
         CreateTaskRequest $request
     ): Task {
-        $dto = CreateTaskDTO::fromRequest($request);
+        $dto = TaskDTO::fromRequest($request, CreateTaskDTO::class);
         $result = TaskRepository::create($dto);
 
         return $result;
@@ -29,7 +30,9 @@ abstract class TaskService // extends Service
     public static function read(
         ReadTaskRequest $request
     ): JsonResource {
-        $dto = ReadTaskDTO::fromRequest($request);
+        $dto = TaskDTO::fromRequest($request, ReadTaskDTO::class);
+        dd($dto);
+
         $result = TaskRepository::read($dto);
 
         return $result;
@@ -38,7 +41,7 @@ abstract class TaskService // extends Service
     public static function update(
         UpdateTaskRequest $request
     ): bool {
-        $dto = UpdateTaskDTO::fromRequest($request);
+        $dto = TaskDTO::fromRequest($request, UpdateTaskDTO::class);
         $result = TaskRepository::update($dto);
 
         return $result;
@@ -47,7 +50,7 @@ abstract class TaskService // extends Service
     public static function delete(
         DeleteTaskRequest $request
     ): bool {
-        $dto = DeleteTaskDTO::fromRequest($request);
+        $dto = TaskDTO::fromRequest($request, DeleteTaskDTO::class);
         $result = TaskRepository::delete($dto);
 
         return $result;
