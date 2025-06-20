@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Requests\Api\Tasks\TaskRequests;
+namespace App\Http\Requests\Api\Tasks;
 
-use App\Http\Requests\Api\Tasks\TaskRequest;
-use App\Enums\TaskStatus;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Validator;
-use Illuminate\Support\Carbon;
 
-class CreateTaskRequest extends TaskRequest
+use App\Enums\Api\Tasks\Stage;
+use App\Http\Requests\Api\Tasks\TaskRequest;
+
+final class CreateTaskRequest extends TaskRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +27,10 @@ class CreateTaskRequest extends TaskRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title'       => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'taskStatus' => ['required', new Enum(TaskStatus::class)],
-            'deadline' => 'required|date|date_format:Y-m-d H:i:s'
+            'stage'       => ['required', new Enum(Stage::class)],
+            'deadline'    => 'required|date|date_format:Y-m-d H:i:s'
         ];
     }
 

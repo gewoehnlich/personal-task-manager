@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Api\Tasks\TaskRequests;
+namespace App\Http\Requests\Api\Tasks;
 
 use Illuminate\Validation\Validator;
+
 use App\Http\Requests\Api\Tasks\TaskRequest;
 
 class ReadTaskRequest extends TaskRequest
@@ -24,7 +25,7 @@ class ReadTaskRequest extends TaskRequest
     {
         return [
             'start' => 'nullable|date|date_format:Y-m-d H:i:s',
-            'end' => 'nullable|date|date_format:Y-m-d H:i:s'
+            'end'   => 'nullable|date|date_format:Y-m-d H:i:s'
         ];
     }
 

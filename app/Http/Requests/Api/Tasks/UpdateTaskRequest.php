@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Api\Tasks\TaskRequests;
+namespace App\Http\Requests\Api\Tasks;
 
-use App\Http\Requests\Api\Tasks\TaskRequest;
-use App\Enums\TaskStatus;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Validator;
-use Illuminate\Support\Carbon;
+
+use App\Enums\Api\Tasks\Stage;
+use App\Http\Requests\Api\Tasks\TaskRequest;
 
 class UpdateTaskRequest extends TaskRequest
 {
@@ -26,11 +27,11 @@ class UpdateTaskRequest extends TaskRequest
     public function rules(): array
     {
         return [
-            'id' => 'integer',
-            'title' => 'required|string|max:255',
+            'id'          => 'integer',
+            'title'       => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'taskStatus' => ['required', new Enum(TaskStatus::class)],
-            'deadline' => 'date|date_format:Y-m-d H:i:s'
+            'stage'       => ['required', new Enum(Stage::class)],
+            'deadline'    => 'date|date_format:Y-m-d H:i:s'
         ];
     }
 
@@ -41,7 +42,7 @@ class UpdateTaskRequest extends TaskRequest
                 if ($this->deadline < Carbon::now()) {
                     $validator->errors()->add(
                         'deadline',
-                        'Поле \'deadline\' не должно быть меньше текущего времени.'
+                        '\'deadline\' не должно быть меньше текущего времени.'
                     );
                 }
             }

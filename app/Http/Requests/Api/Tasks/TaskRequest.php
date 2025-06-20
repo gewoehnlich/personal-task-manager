@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Api\Tasks;
 
-use Illuminate\Validation\Validator;
 use App\Http\Requests\Api\ApiRequest;
 
-class TaskRequest extends ApiRequest
+abstract class TaskRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
