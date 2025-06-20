@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Api\Tasks;
 
-enum TaskStatus: string
+enum Stage: string
 {
     case PENDING = 'pending';
     case ACTIVE  = 'active';
