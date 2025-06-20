@@ -11,12 +11,12 @@ use App\Http\Requests\Api\Tasks\TaskRequests\UpdateTaskRequest;
 use App\Http\Requests\Api\Tasks\TaskRequests\DeleteTaskRequest;
 use App\Services\API\Tasks\TaskService;
 
-class TaskController extends ApiController
+final class TaskController extends ApiController
 {
     /**
      * Display a listing of the resource.
      */
-    public static function index(ReadTaskRequest $request): JsonResponse
+    final public static function index(ReadTaskRequest $request): JsonResponse
     {
         $result = TaskService::read($request);
         return response()->json([
@@ -37,7 +37,7 @@ class TaskController extends ApiController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateTaskRequest $request): JsonResponse
+    final public function store(CreateTaskRequest $request): JsonResponse
     {
         $result = TaskService::create($request);
         return response()->json([
@@ -66,7 +66,7 @@ class TaskController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public static function update(
+    final public static function update(
         UpdateTaskRequest $request,
         string $id
     ): JsonResponse {
@@ -81,7 +81,7 @@ class TaskController extends ApiController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(
+    final public static function destroy(
         DeleteTaskRequest $request,
         string $id
     ): JsonResponse {
