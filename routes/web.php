@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\Tokens\TokenController;
+use App\Http\Controllers\API\TokenController;
 use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
