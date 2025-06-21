@@ -10,7 +10,7 @@ class TokenService // extends Service
 {
     public static function create(): string
     {
-        $user = self::getUserModel();
+        $user        = self::getUserModel();
         $tokenExists = self::hasToken($user);
         if ($tokenExists) {
             self::deleteExistingTokens($user);
@@ -19,11 +19,11 @@ class TokenService // extends Service
         return self::createToken($user);
     }
 
-    public static function renew(): string|null
+    public static function renew(): string | null
     {
-        $user = self::getUserModel();
+        $user        = self::getUserModel();
         $tokenExists = self::hasToken($user);
-        if (! $tokenExists) {
+        if (!$tokenExists) {
             return null;
         }
 
@@ -42,7 +42,7 @@ class TokenService // extends Service
 
     private static function getUserModel(): User
     {
-        $id = Auth::id();
+        $id   = Auth::id();
         $user = User::find($id);
 
         return $user;
@@ -50,8 +50,8 @@ class TokenService // extends Service
 
     private static function hasToken(
         User $user
-    ): string|null {
-        return ! empty($user->tokens);
+    ): string | null {
+        return !empty($user->tokens);
     }
 
     private static function createToken(

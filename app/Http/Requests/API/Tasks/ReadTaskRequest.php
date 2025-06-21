@@ -34,8 +34,8 @@ final class ReadTaskRequest extends TaskRequest
                 Validator $validator
             ) {
                 if (
-                    $this->start && ! $this->end ||
-                    ! $this->start && $this->end
+                    $this->start && !$this->end ||
+                    !$this->start && $this->end
                 ) {
                     $validator->errors()->add(
                         '\'start\' и \'end\'',

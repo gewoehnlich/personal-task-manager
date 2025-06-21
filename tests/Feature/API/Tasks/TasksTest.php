@@ -18,56 +18,56 @@ class TasksTest extends TestCase
      */
     public function testCreateTaskRequest(): void
     {
-        $user = $this->login();
-        $token = $this->createToken($user);
+        $user     = $this->login();
+        $token    = $this->createToken($user);
         $response = $this->createTask($user, $token);
-        $content = $response->getContent();
-        $data = $this->formatCreateContent($content);
+        $content  = $response->getContent();
+        $data     = $this->formatCreateContent($content);
         $this->assertTask($data);
     }
 
     public function testReadTaskRequest(): void
     {
-        $user = $this->login();
-        $token = $this->createToken($user);
+        $user           = $this->login();
+        $token          = $this->createToken($user);
         $createResponse = $this->createTask($user, $token);
-        $createContent = $createResponse->getContent();
-        $createData = $this->formatCreateContent($createContent);
-        $createData = $this->sort($createData);
-        $readResponse = $this->readTask($user, $token);
-        $readContent = $readResponse->getContent();
-        $readData = $this->formatReadContent($readContent);
-        $readData = $this->sort($readData);
+        $createContent  = $createResponse->getContent();
+        $createData     = $this->formatCreateContent($createContent);
+        $createData     = $this->sort($createData);
+        $readResponse   = $this->readTask($user, $token);
+        $readContent    = $readResponse->getContent();
+        $readData       = $this->formatReadContent($readContent);
+        $readData       = $this->sort($readData);
         $this->assertSame($createData, $readData);
     }
 
     public function testUpdateTaskRequest(): void
     {
-        $user = $this->login();
-        $token = $this->createToken($user);
+        $user           = $this->login();
+        $token          = $this->createToken($user);
         $createResponse = $this->createTask($user, $token);
-        $createContent = $createResponse->getContent();
-        $createData = $this->formatCreateContent($createContent);
+        $createContent  = $createResponse->getContent();
+        $createData     = $this->formatCreateContent($createContent);
         $this->updateTask($user, $token);
-        $updatedTask = $this->fetchTask($createData['id']);
-        $createData['title'] = 'asdf';
+        $updatedTask               = $this->fetchTask($createData['id']);
+        $createData['title']       = 'asdf';
         $createData['description'] = 'asdfasdf';
-        $createData['taskStatus'] = 'completed';
-        $createData['deadline'] = '2025-08-19 03:14:07';
-        $createData = $this->sort($createData);
-        $createData = $this->formatTimestamps($createData);
-        $updatedTask = $this->formatTimestamps($updatedTask);
-        $updatedTask = $this->sort($updatedTask);
+        $createData['taskStatus']  = 'completed';
+        $createData['deadline']    = '2025-08-19 03:14:07';
+        $createData                = $this->sort($createData);
+        $createData                = $this->formatTimestamps($createData);
+        $updatedTask               = $this->formatTimestamps($updatedTask);
+        $updatedTask               = $this->sort($updatedTask);
         $this->assertSame($createData, $updatedTask);
     }
 
     public function testDeleteTaskRequest(): void
     {
-        $user = $this->login();
-        $token = $this->createToken($user);
+        $user           = $this->login();
+        $token          = $this->createToken($user);
         $createResponse = $this->createTask($user, $token);
-        $createContent = $createResponse->getContent();
-        $createData = $this->formatCreateContent($createContent);
+        $createContent  = $createResponse->getContent();
+        $createData     = $this->formatCreateContent($createContent);
         $this->deleteTask($createData['id'], $token);
         $this->assertDatabaseMissing('tasks', [
             'id' => 1,
@@ -94,7 +94,7 @@ class TasksTest extends TestCase
         $response->assertStatus(200);
 
         $plainTextToken = $response->getContent();
-        [$id, $token] = explode('|', $plainTextToken);
+        [$id, $token]   = explode('|', $plainTextToken);
 
         $this->assertDatabaseHas('personal_access_tokens', [
             'id' => $id,
@@ -110,7 +110,7 @@ class TasksTest extends TestCase
     {
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$token,
+            'Authorization' => 'Bearer ' . $token,
         ])->post('/api/tasks/create', [
             'title' => 'title',
             'description' => 'description',
@@ -152,7 +152,7 @@ class TasksTest extends TestCase
     {
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$token,
+            'Authorization' => 'Bearer ' . $token,
         ])->get('/api/tasks/?start=2025-01-01 12:34:56&end=2025-06-01 12:34:56');
 
         $response->assertStatus(200);
@@ -183,7 +183,7 @@ class TasksTest extends TestCase
     {
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$token,
+            'Authorization' => 'Bearer ' . $token,
         ])->put('/api/tasks/update', [
             'id' => 1,
             'title' => 'asdf',
@@ -208,7 +208,7 @@ class TasksTest extends TestCase
     {
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$token,
+            'Authorization' => 'Bearer ' . $token,
         ])->delete('/api/tasks/delete?id=1');
 
         return $response;

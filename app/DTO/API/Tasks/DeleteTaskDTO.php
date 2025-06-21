@@ -11,7 +11,7 @@ final class DeleteTaskDTO extends TaskDTO
 
     public function __construct(DeleteTaskRequest $request)
     {
-        $this->id = $request->id;
+        $this->id     = $request->id;
         $this->userId = $request->user_id;
     }
 }

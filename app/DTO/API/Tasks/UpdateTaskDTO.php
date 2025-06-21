@@ -17,11 +17,11 @@ final class UpdateTaskDTO extends TaskDTO
 
     public function __construct(UpdateTaskRequest $request)
     {
-        $this->id = $request->id;
-        $this->userId = $request->user_id;
-        $this->title = $request->title;
+        $this->id          = $request->id;
+        $this->userId      = $request->user_id;
+        $this->title       = $request->title;
         $this->description = $request->description;
-        $this->stage = $request->stage;
-        $this->deadline = $request->deadline;
+        $this->stage       = $request->stage;
+        $this->deadline    = $request->deadline;
     }
 }

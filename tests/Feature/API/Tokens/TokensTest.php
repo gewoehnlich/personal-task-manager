@@ -12,23 +12,23 @@ class TokensTest extends TestCase
 
     public function testCreateTokenRequest(): void
     {
-        $user = $this->login();
-        $token = $this->createToken($user);
+        $user     = $this->login();
+        $token    = $this->createToken($user);
         $newToken = $this->createToken($user);
         $this->assertDeletedToken($user, $token);
     }
 
     public function testRenewTokenRequest(): void
     {
-        $user = $this->login();
-        $token = $this->createToken($user);
+        $user     = $this->login();
+        $token    = $this->createToken($user);
         $newToken = $this->renewToken($user);
         $this->assertDeletedToken($user, $token);
     }
 
     public function testDeleteTokenRequest(): void
     {
-        $user = $this->login();
+        $user       = $this->login();
         $wrongToken = '123|token';
         $this->assertDeletedToken($user, $wrongToken);
         $token = $this->createToken($user);
@@ -56,7 +56,7 @@ class TokensTest extends TestCase
         $response->assertStatus(200);
 
         $plainTextToken = $response->getContent();
-        [$id, $token] = explode('|', $plainTextToken);
+        [$id, $token]   = explode('|', $plainTextToken);
 
         $this->assertDatabaseHas('personal_access_tokens', [
             'id' => $id,
@@ -87,7 +87,7 @@ class TokensTest extends TestCase
         $response->assertStatus(200);
 
         $plainTextToken = $response->getContent();
-        [$id, $token] = explode('|', $plainTextToken);
+        [$id, $token]   = explode('|', $plainTextToken);
 
         $this->assertDatabaseHas('personal_access_tokens', [
             'id' => $id,

@@ -21,7 +21,7 @@ abstract class TaskService // extends Service
     public static function create(
         CreateTaskRequest $request
     ): Task {
-        $dto = TaskDTO::fromRequest($request, CreateTaskDTO::class);
+        $dto    = TaskDTO::fromRequest($request, CreateTaskDTO::class);
         $result = TaskRepository::create($dto);
 
         return $result;
@@ -41,7 +41,7 @@ abstract class TaskService // extends Service
     public static function update(
         UpdateTaskRequest $request
     ): bool {
-        $dto = TaskDTO::fromRequest($request, UpdateTaskDTO::class);
+        $dto    = TaskDTO::fromRequest($request, UpdateTaskDTO::class);
         $result = TaskRepository::update($dto);
 
         return $result;
@@ -50,7 +50,7 @@ abstract class TaskService // extends Service
     public static function delete(
         DeleteTaskRequest $request
     ): bool {
-        $dto = TaskDTO::fromRequest($request, DeleteTaskDTO::class);
+        $dto    = TaskDTO::fromRequest($request, DeleteTaskDTO::class);
         $result = TaskRepository::delete($dto);
 
         return $result;

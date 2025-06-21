@@ -36,8 +36,8 @@ final class MakeDTOCommand extends Command
     public function handle(): bool
     {
         try {
-            $input = self::input($this->argument('class'));
-            $path = self::path($input);
+            $input  = self::input($this->argument('class'));
+            $path   = self::path($input);
             $result = self::file($path);
 
             $this->info("DTO created: {$result}");
@@ -54,7 +54,7 @@ final class MakeDTOCommand extends Command
     {
         $input = self::strip($input);
 
-        if (! self::validateInput($input)) {
+        if (!self::validateInput($input)) {
             throw new \Exception('not valid input.');
         }
 
@@ -75,7 +75,7 @@ final class MakeDTOCommand extends Command
     private static function validateInput(string $input): bool
     {
         $pattern = '/^[A-Za-z\/]+$/';
-        if (! preg_match($pattern, $input)) {
+        if (!preg_match($pattern, $input)) {
             return false;
         }
 
@@ -86,7 +86,7 @@ final class MakeDTOCommand extends Command
     {
         $directory = app_path('DTO');
 
-        if (! File::exists($directory)) {
+        if (!File::exists($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
 
@@ -117,7 +117,7 @@ final class MakeDTOCommand extends Command
         return array_merge($directory, $input);
     }
 
-    private static function parts(string $path): array|false
+    private static function parts(string $path): array | false
     {
         return preg_split('#/#', $path, -1, PREG_SPLIT_NO_EMPTY);
     }
@@ -126,7 +126,7 @@ final class MakeDTOCommand extends Command
         array $directory,
         array $input
     ): bool {
-        for ($i = 0; $i < count($directory); $i++) {
+        for ($i = 0; $i < count($directory); ++$i) {
             if ($directory[$i] != $input[$i]) {
                 return false;
             }
@@ -148,11 +148,11 @@ final class MakeDTOCommand extends Command
 
         foreach ($argv as $array) {
             foreach ($array as $folder) {
-                $path .= $folder.'/';
+                $path .= $folder . '/';
             }
         }
 
-        $path = rtrim($path, '/').'.php';
+        $path = rtrim($path, '/') . '.php';
 
         return $path;
     }
@@ -160,9 +160,8 @@ final class MakeDTOCommand extends Command
     private static function file(array $path): bool
     {
         $namespace = self::namespace($path);
-        $class = self::class($path);
-
-        $stub = self::stub($namespace, $class);
+        $class     = self::class($path);
+        $stub      = self::stub($namespace, $class);
 
         File::put($path, $stub);
 

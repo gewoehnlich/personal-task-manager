@@ -16,10 +16,10 @@ final class CreateTaskDTO extends TaskDTO
 
     public function __construct(CreateTaskRequest $request)
     {
-        $this->userId = $request->user_id;
-        $this->title = $request->title;
+        $this->userId      = $request->user_id;
+        $this->title       = $request->title;
         $this->description = $request->description;
-        $this->stage = $request->stage;
-        $this->deadline = $request->deadline;
+        $this->stage       = $request->stage;
+        $this->deadline    = $request->deadline;
     }
 }
