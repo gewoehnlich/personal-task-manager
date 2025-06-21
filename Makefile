@@ -40,3 +40,10 @@ enter-db:
 
 migrate:
 	docker exec -i $(LARAVEL_CONTAINER) php artisan migrate
+
+migrate-fresh:
+	docker exec -i $(LARAVEL_CONTAINER) php artisan migrate:fresh
+
+seed:
+	docker exec -i $(LARAVEL_CONTAINER) php artisan db:seed
+
