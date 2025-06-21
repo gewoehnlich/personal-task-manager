@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\API\Tokens;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\APIController;
-use App\Services\API\Tokens\TokenService;
+use App\Services\API\TokenService;
 
-abstract class TokenController extends APIController
+final class TokenController extends APIController
 {
-    public static function create(): string
+    final public static function create(): string
     {
         $result = TokenService::create();
 
         return $result;
     }
 
-    public static function renew(): string
+    final public static function renew(): string
     {
         $result = TokenService::renew();
 
         return $result;
     }
 
-    public static function delete(): string
+    final public static function delete(): string
     {
         $result = TokenService::delete();
 

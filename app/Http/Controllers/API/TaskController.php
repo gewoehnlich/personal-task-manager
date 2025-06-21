@@ -6,7 +6,7 @@ use App\Http\Requests\API\Tasks\CreateTaskRequest;
 use App\Http\Requests\API\Tasks\DeleteTaskRequest;
 use App\Http\Requests\API\Tasks\ReadTaskRequest;
 use App\Http\Requests\API\Tasks\UpdateTaskRequest;
-use App\Services\API\Tasks\TaskService;
+use App\Services\API\TaskService;
 use Illuminate\Http\JsonResponse;
 
 final class TaskController extends APIController
