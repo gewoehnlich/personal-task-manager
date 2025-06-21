@@ -23,7 +23,50 @@ final class TaskRepository
 
     final public static function read(TaskDTO $dto): TaskResource
     {
-        $result = Task::where('user_id', $dto->userId)->get();
+        $query = Task::query();
+
+        if (!empty($dto->userId)) {
+            $query->where('user_id', $dto->userId);
+        }
+
+        if (!empty($dto->id)) {
+            $query->where('id', $dto->id);
+        }
+
+        if (!empty($dto->createdAtFrom)) {
+            $query->where('created_at', '>=', $dto->createdAtFrom);
+        }
+
+        if (!empty($dto->createdAtTo)) {
+            $query->where('created_at', '<=', $dto->createdAtTo);
+        }
+
+        if (!empty($dto->updatedAtFrom)) {
+            $query->where('updated_at', '>=', $dto->updatedAtFrom);
+        }
+
+        if (!empty($dto->updatedAtTo)) {
+            $query->where('updated_at', '<=', $dto->updatedAtTo);
+        }
+
+        if (!empty($dto->deadlineFrom)) {
+            $query->where('deadline', '>=', $dto->deadlineFrom);
+        }
+
+        if (!empty($dto->deadlineTo)) {
+            $query->where('deadline', '<=', $dto->deadlineTo);
+        }
+
+        if (!empty($dto->orderBy)) {
+            $orderByField = $dto->orderByField ?? 'id';
+            $query->orderBy($orderByField, $dto->orderBy);
+        }
+
+        if (!empty($dto->limit)) {
+            $query->limit($dto->limit);
+        }
+
+        $result = $query->get();
 
         return new TaskResource($result);
     }
