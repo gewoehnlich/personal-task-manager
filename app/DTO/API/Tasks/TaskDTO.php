@@ -2,9 +2,10 @@
 
 namespace App\DTO\API\Tasks;
 
-use App\Http\Requests\Api\Tasks\TaskRequest;
+use App\DTO\API\APIDTO;
+use App\Http\Requests\API\Tasks\TaskRequest;
 
-abstract class TaskDTO
+abstract class TaskDTO extends APIDTO
 {
     final public static function fromRequest(
         TaskRequest $request,

@@ -3,10 +3,9 @@
 namespace App\DTO\API\Tasks;
 
 use Illuminate\Support\Carbon;
+use App\Http\Requests\API\Tasks\ReadTaskRequest;
 
-use App\Http\Requests\Api\Tasks\ReadTaskRequest;
-
-class ReadTaskDTO extends TaskDTO
+final class ReadTaskDTO extends TaskDTO
 {
     public readonly int $userId;
     public readonly Carbon $start;

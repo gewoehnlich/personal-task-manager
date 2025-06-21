@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\API\Tokens;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\API\ApiController;
+use App\Http\Controllers\API\APIController;
 use App\Services\API\Tokens\TokenService;
 
-class TokenController extends ApiController
+abstract class TokenController extends APIController
 {
     public static function create(): string
     {

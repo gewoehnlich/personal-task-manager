@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api\Tasks;
+namespace App\Http\Requests\API\Tasks;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Validator;
-
-use App\Enums\Api\Tasks\Stage;
-use App\Http\Requests\Api\Tasks\TaskRequest;
+use App\Enums\API\Tasks\Stage;
+use App\Http\Requests\API\Tasks\TaskRequest;
 
 final class CreateTaskRequest extends TaskRequest
 {

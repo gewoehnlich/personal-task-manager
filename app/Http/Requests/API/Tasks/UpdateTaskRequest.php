@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Api\Tasks;
+namespace App\Http\Requests\API\Tasks;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Validator;
+use App\Enums\API\Tasks\Stage;
+use App\Http\Requests\API\Tasks\TaskRequest;
 
-use App\Enums\Api\Tasks\Stage;
-use App\Http\Requests\Api\Tasks\TaskRequest;
-
-class UpdateTaskRequest extends TaskRequest
+final class UpdateTaskRequest extends TaskRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Tasks;
+namespace App\Http\Requests\API\Tasks;
 
-use App\Http\Requests\Api\Tasks\TaskRequest;
+use App\Http\Requests\API\Tasks\TaskRequest;
 
-class DeleteTaskRequest extends TaskRequest
+final class DeleteTaskRequest extends TaskRequest
 {
     /**
      * Determine if the user is authorized to make this request.

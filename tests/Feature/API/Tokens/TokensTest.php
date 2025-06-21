@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Api\Tokens;
+namespace Tests\Feature\API\Tokens;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

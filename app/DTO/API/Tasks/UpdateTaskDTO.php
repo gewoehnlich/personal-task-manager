@@ -3,11 +3,10 @@
 namespace App\DTO\API\Tasks;
 
 use Illuminate\Support\Carbon;
+use App\Enums\API\Tasks\Stage;
+use App\Http\Requests\API\Tasks\UpdateTaskRequest;
 
-use App\Enums\Api\Tasks\Stage;
-use App\Http\Requests\Api\Tasks\UpdateTaskRequest;
-
-class UpdateTaskDTO extends TaskDTO
+final class UpdateTaskDTO extends TaskDTO
 {
     public readonly int $id;
     public readonly int $userId;

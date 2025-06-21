@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 
-abstract class ApiController extends Controller
+abstract class APIController extends Controller
 {
     public function sendResponse(
         mixed $result,
@@ -38,28 +36,4 @@ abstract class ApiController extends Controller
 
         return response()->json($response, $code);
     }
-
-    /*public static function create(*/
-    /*    Request $request*/
-    /*): JsonResource {*/
-    /*    //*/
-    /*}*/
-    /**/
-    /*public static function read(*/
-    /*    Request $request*/
-    /*): JsonResource {*/
-    /*    //*/
-    /*}*/
-    /**/
-    /*public static function update(*/
-    /*    Request $request*/
-    /*): JsonResource {*/
-    /*    //*/
-    /*}*/
-    /**/
-    /*public static function delete(*/
-    /*    Request $request*/
-    /*): JsonResource {*/
-    /*    //*/
-    /*}*/
 }

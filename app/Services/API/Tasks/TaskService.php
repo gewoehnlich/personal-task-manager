@@ -2,10 +2,10 @@
 
 namespace App\Services\API\Tasks;
 
-use App\Http\Requests\Api\Tasks\TaskRequests\CreateTaskRequest;
-use App\Http\Requests\Api\Tasks\TaskRequests\ReadTaskRequest;
-use App\Http\Requests\Api\Tasks\TaskRequests\UpdateTaskRequest;
-use App\Http\Requests\Api\Tasks\TaskRequests\DeleteTaskRequest;
+use App\Http\Requests\API\Tasks\TaskRequests\CreateTaskRequest;
+use App\Http\Requests\API\Tasks\TaskRequests\ReadTaskRequest;
+use App\Http\Requests\API\Tasks\TaskRequests\UpdateTaskRequest;
+use App\Http\Requests\API\Tasks\TaskRequests\DeleteTaskRequest;
 use App\DTO\API\Tasks\TaskDTO;
 use App\DTO\API\Tasks\CreateTaskDTO;
 use App\DTO\API\Tasks\ReadTaskDTO;

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\API\Tasks;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\API\APIRequest;
 
-abstract class ApiRequest extends FormRequest
+abstract class TaskRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

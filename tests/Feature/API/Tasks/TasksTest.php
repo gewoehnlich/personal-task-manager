@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Api\Tasks;
+namespace Tests\Feature\API\Tasks;
 
 use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
