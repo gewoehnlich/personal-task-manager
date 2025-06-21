@@ -3,8 +3,8 @@
 namespace App\Repositories\API\Tasks;
 
 use App\DTO\TaskDTO;
-use App\Models\Task;
 use App\Http\Resources\TaskResource;
+use App\Models\Task;
 
 class TaskRepository
 {
@@ -12,11 +12,11 @@ class TaskRepository
         TaskDTO $dto
     ): Task {
         $result = Task::create([
-            'user_id'      =>  $dto->userId,
-            'title'        =>  $dto->title,
-            'description'  =>  $dto->description,
-            'stage'        =>  $dto->taskStatus,
-            'deadline'     =>  $dto->deadline
+            'user_id' => $dto->userId,
+            'title' => $dto->title,
+            'description' => $dto->description,
+            'stage' => $dto->taskStatus,
+            'deadline' => $dto->deadline,
         ]);
 
         return $result;
@@ -26,6 +26,7 @@ class TaskRepository
         TaskDTO $dto
     ): TaskResource {
         $result = Task::where('user_id', $dto->userId)->get();
+
         return new TaskResource($result);
     }
 
@@ -37,12 +38,12 @@ class TaskRepository
         );
 
         $result = $task->update([
-            'id'           =>  $dto->id,
-            'user_id'      =>  $dto->userId,
-            'title'        =>  $dto->title,
-            'description'  =>  $dto->description,
-            'stage'        =>  $dto->taskStatus,
-            'deadline'     =>  $dto->deadline
+            'id' => $dto->id,
+            'user_id' => $dto->userId,
+            'title' => $dto->title,
+            'description' => $dto->description,
+            'stage' => $dto->taskStatus,
+            'deadline' => $dto->deadline,
         ]);
 
         return $result;

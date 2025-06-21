@@ -2,9 +2,9 @@
 
 namespace App\Services\API\Tokens;
 
+use App\Models\User;
 use App\Services\Service;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
 class TokenService // extends Service
 {
@@ -19,11 +19,11 @@ class TokenService // extends Service
         return self::createToken($user);
     }
 
-    public static function renew(): string | null
+    public static function renew(): string|null
     {
         $user = self::getUserModel();
         $tokenExists = self::hasToken($user);
-        if (!$tokenExists) {
+        if (! $tokenExists) {
             return null;
         }
 
@@ -50,8 +50,8 @@ class TokenService // extends Service
 
     private static function hasToken(
         User $user
-    ): string | null {
-        return !empty($user->tokens);
+    ): string|null {
+        return ! empty($user->tokens);
     }
 
     private static function createToken(

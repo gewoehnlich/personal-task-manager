@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'email@example.com',
-            'password' => 'qwerqwer'
+            'password' => 'qwerqwer',
         ]);
 
         $this->call(TaskSeeder::class);

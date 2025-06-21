@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\API\Tokens\TokenController;
 use App\Models\Task;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get(
     '/',
@@ -16,12 +16,12 @@ Route::get(
     'dashboard',
     function () {
         return Inertia::render('Dashboard', [
-            'tasks' => Task::all()
+            'tasks' => Task::all(),
         ]);
     }
 )->middleware([
     'auth',
-    'verified'
+    'verified',
 ])->name('dashboard');
 
 Route::middleware(
@@ -31,7 +31,7 @@ Route::middleware(
         'api/tokens/create',
         [
             TokenController::class,
-            'create'
+            'create',
         ]
     );
 
@@ -39,7 +39,7 @@ Route::middleware(
         'api/tokens/renew',
         [
             TokenController::class,
-            'renew'
+            'renew',
         ]
     );
 
@@ -47,10 +47,10 @@ Route::middleware(
         'api/tokens/delete',
         [
             TokenController::class,
-            'delete'
+            'delete',
         ]
     );
 });
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';

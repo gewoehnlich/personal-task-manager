@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\API\Tasks;
 
+use App\Enums\API\Tasks\Stage;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Validator;
-use App\Enums\API\Tasks\Stage;
 
 final class CreateTaskRequest extends TaskRequest
 {
@@ -25,10 +25,10 @@ final class CreateTaskRequest extends TaskRequest
     public function rules(): array
     {
         return [
-            'title'       => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'stage'       => ['required', new Enum(Stage::class)],
-            'deadline'    => 'required|date|date_format:Y-m-d H:i:s'
+            'stage' => ['required', new Enum(Stage::class)],
+            'deadline' => 'required|date|date_format:Y-m-d H:i:s',
         ];
     }
 
@@ -42,7 +42,7 @@ final class CreateTaskRequest extends TaskRequest
                         'Поле \'deadline\' не должно быть меньше текущего времени.'
                     );
                 }
-            }
+            },
         ];
     }
 }

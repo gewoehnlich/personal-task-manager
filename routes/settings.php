@@ -15,7 +15,7 @@ Route::middleware('auth')->group(function () {
         'settings/profile',
         [
             ProfileController::class,
-            'edit'
+            'edit',
         ]
     )->name('profile.edit');
 
@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
         'settings/profile',
         [
             ProfileController::class,
-            'update'
+            'update',
         ]
     )->name('profile.update');
 
@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
         'settings/profile',
         [
             ProfileController::class,
-            'destroy'
+            'destroy',
         ]
     )->name('profile.destroy');
 
@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
         'settings/password',
         [
             PasswordController::class,
-            'edit'
+            'edit',
         ]
     )->name('password.edit');
 
@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
         'settings/password',
         [
             PasswordController::class,
-            'update'
+            'update',
         ]
     )->name('password.update');
 

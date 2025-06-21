@@ -14,6 +14,6 @@ final class Task extends Model
         'title',
         'description',
         'taskStatus',
-        'deadline'
+        'deadline',
     ];
 }

@@ -13,6 +13,6 @@ final class Bill extends Model
         'task_id',
         'description',
         'time_spent',
-        'performed_at'
+        'performed_at',
     ];
 }

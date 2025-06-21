@@ -2,8 +2,8 @@
 
 namespace App\DTO\API\Tasks;
 
-use Illuminate\Support\Carbon;
 use App\Http\Requests\API\Tasks\ReadTaskRequest;
+use Illuminate\Support\Carbon;
 
 final class ReadTaskDTO extends TaskDTO
 {
@@ -14,7 +14,7 @@ final class ReadTaskDTO extends TaskDTO
     public function __construct(ReadTaskRequest $request)
     {
         $this->userId = $request->user_id;
-        $this->start  = $request->start;
-        $this->end    = $request->end;
+        $this->start = $request->start;
+        $this->end = $request->end;
     }
 }

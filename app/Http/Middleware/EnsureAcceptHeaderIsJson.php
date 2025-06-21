@@ -20,7 +20,7 @@ class EnsureAcceptHeaderIsJson
         }
 
         return response()->json([
-            'message' => 'Необходимо указать Header \'Accept\': \'application/json\'.'
+            'message' => 'Необходимо указать Header \'Accept\': \'application/json\'.',
         ], Response::HTTP_NOT_ACCEPTABLE);
     }
 }

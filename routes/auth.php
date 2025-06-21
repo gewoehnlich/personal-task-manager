@@ -17,7 +17,7 @@ Route::middleware(
         'register',
         [
             RegisteredUserController::class,
-            'create'
+            'create',
         ]
     )->name('register');
 
@@ -25,7 +25,7 @@ Route::middleware(
         'register',
         [
             RegisteredUserController::class,
-            'store'
+            'store',
         ]
     );
 
@@ -33,7 +33,7 @@ Route::middleware(
         'login',
         [
             AuthenticatedSessionController::class,
-            'create'
+            'create',
         ]
     )->name('login');
 
@@ -41,7 +41,7 @@ Route::middleware(
         'login',
         [
             AuthenticatedSessionController::class,
-            'store'
+            'store',
         ]
     );
 
@@ -49,7 +49,7 @@ Route::middleware(
         'forgot-password',
         [
             PasswordResetLinkController::class,
-            'create'
+            'create',
         ]
     )->name('password.request');
 
@@ -57,7 +57,7 @@ Route::middleware(
         'forgot-password',
         [
             PasswordResetLinkController::class,
-            'store'
+            'store',
         ]
     )->name('password.email');
 
@@ -65,7 +65,7 @@ Route::middleware(
         'reset-password/{token}',
         [
             NewPasswordController::class,
-            'create'
+            'create',
         ]
     )->name('password.reset');
 
@@ -73,7 +73,7 @@ Route::middleware(
         'reset-password',
         [
             NewPasswordController::class,
-            'store'
+            'store',
         ]
     )->name('password.store');
 });
@@ -91,14 +91,14 @@ Route::middleware(
         VerifyEmailController::class
     )->middleware([
         'signed',
-        'throttle:6,1'
+        'throttle:6,1',
     ])->name('verification.verify');
 
     Route::post(
         'email/verification-notification',
         [
             EmailVerificationNotificationController::class,
-            'store'
+            'store',
         ]
     )
         ->middleware('throttle:6,1')
@@ -108,7 +108,7 @@ Route::middleware(
         'confirm-password',
         [
             ConfirmablePasswordController::class,
-            'show'
+            'show',
         ]
     )->name('password.confirm');
 
@@ -116,7 +116,7 @@ Route::middleware(
         'confirm-password',
         [
             ConfirmablePasswordController::class,
-            'store'
+            'store',
         ]
     );
 
@@ -124,7 +124,7 @@ Route::middleware(
         'logout',
         [
             AuthenticatedSessionController::class,
-            'destroy'
+            'destroy',
         ]
     )->name('logout');
 });

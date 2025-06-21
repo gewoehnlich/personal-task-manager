@@ -24,7 +24,7 @@ class TaskFactory extends Factory
                 'pending',
                 'active',
                 'delayed',
-                'done'
+                'done',
             ]),
             'deadline' => $this->faker->dateTimeBetween('now', '+10 days'),
         ];

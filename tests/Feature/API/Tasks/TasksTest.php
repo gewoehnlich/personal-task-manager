@@ -3,11 +3,11 @@
 namespace Tests\Feature\API\Tasks;
 
 use App\Models\Task;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Testing\TestResponse;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Illuminate\Testing\TestResponse;
+use Tests\TestCase;
 
 class TasksTest extends TestCase
 {
@@ -70,7 +70,7 @@ class TasksTest extends TestCase
         $createData = $this->formatCreateContent($createContent);
         $this->deleteTask($createData['id'], $token);
         $this->assertDatabaseMissing('tasks', [
-            'id' => 1
+            'id' => 1,
         ]);
     }
 
@@ -100,7 +100,7 @@ class TasksTest extends TestCase
             'id' => $id,
             'tokenable_id' => $user->id,
             'tokenable_type' => User::class,
-            'token' => hash('sha256', $token)
+            'token' => hash('sha256', $token),
         ]);
 
         return $plainTextToken;
@@ -110,12 +110,12 @@ class TasksTest extends TestCase
     {
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ])->post('/api/tasks/create', [
             'title' => 'title',
             'description' => 'description',
             'taskStatus' => 'inProgress',
-            'deadline' => '2025-07-19 03:14:07'
+            'deadline' => '2025-07-19 03:14:07',
         ]);
 
         $response->assertStatus(200);
@@ -152,7 +152,7 @@ class TasksTest extends TestCase
     {
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ])->get('/api/tasks/?start=2025-01-01 12:34:56&end=2025-06-01 12:34:56');
 
         $response->assertStatus(200);
@@ -175,6 +175,7 @@ class TasksTest extends TestCase
     private function sort(array $data): array
     {
         ksort($data);
+
         return $data;
     }
 
@@ -182,13 +183,13 @@ class TasksTest extends TestCase
     {
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ])->put('/api/tasks/update', [
             'id' => 1,
             'title' => 'asdf',
             'description' => 'asdfasdf',
             'taskStatus' => 'completed',
-            'deadline' => '2025-08-19 03:14:07'
+            'deadline' => '2025-08-19 03:14:07',
         ]);
 
         $response->assertStatus(200);
@@ -199,6 +200,7 @@ class TasksTest extends TestCase
     private function fetchTask(int $id): array
     {
         $task = Task::find($id);
+
         return $task->toArray();
     }
 
@@ -206,7 +208,7 @@ class TasksTest extends TestCase
     {
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ])->delete('/api/tasks/delete?id=1');
 
         return $response;

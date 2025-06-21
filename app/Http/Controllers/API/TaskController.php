@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\JsonResponse;
 use App\Http\Requests\API\Tasks\CreateTaskRequest;
+use App\Http\Requests\API\Tasks\DeleteTaskRequest;
 use App\Http\Requests\API\Tasks\ReadTaskRequest;
 use App\Http\Requests\API\Tasks\UpdateTaskRequest;
-use App\Http\Requests\API\Tasks\DeleteTaskRequest;
 use App\Services\API\Tasks\TaskService;
+use Illuminate\Http\JsonResponse;
 
 final class TaskController extends APIController
 {
@@ -17,10 +17,11 @@ final class TaskController extends APIController
     final public static function index(ReadTaskRequest $request): JsonResponse
     {
         $result = TaskService::read($request);
+
         return response()->json([
             'error' => false,
             'message' => 'Успешный запрос на чтение задач!',
-            'result' => $result
+            'result' => $result,
         ]);
     }
 
@@ -38,10 +39,11 @@ final class TaskController extends APIController
     final public function store(CreateTaskRequest $request): JsonResponse
     {
         $result = TaskService::create($request);
+
         return response()->json([
             'error' => false,
             'message' => "Успешно cоздана новая задача № {$result->id}!",
-            'result' => $result
+            'result' => $result,
         ]);
     }
 
@@ -69,10 +71,11 @@ final class TaskController extends APIController
         string $id
     ): JsonResponse {
         $result = TaskService::update($request);
+
         return response()->json([
             'error' => false,
             'message' => "Успешно обновлена задача № {$request->id}",
-            'result' => $result
+            'result' => $result,
         ]);
     }
 
@@ -84,10 +87,11 @@ final class TaskController extends APIController
         string $id
     ): JsonResponse {
         $result = TaskService::delete($request);
+
         return response()->json([
             'error' => false,
             'message' => "Успешно удалена задача № {$request->id}",
-            'result' => $result
+            'result' => $result,
         ]);
     }
 }

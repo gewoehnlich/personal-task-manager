@@ -11,6 +11,6 @@ final class Project extends Model
 
     protected $fillable = [
         'title',
-        'description'
+        'description',
     ];
 }

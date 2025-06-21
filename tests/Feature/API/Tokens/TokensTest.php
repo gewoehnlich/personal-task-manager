@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\API\Tokens;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
 
 class TokensTest extends TestCase
 {
@@ -62,7 +62,7 @@ class TokensTest extends TestCase
             'id' => $id,
             'tokenable_id' => $user->id,
             'tokenable_type' => User::class,
-            'token' => hash('sha256', $token)
+            'token' => hash('sha256', $token),
         ]);
 
         return $plainTextToken;
@@ -77,7 +77,7 @@ class TokensTest extends TestCase
             'id' => $id,
             'tokenable_id' => $user->id,
             'tokenable_type' => User::class,
-            'token' => hash('sha256', $token)
+            'token' => hash('sha256', $token),
         ]);
     }
 
@@ -93,7 +93,7 @@ class TokensTest extends TestCase
             'id' => $id,
             'tokenable_id' => $user->id,
             'tokenable_type' => User::class,
-            'token' => hash('sha256', $token)
+            'token' => hash('sha256', $token),
         ]);
 
         return $plainTextToken;

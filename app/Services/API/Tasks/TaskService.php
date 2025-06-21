@@ -2,19 +2,19 @@
 
 namespace App\Services\API\Tasks;
 
+use App\DTO\API\Tasks\CreateTaskDTO;
+use App\DTO\API\Tasks\DeleteTaskDTO;
+use App\DTO\API\Tasks\ReadTaskDTO;
+use App\DTO\API\Tasks\TaskDTO;
+use App\DTO\API\Tasks\UpdateTaskDTO;
 use App\Http\Requests\API\Tasks\TaskRequests\CreateTaskRequest;
+use App\Http\Requests\API\Tasks\TaskRequests\DeleteTaskRequest;
 use App\Http\Requests\API\Tasks\TaskRequests\ReadTaskRequest;
 use App\Http\Requests\API\Tasks\TaskRequests\UpdateTaskRequest;
-use App\Http\Requests\API\Tasks\TaskRequests\DeleteTaskRequest;
-use App\DTO\API\Tasks\TaskDTO;
-use App\DTO\API\Tasks\CreateTaskDTO;
-use App\DTO\API\Tasks\ReadTaskDTO;
-use App\DTO\API\Tasks\UpdateTaskDTO;
-use App\DTO\API\Tasks\DeleteTaskDTO;
+use App\Models\Task;
 use App\Repositories\API\Tasks\TaskRepository;
 use App\Services\Service;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Task;
 
 abstract class TaskService // extends Service
 {

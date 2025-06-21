@@ -2,9 +2,9 @@
 
 namespace App\DTO\API\Tasks;
 
-use Illuminate\Support\Carbon;
 use App\Enums\API\Tasks\Stage;
 use App\Http\Requests\API\Tasks\UpdateTaskRequest;
+use Illuminate\Support\Carbon;
 
 final class UpdateTaskDTO extends TaskDTO
 {
@@ -17,11 +17,11 @@ final class UpdateTaskDTO extends TaskDTO
 
     public function __construct(UpdateTaskRequest $request)
     {
-        $this->id          = $request->id;
-        $this->userId      = $request->user_id;
-        $this->title       = $request->title;
+        $this->id = $request->id;
+        $this->userId = $request->user_id;
+        $this->title = $request->title;
         $this->description = $request->description;
-        $this->stage       = $request->stage;
-        $this->deadline    = $request->deadline;
+        $this->stage = $request->stage;
+        $this->deadline = $request->deadline;
     }
 }

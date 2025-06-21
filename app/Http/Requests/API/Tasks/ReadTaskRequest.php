@@ -23,7 +23,7 @@ final class ReadTaskRequest extends TaskRequest
     {
         return [
             'start' => 'nullable|date|date_format:Y-m-d H:i:s',
-            'end'   => 'nullable|date|date_format:Y-m-d H:i:s'
+            'end' => 'nullable|date|date_format:Y-m-d H:i:s',
         ];
     }
 
@@ -53,7 +53,7 @@ final class ReadTaskRequest extends TaskRequest
                         'Поле \'start\' не может быть позднее \'end\'.'
                     );
                 }
-            }
+            },
         ];
     }
 }
