@@ -25,10 +25,10 @@ final class CreateTaskRequest extends TaskRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title'       => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'stage' => ['required', new Enum(Stage::class)],
-            'deadline' => 'required|date|date_format:Y-m-d H:i:s',
+            'stage'       => ['required', new Enum(Stage::class)],
+            'deadline'    => 'required|date|date_format:Y-m-d H:i:s',
         ];
     }
 

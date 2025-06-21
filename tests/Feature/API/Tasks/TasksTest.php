@@ -79,7 +79,7 @@ class TasksTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->post('/login', [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'password',
         ]);
 
@@ -97,10 +97,10 @@ class TasksTest extends TestCase
         [$id, $token]   = explode('|', $plainTextToken);
 
         $this->assertDatabaseHas('personal_access_tokens', [
-            'id' => $id,
-            'tokenable_id' => $user->id,
+            'id'             => $id,
+            'tokenable_id'   => $user->id,
             'tokenable_type' => User::class,
-            'token' => hash('sha256', $token),
+            'token'          => hash('sha256', $token),
         ]);
 
         return $plainTextToken;
@@ -109,13 +109,13 @@ class TasksTest extends TestCase
     private function createTask(User $user, string $token): TestResponse
     {
         $response = $this->withHeaders([
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
             'Authorization' => 'Bearer ' . $token,
         ])->post('/api/tasks/create', [
-            'title' => 'title',
+            'title'       => 'title',
             'description' => 'description',
-            'taskStatus' => 'inProgress',
-            'deadline' => '2025-07-19 03:14:07',
+            'taskStatus'  => 'inProgress',
+            'deadline'    => '2025-07-19 03:14:07',
         ]);
 
         $response->assertStatus(200);
@@ -151,7 +151,7 @@ class TasksTest extends TestCase
     private function readTask(User $user, string $token): TestResponse
     {
         $response = $this->withHeaders([
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
             'Authorization' => 'Bearer ' . $token,
         ])->get('/api/tasks/?start=2025-01-01 12:34:56&end=2025-06-01 12:34:56');
 
@@ -182,14 +182,14 @@ class TasksTest extends TestCase
     private function updateTask(User $user, string $token): TestResponse
     {
         $response = $this->withHeaders([
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
             'Authorization' => 'Bearer ' . $token,
         ])->put('/api/tasks/update', [
-            'id' => 1,
-            'title' => 'asdf',
+            'id'          => 1,
+            'title'       => 'asdf',
             'description' => 'asdfasdf',
-            'taskStatus' => 'completed',
-            'deadline' => '2025-08-19 03:14:07',
+            'taskStatus'  => 'completed',
+            'deadline'    => '2025-08-19 03:14:07',
         ]);
 
         $response->assertStatus(200);
@@ -207,7 +207,7 @@ class TasksTest extends TestCase
     private function deleteTask(int $id, string $token): TestResponse
     {
         $response = $this->withHeaders([
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
             'Authorization' => 'Bearer ' . $token,
         ])->delete('/api/tasks/delete?id=1');
 

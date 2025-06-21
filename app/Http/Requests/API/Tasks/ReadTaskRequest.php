@@ -23,7 +23,7 @@ final class ReadTaskRequest extends TaskRequest
     {
         return [
             'start' => 'nullable|date|date_format:Y-m-d H:i:s',
-            'end' => 'nullable|date|date_format:Y-m-d H:i:s',
+            'end'   => 'nullable|date|date_format:Y-m-d H:i:s',
         ];
     }
 

@@ -17,10 +17,10 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'userId' => 1,
-            'title' => $this->faker->sentence,
+            'userId'      => 1,
+            'title'       => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'taskStatus' => $this->faker->randomElement([
+            'taskStatus'  => $this->faker->randomElement([
                 'pending',
                 'active',
                 'delayed',

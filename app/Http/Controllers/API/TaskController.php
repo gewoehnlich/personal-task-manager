@@ -18,10 +18,11 @@ final class TaskController extends APIController
     {
         $result = TaskService::read($request);
 
+        // move this to APIController method
         return response()->json([
-            'error' => false,
+            'error'   => false,
             'message' => 'Успешный запрос на чтение задач!',
-            'result' => $result,
+            'result'  => $result,
         ]);
     }
 
@@ -41,9 +42,9 @@ final class TaskController extends APIController
         $result = TaskService::create($request);
 
         return response()->json([
-            'error' => false,
+            'error'   => false,
             'message' => "Успешно cоздана новая задача № {$result->id}!",
-            'result' => $result,
+            'result'  => $result,
         ]);
     }
 
@@ -73,9 +74,9 @@ final class TaskController extends APIController
         $result = TaskService::update($request);
 
         return response()->json([
-            'error' => false,
+            'error'   => false,
             'message' => "Успешно обновлена задача № {$request->id}",
-            'result' => $result,
+            'result'  => $result,
         ]);
     }
 
@@ -89,9 +90,9 @@ final class TaskController extends APIController
         $result = TaskService::delete($request);
 
         return response()->json([
-            'error' => false,
+            'error'   => false,
             'message' => "Успешно удалена задача № {$request->id}",
-            'result' => $result,
+            'result'  => $result,
         ]);
     }
 }

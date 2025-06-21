@@ -3,7 +3,6 @@
 namespace App\Services\API;
 
 use App\Models\User;
-use App\Services\API\APIService;
 use Illuminate\Support\Facades\Auth;
 
 class TokenService extends APIService

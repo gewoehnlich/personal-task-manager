@@ -13,7 +13,6 @@ use App\Http\Requests\API\Tasks\ReadTaskRequest;
 use App\Http\Requests\API\Tasks\UpdateTaskRequest;
 use App\Models\Task;
 use App\Repositories\API\Tasks\TaskRepository;
-use App\Services\API\APIService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 final class TaskService extends APIService
@@ -28,7 +27,7 @@ final class TaskService extends APIService
 
     final public static function read(ReadTaskRequest $request): JsonResource
     {
-        $dto = TaskDTO::fromRequest($request, ReadTaskDTO::class);
+        $dto    = TaskDTO::fromRequest($request, ReadTaskDTO::class);
         $result = TaskRepository::read($dto);
 
         return $result;

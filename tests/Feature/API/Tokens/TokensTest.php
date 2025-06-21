@@ -41,7 +41,7 @@ class TokensTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->post('/login', [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'password',
         ]);
 
@@ -59,10 +59,10 @@ class TokensTest extends TestCase
         [$id, $token]   = explode('|', $plainTextToken);
 
         $this->assertDatabaseHas('personal_access_tokens', [
-            'id' => $id,
-            'tokenable_id' => $user->id,
+            'id'             => $id,
+            'tokenable_id'   => $user->id,
             'tokenable_type' => User::class,
-            'token' => hash('sha256', $token),
+            'token'          => hash('sha256', $token),
         ]);
 
         return $plainTextToken;
@@ -74,10 +74,10 @@ class TokensTest extends TestCase
     ): void {
         [$id, $token] = explode('|', $plainTextToken);
         $this->assertDatabaseMissing('personal_access_tokens', [
-            'id' => $id,
-            'tokenable_id' => $user->id,
+            'id'             => $id,
+            'tokenable_id'   => $user->id,
             'tokenable_type' => User::class,
-            'token' => hash('sha256', $token),
+            'token'          => hash('sha256', $token),
         ]);
     }
 
@@ -90,10 +90,10 @@ class TokensTest extends TestCase
         [$id, $token]   = explode('|', $plainTextToken);
 
         $this->assertDatabaseHas('personal_access_tokens', [
-            'id' => $id,
-            'tokenable_id' => $user->id,
+            'id'             => $id,
+            'tokenable_id'   => $user->id,
             'tokenable_type' => User::class,
-            'token' => hash('sha256', $token),
+            'token'          => hash('sha256', $token),
         ]);
 
         return $plainTextToken;

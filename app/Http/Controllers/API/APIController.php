@@ -13,7 +13,7 @@ abstract class APIController extends Controller
     ): JsonResponse {
         $response = [
             'success' => true,
-            'data' => $result,
+            'data'    => $result,
             'message' => $message,
         ];
 
