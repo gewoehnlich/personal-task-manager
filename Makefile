@@ -30,6 +30,7 @@ delete:
 	docker compose down -v
 
 commit:
+	vendor/bin/pint .
 	git add .
 	git commit -m "$(m)"
 	git push origin main
