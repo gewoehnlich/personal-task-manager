@@ -12,7 +12,8 @@
         },
         "binary_operator_spaces": {
             "operators": {
-                "=": "align"
+                "=": "align",
+                "=>": "align"
             },
             "default": "single_space"
         },
@@ -78,6 +79,7 @@
         },
         "native_function_casing": true,
         "native_type_declaration_casing": true,
+        "new_with_braces": false,
         "no_alternative_syntax": true,
         "no_binary_string": true,
         "no_blank_lines_after_class_opening": true,
