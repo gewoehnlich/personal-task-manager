@@ -25,4 +25,11 @@ abstract class APIRequest extends FormRequest
             //
         ];
     }
+
+    public function passedValidation(): void
+    {
+        $this->merge([
+            'user_id' => $this->user()->id,
+        ]);
+    }
 }

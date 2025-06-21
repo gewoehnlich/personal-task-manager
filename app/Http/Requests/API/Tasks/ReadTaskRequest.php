@@ -22,35 +22,54 @@ final class ReadTaskRequest extends TaskRequest
     public function rules(): array
     {
         return [
-            'start' => 'nullable|date|date_format:Y-m-d H:i:s',
-            'end'   => 'nullable|date|date_format:Y-m-d H:i:s',
+            'id' => 'nullable|integer|exists:tasks,id',
+            'parent_id' => 'nullable|integer|exists:tasks,id',
+            'project_id' => 'nullable|integer|exists:projects,id',
+            'created_at_from' => 'nullable|date|date_format:Y-m-d H:i:s',
+            'created_at_to' => 'nullable|date|date_format:Y-m-d H:i:s',
+            'updated_at_from' => 'nullable|date|date_format:Y-m-d H:i:s',
+            'updated_at_to' => 'nullable|date|date_format:Y-m-d H:i:s',
+            'deadline_from' => 'nullable|date|date_format:Y-m-d H:i:s',
+            'deadline_to' => 'nullable|date|date_format:Y-m-d H:i:s',
+            'order_by' => 'nullable|string|in:asc,desc',
+            'limit' => 'nullable|integer',
         ];
     }
 
     public function after(): array
     {
         return [
-            function (
-                Validator $validator
-            ) {
+            function (Validator $validator) {
                 if (
-                    $this->start && !$this->end ||
-                    !$this->start && $this->end
+                    $this->createdAtFrom &&
+                    $this->createdAtTo &&
+                    $this->createdAtFrom > $this->createdAtTo
                 ) {
                     $validator->errors()->add(
-                        '\'start\' и \'end\'',
-                        'Поля \'start\' и \'end\' должны быть либо оба пустыми, либо оба заполнеными.'
+                        'created_at_range',
+                        'created_at_from не может быть позже created_at_to.'
                     );
                 }
 
                 if (
-                    $this->start &&
-                    $this->end &&
-                    $this->start > $this->end
+                    $this->updatedAtFrom &&
+                    $this->updatedAtTo &&
+                    $this->updatedAtFrom > $this->updatedAtTo
                 ) {
                     $validator->errors()->add(
-                        '\'start\' и \'end\'',
-                        'Поле \'start\' не может быть позднее \'end\'.'
+                        'updated_at_range',
+                        'updated_at_from не может быть позже updated_at_to.'
+                    );
+                }
+
+                if (
+                    $this->deadlineFrom &&
+                    $this->deadlineTo &&
+                    $this->deadlineFrom > $this->deadlineTo
+                ) {
+                    $validator->errors()->add(
+                        'deadline_range',
+                        'deadline_from не может быть позже deadline_to.'
                     );
                 }
             },
