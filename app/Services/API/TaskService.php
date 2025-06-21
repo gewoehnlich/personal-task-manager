@@ -12,7 +12,7 @@ use App\Http\Requests\API\Tasks\DeleteTaskRequest;
 use App\Http\Requests\API\Tasks\ReadTaskRequest;
 use App\Http\Requests\API\Tasks\UpdateTaskRequest;
 use App\Models\Task;
-use App\Repositories\API\Tasks\TaskRepository;
+use App\Repositories\API\TaskRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 final class TaskService extends APIService

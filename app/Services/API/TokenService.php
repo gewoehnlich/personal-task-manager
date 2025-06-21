@@ -5,9 +5,9 @@ namespace App\Services\API;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class TokenService extends APIService
+final class TokenService extends APIService
 {
-    public static function create(): string
+    final public static function create(): string
     {
         $user        = self::getUserModel();
         $tokenExists = self::hasToken($user);
@@ -18,7 +18,7 @@ class TokenService extends APIService
         return self::createToken($user);
     }
 
-    public static function renew(): string | null
+    final public static function renew(): string | null
     {
         $user        = self::getUserModel();
         $tokenExists = self::hasToken($user);
@@ -31,7 +31,7 @@ class TokenService extends APIService
         return self::createToken($user);
     }
 
-    public static function delete(): bool
+    final public static function delete(): bool
     {
         $user = self::getUserModel();
         self::deleteExistingTokens($user);
