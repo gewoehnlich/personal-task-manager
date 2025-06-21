@@ -1,55 +1,49 @@
 <?php
 
-namespace App\Services\API\Tasks;
+namespace App\Services\API;
 
 use App\DTO\API\Tasks\CreateTaskDTO;
 use App\DTO\API\Tasks\DeleteTaskDTO;
 use App\DTO\API\Tasks\ReadTaskDTO;
 use App\DTO\API\Tasks\TaskDTO;
 use App\DTO\API\Tasks\UpdateTaskDTO;
-use App\Http\Requests\API\Tasks\TaskRequests\CreateTaskRequest;
-use App\Http\Requests\API\Tasks\TaskRequests\DeleteTaskRequest;
-use App\Http\Requests\API\Tasks\TaskRequests\ReadTaskRequest;
-use App\Http\Requests\API\Tasks\TaskRequests\UpdateTaskRequest;
+use App\Http\Requests\API\Tasks\CreateTaskRequest;
+use App\Http\Requests\API\Tasks\DeleteTaskRequest;
+use App\Http\Requests\API\Tasks\ReadTaskRequest;
+use App\Http\Requests\API\Tasks\UpdateTaskRequest;
 use App\Models\Task;
 use App\Repositories\API\Tasks\TaskRepository;
-use App\Services\Service;
+use App\Services\API\APIService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-abstract class TaskService // extends Service
+final class TaskService extends APIService
 {
-    public static function create(
-        CreateTaskRequest $request
-    ): Task {
+    final public static function create(CreateTaskRequest $request): Task
+    {
         $dto    = TaskDTO::fromRequest($request, CreateTaskDTO::class);
         $result = TaskRepository::create($dto);
 
         return $result;
     }
 
-    public static function read(
-        ReadTaskRequest $request
-    ): JsonResource {
+    final public static function read(ReadTaskRequest $request): JsonResource
+    {
         $dto = TaskDTO::fromRequest($request, ReadTaskDTO::class);
-        dd($dto);
-
         $result = TaskRepository::read($dto);
 
         return $result;
     }
 
-    public static function update(
-        UpdateTaskRequest $request
-    ): bool {
+    final public static function update(UpdateTaskRequest $request): bool
+    {
         $dto    = TaskDTO::fromRequest($request, UpdateTaskDTO::class);
         $result = TaskRepository::update($dto);
 
         return $result;
     }
 
-    public static function delete(
-        DeleteTaskRequest $request
-    ): bool {
+    final public static function delete(DeleteTaskRequest $request): bool
+    {
         $dto    = TaskDTO::fromRequest($request, DeleteTaskDTO::class);
         $result = TaskRepository::delete($dto);
 

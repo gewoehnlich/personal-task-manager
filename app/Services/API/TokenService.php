@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\API\Tokens;
+namespace App\Services\API;
 
 use App\Models\User;
-use App\Services\Service;
+use App\Services\API\APIService;
 use Illuminate\Support\Facades\Auth;
 
-class TokenService // extends Service
+class TokenService extends APIService
 {
     public static function create(): string
     {
