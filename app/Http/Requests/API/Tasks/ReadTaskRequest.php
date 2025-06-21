@@ -3,7 +3,6 @@
 namespace App\Http\Requests\API\Tasks;
 
 use Illuminate\Validation\Validator;
-use App\Http\Requests\API\Tasks\TaskRequest;
 
 final class ReadTaskRequest extends TaskRequest
 {

@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\API\Tasks;
 
-use App\Http\Requests\API\Tasks\TaskRequest;
-
 final class DeleteTaskRequest extends TaskRequest
 {
     /**
