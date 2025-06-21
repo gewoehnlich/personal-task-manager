@@ -23,17 +23,17 @@ final class ReadTaskDTO extends TaskDTO
 
     public function __construct(ReadTaskRequest $request)
     {
-        $this->userId         = $request->user_id;
-        $this->id             = $request->id;
-        $this->parentId         = $request->parent_id;
+        $this->userId            = $request->user_id;
+        $this->id                = $request->id;
+        $this->parentId          = $request->parent_id;
         $this->projectId         = $request->project_id;
-        $this->createdAtFrom  = $request->created_at_from;
-        $this->createdAtTo    = $request->created_at_to;
-        $this->updatedAtFrom  = $request->updated_at_from;
-        $this->updatedAtTo    = $request->updated_at_to;
-        $this->deadlineFrom   = $request->deadline_from;
-        $this->deadlineTo     = $request->deadlineTo;
-        $this->orderBy        = $request->order_by;
-        $this->limit          = $request->limit;
+        $this->createdAtFrom     = $request->created_at_from;
+        $this->createdAtTo       = $request->created_at_to;
+        $this->updatedAtFrom     = $request->updated_at_from;
+        $this->updatedAtTo       = $request->updated_at_to;
+        $this->deadlineFrom      = $request->deadline_from;
+        $this->deadlineTo        = $request->deadlineTo;
+        $this->orderBy           = $request->order_by;
+        $this->limit             = $request->limit;
     }
 }

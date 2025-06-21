@@ -18,16 +18,16 @@ class TaskFactory extends Factory
     {
         return [
             'user_id'      => 1,
-            'title'       => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
-            'stage'  => $this->faker->randomElement([
+            'title'        => $this->faker->sentence,
+            'description'  => $this->faker->paragraph,
+            'stage'        => $this->faker->randomElement([
                 'pending',
                 'active',
                 'delayed',
                 'done',
             ]),
             'project_id' => 1,
-            'deadline' => $this->faker->dateTimeBetween('now', '+10 days'),
+            'deadline'   => $this->faker->dateTimeBetween('now', '+10 days'),
         ];
     }
 }

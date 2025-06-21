@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\API\APIController;
 use App\Services\API\TokenService;
 
 final class TokenController extends APIController
