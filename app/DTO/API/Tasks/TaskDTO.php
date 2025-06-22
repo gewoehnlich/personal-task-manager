@@ -3,7 +3,9 @@
 namespace App\DTO\API\Tasks;
 
 use App\DTO\API\APIDTO;
+use App\Enums\API\Tasks\Stage;
 use App\Http\Requests\API\Tasks\TaskRequest;
+use Illuminate\Support\Carbon;
 
 /**
  * @property-read int    $id
@@ -33,5 +35,23 @@ abstract class TaskDTO extends APIDTO
         $dto = new $class($request);
 
         return $dto;
+    }
+
+    protected static function stage(string | null $stage): Stage | null
+    {
+        if (is_null($stage)) {
+            return null;
+        }
+
+        return Stage::tryFrom($stage);
+    }
+
+    protected static function date(string | null $date): Carbon | null
+    {
+        if (is_null($date)) {
+            return null;
+        }
+
+        return Carbon::parse($date);
     }
 }
