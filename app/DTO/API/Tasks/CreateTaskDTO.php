@@ -8,18 +8,22 @@ use Illuminate\Support\Carbon;
 
 final class CreateTaskDTO extends TaskDTO
 {
-    public readonly int $userId;
-    public readonly string $title;
-    public readonly string $description;
-    public readonly Stage $stage;
-    public readonly Carbon $deadline;
+    final public readonly int $userId;
+    final public readonly string $title;
+    final public readonly string $description;
+    final public readonly Stage $stage;
+    final public readonly Carbon $deadline;
+    final public readonly int | null $parentId;
+    final public readonly int | null $projectId;
 
     public function __construct(CreateTaskRequest $request)
     {
         $this->userId      = $request->user_id;
         $this->title       = $request->title;
         $this->description = $request->description;
-        $this->stage       = $request->stage;
-        $this->deadline    = $request->deadline;
+        $this->stage       = self::stage($request->stage);
+        $this->deadline    = self::date($request->deadline);
+        $this->parentId = $request->parent_id;
+        $this->projectId = $request->project_id;
     }
 }
