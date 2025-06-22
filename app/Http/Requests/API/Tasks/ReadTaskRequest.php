@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\API\Tasks;
 
+use App\Enums\API\Tasks\Stage;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
 final class ReadTaskRequest extends TaskRequest
@@ -22,17 +24,19 @@ final class ReadTaskRequest extends TaskRequest
     public function rules(): array
     {
         return [
-            'id'              => 'nullable|integer|exists:tasks,id',
-            'parent_id'       => 'nullable|integer|exists:tasks,id',
-            'project_id'      => 'nullable|integer|exists:projects,id',
-            'created_at_from' => 'nullable|date|date_format:Y-m-d H:i:s',
-            'created_at_to'   => 'nullable|date|date_format:Y-m-d H:i:s',
-            'updated_at_from' => 'nullable|date|date_format:Y-m-d H:i:s',
-            'updated_at_to'   => 'nullable|date|date_format:Y-m-d H:i:s',
-            'deadline_from'   => 'nullable|date|date_format:Y-m-d H:i:s',
-            'deadline_to'     => 'nullable|date|date_format:Y-m-d H:i:s',
-            'order_by'        => 'nullable|string|in:asc,desc',
-            'limit'           => 'nullable|integer',
+            'id'              => ['nullable', 'integer', 'exists:tasks,id'],
+            'stage'           => ['nullable', 'string', Rule::enum(Stage::class)],
+            'parent_id'       => ['nullable', 'integer', 'exists:tasks,id'],
+            'project_id'      => ['nullable', 'integer', 'exists:projects,id'],
+            'created_at_from' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'created_at_to'   => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'updated_at_from' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'updated_at_to'   => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'deadline_from'   => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'deadline_to'     => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'order_by'        => ['nullable', 'string', 'in:asc,desc'],
+            'order_by_field'  => ['nullable', 'string', 'in:id,created_at,updated_at,deadline,stage'],
+            'limit'           => ['nullable', 'integer'],
         ];
     }
 
