@@ -23,7 +23,7 @@ final class CreateTaskDTO extends TaskDTO
         $this->description = $request->description;
         $this->stage       = self::stage($request->stage);
         $this->deadline    = self::date($request->deadline);
-        $this->parentId = $request->parent_id;
-        $this->projectId = $request->project_id;
+        $this->parentId    = $request->parent_id;
+        $this->projectId   = $request->project_id;
     }
 }

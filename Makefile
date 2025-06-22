@@ -30,7 +30,6 @@ delete:
 	docker compose down -v
 
 commit:
-	vendor/bin/pint .
 	git add .
 	git commit -m "$(m)"
 	git push origin main
@@ -47,3 +46,12 @@ migrate-fresh:
 seed:
 	docker exec -i $(LARAVEL_CONTAINER) php artisan db:seed
 
+stats:
+	@git log --since=midnight --author="$$(git config user.name)" \
+		 --pretty=tformat: --numstat | \
+	awk '{ added += $$1; removed += $$2 } \
+	     END { print "Added:", added, "Removed:", removed, \
+	            "Total:", added + removed }'
+
+lint:
+	vendor/bin/pint .

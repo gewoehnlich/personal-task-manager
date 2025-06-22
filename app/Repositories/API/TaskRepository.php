@@ -16,8 +16,8 @@ final class TaskRepository
             'description' => $dto->description,
             'stage'       => $dto->stage,
             'deadline'    => $dto->deadline,
-            'parent_id' => $dto->parentId,
-            'project_id' => $dto->projectId,
+            'parent_id'   => $dto->parentId,
+            'project_id'  => $dto->projectId,
         ]);
 
         return $result;
@@ -87,7 +87,7 @@ final class TaskRepository
 
     final public static function update(TaskDTO $dto): bool
     {
-        $task = Task::where(['id' => $dto->id, 'user_id' => $dto->userId]);
+        $task   = Task::where(['id' => $dto->id, 'user_id' => $dto->userId]);
         $result = $task->update([
             'id'          => $dto->id,
             'user_id'     => $dto->userId,
@@ -95,8 +95,8 @@ final class TaskRepository
             'description' => $dto->description,
             'stage'       => $dto->stage,
             'deadline'    => $dto->deadline,
-            'parent_id' => $dto->parentId,
-            'project_id' => $dto->projectId,
+            'parent_id'   => $dto->parentId,
+            'project_id'  => $dto->projectId,
         ]);
 
         return $result;
@@ -104,7 +104,7 @@ final class TaskRepository
 
     final public static function delete(TaskDTO $dto): bool
     {
-        $task = Task::where(['id' => $dto->id, 'user_id' => $dto->userId]);
+        $task   = Task::where(['id' => $dto->id, 'user_id' => $dto->userId]);
         $result = $task->delete();
 
         return $result;
