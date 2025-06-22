@@ -69,13 +69,14 @@ final class TaskController extends APIController
      */
     final public static function update(
         UpdateTaskRequest $request,
-        string $id
+        int $id
     ): JsonResponse {
+        $request->merge(['id' => $id]);
         $result = TaskService::update($request);
 
         return response()->json([
             'error'   => false,
-            'message' => "Успешно обновлена задача № {$request->id}",
+            'message' => "Успешно обновлена задача № {$id}",
             'result'  => $result,
         ]);
     }
@@ -85,13 +86,14 @@ final class TaskController extends APIController
      */
     final public static function destroy(
         DeleteTaskRequest $request,
-        string $id
+        int $id
     ): JsonResponse {
+        $request->merge(['id' => $id]);
         $result = TaskService::delete($request);
 
         return response()->json([
             'error'   => false,
-            'message' => "Успешно удалена задача № {$request->id}",
+            'message' => "Успешно удалена задача № {$id}",
             'result'  => $result,
         ]);
     }
