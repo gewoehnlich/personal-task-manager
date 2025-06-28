@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\API\Tasks;
+namespace App\Containers\Tasks\Transfers\Transporters;
 
 use App\DTO\API\APIDTO;
 use App\Enums\API\Tasks\Stage;
@@ -26,7 +26,7 @@ use Illuminate\Support\Carbon;
  * @property-read string $orderByField
  * @property-read int    $limit
  */
-abstract class TaskDTO extends APIDTO
+abstract readonly class TaskDTO // extends APIDTO
 {
     final public static function fromRequest(
         TaskRequest $request,

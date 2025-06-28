@@ -6,7 +6,7 @@ use App\Enums\API\Tasks\Stage;
 use App\Http\Requests\API\Tasks\UpdateTaskRequest;
 use Illuminate\Support\Carbon;
 
-final class UpdateTaskDTO extends TaskDTO
+final class UpdateTaskTransporter extends TaskDTO
 {
     final public readonly int $id;
     final public readonly int $userId;

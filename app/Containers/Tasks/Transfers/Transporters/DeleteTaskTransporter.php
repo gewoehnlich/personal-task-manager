@@ -4,7 +4,7 @@ namespace App\DTO\API\Tasks;
 
 use App\Http\Requests\API\Tasks\DeleteTaskRequest;
 
-final class DeleteTaskDTO extends TaskDTO
+final class DeleteTaskTransporter extends TaskDTO
 {
     final public readonly int $id;
     final public readonly int $userId;

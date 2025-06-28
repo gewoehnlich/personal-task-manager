@@ -1,12 +1,13 @@
 <?php
 
-namespace App\DTO\API\Tasks;
+namespace App\Containers\Tasks\Transfers\Transporters;
 
 use App\Enums\API\Tasks\Stage;
 use App\Http\Requests\API\Tasks\CreateTaskRequest;
+use App\Ship\Tasks\Transfers\Transporters\TaskDTO;
 use Illuminate\Support\Carbon;
 
-final class CreateTaskDTO extends TaskDTO
+final readonly class CreateTaskTransporter extends TaskDTO
 {
     final public readonly int $userId;
     final public readonly string $title;
