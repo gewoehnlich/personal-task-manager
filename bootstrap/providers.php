@@ -2,5 +2,5 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    App\Providers\TaskProvider::class,
+    App\Containers\Tasks\Providers\TaskProvider::class,
 ];

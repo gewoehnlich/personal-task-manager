@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums\API\Tasks;
+namespace App\Containers\Tasks\Domains\Enums;
 
 enum Stage: string
 {
