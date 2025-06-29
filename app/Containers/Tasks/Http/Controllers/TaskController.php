@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Containers\Tasks\Http\Controllers;
 
 use App\Http\Requests\API\Tasks\CreateTaskRequest;
 use App\Http\Requests\API\Tasks\DeleteTaskRequest;
@@ -9,7 +9,7 @@ use App\Http\Requests\API\Tasks\UpdateTaskRequest;
 use App\Services\API\TaskService;
 use Illuminate\Http\JsonResponse;
 
-final class TaskController extends APIController
+final readonly class TaskController // extends APIController
 {
     /**
      * Display a listing of the resource.

@@ -4,7 +4,7 @@ namespace App\Containers\Tasks\Actions;
 
 use App\Containers\Tasks\Transfers\Transporters\CreateTaskTransporter;
 use App\Models\Task;
-use App\Ship\Tasks\Actions\TaskAction;
+use App\Ship\Tasks\Actions\Action;
 
 final abstract class CreateTaskAction extends Action
 {
