@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Tasks\Domains\Models;
+namespace App\Containers\Tasks\Models;
 
 use App\Models\Bill;
 use App\Models\Project;

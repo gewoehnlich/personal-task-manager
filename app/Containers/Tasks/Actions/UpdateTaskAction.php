@@ -2,15 +2,19 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\Transfers\Transporters\UpdateTaskTransporter;
-use App\Models\Task;
-use App\Ship\Tasks\Actions\TaskAction;
+use App\Containers\Tasks\DTOs\UpdateTaskDTO;
+use App\Containers\Tasks\Models\Task;
+use App\Ship\Tasks\Actions\Action;
 
 final abstract class UpdateTaskAction extends Action
 {
-    final public static function run(UpdateTaskTransporter $dto): Task
+    final public static function run(UpdateTaskDTO $dto): Task
     {
-        $task   = Task::where(['id' => $dto->id, 'user_id' => $dto->userId]);
+        $task   = Task::where([
+            'id' => $dto->id,
+            'user_id' => $dto->userId
+        ]);
+
         $result = $task->update([
             'id'          => $dto->id,
             'user_id'     => $dto->userId,

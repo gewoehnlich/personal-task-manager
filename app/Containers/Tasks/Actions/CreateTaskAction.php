@@ -2,13 +2,13 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\Transfers\Transporters\CreateTaskTransporter;
-use App\Models\Task;
+use App\Containers\Tasks\DTOs\CreateTaskDTO;
+use App\Containers\Tasks\Models\Task;
 use App\Ship\Tasks\Actions\Action;
 
 final abstract class CreateTaskAction extends Action
 {
-    final public static function run(CreateTaskTransporter $dto): Task
+    final public static function run(CreateTaskDTO $dto): Task
     {
         $result = Task::create([
             'user_id'     => $dto->userId,

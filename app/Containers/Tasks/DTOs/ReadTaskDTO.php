@@ -1,12 +1,12 @@
 <?php
 
-namespace App\DTO\API\Tasks;
+namespace App\Containers\Tasks\DTOs;
 
 use App\Enums\API\Tasks\Stage;
 use App\Http\Requests\API\Tasks\ReadTaskRequest;
 use Illuminate\Support\Carbon;
 
-final class ReadTaskTransporter extends TaskDTO
+final readonly class ReadTaskDTO extends TaskDTO
 {
     final public readonly int $userId;
     final public readonly int | null $id;

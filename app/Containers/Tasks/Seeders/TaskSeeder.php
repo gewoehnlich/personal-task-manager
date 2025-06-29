@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Containers\Tasks\Seeders;
 
 use App\Models\Task;
 use Illuminate\Database\Seeder;

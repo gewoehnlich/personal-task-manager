@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Tasks\Transfers\Resources;
+namespace App\Containers\Tasks\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

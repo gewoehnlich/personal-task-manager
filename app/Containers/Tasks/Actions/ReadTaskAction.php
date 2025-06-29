@@ -2,13 +2,13 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\Transfers\Transporters\ReadTaskTransporter;
-use App\Models\Task;
-use App\Ship\Tasks\Actions\TaskAction;
+use App\Containers\Tasks\DTOs\ReadTaskDTO;
+use App\Containers\Tasks\Models\Task;
+use App\Ship\Tasks\Actions\Action;
 
 final abstract class ReadTaskAction extends Action
 {
-    final public static function run(ReadTaskTransporter $dto): Task
+    final public static function run(ReadTaskDTO $dto): Task
     {
         $query = Task::query();
 

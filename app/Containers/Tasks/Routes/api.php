@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Containers\Tasks\Routes;
+
 use App\Containers\Tasks\Http\Controllers\TaskController;
 use App\Http\Middleware\EnsureAcceptHeaderIsJson;
 use Illuminate\Support\Facades\Route;

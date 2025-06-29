@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\API\Tasks;
+namespace App\Containers\Tasks\Requests;
 
 use App\Enums\API\Tasks\Stage;
 use Illuminate\Validation\Rule;

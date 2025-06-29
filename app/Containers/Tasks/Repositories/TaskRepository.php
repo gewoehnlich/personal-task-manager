@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\API;
+namespace App\Containers\Tasks\Repositories;
 
 use App\DTO\API\Tasks\TaskDTO;
 use App\Http\Resources\TaskResource;

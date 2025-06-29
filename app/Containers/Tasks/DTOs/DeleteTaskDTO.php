@@ -1,10 +1,10 @@
 <?php
 
-namespace App\DTO\API\Tasks;
+namespace App\Containers\Tasks\DTOs;
 
 use App\Http\Requests\API\Tasks\DeleteTaskRequest;
 
-final class DeleteTaskTransporter extends TaskDTO
+final class DeleteTaskDTO extends TaskDTO
 {
     final public readonly int $id;
     final public readonly int $userId;

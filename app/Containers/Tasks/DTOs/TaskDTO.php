@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Tasks\Transfers\Transporters;
+namespace App\Containers\Tasks\DTOs;
 
 use App\DTO\API\APIDTO;
 use App\Enums\API\Tasks\Stage;
