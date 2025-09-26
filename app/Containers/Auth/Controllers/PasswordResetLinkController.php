@@ -14,8 +14,9 @@ class PasswordResetLinkController extends Controller
     /**
      * Show the password reset link request page.
      */
-    public function create(Request $request): Response
-    {
+    public function create(
+        Request $request
+    ): Response {
         return Inertia::render('auth/ForgotPassword', [
             'status' => $request->session()->get('status'),
         ]);
@@ -26,8 +27,9 @@ class PasswordResetLinkController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
+    public function store(
+        Request $request
+    ): RedirectResponse {
         $request->validate([
             'email' => 'required|email',
         ]);

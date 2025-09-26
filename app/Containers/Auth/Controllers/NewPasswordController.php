@@ -19,8 +19,9 @@ class NewPasswordController extends Controller
     /**
      * Show the password reset page.
      */
-    public function create(Request $request): Response
-    {
+    public function create(
+        Request $request
+    ): Response {
         return Inertia::render('auth/ResetPassword', [
             'email' => $request->email,
             'token' => $request->route('token'),
@@ -32,8 +33,9 @@ class NewPasswordController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
+    public function store(
+        Request $request
+    ): RedirectResponse {
         $request->validate([
             'token'    => 'required',
             'email'    => 'required|email',
