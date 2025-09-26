@@ -1,7 +1,7 @@
 <?php
 
-use App\Ship\Middleware\HandleAppearance;
-use App\Ship\Middleware\HandleInertiaRequests;
+use App\Ship\Middlewares\HandleAppearance;
+use App\Ship\Middlewares\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,9 +19,7 @@ return Application::configure(
             Route::middleware(
                 'auth'
             )->group(
-                base_path(
-                    '/app/Containers/Settings/Routes/settings.php'
-                )
+                base_path('/app/Containers/Settings/Routes/settings.php')
             );
 
             Route::middleware(
