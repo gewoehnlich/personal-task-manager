@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Containers\Tokens\Controllers;
 
 use App\Services\API\TokenService;
 
