@@ -6,10 +6,11 @@ use App\Containers\Tasks\DTOs\CreateTaskDTO;
 use App\Containers\Tasks\Models\Task;
 use App\Ship\Tasks\Actions\Action;
 
-final abstract class CreateTaskAction extends Action
+final class CreateTaskAction extends Action
 {
-    final public static function run(CreateTaskDTO $dto): Task
-    {
+    public static function run(
+        CreateTaskDTO $dto
+    ): Task {
         $result = Task::create([
             'user_id'     => $dto->userId,
             'title'       => $dto->title,
