@@ -55,3 +55,6 @@ stats:
 
 lint:
 	vendor/bin/pint .
+
+gemini:
+	npx https://github.com/google-gemini/gemini-cli

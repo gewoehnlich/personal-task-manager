@@ -1,4 +1,4 @@
-FROM php:8.4.6-fpm
+FROM php:8.4.13-fpm
 
 WORKDIR /var/www/html
 
@@ -36,11 +36,9 @@ RUN { \
     echo 'session.use_strict_mode = 1'; \
 } > /usr/local/etc/php/conf.d/strict.ini
 
-# RUN git config --global --add safe.directory /var/www/html
+COPY --from=composer:2.8.2 /usr/bin/composer /usr/bin/composer
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-COPY composer.json composer.lock ./
+COPY ../../composer.json ../../composer.lock ./
 
 RUN composer install --no-scripts
 
