@@ -43,17 +43,12 @@ Route::post('logout', [
     'destroy',
 ])->name('logout');
 
-Route::get('tokens/create', [
-    TokenController::class,
-    'create',
-]);
-
-Route::get('tokens/renew', [
-    TokenController::class,
-    'renew',
-]);
-
-Route::get('tokens/delete', [
-    TokenController::class,
-    'delete',
-]);
+Route::prefix('tokens')
+    ->name('tokens.')
+    ->group(
+        function () {
+            Route::resources([
+                'tokens' => TokenController::class,
+            ]);
+        }
+    );

@@ -3,13 +3,14 @@
 namespace App\Ship\Parents\Actions;
 
 use App\Ship\Abstracts\Actions\Action as AbstractAction;
-use App\Ship\Parents\Transporters\Transporter;
+// use App\Ship\Abstracts\Responders\Responder;
+// use App\Ship\Parents\Transporters\Transporter;
 
-abstract class Action extends AbstractAction
+abstract readonly class Action extends AbstractAction
 {
-    public function run(
-        Transporter $transporter,
-    ): Responder {
-        //
-    }
+    // public function run(
+    //     Transporter $transporter,
+    // ): Responder {
+    //     //
+    // }
 }

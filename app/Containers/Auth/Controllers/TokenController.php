@@ -6,6 +6,7 @@ use App\Containers\Auth\Requests\CreateUserTokenRequest;
 use App\Containers\Auth\Requests\GetUserTokenRequest;
 use App\Containers\Auth\Requests\RefreshUserTokenRequest;
 use App\Containers\Auth\Requests\RevokeUserTokenRequest;
+use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\WebController;
 
 final class TokenController extends WebController
@@ -13,9 +14,9 @@ final class TokenController extends WebController
     /**
      * Display a listing of the resource.
      */
-    public static function index(
-        GetUserTokenRequest $request
-    ): JsonResponse {
+    public function index(
+        GetUserTokenRequest $request,
+    ): Responder {
         //
     }
 
@@ -31,9 +32,12 @@ final class TokenController extends WebController
      * Store a newly created resource in storage.
      */
     public function store(
-        CreateUserTokenRequest $request
-    ): JsonResponse {
-        //
+        CreateUserTokenRequest $request,
+    ): Responder {
+        return $this->action(
+            CreateUserTokenAction::class,
+            $request->transported(),
+        );
     }
 
     /**
@@ -55,20 +59,20 @@ final class TokenController extends WebController
     /**
      * Update the specified resource in storage.
      */
-    public static function update(
+    public function update(
         RefreshUserTokenRequest $request,
         int $id,
-    ): JsonResponse {
+    ): Responder {
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public static function destroy(
+    public function destroy(
         RevokeUserTokenRequest $request,
         int $id,
-    ): JsonResponse {
+    ): Responder {
         //
     }
 }
