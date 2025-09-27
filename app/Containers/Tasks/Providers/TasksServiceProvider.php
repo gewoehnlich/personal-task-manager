@@ -2,13 +2,12 @@
 
 namespace App\Containers\Tasks\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class TaskProvider extends ServiceProvider
+class TasksServiceProvider extends ServiceProvider
 {
     /**
-     * Register services.
+     * Register any application services.
      */
     public function register(): void
     {
@@ -16,10 +15,10 @@ class TaskProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap services.
+     * Bootstrap any application services.
      */
     public function boot(): void
     {
-        $this->loadRoutesFrom(base_path('app/Containers/Tasks/Routes/api.php'));
+        //
     }
 }

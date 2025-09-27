@@ -17,19 +17,22 @@ return Application::configure(
         health: '/up',
         then: function () {
             Route::middleware(
-                'auth'
+                'web',
+                'auth',
             )->group(
                 base_path('/app/Containers/Settings/Routes/settings.php')
             );
 
             Route::middleware(
-                'guest'
+                'web',
+                'guest',
             )->group(
                 base_path('/app/Containers/Auth/Routes/guest.php')
             );
 
             Route::middleware(
-                'auth'
+                'web',
+                'auth',
             )->group(
                 base_path('/app/Containers/Auth/Routes/auth.php')
             );
