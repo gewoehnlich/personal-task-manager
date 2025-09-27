@@ -2,9 +2,9 @@
 
 namespace App\Ship\Parents;
 
-use App\Ship\Abstracts\Dto\Dto as CoreDto;
+use App\Ship\Abstracts\Dto\Dto as AbstractDto;
 
-abstract class Dto extends CoreDto
+abstract class Dto extends AbstractDto
 {
     //
 }

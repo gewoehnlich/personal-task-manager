@@ -43,17 +43,17 @@ Route::post('logout', [
     'destroy',
 ])->name('logout');
 
-Route::get('api/tokens/create', [
+Route::get('tokens/create', [
     TokenController::class,
     'create',
 ]);
 
-Route::get('api/tokens/renew', [
+Route::get('tokens/renew', [
     TokenController::class,
     'renew',
 ]);
 
-Route::get('api/tokens/delete', [
+Route::get('tokens/delete', [
     TokenController::class,
     'delete',
 ]);
