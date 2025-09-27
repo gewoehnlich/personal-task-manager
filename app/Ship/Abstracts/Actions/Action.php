@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ship\Parents;
+namespace App\Ship\Abstracts\Actions;
 
 abstract class Action
 {
