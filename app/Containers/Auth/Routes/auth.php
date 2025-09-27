@@ -4,6 +4,7 @@ use App\Containers\Auth\Controllers\AuthenticatedSessionController;
 use App\Containers\Auth\Controllers\ConfirmablePasswordController;
 use App\Containers\Auth\Controllers\EmailVerificationNotificationController;
 use App\Containers\Auth\Controllers\EmailVerificationPromptController;
+use App\Containers\Auth\Controllers\TokenController;
 use App\Containers\Auth\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +42,18 @@ Route::post('logout', [
     AuthenticatedSessionController::class,
     'destroy',
 ])->name('logout');
+
+Route::get('api/tokens/create', [
+    TokenController::class,
+    'create',
+]);
+
+Route::get('api/tokens/renew', [
+    TokenController::class,
+    'renew',
+]);
+
+Route::get('api/tokens/delete', [
+    TokenController::class,
+    'delete',
+]);

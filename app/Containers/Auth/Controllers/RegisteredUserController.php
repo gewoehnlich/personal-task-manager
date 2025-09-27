@@ -2,7 +2,7 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Ship\Parents\Controller;
+use App\Ship\Parents\Controllers\WebController;
 use App\Containers\Users\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -13,7 +13,7 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class RegisteredUserController extends Controller
+class RegisteredUserController extends WebController
 {
     /**
      * Show the registration page.

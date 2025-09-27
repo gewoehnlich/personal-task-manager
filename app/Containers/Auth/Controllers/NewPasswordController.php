@@ -2,7 +2,7 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Ship\Parents\Controller;
+use App\Ship\Parents\Controllers\WebController;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class NewPasswordController extends Controller
+class NewPasswordController extends WebController
 {
     /**
      * Show the password reset page.

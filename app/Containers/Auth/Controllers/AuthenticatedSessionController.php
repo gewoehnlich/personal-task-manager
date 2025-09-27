@@ -2,7 +2,7 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Ship\Parents\Controller;
+use App\Ship\Parents\Controllers\WebController;
 use App\Containers\Auth\Requests\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class AuthenticatedSessionController extends Controller
+class AuthenticatedSessionController extends WebController
 {
     /**
      * Show the login page.

@@ -2,12 +2,12 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Ship\Parents\Controller;
+use App\Ship\Parents\Controllers\WebController;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 
-class VerifyEmailController extends Controller
+class VerifyEmailController extends WebController
 {
     /**
      * Mark the authenticated user's email address as verified.

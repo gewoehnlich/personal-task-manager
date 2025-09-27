@@ -2,9 +2,9 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Services\API\TokenService;
+use App\Ship\Parents\Controllers\WebController;
 
-final class TokenController extends APIController
+final class TokenController extends WebController
 {
     public static function create(): string
     {

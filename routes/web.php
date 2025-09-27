@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\TokenController;
 use App\Containers\Tasks\Models\Task;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,33 +16,3 @@ Route::get('dashboard', function () {
     'auth',
     'verified',
 ])->name('dashboard');
-
-Route::middleware(
-    'auth'
-)->group(
-    function () {
-        Route::get(
-            'api/tokens/create',
-            [
-                TokenController::class,
-                'create',
-            ]
-        );
-
-        Route::get(
-            'api/tokens/renew',
-            [
-                TokenController::class,
-                'renew',
-            ]
-        );
-
-        Route::get(
-            'api/tokens/delete',
-            [
-                TokenController::class,
-                'delete',
-            ]
-        );
-    }
-);

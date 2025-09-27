@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ship\Parents;
+namespace App\Ship\Parents\Controllers;
 
 use App\Ship\Abstracts\Controllers\Controller;
 
