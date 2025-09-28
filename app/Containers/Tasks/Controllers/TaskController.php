@@ -2,28 +2,26 @@
 
 namespace App\Containers\Tasks\Controllers;
 
+use App\Containers\Tasks\Actions\CreateTaskAction;
 use App\Containers\Tasks\Requests\CreateTaskRequest;
 use App\Containers\Tasks\Requests\DeleteTaskRequest;
 use App\Containers\Tasks\Requests\ReadTaskRequest;
 use App\Containers\Tasks\Requests\UpdateTaskRequest;
 use App\Services\API\TaskService;
-use Illuminate\Http\JsonResponse;
+use App\Ship\Abstracts\Responders\Responder;
 
 final readonly class TaskController // extends APIController
 {
     /**
      * Display a listing of the resource.
      */
-    final public static function index(ReadTaskRequest $request): JsonResponse
-    {
-        $result = TaskService::read($request);
-
-        // move this to APIController method
-        return response()->json([
-            'error'   => false,
-            'message' => 'Успешный запрос на чтение задач!',
-            'result'  => $result,
-        ]);
+    final public static function index(
+        ReadTaskRequest $request,
+    ): Responder {
+        return $this->action(
+            CreateTaskAction::class,
+            $request->transported(),
+        );
     }
 
     /**
@@ -37,8 +35,9 @@ final readonly class TaskController // extends APIController
     /**
      * Store a newly created resource in storage.
      */
-    final public function store(CreateTaskRequest $request): JsonResponse
-    {
+    final public function store(
+        CreateTaskRequest $request,
+    ): Responder {
         $result = TaskService::create($request);
 
         return response()->json([
@@ -51,16 +50,18 @@ final readonly class TaskController // extends APIController
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
+    public function show(
+        string $id,
+    ) {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
+    public function edit(
+        string $id,
+    ) {
         //
     }
 
@@ -69,8 +70,8 @@ final readonly class TaskController // extends APIController
      */
     final public static function update(
         UpdateTaskRequest $request,
-        int $id
-    ): JsonResponse {
+        int $id,
+    ): Responder {
         $request->merge(['id' => $id]);
         $result = TaskService::update($request);
 
@@ -86,8 +87,8 @@ final readonly class TaskController // extends APIController
      */
     final public static function destroy(
         DeleteTaskRequest $request,
-        int $id
-    ): JsonResponse {
+        int $id,
+    ): Responder {
         $request->merge(['id' => $id]);
         $result = TaskService::delete($request);
 
