@@ -2,9 +2,9 @@
 
 namespace App\Containers\Tasks\Requests;
 
-use App\Http\Requests\API\APIRequest;
+use App\Ship\Parents\Requests\Request;
 
-abstract class TaskRequest extends APIRequest
+abstract class TaskRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

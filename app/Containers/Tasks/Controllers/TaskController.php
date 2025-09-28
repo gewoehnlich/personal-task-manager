@@ -10,15 +10,15 @@ use App\Containers\Tasks\Requests\CreateTaskRequest;
 use App\Containers\Tasks\Requests\DeleteTaskRequest;
 use App\Containers\Tasks\Requests\ReadTaskRequest;
 use App\Containers\Tasks\Requests\UpdateTaskRequest;
-use App\Services\API\TaskService;
 use App\Ship\Abstracts\Responders\Responder;
+use App\Ship\Parents\Controllers\WebController;
 
-final readonly class TaskController // extends APIController
+final class TaskController extends WebController
 {
     /**
      * Display a listing of the resource.
      */
-    final public static function index(
+    public function index(
         ReadTaskRequest $request,
     ): Responder {
         return $this->action(
@@ -38,7 +38,7 @@ final readonly class TaskController // extends APIController
     /**
      * Store a newly created resource in storage.
      */
-    final public function store(
+    public function store(
         CreateTaskRequest $request,
     ): Responder {
         return $this->action(
@@ -68,7 +68,7 @@ final readonly class TaskController // extends APIController
     /**
      * Update the specified resource in storage.
      */
-    final public static function update(
+    public function update(
         UpdateTaskRequest $request,
         int $id,
     ): Responder {
@@ -81,7 +81,7 @@ final readonly class TaskController // extends APIController
     /**
      * Remove the specified resource from storage.
      */
-    final public static function destroy(
+    public function destroy(
         DeleteTaskRequest $request,
         int $id,
     ): Responder {

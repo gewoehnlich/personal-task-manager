@@ -4,9 +4,9 @@ namespace App\Containers\Tasks\Actions;
 
 use App\Containers\Tasks\DTOs\CreateTaskDTO;
 use App\Containers\Tasks\Models\Task;
-use App\Ship\Tasks\Actions\Action;
+use App\Ship\Parents\Actions\Action;
 
-final class CreateTaskAction extends Action
+final readonly class CreateTaskAction extends Action
 {
     public static function run(
         CreateTaskDTO $dto

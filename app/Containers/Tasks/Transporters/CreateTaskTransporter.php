@@ -7,7 +7,7 @@ use App\Http\Requests\API\Tasks\CreateTaskRequest;
 use App\Ship\Tasks\Transfers\Transporters\TaskTransporter;
 use Illuminate\Support\Carbon;
 
-final readonly class CreateTaskTransporter extends TaskTransporter
+final class CreateTaskTransporter extends TaskTransporter
 {
     final public readonly int $userId;
     final public readonly string $title;
