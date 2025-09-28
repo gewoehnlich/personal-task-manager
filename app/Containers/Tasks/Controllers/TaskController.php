@@ -3,6 +3,9 @@
 namespace App\Containers\Tasks\Controllers;
 
 use App\Containers\Tasks\Actions\CreateTaskAction;
+use App\Containers\Tasks\Actions\IndexTasksAction;
+use App\Containers\Tasks\Actions\UpdateTaskAction;
+use App\Containers\Tasks\Actions\DeleteTaskAction;
 use App\Containers\Tasks\Requests\CreateTaskRequest;
 use App\Containers\Tasks\Requests\DeleteTaskRequest;
 use App\Containers\Tasks\Requests\ReadTaskRequest;
@@ -19,7 +22,7 @@ final readonly class TaskController // extends APIController
         ReadTaskRequest $request,
     ): Responder {
         return $this->action(
-            CreateTaskAction::class,
+            IndexTasksAction::class,
             $request->transported(),
         );
     }
@@ -38,13 +41,10 @@ final readonly class TaskController // extends APIController
     final public function store(
         CreateTaskRequest $request,
     ): Responder {
-        $result = TaskService::create($request);
-
-        return response()->json([
-            'error'   => false,
-            'message' => "Успешно cоздана новая задача № {$result->id}!",
-            'result'  => $result,
-        ]);
+        return $this->action(
+            CreateTaskAction::class,
+            $request->transported(),
+        );
     }
 
     /**
@@ -72,14 +72,10 @@ final readonly class TaskController // extends APIController
         UpdateTaskRequest $request,
         int $id,
     ): Responder {
-        $request->merge(['id' => $id]);
-        $result = TaskService::update($request);
-
-        return response()->json([
-            'error'   => false,
-            'message' => "Успешно обновлена задача № {$id}",
-            'result'  => $result,
-        ]);
+        return $this->action(
+            UpdateTaskAction::class,
+            $request->transported(),
+        );
     }
 
     /**
@@ -89,13 +85,9 @@ final readonly class TaskController // extends APIController
         DeleteTaskRequest $request,
         int $id,
     ): Responder {
-        $request->merge(['id' => $id]);
-        $result = TaskService::delete($request);
-
-        return response()->json([
-            'error'   => false,
-            'message' => "Успешно удалена задача № {$id}",
-            'result'  => $result,
-        ]);
+        return $this->action(
+            DeleteTaskAction::class,
+            $request->transported(),
+        );
     }
 }

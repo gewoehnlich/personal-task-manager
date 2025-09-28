@@ -11,6 +11,11 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
+    // public function dataClass(): string
+    // {
+    //     return GetUserTokenTransporter::class;
+    // }
+
     /**
      * Determine if the user is authorized to make this request.
      */
