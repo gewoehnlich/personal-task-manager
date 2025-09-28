@@ -35,6 +35,7 @@ final class TokenController extends WebController
     public function store(
         CreateUserTokenRequest $request,
     ): Responder {
+        dd('123');
         return $this->action(
             CreateUserTokenAction::class,
             $request->transported(),
