@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Actions;
+namespace App\Containers\Auth\Actions;
 
 use App\Containers\Auth\Transporters\CreateUserTokenTransporter;
 use App\Ship\Abstracts\Responders\Responder;
@@ -12,7 +12,7 @@ final readonly class CreateUserTokenAction extends Action
     public function run(
         CreateUserTokenTransporter $transporter,
     ): Responder {
-        $this->task(
+        $tokenExists = $this->task(
 
         )
     }

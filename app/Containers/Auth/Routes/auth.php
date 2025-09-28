@@ -43,12 +43,9 @@ Route::post('logout', [
     'destroy',
 ])->name('logout');
 
-Route::prefix('tokens')
-    ->name('tokens.')
-    ->group(
-        function () {
-            Route::resources([
-                'tokens' => TokenController::class,
-            ]);
-        }
-    );
+Route::prefix('')
+    ->group(function () {
+        Route::resources([
+            'tokens' => TokenController::class,
+        ]);
+    })->name('tokens.');

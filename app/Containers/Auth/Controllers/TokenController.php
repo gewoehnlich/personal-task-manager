@@ -2,6 +2,7 @@
 
 namespace App\Containers\Auth\Controllers;
 
+use App\Containers\Auth\Actions\CreateUserTokenAction;
 use App\Containers\Auth\Requests\CreateUserTokenRequest;
 use App\Containers\Auth\Requests\GetUserTokenRequest;
 use App\Containers\Auth\Requests\RefreshUserTokenRequest;
