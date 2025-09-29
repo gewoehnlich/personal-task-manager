@@ -36,6 +36,12 @@ return Application::configure(
             )->group(
                 base_path('/app/Containers/Auth/Routes/auth.php')
             );
+
+            Route::middleware(
+                'web',
+            )->group(
+                base_path('/app/Containers/Auth/Routes/tokens.php')
+            );
         },
     )->withMiddleware(
         function (Middleware $middleware) {

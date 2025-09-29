@@ -4,7 +4,7 @@ namespace App\Ship\Exceptions;
 
 use App\Ship\Abstracts\Exceptions\Exception;
 
-readonly class InvalidArgumentException extends Exception
+class InvalidArgumentException extends Exception
 {
     //
 }

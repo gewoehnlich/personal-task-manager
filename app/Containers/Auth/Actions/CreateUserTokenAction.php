@@ -19,5 +19,9 @@ final readonly class CreateUserTokenAction extends Action
             CheckIfUserTokenAlreadyExistsTask::class,
             user: $user,
         );
+
+        return $this->success(
+            $tokenExists,
+        );
     }
 }
