@@ -17,16 +17,6 @@ abstract class Exception extends SymfonyHttpException
 
     protected string $environment;
 
-    /**
-     * Exception constructor.
-     *
-     * @param null            $message
-     * @param null            $errors
-     * @param null            $statusCode
-     * @param int             $code
-     * @param \Exception|null $previous
-     * @param array           $headers
-     */
     public function __construct(
         ?string $message = null,
         ?MessageBag $errors = null,
