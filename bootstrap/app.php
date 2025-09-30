@@ -14,8 +14,10 @@ return Application::configure(
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
         api: __DIR__ . '/../routes/api.php',
+        commands: __DIR__ . '/../routes/commands.php',
         health: '/up',
         then: function () {
+            // todo: moved the routes from over here
             Route::middleware(
                 'web',
                 'auth',

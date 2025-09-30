@@ -7,11 +7,9 @@ use App\Containers\Auth\Requests\CreateUserTokenRequest;
 use App\Containers\Auth\Requests\GetUserTokenRequest;
 use App\Containers\Auth\Requests\RefreshUserTokenRequest;
 use App\Containers\Auth\Requests\RevokeUserTokenRequest;
-use App\Containers\Auth\Tasks\CheckIfUserTokenAlreadyExistsTask;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\WebController;
 use App\Ship\Traits\CanCallTaskTrait;
-use Illuminate\Support\Facades\Auth;
 
 final class TokenController extends WebController
 {
@@ -40,6 +38,7 @@ final class TokenController extends WebController
     public function store(
         CreateUserTokenRequest $request,
     ): Responder {
+        dd($request->transported());
         return $this->action(
             CreateUserTokenAction::class,
             $request->transported(),

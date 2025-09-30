@@ -2,10 +2,10 @@
 
 namespace App\Containers\Auth\Requests;
 
+use App\Containers\Auth\Parents\Requests\UserTokenRequest;
 use App\Containers\Auth\Transporters\CreateUserTokenTransporter;
-use App\Ship\Parents\Requests\Request;
 
-final class CreateUserTokenRequest extends Request
+final class CreateUserTokenRequest extends UserTokenRequest
 {
     public function dataClass(): string
     {
@@ -15,12 +15,5 @@ final class CreateUserTokenRequest extends Request
     public function authorize(): bool
     {
         return true;
-    }
-
-    public function rules(): array
-    {
-        return [
-            //
-        ];
     }
 }

@@ -7,7 +7,7 @@ use App\Ship\Parents\Requests\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class ErrorResponder extends AbstractResponder
+class ErrorResponder extends AbstractResponder
 {
     public int $status = Response::HTTP_BAD_REQUEST;
     public string $message;
