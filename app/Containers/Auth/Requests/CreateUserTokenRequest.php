@@ -2,11 +2,18 @@
 
 namespace App\Containers\Auth\Requests;
 
-use App\Containers\Auth\Parents\Requests\UserTokenRequest;
 use App\Containers\Auth\Transporters\CreateUserTokenTransporter;
+use App\Ship\Parents\Requests\Request;
 
-final class CreateUserTokenRequest extends UserTokenRequest
+final class CreateUserTokenRequest extends Request
 {
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'user' => $this->user(),
+        ]);
+    }
+
     public function dataClass(): string
     {
         return CreateUserTokenTransporter::class;
@@ -15,5 +22,12 @@ final class CreateUserTokenRequest extends UserTokenRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'user' => 'required',
+        ];
     }
 }
