@@ -32,9 +32,9 @@ final class TokenController extends WebController
     public function revoke(
         Request $request,
     ): Responder {
-        // return $this->action(
-        //     RevokeUserTokenAction::class,
-        //     user: $request->user(),
-        // );
+        return $this->action(
+            RevokeUserTokenAction::class,
+            user: $request->user(),
+        );
     }
 }
