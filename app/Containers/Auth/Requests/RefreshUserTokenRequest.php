@@ -7,6 +7,13 @@ use App\Ship\Parents\Requests\Request;
 
 final class RefreshUserTokenRequest extends Request
 {
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'user' => $this->user(),
+        ]);
+    }
+
     public function dataClass(): string
     {
         return RefreshUserTokenTransporter::class;
@@ -20,7 +27,7 @@ final class RefreshUserTokenRequest extends Request
     public function rules(): array
     {
         return [
-            //
+            'user' => 'required',
         ];
     }
 }
