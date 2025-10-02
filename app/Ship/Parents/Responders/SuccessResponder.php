@@ -8,8 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SuccessResponder extends AbstractResponder
 {
-    public int $status = Response::HTTP_OK;
-    public array $data = [];
+    public function __construct(
+        public int $status = Response::HTTP_OK,
+        public array $data = [],
+    ) {
+        //
+    }
 
     public function toResponse(
         $request,

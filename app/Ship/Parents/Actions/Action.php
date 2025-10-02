@@ -19,11 +19,9 @@ abstract readonly class Action extends AbstractAction
     protected function success(
         array $data = []
     ): Responder {
-        $data = [
-            'data' => $data,
-        ];
-
-        return new SuccessResponder($data);
+        return new SuccessResponder(
+            data: $data,
+        );
     }
 
     protected function error(
