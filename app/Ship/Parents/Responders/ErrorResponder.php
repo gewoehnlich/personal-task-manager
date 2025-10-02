@@ -3,7 +3,6 @@
 namespace App\Ship\Parents\Responders;
 
 use App\Ship\Abstracts\Responders\Responder as AbstractResponder;
-use App\Ship\Parents\Requests\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,7 +12,7 @@ class ErrorResponder extends AbstractResponder
     public string $message;
 
     public function toResponse(
-        Request $request,
+        $request,
     ): Response {
         return new JsonResponse(
             data: [

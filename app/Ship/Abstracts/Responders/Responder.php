@@ -2,9 +2,9 @@
 
 namespace App\Ship\Abstracts\Responders;
 
-use Spatie\LaravelData\Dto;
+use Spatie\LaravelData\Data;
 
-abstract class Responder extends Dto
+abstract class Responder extends Data
 {
     //
 }
