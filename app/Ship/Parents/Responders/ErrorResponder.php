@@ -8,8 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ErrorResponder extends AbstractResponder
 {
-    public int $status = Response::HTTP_BAD_REQUEST;
-    public string $message;
+    public function __construct(
+        public int $status = Response::HTTP_BAD_REQUEST,
+        public string $message = '',
+    ) {
+        //
+    }
+
 
     public function toResponse(
         $request,

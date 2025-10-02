@@ -5,7 +5,7 @@ namespace App\Containers\Auth\Actions;
 use App\Containers\Auth\Tasks\CheckIfUserTokenAlreadyExistsTask;
 use App\Containers\Auth\Tasks\DeleteExistingTokensTask;
 use App\Containers\Auth\Tasks\GenerateUserTokenTask;
-use App\Containers\Auth\Transporters\RefreshUserTokenTransporter;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
@@ -13,13 +13,12 @@ use App\Ship\Parents\Exceptions\Exception;
 final readonly class RefreshUserTokenAction extends Action
 {
     public function run(
-        RefreshUserTokenTransporter $transporter,
+        User $user,
     ): Responder {
         try {
-            dd('123');
             $tokenExists = $this->task(
                 CheckIfUserTokenAlreadyExistsTask::class,
-                user: $transporter->user,
+                user: $user,
             );
 
             if (!$tokenExists) {
@@ -30,12 +29,12 @@ final readonly class RefreshUserTokenAction extends Action
 
             $this->task(
                 DeleteExistingTokensTask::class,
-                user: $transporter->user,
+                user: $user,
             );
 
             $newToken = $this->task(
                 GenerateUserTokenTask::class,
-                user: $transporter->user,
+                user: $user,
             );
 
             return $this->success(

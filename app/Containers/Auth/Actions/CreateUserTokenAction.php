@@ -4,7 +4,7 @@ namespace App\Containers\Auth\Actions;
 
 use App\Containers\Auth\Tasks\CheckIfUserTokenAlreadyExistsTask;
 use App\Containers\Auth\Tasks\GenerateUserTokenTask;
-use App\Containers\Auth\Transporters\CreateUserTokenTransporter;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
@@ -12,12 +12,12 @@ use App\Ship\Parents\Exceptions\Exception;
 final readonly class CreateUserTokenAction extends Action
 {
     public function run(
-        CreateUserTokenTransporter $transporter,
+        User $user,
     ): Responder {
         try {
             $tokenExists = $this->task(
                 CheckIfUserTokenAlreadyExistsTask::class,
-                user: $transporter->user,
+                user: $user,
             );
 
             if ($tokenExists) {
@@ -28,7 +28,7 @@ final readonly class CreateUserTokenAction extends Action
 
             $token = $this->task(
                 GenerateUserTokenTask::class,
-                user: $transporter->user,
+                user: $user,
             );
 
             return $this->success(

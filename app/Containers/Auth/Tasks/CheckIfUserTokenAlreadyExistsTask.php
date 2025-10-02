@@ -10,6 +10,8 @@ final readonly class CheckIfUserTokenAlreadyExistsTask extends Task
     public function run(
         User $user,
     ): bool {
-        return empty($user->tokens());
+        return !empty(
+            $user->tokens()->get()
+        );
     }
 }

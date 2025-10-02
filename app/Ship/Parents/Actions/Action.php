@@ -27,11 +27,9 @@ abstract readonly class Action extends AbstractAction
     protected function error(
         string $message
     ): Responder {
-        $data = [
-            'message' => $message,
-        ];
-
-        return new ErrorResponder($data);
+        return new ErrorResponder(
+            message: $message
+        );
     }
 
     protected function response(
