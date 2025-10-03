@@ -30,7 +30,6 @@ final class CreateTaskRequest extends Request
             'stage'       => ['required', Rule::enum(Stage::class)],
             'deadline'    => ['required', 'date', 'date_format:Y-m-d H:i:s'],
             'parent_id'   => ['nullable', 'integer', 'exists:tasks,id'],
-            'project_id'  => ['nullable', 'integer', 'exists:projects,id'],
         ];
     }
 

@@ -21,7 +21,6 @@ final class Task extends Model
         'stage',
         'deadline',
         'parent_id',
-        'project_id',
     ];
 
     protected $hidden = [
@@ -38,11 +37,6 @@ final class Task extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function project(): BelongsTo
-    {
-        return $this->belongsTo(Project::class);
     }
 
     public function bill(): HasMany

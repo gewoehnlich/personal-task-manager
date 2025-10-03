@@ -21,7 +21,6 @@ final readonly class CreateTaskAction extends Action
                 'stage'       => $transporter->stage,
                 'deadline'    => $transporter->deadline,
                 'parent_id'   => $transporter->parentId,
-                'project_id'  => $transporter->projectId,
             ]);
 
             return $this->success(
