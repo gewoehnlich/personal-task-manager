@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Tasks\Controllers;
+namespace App\Containers\Tasks\Controllers\Api;
 
 use App\Containers\Tasks\Actions\CreateTaskAction;
 use App\Containers\Tasks\Actions\IndexTasksAction;
@@ -15,9 +15,6 @@ use App\Ship\Parents\Controllers\WebController;
 
 final class TaskController extends WebController
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(
         ReadTaskRequest $request,
     ): Responder {
@@ -27,18 +24,7 @@ final class TaskController extends WebController
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(
+    public function create(
         CreateTaskRequest $request,
     ): Responder {
         return $this->action(
@@ -47,27 +33,6 @@ final class TaskController extends WebController
         );
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(
-        string $id,
-    ) {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(
-        string $id,
-    ) {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(
         UpdateTaskRequest $request,
         int $id,
@@ -78,10 +43,7 @@ final class TaskController extends WebController
         );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(
+    public function delete(
         DeleteTaskRequest $request,
         int $id,
     ): Responder {

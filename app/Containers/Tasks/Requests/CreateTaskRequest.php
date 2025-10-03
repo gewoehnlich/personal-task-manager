@@ -2,26 +2,25 @@
 
 namespace App\Containers\Tasks\Requests;
 
-use App\Enums\API\Tasks\Stage;
+use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Transporters\CreateTaskTransporter;
+use App\Ship\Parents\Requests\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
-final class CreateTaskRequest extends TaskRequest
+final class CreateTaskRequest extends Request
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    public function dataClass(): string
+    {
+        return CreateTaskTransporter::class;
+    }
+
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [

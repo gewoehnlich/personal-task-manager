@@ -1,5 +1,6 @@
 <?php
 
+use App\Ship\Middleware\EnsureAcceptHeaderIsJson;
 use App\Ship\Middleware\HandleAppearance;
 use App\Ship\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
@@ -43,6 +44,15 @@ return Application::configure(
                 'web',
             )->group(
                 base_path('/app/Containers/Auth/Routes/tokens.php')
+            );
+
+            Route::middleware(
+                'auth:sanctum',
+                EnsureAcceptHeaderIsJson::class,
+            )->prefix(
+                '/api'
+            )->group(
+                base_path('/app/Containers/Tasks/Routes/Api/api.php'),
             );
         },
     )->withMiddleware(
