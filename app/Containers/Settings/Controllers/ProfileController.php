@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ProfileController extends WebController
+final readonly class ProfileController extends WebController
 {
     /**
      * Show the user's profile settings page.

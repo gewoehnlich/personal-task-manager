@@ -24,11 +24,6 @@ return new class extends Migration
                 ->references('id')
                 ->on('tasks')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('project_id');
-            $table->foreign('project_id')
-                ->references('id')
-                ->on('projects')
-                ->onDelete('cascade');
             $table->string('title');
             $table->text('description');
             $table->enum('stage', [

@@ -10,7 +10,7 @@ use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class PasswordController extends WebController
+final readonly class PasswordController extends WebController
 {
     /**
      * Show the user's password settings page.

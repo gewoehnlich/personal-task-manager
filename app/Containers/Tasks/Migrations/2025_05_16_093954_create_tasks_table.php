@@ -21,7 +21,6 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')
                 ->references('id')->on('tasks')->onDelete('cascade');
-            $table->unsignedBigInteger('project_id');
             $table->string('title');
             $table->text('description');
             $table->enum('stage', ['pending', 'active', 'delayed', 'done']);
