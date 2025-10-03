@@ -13,7 +13,7 @@ use App\Containers\Tasks\Requests\UpdateTaskRequest;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\WebController;
 
-final class TaskController extends WebController
+final readonly class TaskController extends WebController
 {
     public function index(
         ReadTaskRequest $request,
@@ -37,6 +37,7 @@ final class TaskController extends WebController
         UpdateTaskRequest $request,
         int $id,
     ): Responder {
+        dd($request->transported());
         return $this->action(
             UpdateTaskAction::class,
             $request->transported(),

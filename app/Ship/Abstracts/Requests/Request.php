@@ -5,7 +5,7 @@ namespace App\Ship\Abstracts\Requests;
 use Illuminate\Foundation\Http\FormRequest as LaravelRequest;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\WithData;
-use Tairai\Ship\Captain\Exceptions\TransporterIsMissingException;
+use App\Ship\Exceptions\TransporterIsMissingException;
 
 abstract class Request extends LaravelRequest
 {

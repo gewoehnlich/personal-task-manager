@@ -6,7 +6,7 @@ use App\Ship\Parents\Controllers\WebController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class EmailVerificationNotificationController extends WebController
+final readonly class EmailVerificationNotificationController extends WebController
 {
     /**
      * Send a new email verification notification.

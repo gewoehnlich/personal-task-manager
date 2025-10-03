@@ -2,7 +2,7 @@
 
 namespace App\Ship\Abstracts\Actions;
 
-abstract class Subaction
+abstract readonly class Subaction
 {
     //
 }

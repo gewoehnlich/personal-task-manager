@@ -13,7 +13,7 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class RegisteredUserController extends WebController
+final readonly class RegisteredUserController extends WebController
 {
     /**
      * Show the registration page.

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class AuthenticatedSessionController extends WebController
+final readonly class AuthenticatedSessionController extends WebController
 {
     /**
      * Show the login page.

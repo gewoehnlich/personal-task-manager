@@ -2,7 +2,7 @@
 
 namespace App\Ship\Abstracts\Controllers;
 
-abstract class Controller
+abstract readonly class Controller
 {
     //
 }

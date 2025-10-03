@@ -2,9 +2,9 @@
 
 namespace App\Containers\Tasks\Models;
 
-use App\Models\Bill;
-use App\Models\Project;
-use App\Models\User;
+use App\Containers\Bills\Models\Bill;
+use App\Containers\Projects\Models\Project;
+use App\Containers\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,35 +14,20 @@ final class Task extends Model
 {
     use HasFactory;
 
-        /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'user_id',
         'title',
         'description',
-        'taskStatus',
+        'stage',
         'deadline',
         'parent_id',
         'project_id',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         //
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [

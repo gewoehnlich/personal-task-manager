@@ -5,7 +5,12 @@ namespace App\Containers\Tasks\Transporters;
 use App\Containers\Tasks\Enums\Stage;
 use App\Ship\Parents\Transporters\Transporter;
 use Illuminate\Support\Carbon;
+use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
+#[MapName(SnakeCaseMapper::class)]
 final class CreateTaskTransporter extends Transporter
 {
     public function __construct(
@@ -13,6 +18,7 @@ final class CreateTaskTransporter extends Transporter
         public readonly string $title,
         public readonly string $description,
         public readonly Stage $stage,
+        #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
         public readonly Carbon $deadline,
         public readonly ?int $parentId,
         public readonly ?int $projectId,

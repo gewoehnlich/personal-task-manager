@@ -9,7 +9,7 @@ use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\WebController;
 use Illuminate\Http\Request;
 
-final class TokenController extends WebController
+final readonly class TokenController extends WebController
 {
     public function create(
         Request $request,
