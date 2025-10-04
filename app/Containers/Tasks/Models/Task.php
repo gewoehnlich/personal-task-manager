@@ -3,7 +3,6 @@
 namespace App\Containers\Tasks\Models;
 
 use App\Containers\Bills\Models\Bill;
-use App\Containers\Projects\Models\Project;
 use App\Containers\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +20,7 @@ final class Task extends Model
         'stage',
         'deadline',
         'parent_id',
+        'deleted',
     ];
 
     protected $hidden = [

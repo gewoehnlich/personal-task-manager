@@ -2,6 +2,8 @@
 
 namespace App\Containers\Tasks\Actions;
 
+use App\Containers\Tasks\Criteria\FilterByIdCriterion;
+use App\Containers\Tasks\Criteria\FilterByUserIdCriterion;
 use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Containers\Tasks\Transporters\TaskDeleteTransporter;
 use App\Ship\Abstracts\Responders\Responder;
@@ -20,10 +22,19 @@ final readonly class TaskDeleteAction extends Action
         TaskDeleteTransporter $transporter,
     ): Responder {
         try {
-            $task = $this->repository->where([
-                'id'      => $transporter->id,
-                'user_id' => $transporter->userId
-            ]);
+            $this->repository->pushCriteria(
+                criteria: new FilterByUserIdCriterion(
+                    userId: $transporter->userId,
+                ),
+            );
+
+            $this->repository->pushCriteria(
+                criteria: new FilterByIdCriterion(
+                    id: $transporter->id,
+                ),
+            );
+
+            $task = $this->repository->get()->first();
 
             if (!isset($task)) {
                 throw new Exception('can\'t find task.');
