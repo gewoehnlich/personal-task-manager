@@ -35,7 +35,6 @@ final readonly class TaskController extends WebController
 
     public function update(
         UpdateTaskRequest $request,
-        int $id,
     ): Responder {
         return $this->action(
             UpdateTaskAction::class,
@@ -45,7 +44,6 @@ final readonly class TaskController extends WebController
 
     public function delete(
         DeleteTaskRequest $request,
-        int $id,
     ): Responder {
         return $this->action(
             DeleteTaskAction::class,

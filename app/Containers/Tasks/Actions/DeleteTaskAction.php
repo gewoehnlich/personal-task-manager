@@ -2,21 +2,42 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\DTOs\DeleteTaskDTO;
-use App\Containers\Tasks\Models\Task;
-use App\Ship\Tasks\Actions\Action;
+use App\Containers\Tasks\Repositories\TaskRepository;
+use App\Containers\Tasks\Transporters\DeleteTaskTransporter;
+use App\Ship\Abstracts\Responders\Responder;
+use App\Ship\Parents\Actions\Action;
+use App\Ship\Parents\Exceptions\Exception;
 
-final abstract class DeleteTaskAction extends Action
+final readonly class DeleteTaskAction extends Action
 {
-    final public static function run(DeleteTaskDTO $dto): Task
-    {
-        $task   = Task::where([
-            'id' => $dto->id,
-            'user_id' => $dto->userId
-        ]);
+    public function __construct(
+        private readonly TaskRepository $repository,
+    ) {
+        //
+    }
 
-        $result = $task->delete();
+    public function run(
+        DeleteTaskTransporter $transporter,
+    ): Responder {
+        try {
+            $task = $this->repository->where([
+                'id'      => $transporter->id,
+                'user_id' => $transporter->userId
+            ]);
 
-        return $result;
+            if (!isset($task)) {
+                throw new Exception('can\'t find task.');
+            }
+
+            $result = $task->delete();
+
+            return $this->success(
+                data: ['result' => $result],
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getErrors(),
+            );
+        }
     }
 }

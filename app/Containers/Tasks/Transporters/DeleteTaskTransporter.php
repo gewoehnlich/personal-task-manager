@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Containers\Tasks\DTOs;
+namespace App\Containers\Tasks\Transporters;
 
-use App\Http\Requests\API\Tasks\DeleteTaskRequest;
+use App\Ship\Parents\Transporters\Transporter;
+use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
-final class DeleteTaskDTO extends TaskDTO
+#[MapName(SnakeCaseMapper::class)]
+final class DeleteTaskTransporter extends Transporter
 {
-    final public readonly int $id;
-    final public readonly int $userId;
-
-    public function __construct(DeleteTaskRequest $request)
-    {
-        $this->id     = $request->id;
-        $this->userId = $request->user_id;
+    public function __construct(
+        public readonly int $id,
+        public readonly int $userId,
+    ) {
+        //
     }
 }
