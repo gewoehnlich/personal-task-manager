@@ -3,12 +3,12 @@
 namespace App\Containers\Tasks\Actions;
 
 use App\Containers\Tasks\Repositories\TaskRepository;
-use App\Containers\Tasks\Transporters\CreateTaskTransporter;
+use App\Containers\Tasks\Transporters\TaskCreateTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 
-final readonly class CreateTaskAction extends Action
+final readonly class TaskCreateAction extends Action
 {
     public function __construct(
         private readonly TaskRepository $repository,
@@ -17,7 +17,7 @@ final readonly class CreateTaskAction extends Action
     }
 
     public function run(
-        CreateTaskTransporter $transporter,
+        TaskCreateTransporter $transporter,
     ): Responder {
         try {
             $result = $this->repository->create([

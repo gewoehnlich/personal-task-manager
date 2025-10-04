@@ -2,13 +2,13 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\Transporters\UpdateTaskTransporter;
 use App\Containers\Tasks\Repositories\TaskRepository;
+use App\Containers\Tasks\Transporters\TaskDeleteTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 
-final readonly class UpdateTaskAction extends Action
+final readonly class TaskDeleteAction extends Action
 {
     public function __construct(
         private readonly TaskRepository $repository,
@@ -17,7 +17,7 @@ final readonly class UpdateTaskAction extends Action
     }
 
     public function run(
-        UpdateTaskTransporter $transporter,
+        TaskDeleteTransporter $transporter,
     ): Responder {
         try {
             $task = $this->repository->where([
@@ -29,15 +29,7 @@ final readonly class UpdateTaskAction extends Action
                 throw new Exception('can\'t find task.');
             }
 
-            $result = $task->update([
-                'id'          => $transporter->id,
-                'user_id'     => $transporter->userId,
-                'title'       => $transporter->title,
-                'description' => $transporter->description,
-                'stage'       => $transporter->stage,
-                'deadline'    => $transporter->deadline,
-                'parent_id'   => $transporter->parentId,
-            ]);
+            $result = $task->delete();
 
             return $this->success(
                 data: ['result' => $result],

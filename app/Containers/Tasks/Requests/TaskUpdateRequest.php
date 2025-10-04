@@ -3,17 +3,17 @@
 namespace App\Containers\Tasks\Requests;
 
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Transporters\CreateTaskTransporter;
+use App\Containers\Tasks\Transporters\TaskUpdateTransporter;
 use App\Ship\Parents\Requests\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
-final class CreateTaskRequest extends Request
+final class TaskUpdateRequest extends Request
 {
     public function transporter(): string
     {
-        return CreateTaskTransporter::class;
+        return TaskUpdateTransporter::class;
     }
 
     public function authorize(): bool
@@ -24,6 +24,7 @@ final class CreateTaskRequest extends Request
     public function rules(): array
     {
         return [
+            'id'          => ['required', 'integer', 'exists:tasks,id'],
             'user_id'     => ['required', 'integer', 'exists:users,id'],
             'title'       => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:65535'],
@@ -50,6 +51,7 @@ final class CreateTaskRequest extends Request
     protected function prepareForValidation(): void
     {
         $this->merge([
+            'id'      => $this->route('id'),
             'user_id' => $this->user()->id,
         ]);
     }

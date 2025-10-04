@@ -7,7 +7,7 @@ use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class DeleteTaskTransporter extends Transporter
+final class TaskDeleteTransporter extends Transporter
 {
     public function __construct(
         public readonly int $id,

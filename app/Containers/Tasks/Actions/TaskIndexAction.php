@@ -12,13 +12,13 @@ use App\Containers\Tasks\Criteria\FilterByProjectIdCriterion;
 use App\Containers\Tasks\Criteria\FilterByStageCriterion;
 use App\Containers\Tasks\Criteria\FilterByUpdatedAtRangeCriterion;
 use App\Containers\Tasks\Criteria\FilterByUserIdCriterion;
-use App\Containers\Tasks\Transporters\IndexTasksTransporter;
 use App\Containers\Tasks\Repositories\TaskRepository;
+use App\Containers\Tasks\Transporters\TaskIndexTransporter;
 use App\Ship\Abstracts\Responders\Responder;
-use App\Ship\Parents\Actions\Action as ActionsAction;
+use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 
-final readonly class IndexTasksAction extends ActionsAction
+final readonly class TaskIndexAction extends Action
 {
     public function __construct(
         private readonly TaskRepository $repository,
@@ -27,7 +27,7 @@ final readonly class IndexTasksAction extends ActionsAction
     }
 
     public function run(
-        IndexTasksTransporter $transporter,
+        TaskIndexTransporter $transporter,
     ): Responder {
         try {
             $this->repository->pushCriteria(

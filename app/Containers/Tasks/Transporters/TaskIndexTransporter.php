@@ -11,7 +11,7 @@ use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class IndexTasksTransporter extends Transporter
+final class TaskIndexTransporter extends Transporter
 {
     public function __construct(
         public readonly int $userId,
