@@ -37,6 +37,7 @@ final readonly class TaskUpdateAction extends Action
                 'stage'       => $transporter->stage,
                 'deadline'    => $transporter->deadline,
                 'parent_id'   => $transporter->parentId,
+                'deleted'     => $transporter->deleted,
             ]);
 
             return $this->success(

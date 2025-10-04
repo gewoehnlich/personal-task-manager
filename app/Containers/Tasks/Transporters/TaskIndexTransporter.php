@@ -34,6 +34,7 @@ final class TaskIndexTransporter extends Transporter
         public readonly ?string $orderBy,
         public readonly ?string $orderByField,
         public readonly ?int $limit,
+        public readonly ?bool $deleted,
     ) {
         //
     }

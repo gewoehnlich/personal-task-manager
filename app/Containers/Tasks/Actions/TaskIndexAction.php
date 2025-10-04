@@ -4,6 +4,7 @@ namespace App\Containers\Tasks\Actions;
 
 use App\Containers\Tasks\Criteria\FilterByCreatedAtRangeCriterion;
 use App\Containers\Tasks\Criteria\FilterByDeadlineRangeCriterion;
+use App\Containers\Tasks\Criteria\FilterByDeletedCriterion;
 use App\Containers\Tasks\Criteria\FilterByIdCriterion;
 use App\Containers\Tasks\Criteria\FilterByLimitCriterion;
 use App\Containers\Tasks\Criteria\FilterByOrderByCriterion;
@@ -91,6 +92,12 @@ final readonly class TaskIndexAction extends Action
             $this->repository->pushCriteria(
                 criteria: new FilterByLimitCriterion(
                     limit: $transporter->limit,
+                ),
+            );
+
+            $this->repository->pushCriteria(
+                criteria: new FilterByDeletedCriterion(
+                    deleted: $transporter->deleted,
                 ),
             );
 

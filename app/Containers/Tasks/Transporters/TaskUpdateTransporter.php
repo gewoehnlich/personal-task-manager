@@ -22,6 +22,7 @@ final class TaskUpdateTransporter extends Transporter
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
         public readonly Carbon $deadline,
         public readonly ?int $parentId,
+        public readonly ?bool $deleted,
     ) {
         //
     }

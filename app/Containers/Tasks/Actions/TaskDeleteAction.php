@@ -29,10 +29,12 @@ final readonly class TaskDeleteAction extends Action
                 throw new Exception('can\'t find task.');
             }
 
-            $result = $task->delete();
+            $task->update([
+                'deleted' => true,
+            ]);
 
             return $this->success(
-                data: ['result' => $result],
+                data: ['result' => true],
             );
         } catch (Exception $exception) {
             return $this->error(

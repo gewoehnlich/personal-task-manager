@@ -37,6 +37,7 @@ final class TaskIndexRequest extends Request
             'order_by'        => ['nullable', 'string', 'in:asc,desc'],
             'order_by_field'  => ['nullable', 'string', 'in:id,created_at,updated_at,deadline,stage'],
             'limit'           => ['nullable', 'integer'],
+            'deleted'         => ['nullable', 'boolean'],
         ];
     }
 
