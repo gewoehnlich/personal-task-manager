@@ -4,12 +4,19 @@ namespace App\Containers\Tasks\Actions;
 
 use App\Containers\Tasks\Transporters\IndexTasksTransporter;
 use App\Containers\Tasks\Models\Task;
+use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action as ActionsAction;
 use App\Ship\Parents\Exceptions\Exception;
 
 final readonly class IndexTasksAction extends ActionsAction
 {
+    public function __construct(
+        private readonly TaskRepository $repository,
+    ) {
+        //
+    }
+
     public function run(
         IndexTasksTransporter $transporter,
     ): Responder {
