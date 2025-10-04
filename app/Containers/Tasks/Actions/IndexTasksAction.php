@@ -2,14 +2,16 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\DTOs\ReadTaskDTO;
+use App\Containers\Tasks\DTOs\IndexTasksTransporter;
 use App\Containers\Tasks\Models\Task;
-use App\Ship\Tasks\Actions\Action;
+use App\Ship\Abstracts\Responders\Responder;
+use App\Ship\Parents\Actions\Action as ActionsAction;
 
-final abstract class ReadTaskAction extends Action
+final readonly class IndexTasksAction extends ActionsAction
 {
-    final public static function run(ReadTaskDTO $dto): Task
-    {
+    public function run(
+        IndexTasksTransporter $transporter,
+    ): Responder {
         $query = Task::query();
 
         if (!empty($dto->userId)) {
