@@ -40,6 +40,8 @@ COPY --from=composer:2.8.2 /usr/bin/composer /usr/bin/composer
 
 COPY ../../composer.json ../../composer.lock ./
 
+RUN git config --global --add safe.directory /var/www/html
+
 RUN composer install --no-scripts
 
 COPY . .
