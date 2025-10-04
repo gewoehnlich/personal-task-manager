@@ -20,14 +20,9 @@ final readonly class TaskCreateAction extends Action
         TaskCreateTransporter $transporter,
     ): Responder {
         try {
-            $result = $this->repository->create([
-                'user_id'     => $transporter->userId,
-                'title'       => $transporter->title,
-                'description' => $transporter->description,
-                'stage'       => $transporter->stage,
-                'deadline'    => $transporter->deadline,
-                'parent_id'   => $transporter->parentId,
-            ]);
+            $result = $this->repository->create(
+                attributes: $transporter->toArray()
+            );
 
             return $this->success(
                 data: ['result' => $result],

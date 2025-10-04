@@ -40,16 +40,9 @@ final readonly class TaskUpdateAction extends Action
                 throw new Exception('can\'t find task.');
             }
 
-            $result = $task->update([
-                'id'          => $transporter->id,
-                'user_id'     => $transporter->userId,
-                'title'       => $transporter->title,
-                'description' => $transporter->description,
-                'stage'       => $transporter->stage,
-                'deadline'    => $transporter->deadline,
-                'parent_id'   => $transporter->parentId,
-                'deleted'     => $transporter->deleted,
-            ]);
+            $result = $task->update(
+                attributes: $transporter->toArray()
+            );
 
             return $this->success(
                 data: ['result' => $result],
