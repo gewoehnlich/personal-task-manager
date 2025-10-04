@@ -4,10 +4,12 @@ namespace App\Containers\Tasks\Controllers\Api;
 
 use App\Containers\Tasks\Actions\TaskCreateAction;
 use App\Containers\Tasks\Actions\TaskDeleteAction;
+use App\Containers\Tasks\Actions\TaskGetAction;
 use App\Containers\Tasks\Actions\TaskIndexAction;
 use App\Containers\Tasks\Actions\TaskUpdateAction;
 use App\Containers\Tasks\Requests\TaskCreateRequest;
 use App\Containers\Tasks\Requests\TaskDeleteRequest;
+use App\Containers\Tasks\Requests\TaskGetRequest;
 use App\Containers\Tasks\Requests\TaskIndexRequest;
 use App\Containers\Tasks\Requests\TaskUpdateRequest;
 use App\Ship\Abstracts\Responders\Responder;
@@ -24,14 +26,14 @@ final readonly class TaskController extends ApiController
         );
     }
 
-    // public function get(
-    //     IndexTasksRequest $request,
-    // ): Responder {
-    //     return $this->action(
-    //         IndexTasksAction::class,
-    //         $request->transported(),
-    //     );
-    // }
+    public function get(
+        TaskGetRequest $request,
+    ): Responder {
+        return $this->action(
+            TaskGetAction::class,
+            $request->transported(),
+        );
+    }
 
     public function create(
         TaskCreateRequest $request,
