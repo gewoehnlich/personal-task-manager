@@ -11,7 +11,7 @@ use Illuminate\Validation\Validator;
 
 final class CreateTaskRequest extends Request
 {
-    public function dataClass(): string
+    public function transporter(): string
     {
         return CreateTaskTransporter::class;
     }

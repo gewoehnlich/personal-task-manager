@@ -2,23 +2,24 @@
 
 namespace App\Ship\Abstracts\Requests;
 
+use App\Ship\Contracts\Transportable;
 use Illuminate\Foundation\Http\FormRequest as LaravelRequest;
-use Spatie\LaravelData\Data;
 use Spatie\LaravelData\WithData;
 use App\Ship\Exceptions\TransporterIsMissingException;
+use App\Ship\Parents\Transporters\Transporter;
 
-abstract class Request extends LaravelRequest
+abstract class Request extends LaravelRequest implements Transportable
 {
     use WithData;
 
-    abstract public function dataClass(): string;
+    abstract public function transporter(): string;
 
-    public function transported(): Data
+    public function transported(): Transporter
     {
-        if (! $this->dataClass()) {
+        if (! $this->transporter()) {
             throw new TransporterIsMissingException();
         }
 
-        return $this->dataClass()::from($this->validated());
+        return $this->transporter()::from($this->validated());
     }
 }

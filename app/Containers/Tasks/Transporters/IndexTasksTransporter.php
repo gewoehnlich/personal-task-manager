@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Tasks\DTOs;
+namespace App\Containers\Tasks\Transporters;
 
 use App\Containers\Tasks\Enums\Stage;
 use App\Ship\Parents\Transporters\Transporter;

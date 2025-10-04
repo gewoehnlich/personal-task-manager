@@ -8,7 +8,7 @@ use App\Containers\Tasks\Actions\UpdateTaskAction;
 use App\Containers\Tasks\Actions\DeleteTaskAction;
 use App\Containers\Tasks\Requests\CreateTaskRequest;
 use App\Containers\Tasks\Requests\DeleteTaskRequest;
-use App\Containers\Tasks\Requests\ReadTaskRequest;
+use App\Containers\Tasks\Requests\IndexTasksRequest;
 use App\Containers\Tasks\Requests\UpdateTaskRequest;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\WebController;
@@ -16,7 +16,7 @@ use App\Ship\Parents\Controllers\WebController;
 final readonly class TaskController extends WebController
 {
     public function index(
-        ReadTaskRequest $request,
+        IndexTasksRequest $request,
     ): Responder {
         return $this->action(
             IndexTasksAction::class,

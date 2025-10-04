@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\DTOs\IndexTasksTransporter;
+use App\Containers\Tasks\Transporters\IndexTasksTransporter;
 use App\Containers\Tasks\Models\Task;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action as ActionsAction;
@@ -14,57 +14,57 @@ final readonly class IndexTasksAction extends ActionsAction
     ): Responder {
         $query = Task::query();
 
-        if (!empty($dto->userId)) {
-            $query->where('user_id', $dto->userId);
+        if (!empty($transporter->userId)) {
+            $query->where('user_id', $transporter->userId);
         }
 
-        if (!empty($dto->id)) {
-            $query->where('id', $dto->id);
+        if (!empty($transporter->id)) {
+            $query->where('id', $transporter->id);
         }
 
-        if (!empty($dto->stage)) {
-            $query->where('stage', $dto->stage);
+        if (!empty($transporter->stage)) {
+            $query->where('stage', $transporter->stage);
         }
 
-        if (!empty($dto->parentId)) {
-            $query->where('parent_id', $dto->parentId);
+        if (!empty($transporter->parentId)) {
+            $query->where('parent_id', $transporter->parentId);
         }
 
-        if (!empty($dto->projectId)) {
-            $query->where('project_id', $dto->projectId);
+        if (!empty($transporter->projectId)) {
+            $query->where('project_id', $transporter->projectId);
         }
 
-        if (!empty($dto->createdAtFrom)) {
-            $query->where('created_at', '>=', $dto->createdAtFrom);
+        if (!empty($transporter->createdAtFrom)) {
+            $query->where('created_at', '>=', $transporter->createdAtFrom);
         }
 
-        if (!empty($dto->createdAtTo)) {
-            $query->where('created_at', '<=', $dto->createdAtTo);
+        if (!empty($transporter->createdAtTo)) {
+            $query->where('created_at', '<=', $transporter->createdAtTo);
         }
 
-        if (!empty($dto->updatedAtFrom)) {
-            $query->where('updated_at', '>=', $dto->updatedAtFrom);
+        if (!empty($transporter->updatedAtFrom)) {
+            $query->where('updated_at', '>=', $transporter->updatedAtFrom);
         }
 
-        if (!empty($dto->updatedAtTo)) {
-            $query->where('updated_at', '<=', $dto->updatedAtTo);
+        if (!empty($transporter->updatedAtTo)) {
+            $query->where('updated_at', '<=', $transporter->updatedAtTo);
         }
 
-        if (!empty($dto->deadlineFrom)) {
-            $query->where('deadline', '>=', $dto->deadlineFrom);
+        if (!empty($transporter->deadlineFrom)) {
+            $query->where('deadline', '>=', $transporter->deadlineFrom);
         }
 
-        if (!empty($dto->deadlineTo)) {
-            $query->where('deadline', '<=', $dto->deadlineTo);
+        if (!empty($transporter->deadlineTo)) {
+            $query->where('deadline', '<=', $transporter->deadlineTo);
         }
 
-        if (!empty($dto->orderBy)) {
-            $orderByField = $dto->orderByField ?? 'id';
-            $query->orderBy($orderByField, $dto->orderBy);
+        if (!empty($transporter->orderBy)) {
+            $orderByField = $transporter->orderByField ?? 'id';
+            $query->orderBy($orderByField, $transporter->orderBy);
         }
 
-        if (!empty($dto->limit)) {
-            $query->limit($dto->limit);
+        if (!empty($transporter->limit)) {
+            $query->limit($transporter->limit);
         }
 
         $result = $query->get();
