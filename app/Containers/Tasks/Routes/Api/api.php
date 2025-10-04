@@ -22,7 +22,7 @@ Route::post(
 );
 
 Route::put(
-    uri: 'tasks/{task}',
+    uri: 'tasks/{id}',
     action: [
         TaskController::class,
         'update',
@@ -30,7 +30,7 @@ Route::put(
 );
 
 Route::delete(
-    uri: 'tasks/{task}',
+    uri: 'tasks/{id}',
     action: [
         TaskController::class,
         'delete',

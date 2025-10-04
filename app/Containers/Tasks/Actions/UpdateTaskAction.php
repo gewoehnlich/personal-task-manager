@@ -2,30 +2,50 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\DTOs\UpdateTaskDTO;
-use App\Containers\Tasks\Models\Task;
-use App\Ship\Tasks\Actions\Action;
+use App\Containers\Tasks\Transporters\UpdateTaskTransporter;
+use App\Containers\Tasks\Repositories\TaskRepository;
+use App\Ship\Abstracts\Responders\Responder;
+use App\Ship\Parents\Actions\Action;
+use App\Ship\Parents\Exceptions\Exception;
 
-final abstract class UpdateTaskAction extends Action
+final readonly class UpdateTaskAction extends Action
 {
-    final public static function run(UpdateTaskDTO $dto): Task
-    {
-        $task   = Task::where([
-            'id' => $dto->id,
-            'user_id' => $dto->userId
-        ]);
+    public function __construct(
+        private readonly TaskRepository $repository,
+    ) {
+        //
+    }
 
-        $result = $task->update([
-            'id'          => $dto->id,
-            'user_id'     => $dto->userId,
-            'title'       => $dto->title,
-            'description' => $dto->description,
-            'stage'       => $dto->stage,
-            'deadline'    => $dto->deadline,
-            'parent_id'   => $dto->parentId,
-            'project_id'  => $dto->projectId,
-        ]);
+    public function run(
+        UpdateTaskTransporter $transporter,
+    ): Responder {
+        try {
+            $task = $this->repository->where([
+                'id'      => $transporter->id,
+                'user_id' => $transporter->userId
+            ]);
 
-        return $result;
+            if (!isset($task)) {
+                throw new Exception('can\'t find task.');
+            }
+
+            $result = $task->update([
+                'id'          => $transporter->id,
+                'user_id'     => $transporter->userId,
+                'title'       => $transporter->title,
+                'description' => $transporter->description,
+                'stage'       => $transporter->stage,
+                'deadline'    => $transporter->deadline,
+                'parent_id'   => $transporter->parentId,
+            ]);
+
+            return $this->success(
+                data: ['result' => $result],
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getErrors(),
+            );
+        }
     }
 }

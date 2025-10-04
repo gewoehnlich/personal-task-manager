@@ -37,7 +37,6 @@ final readonly class TaskController extends WebController
         UpdateTaskRequest $request,
         int $id,
     ): Responder {
-        dd($request->transported());
         return $this->action(
             UpdateTaskAction::class,
             $request->transported(),

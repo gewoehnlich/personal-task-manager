@@ -1,31 +1,28 @@
 <?php
 
-namespace App\Containers\Tasks\DTOs;
+namespace App\Containers\Tasks\Transporters;
 
-use App\Enums\API\Tasks\Stage;
-use App\Http\Requests\API\Tasks\UpdateTaskRequest;
+use App\Containers\Tasks\Enums\Stage;
+use App\Ship\Parents\Transporters\Transporter;
 use Illuminate\Support\Carbon;
+use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
-final readonly class UpdateTaskDTO extends TaskDTO
+#[MapName(SnakeCaseMapper::class)]
+final class UpdateTaskTransporter extends Transporter
 {
-    final public readonly int $id;
-    final public readonly int $userId;
-    final public readonly string $title;
-    final public readonly string $description;
-    final public readonly Stage $stage;
-    final public readonly Carbon $deadline;
-    final public readonly int | null $parentId;
-    final public readonly int | null $projectId;
-
-    public function __construct(UpdateTaskRequest $request)
-    {
-        $this->id          = $request->id;
-        $this->userId      = $request->user_id;
-        $this->title       = $request->title;
-        $this->description = $request->description;
-        $this->stage       = self::stage($request->stage);
-        $this->deadline    = self::date($request->deadline);
-        $this->parentId    = $request->parent_id;
-        $this->projectId   = $request->project_id;
+    public function __construct(
+        public readonly int $id,
+        public readonly int $userId,
+        public readonly string $title,
+        public readonly string $description,
+        public readonly Stage $stage,
+        #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
+        public readonly Carbon $deadline,
+        public readonly ?int $parentId,
+    ) {
+        //
     }
 }
