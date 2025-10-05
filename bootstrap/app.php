@@ -54,6 +54,15 @@ return Application::configure(
             )->group(
                 base_path('/app/Containers/Tasks/Routes/api.php'),
             );
+
+            Route::middleware(
+                'auth:sanctum',
+                EnsureAcceptHeaderIsJson::class,
+            )->prefix(
+                '/api'
+            )->group(
+                base_path('/app/Containers/Bills/Routes/api.php'),
+            );
         },
     )->withMiddleware(
         function (Middleware $middleware) {
