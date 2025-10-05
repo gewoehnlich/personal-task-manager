@@ -52,7 +52,7 @@ return Application::configure(
             )->prefix(
                 '/api'
             )->group(
-                base_path('/app/Containers/Tasks/Routes/Api/api.php'),
+                base_path('/app/Containers/Tasks/Routes/api.php'),
             );
         },
     )->withMiddleware(
