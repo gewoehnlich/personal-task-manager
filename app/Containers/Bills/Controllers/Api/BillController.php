@@ -3,29 +3,22 @@
 namespace App\Containers\Bills\Controllers\Api;
 
 use App\Containers\Bills\Actions\BillCreateAction;
+use App\Containers\Bills\Actions\BillGetAction;
 use App\Containers\Bills\Requests\BillCreateRequest;
+use App\Containers\Bills\Requests\BillGetRequest;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\ApiController;
 
 final readonly class BillController extends ApiController
 {
-    // public function index(
-    //     TaskIndexRequest $request,
-    // ): Responder {
-    //     return $this->action(
-    //         TaskIndexAction::class,
-    //         $request->transported(),
-    //     );
-    // }
-    //
-    // public function get(
-    //     TaskGetRequest $request,
-    // ): Responder {
-    //     return $this->action(
-    //         TaskGetAction::class,
-    //         $request->transported(),
-    //     );
-    // }
+    public function get(
+        BillGetRequest $request,
+    ): Responder {
+        return $this->action(
+            BillGetAction::class,
+            $request->transported(),
+        );
+    }
 
     public function create(
         BillCreateRequest $request,

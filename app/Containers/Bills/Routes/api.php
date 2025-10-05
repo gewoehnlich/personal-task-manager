@@ -9,7 +9,7 @@ Route::get(
     uri: 'tasks/{task}/bills',
     action: [
         BillController::class,
-        'index',
+        'get',
     ],
 );
 
