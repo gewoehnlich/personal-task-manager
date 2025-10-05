@@ -15,9 +15,9 @@ return new class extends Migration
                 ->references('id')
                 ->on('tasks')
                 ->onDelete('cascade');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('time_spent');
-            $table->timestamp('performed_at');
+            $table->timestamp('performed_at')->useCurrent();
             $table->timestamps();
         });
     }
