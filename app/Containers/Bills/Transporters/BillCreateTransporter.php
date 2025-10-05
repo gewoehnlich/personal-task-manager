@@ -14,6 +14,7 @@ final class BillCreateTransporter extends Transporter
 {
     public function __construct(
         public readonly int $userId,
+        public readonly int $taskId,
         public readonly ?string $description,
         public readonly int $timeSpent,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]

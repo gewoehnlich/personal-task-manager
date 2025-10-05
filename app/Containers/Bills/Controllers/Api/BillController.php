@@ -2,6 +2,7 @@
 
 namespace App\Containers\Bills\Controllers\Api;
 
+use App\Containers\Bills\Actions\BillCreateAction;
 use App\Containers\Bills\Requests\BillCreateRequest;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\ApiController;
@@ -30,7 +31,7 @@ final readonly class BillController extends ApiController
         BillCreateRequest $request,
     ): Responder {
         return $this->action(
-            Bill::class,
+            BillCreateAction::class,
             $request->transported(),
         );
     }
