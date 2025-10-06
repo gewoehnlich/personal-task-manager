@@ -4,8 +4,10 @@ namespace App\Containers\Bills\Controllers\Api;
 
 use App\Containers\Bills\Actions\BillCreateAction;
 use App\Containers\Bills\Actions\BillGetAction;
+use App\Containers\Bills\Actions\BillUpdateAction;
 use App\Containers\Bills\Requests\BillCreateRequest;
 use App\Containers\Bills\Requests\BillGetRequest;
+use App\Containers\Bills\Requests\BillUpdateRequest;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\ApiController;
 
@@ -29,15 +31,15 @@ final readonly class BillController extends ApiController
         );
     }
 
-    // public function update(
-    //     TaskUpdateRequest $request,
-    // ): Responder {
-    //     return $this->action(
-    //         TaskUpdateAction::class,
-    //         $request->transported(),
-    //     );
-    // }
-    //
+    public function update(
+        BillUpdateRequest $request,
+    ): Responder {
+        return $this->action(
+            BillUpdateAction::class,
+            $request->transported(),
+        );
+    }
+
     // public function delete(
     //     TaskDeleteRequest $request,
     // ): Responder {
