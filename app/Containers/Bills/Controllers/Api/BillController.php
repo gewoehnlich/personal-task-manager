@@ -3,9 +3,11 @@
 namespace App\Containers\Bills\Controllers\Api;
 
 use App\Containers\Bills\Actions\BillCreateAction;
+use App\Containers\Bills\Actions\BillDeleteAction;
 use App\Containers\Bills\Actions\BillGetAction;
 use App\Containers\Bills\Actions\BillUpdateAction;
 use App\Containers\Bills\Requests\BillCreateRequest;
+use App\Containers\Bills\Requests\BillDeleteRequest;
 use App\Containers\Bills\Requests\BillGetRequest;
 use App\Containers\Bills\Requests\BillUpdateRequest;
 use App\Ship\Abstracts\Responders\Responder;
@@ -40,12 +42,12 @@ final readonly class BillController extends ApiController
         );
     }
 
-    // public function delete(
-    //     TaskDeleteRequest $request,
-    // ): Responder {
-    //     return $this->action(
-    //         TaskDeleteAction::class,
-    //         $request->transported(),
-    //     );
-    // }
+    public function delete(
+        BillDeleteRequest $request,
+    ): Responder {
+        return $this->action(
+            BillDeleteAction::class,
+            $request->transported(),
+        );
+    }
 }

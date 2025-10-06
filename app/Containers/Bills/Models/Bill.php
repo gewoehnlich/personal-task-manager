@@ -16,6 +16,7 @@ final class Bill extends Model
         'description',
         'time_spent',
         'performed_at',
+        'deleted',
     ];
 
     protected $hidden = [
