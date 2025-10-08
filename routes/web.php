@@ -1,6 +1,7 @@
 <?php
 
 use App\Containers\Tasks\Models\Task;
+use App\Ship\Exceptions\ContainersDirectoryIsEmptyException;
 use App\Ship\Exceptions\ContainersDirectoryNotFoundException;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,32 +31,17 @@ Route::middleware('web')
         }
 
         if ($containersDirectories === []) {
-            throw new ContainersDirectoryNotFoundException();
+            throw new ContainersDirectoryIsEmptyException();
         }
 
-        dd($containersDirectories);
-        // Route::middleware(
-        //     'web',
-        //     'auth',
-        // )->group(
-        //     base_path('/app/Containers/Settings/Routes/settings.php')
-        // );
-        // Route::middleware(
-        //     'web',
-        //     'guest',
-        // )->group(
-        //     base_path('/app/Containers/Auth/Routes/guest.php')
-        // );
-        // Route::middleware(
-        //     'web',
-        //     'auth',
-        // )->group(
-        //     base_path('/app/Containers/Auth/Routes/auth.php')
-        // );
-        //
-        // Route::middleware(
-        //     'web',
-        // )->group(
-        //     base_path('/app/Containers/Auth/Routes/tokens.php')
-        // );
+        foreach ($containersDirectories as $dir) {
+            $routePath = $dir . '/Routes/web.php';
+
+            if (file_exists(filename: $routePath)) {
+                Route::group(
+                    attributes: [],
+                    routes: $routePath,
+                );
+            }
+        }
     });
