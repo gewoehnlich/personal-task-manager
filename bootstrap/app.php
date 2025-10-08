@@ -20,33 +20,6 @@ return Application::configure(
         then: function () {
             // todo: moved the routes from over here
             Route::middleware(
-                'web',
-                'auth',
-            )->group(
-                base_path('/app/Containers/Settings/Routes/settings.php')
-            );
-
-            Route::middleware(
-                'web',
-                'guest',
-            )->group(
-                base_path('/app/Containers/Auth/Routes/guest.php')
-            );
-
-            Route::middleware(
-                'web',
-                'auth',
-            )->group(
-                base_path('/app/Containers/Auth/Routes/auth.php')
-            );
-
-            Route::middleware(
-                'web',
-            )->group(
-                base_path('/app/Containers/Auth/Routes/tokens.php')
-            );
-
-            Route::middleware(
                 'auth:sanctum',
                 EnsureAcceptHeaderIsJson::class,
             )->prefix(

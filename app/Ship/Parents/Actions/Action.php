@@ -36,8 +36,6 @@ abstract readonly class Action extends AbstractAction
         Responder | string $responder,
         array | string $data = []
     ): Responder {
-        $data = $data ?: ['data' => []];
-
         return new $responder($data);
     }
 }
