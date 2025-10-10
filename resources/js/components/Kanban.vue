@@ -7,11 +7,29 @@ import TaskModal from './TaskModal.vue';
 const page = usePage();
 const selectedTask = ref<Task | null>(null);
 
-const tasks = computed(() => page.props.tasks);
-const backlog = computed(() => tasks.value.filter(task => task.taskStatus === 'backlog'));
-const inProgress = computed(() => tasks.value.filter(task => task.taskStatus === 'inProgress'));
-const overdue = computed(() => tasks.value.filter(task => task.taskStatus === 'overdue'));
-const done = computed(() => tasks.value.filter(task => task.taskStatus === 'done'));
+const tasks = computed(
+    () => page.props.tasks
+);
+const pending = computed(
+    () => tasks.value.filter(
+        task => task.stage === 'pending'
+    )
+);
+const active = computed(
+    () => tasks.value.filter(
+        task => task.stage === 'active'
+    )
+);
+const delayed = computed(
+    () => tasks.value.filter(
+        task => task.stage === 'delayed'
+    )
+);
+const done = computed(
+    () => tasks.value.filter(
+        task => task.stage === 'done'
+    )
+);
 
 function handleTaskDrop(taskId: number, newStatus: string) {
     const task = tasks.value.find(t => t.id === taskId);
@@ -52,11 +70,11 @@ function updateTask(updatedTask: Task) {
 </script>
 
 <template>
-    <div class="kanban grid grid-cols-4 h-full gap-2">
+    <div class="kanban grid grid-cols-4 h-full gap-10">
         <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
             <Stage
-                title="backlog"
-                :tasks="backlog"
+                title="pending"
+                :tasks="pending"
                 @task-drop="handleTaskDrop"
                 @create-task="handleCreateTask"
                 @reorder-task="handleTaskReorder"
@@ -65,8 +83,8 @@ function updateTask(updatedTask: Task) {
         </div>
         <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
             <Stage
-                title="inProgress"
-                :tasks="inProgress"
+                title="active"
+                :tasks="active"
                 @task-drop="handleTaskDrop"
                 @create-task="handleCreateTask"
                 @reorder-task="handleTaskReorder"
@@ -75,8 +93,8 @@ function updateTask(updatedTask: Task) {
         </div>
         <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
             <Stage
-                title="overdue"
-                :tasks="overdue"
+                title="delayed"
+                :tasks="delayed"
                 @task-drop="handleTaskDrop"
                 @create-task="handleCreateTask"
                 @reorder-task="handleTaskReorder"
