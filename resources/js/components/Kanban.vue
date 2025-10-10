@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
-import Stage from './Stage.vue';
-import TaskModal from './TaskModal.vue';
+import Stage       from './Stage.vue';
+import TaskModal   from './TaskModal.vue';
+import type { TaskType } from '@/types';
 
-const page = usePage();
-const selectedTask = ref<Task | null>(null);
+type PageProps = {
+    tasks: TaskType[],
+}
+
+const page = usePage<PageProps>();
+const selectedTask = ref<TaskType | null>(null);
 
 const tasks = computed(
     () => page.props.tasks
 );
+
 const pending = computed(
     () => tasks.value.filter(
         task => task.stage === 'pending'
@@ -31,21 +37,37 @@ const done = computed(
     )
 );
 
-function handleTaskDrop(taskId: number, newStatus: string) {
-    const task = tasks.value.find(t => t.id === taskId);
+function handleTaskDrop(
+    taskId: number,
+    newStage: string,
+) {
+    const task = tasks.value.find(
+        task => task.id === taskId
+    );
+
     if (task) {
-        task.taskStatus = newStatus;
+        task.stage = newStage;
     }
 }
 
-function handleCreateTask(newTask) {
+function handleCreateTask(
+    newTask: TaskType,
+) {
+    // rewrite
     const id = Math.max(...tasks.value.map(t => t.id) + 1);
     tasks.value.push({ id, ...newTask });
 }
 
-function handleTaskReorder(draggedId: number, targetId: number) {
-    const indexFrom = tasks.value.findIndex(t => t.id === draggedId);
-    const indexTo = tasks.value.findIndex(t => t.id === targetId);
+function handleTaskReorder(
+    draggedId: number,
+    targetId: number,
+) {
+    const indexFrom = tasks.value.findIndex(
+        task => task.id === draggedId
+    );
+    const indexTo = tasks.value.findIndex(
+        task => task.id === targetId
+    );
 
     if (indexFrom === -1 || indexTo === -1) return;
 
@@ -53,7 +75,9 @@ function handleTaskReorder(draggedId: number, targetId: number) {
     tasks.value.splice(indexTo, 0, moved);
 }
 
-function openTaskModal(task: Task) {
+function openTaskModal(
+    task: TaskType
+) {
     selectedTask.value = task;
 }
 
@@ -61,7 +85,9 @@ function closeTaskModal() {
     selectedTask.value = null;
 }
 
-function updateTask(updatedTask: Task) {
+function updateTask(
+    updatedTask: TaskType,
+) {
     const index = tasks.value.findIndex(t => t.id == updatedTask.id);
     if (index === -1) return;
     tasks.value[index] = updatedTask;
@@ -120,4 +146,3 @@ function updateTask(updatedTask: Task) {
         @update="updateTask"
     />
 </template>
-
