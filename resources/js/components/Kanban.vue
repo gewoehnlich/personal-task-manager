@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, Ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import Stage       from './Stage.vue';
 import TaskModal   from './TaskModal.vue';
@@ -16,26 +16,21 @@ const tasks = computed(
     () => page.props.tasks
 );
 
-const pending = computed(
-    () => tasks.value.filter(
-        task => task.stage === 'pending'
-    )
-);
-const active = computed(
-    () => tasks.value.filter(
-        task => task.stage === 'active'
-    )
-);
-const delayed = computed(
-    () => tasks.value.filter(
-        task => task.stage === 'delayed'
-    )
-);
-const done = computed(
-    () => tasks.value.filter(
-        task => task.stage === 'done'
-    )
-);
+const pending = filterTasksByStage(tasks, "pending");
+const active  = filterTasksByStage(tasks, "active");
+const delayed = filterTasksByStage(tasks, "delayed");
+const done    = filterTasksByStage(tasks, "done");
+
+function filterTasksByStage(
+    tasks: Ref<TaskType[]>,
+    stage: string,
+) {
+    return computed(
+        () => tasks.value.filter(
+            task => task.stage === stage
+        )
+    );
+}
 
 function handleTaskDrop(
     taskId: number,

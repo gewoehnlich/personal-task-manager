@@ -42,8 +42,8 @@ function openTask(e: event) {
         @drop="handleDrop"
         @click="openTask"
     >
-        <h2 class="font-bold text-2xl">{{ task.title }}</h2>
+        <h2 class="font-bold text-3xl">{{ task.title }}</h2>
         <div class="my-1 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent dark:via-gray-600"></div>
-        <p class="text-md text-gray-700 dark:text-gray-300">{{ task.description }}</p>
+        <p class="text-lg text-gray-700 dark:text-gray-500">{{ task.description }}</p>
     </div>
 </template>
