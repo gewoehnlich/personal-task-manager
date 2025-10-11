@@ -65,13 +65,18 @@ services:
       - personal-task-manager-data:/var/lib/mysql/
     restart: unless-stopped
 
-  # node:
-  #   container_name: node.personal-task-manager
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/node/Dockerfile
-  #   networks:
-  #     - personal-task-manager-network
-  #   volumes:
-  #     - .:/var/www/html
-  #   restart: unless-stopped
+  node:
+    container_name: node.personal-task-manager
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    networks:
+      - personal-task-manager-network
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    ports:
+      - "5173:5173"
+    command: >
+      sh -c "npm install && npm run dev"
+    restart: unless-stopped
