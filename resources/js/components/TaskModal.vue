@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-interface Task {
-    id: number;
-    userId: number;
-    title: string;
-    description?: string;
-    taskStatus: string;
-    deadline: string;
-    updated_at: string;
-    created_at: string;
-}
+import { TaskType } from '@/types';
 
 const props = defineProps<{
-    task: Task
+    task: TaskType
 }>();
 
 const emit = defineEmits<{
     (e: 'close'): void;
-    (e: 'update', updatedTask: Task): void;
+    (e: 'update', updatedTask: TaskType): void;
 }>();
 
 const editableTask = reactive({ ...props.task });
@@ -60,7 +51,7 @@ function saveChanges() {
           <div class="flex-1 min-w-[140px]">
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Status</p>
             <select
-              v-model="editableTask.taskStatus"
+              v-model="editableTask.stage"
               class="w-full bg-input dark:bg-muted rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="backlog">Backlog</option>
@@ -82,8 +73,8 @@ function saveChanges() {
       </section>
 
       <section class="text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-4">
-        <p>Created at: {{ task.created_at }}</p>
-        <p>Updated at: {{ task.updated_at }}</p>
+        <p>Created at: {{ task.createdAt }}</p>
+        <p>Updated at: {{ task.updatedAt }}</p>
       </section>
 
       <footer class="flex justify-end gap-3 pt-6">

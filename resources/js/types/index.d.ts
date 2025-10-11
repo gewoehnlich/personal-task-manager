@@ -38,15 +38,15 @@ export interface User {
 
 export interface Task {
     id: number;
-    user_id: number;
-    parent_id: number;
+    userId: number;
+    parentId: number;
     title: string;
     description: string;
     stage: string;
     deleted: bool;
     deadline: string;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export type TaskType = Task;

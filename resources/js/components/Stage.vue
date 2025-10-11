@@ -2,21 +2,11 @@
 import { ref, computed } from 'vue';
 import Task from './Task.vue';
 import TaskForm from './TaskForm.vue';
-
-interface Task {
-    id: number;
-    userId: number;
-    title: string;
-    description?: string;
-    taskStatus: string;
-    deadline: string;
-    updated_at: string;
-    created_at: string;
-}
+import { TaskType } from '@/types';
 
 const props = defineProps<{
     title: string;
-    tasks: Array<Task>;
+    tasks: Array<TaskType>;
 }>();
 
 const emit = defineEmits<{
@@ -28,7 +18,7 @@ const emit = defineEmits<{
         deadline: string;
     }): void;
     (e: 'reorder-task', draggedId: number, targetId: number): void;
-    (e: 'task-clicked', task: Task): void;
+    (e: 'task-clicked', task: TaskType): void;
 }>();
 
 const showForm = ref(false);
@@ -36,7 +26,6 @@ const newTitle = ref('');
 const newDescription = ref('');
 const newDeadline = ref('');
 const length = computed(() => props.tasks.length);
-
 
 function handleDrop(event: DragEvent) {
     const taskId = parseInt(event.dataTransfer?.getData('task-id') || '', 10);

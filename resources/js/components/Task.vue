@@ -1,24 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-
-interface Task {
-    id: number;
-    userId: number;
-    title: string;
-    description?: string;
-    taskStatus: string;
-    deadline: string;
-    updated_at: string;
-    created_at: string;
-}
+import { TaskType } from '@/types';
 
 const props = defineProps<{
-    task: Task;
+    task: TaskType;
 }>();
 
 const emit = defineEmits<{
     (e: 'reorder-task', draggedId: number, targetId: number): void;
-    (e: 'task-clicked', task: Task): void;
+    (e: 'task-clicked', task: TaskType): void;
 }>();
 
 function handleDragStart(event: DragEvent) {
