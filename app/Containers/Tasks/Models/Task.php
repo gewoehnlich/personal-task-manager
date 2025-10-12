@@ -3,8 +3,10 @@
 namespace App\Containers\Tasks\Models;
 
 use App\Containers\Bills\Models\Bill;
+use App\Containers\Tasks\Factories\TaskFactory;
 use App\Containers\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -42,5 +44,10 @@ final class Task extends Model
     public function bill(): HasMany
     {
         return $this->hasMany(Bill::class);
+    }
+
+    protected static function newFactory(): Factory
+    {
+        return TaskFactory::new();
     }
 }
