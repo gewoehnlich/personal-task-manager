@@ -6,30 +6,36 @@ use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 use App\Ship\Tasks\DirectoriesContainersGetTask;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 
-final readonly class RoutesContainersRegisterAction extends Action
+final readonly class MigrationsContainersGetAction extends Action
 {
-    public function run(
-        string $channel,
-    ): Responder {
+    public function run(): Responder
+    {
         try {
             $containersDirectories = $this->task(
                 DirectoriesContainersGetTask::class
             );
 
-            foreach ($containersDirectories as $dir) {
-                $routePath = $dir . "/Routes/{$channel}.php";
+            $migrations = [];
 
-                if (file_exists(filename: $routePath)) {
-                    Route::group(
-                        attributes: [],
-                        routes: $routePath,
-                    );
+            foreach ($containersDirectories as $dir) {
+                $dir .= '/Migrations';
+                if (! File::exists($dir)) {
+                    continue;
+                }
+
+                $files = File::allFiles(
+                    directory: $dir,
+                );
+
+                foreach ($files as $f) {
+                    array_push($migrations, $f);
                 }
             }
+
             return $this->success(
-                data: ['result' => true],
+                data: [$migrations],
             );
         } catch (Exception $exception) {
             return $this->error(
