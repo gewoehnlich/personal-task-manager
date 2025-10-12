@@ -21,7 +21,11 @@ final readonly class MigrationsContainersGetAction extends Action
 
             foreach ($containersDirectories as $dir) {
                 $dir .= '/Migrations';
-                if (! File::exists($dir)) {
+
+                if (
+                    ! File::isDirectory(directory: $dir) ||
+                    File::isEmptyDirectory(directory: $dir)
+                ) {
                     continue;
                 }
 
@@ -30,7 +34,7 @@ final readonly class MigrationsContainersGetAction extends Action
                 );
 
                 foreach ($files as $f) {
-                    array_push($migrations, $f);
+                    array_push($migrations, $f->getPathname());
                 }
             }
 

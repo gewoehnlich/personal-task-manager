@@ -16,10 +16,14 @@ class AppServiceProvider extends ServiceProvider
     {
         $containersMigrations = (
             new MigrationsContainersGetAction()
-        )->run();
+        )
+            ->run()
+            ->data;
 
-        $this->loadMigrationsFrom(
-            $containersMigrations
-        );
+        foreach ($containersMigrations as $folder) {
+            $this->loadMigrationsFrom(
+                $folder,
+            );
+        }
     }
 }

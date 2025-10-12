@@ -9,12 +9,9 @@ use Illuminate\Database\Seeder;
 
 final class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // $this->call(UserSeeder::class);
+        $this->call(UserSeeder::class);
         $this->call(TaskSeeder::class);
         $this->call(BillSeeder::class);
     }

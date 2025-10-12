@@ -17,6 +17,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('time_spent');
+            $table->boolean('deleted')->default(false);
             $table->timestamp('performed_at')->useCurrent();
             $table->timestamps();
         });
