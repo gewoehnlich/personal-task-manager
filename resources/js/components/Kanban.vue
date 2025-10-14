@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, Ref, computed } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 import Stage       from './Stage.vue';
 import TaskModal   from './TaskModal.vue';
 import type { TaskType } from '@/types';
@@ -46,13 +46,9 @@ function handleTaskDrop(
 }
 
 function handleCreateTask(
-    newTask: Omit<TaskType, 'id'>,
+  task: Omit<TaskType, 'id'>,
 ) {
-    const newId = page.props.tasks.length > 0 ? Math.max(...page.props.tasks.map(t => t.id)) + 1 : 1;
-    page.props.tasks.push({
-        id: newId,
-        ...newTask,
-    });
+  router.post('/tasks', task);
 }
 
 function handleTaskReorder(
