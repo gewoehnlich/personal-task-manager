@@ -46,28 +46,30 @@ function handleTaskDrop(
 }
 
 function handleCreateTask(
-    newTask: TaskType,
+    newTask: Omit<TaskType, 'id'>,
 ) {
-    // rewrite
-    const id = Math.max(...tasks.value.map(t => t.id) + 1);
-    tasks.value.push({ id, ...newTask });
+    const newId = page.props.tasks.length > 0 ? Math.max(...page.props.tasks.map(t => t.id)) + 1 : 1;
+    page.props.tasks.push({
+        id: newId,
+        ...newTask,
+    });
 }
 
 function handleTaskReorder(
     draggedId: number,
     targetId: number,
 ) {
-    const indexFrom = tasks.value.findIndex(
+    const indexFrom = page.props.tasks.findIndex(
         task => task.id === draggedId
     );
-    const indexTo = tasks.value.findIndex(
+    const indexTo = page.props.tasks.findIndex(
         task => task.id === targetId
     );
 
     if (indexFrom === -1 || indexTo === -1) return;
 
-    const [moved] = tasks.value.splice(indexFrom, 1);
-    tasks.value.splice(indexTo, 0, moved);
+    const [moved] = page.props.tasks.splice(indexFrom, 1);
+    page.props.tasks.splice(indexTo, 0, moved);
 }
 
 function openTaskModal(

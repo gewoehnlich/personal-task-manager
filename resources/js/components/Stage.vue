@@ -14,7 +14,7 @@ const emit = defineEmits<{
     (e: 'create-task', task: {
         title: string;
         description: string;
-        taskStatus: string;
+        stage: string;
         deadline: string;
     }): void;
     (e: 'reorder-task', draggedId: number, targetId: number): void;
@@ -22,9 +22,6 @@ const emit = defineEmits<{
 }>();
 
 const showForm = ref(false);
-const newTitle = ref('');
-const newDescription = ref('');
-const newDeadline = ref('');
 const length = computed(() => props.tasks.length);
 
 function handleDrop(event: DragEvent) {
@@ -34,19 +31,18 @@ function handleDrop(event: DragEvent) {
     }
 }
 
-function submitForm() {
-    if (!newTitle.value.trim()) return;
-
+function handleTaskFormSubmit(
+  task: {
+    title: string;
+    description: string;
+    deadline: string
+  },
+): void {
     emit('create-task', {
-        title: newTitle.value,
-        description: newDescription.value,
-        taskStatus: props.title,
-        deadline: newDeadline.value
+        ...task,
+        stage: props.title,
     });
 
-    newTitle.value = '';
-    newDescription.value = '';
-    newDeadline.value = '';
     showForm.value = false;
 }
 
@@ -66,7 +62,7 @@ function submitForm() {
         </div>
 
         <div v-if="showForm" class="px-1">
-            <TaskForm />
+            <TaskForm @submit="handleTaskFormSubmit" />
         </div>
 
         <div class="grid grid-cols-1 gap-1 px-1 overflow-y-auto">
