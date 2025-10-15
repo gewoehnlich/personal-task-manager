@@ -47,7 +47,7 @@ function handleTaskDrop(
 
 function handleCreateTask(
   task: Omit<TaskType, 'id'>,
-) {
+): void {
   router.post('/tasks', task);
 }
 
@@ -78,12 +78,10 @@ function closeTaskModal() {
     selectedTask.value = null;
 }
 
-function updateTask(
-    updatedTask: TaskType,
-) {
-    const index = tasks.value.findIndex(t => t.id == updatedTask.id);
-    if (index === -1) return;
-    tasks.value[index] = updatedTask;
+function handleUpdateTask(
+  task: Omit<TaskType, 'id'>,
+): void {
+  router.put('/tasks/${task.id}', task);
 }
 
 </script>
@@ -136,6 +134,6 @@ function updateTask(
         v-if="selectedTask"
         :task="selectedTask"
         @close="closeTaskModal"
-        @update="updateTask"
+        @update="handleUpdateTask"
     />
 </template>

@@ -11,12 +11,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
     (e: 'task-drop', taskId: number, newStatus: string): void;
-    (e: 'create-task', task: {
-        title: string;
-        description: string;
-        stage: string;
-        deadline: string;
-    }): void;
+    (e: 'create-task', task: Omit<TaskType, 'id'>): void;
     (e: 'reorder-task', draggedId: number, targetId: number): void;
     (e: 'task-clicked', task: TaskType): void;
 }>();
@@ -49,31 +44,37 @@ function handleTaskFormSubmit(
 </script>
 
 <template>
-    <div class="stage h-full flex flex-col gap-1" @dragover.prevent @drop="handleDrop">
-        <div class="flex justify-between py-2 px-5 gap-5">
-            <h2 class="text-2xl font-bold mb-2 text-center">{{ title }}</h2>
-            <h2 class="font-bold text-2xl text-center">{{ length }}</h2>
-        </div>
-
-        <div class="px-1">
-            <button class="bg-input hover:bg-popover text-popover-foreground w-full px-4 py-3 rounded-xl" @click="showForm = !showForm">
-                Добавить новую задачу
-            </button>
-        </div>
-
-        <div v-if="showForm" class="px-1">
-            <TaskForm @submit="handleTaskFormSubmit" />
-        </div>
-
-        <div class="grid grid-cols-1 gap-1 px-1 overflow-y-auto">
-            <Task
-                v-for="task in tasks"
-                :key="task.id"
-                :task="task"
-                @reorder-task="(draggedId, targetId) => emit('reorder-task', draggedId, targetId)"
-                @task-clicked="(task) => emit('task-clicked', task)"
-            />
-        </div>
+  <div
+    class="stage h-full flex flex-col gap-1"
+    @dragover.prevent
+    @drop="handleDrop"
+  >
+    <div class="flex justify-between py-2 px-5 gap-5">
+      <h2 class="text-2xl font-bold mb-2 text-center">{{ title }}</h2>
+      <h2 class="font-bold text-2xl text-center">{{ length }}</h2>
     </div>
+
+    <div class="px-1">
+      <button class="bg-input hover:bg-popover text-popover-foreground w-full px-4 py-3 rounded-xl"
+        @click="showForm = !showForm"
+      >
+        Добавить новую задачу
+      </button>
+    </div>
+
+    <div v-if="showForm" class="px-1">
+      <TaskForm @submit="handleTaskFormSubmit" />
+    </div>
+
+    <div class="grid grid-cols-1 gap-1 px-1 overflow-y-auto">
+      <Task
+        v-for="task in tasks"
+        :key="task.id"
+        :task="task"
+        @reorder-task="(draggedId, targetId) => emit('reorder-task', draggedId, targetId)"
+        @task-clicked="(task) => emit('task-clicked', task)"
+      />
+    </div>
+  </div>
 </template>
 
