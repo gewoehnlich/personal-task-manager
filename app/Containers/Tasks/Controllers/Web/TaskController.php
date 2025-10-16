@@ -54,7 +54,7 @@ final readonly class TaskController extends WebController
     public function update(
         TaskUpdateRequest $request,
     ): RedirectResponse {
-        return $this->action(
+        $this->action(
             TaskUpdateAction::class,
             $request->transported(),
         );

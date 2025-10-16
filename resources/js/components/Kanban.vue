@@ -81,7 +81,7 @@ function closeTaskModal() {
 function handleUpdateTask(
   task: Omit<TaskType, 'id'>,
 ): void {
-  router.put('/tasks/${task.id}', task);
+  router.put(`/tasks/${task.id}`, task);
 }
 </script>
 
