@@ -28,36 +28,63 @@ function submitForm() {
 
 <template>
     <form
-        @submit.prevent="submitForm"
-        class="flex flex-col rounded-xl gap-2 bg-popup p-4 rounded"
+      @submit.prevent="submitForm"
+      class="
+        flex
+        flex-col
+        rounded-xl
+        gap-2
+        bg-popup
+        p-4
+        rounded
+      "
     >
-        <input
-            v-model="title"
-            type="text"
-            placeholder="title"
-            class="border p-2 rounded"
-            required
-        />
+      <input
+        v-model="title"
+        type="text"
+        placeholder="title"
+        class="
+          border
+          p-2
+          rounded
+        "
+        required
+      />
 
-        <textarea
-            v-model="description"
-            placeholder="description"
-            class="border p-2 rounded"
-        ></textarea>
+      <textarea
+        v-model="description"
+        placeholder="description"
+        class="
+          border
+          p-2
+          rounded
+        "
+      ></textarea>
 
-        <input
-            v-model="deadline"
-            type="text"
-            placeholder="deadline"
-            class="border p-2 rounded"
-            required
-        />
+      <input
+        v-model="deadline"
+        type="text"
+        placeholder="deadline"
+        class="
+          border
+          p-2
+          rounded
+        "
+        required
+      />
 
-        <button
-            type="submit"
-            class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-        >
-            save
-        </button>
+      <button
+        type="submit"
+        class="
+          bg-green-500
+          hover:bg-green-600
+          text-white
+          px-4
+          py-2
+          rounded
+        "
+      >
+        save
+      </button>
     </form>
 </template>

@@ -33,18 +33,44 @@ function openTask() {
 
 <template>
   <div
-    class="task bg-card break-words rounded-xl border border-sidebar-border/70 dark:border-sidebar-border p-4"
+    class="
+      task
+      bg-card
+      break-words
+      rounded-xl
+      border
+      border-sidebar-border/70
+      dark:border-sidebar-border
+      p-4
+    "
     draggable="true"
     @dragstart="handleDragStart"
     @dragover="handleDragOver"
     @drop="handleDrop"
     @click="openTask"
   >
-    <h2 class="font-bold text-3xl">
+    <h2 class="
+      font-bold
+      text-3xl
+    ">
       {{ task.title }}
     </h2>
-    <div class="my-1 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent dark:via-gray-600"></div>
-    <p class="text-lg text-gray-700 dark:text-gray-500">
+
+    <div class="
+      my-1
+      h-px
+      bg-gradient-to-r
+      from-transparent
+      via-gray-400
+      to-transparent
+      dark:via-gray-600
+    "></div>
+
+    <p class="
+      text-lg
+      text-gray-700
+      dark:text-gray-500
+    ">
       {{ task.description }}
     </p>
   </div>

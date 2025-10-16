@@ -6,14 +6,14 @@ import TaskModal   from './TaskModal.vue';
 import type { TaskType } from '@/types';
 
 type PageProps = {
-    tasks: TaskType[],
+  tasks: TaskType[],
 }
 
 const page = usePage<PageProps>();
 const selectedTask = ref<TaskType | null>(null);
 
 const tasks = computed(
-    () => page.props.tasks
+  () => page.props.tasks
 );
 
 const pending = filterTasksByStage(tasks, "pending");
@@ -22,27 +22,27 @@ const delayed = filterTasksByStage(tasks, "delayed");
 const done    = filterTasksByStage(tasks, "done");
 
 function filterTasksByStage(
-    tasks: Ref<TaskType[]>,
-    stage: string,
+  tasks: Ref<TaskType[]>,
+  stage: string,
 ) {
-    return computed(
-        () => tasks.value.filter(
-            task => task.stage === stage
-        )
-    );
+  return computed(
+    () => tasks.value.filter(
+      task => task.stage === stage
+    )
+  );
 }
 
 function handleTaskDrop(
-    taskId: number,
-    newStage: string,
+  taskId: number,
+  newStage: string,
 ) {
-    const task = tasks.value.find(
-        task => task.id === taskId
-    );
+  const task = tasks.value.find(
+    task => task.id === taskId
+  );
 
-    if (task) {
-        task.stage = newStage;
-    }
+  if (task) {
+    task.stage = newStage;
+  }
 }
 
 function handleCreateTask(
@@ -52,30 +52,30 @@ function handleCreateTask(
 }
 
 function handleTaskReorder(
-    draggedId: number,
-    targetId: number,
+  draggedId: number,
+  targetId: number,
 ) {
-    const indexFrom = page.props.tasks.findIndex(
-        task => task.id === draggedId
-    );
-    const indexTo = page.props.tasks.findIndex(
-        task => task.id === targetId
-    );
+  const indexFrom = page.props.tasks.findIndex(
+    task => task.id === draggedId
+  );
+  const indexTo = page.props.tasks.findIndex(
+    task => task.id === targetId
+  );
 
-    if (indexFrom === -1 || indexTo === -1) return;
+  if (indexFrom === -1 || indexTo === -1) return;
 
-    const [moved] = page.props.tasks.splice(indexFrom, 1);
-    page.props.tasks.splice(indexTo, 0, moved);
+  const [moved] = page.props.tasks.splice(indexFrom, 1);
+  page.props.tasks.splice(indexTo, 0, moved);
 }
 
 function openTaskModal(
-    task: TaskType
+  task: TaskType
 ) {
-    selectedTask.value = task;
+  selectedTask.value = task;
 }
 
 function closeTaskModal() {
-    selectedTask.value = null;
+  selectedTask.value = null;
 }
 
 function handleUpdateTask(
@@ -83,57 +83,89 @@ function handleUpdateTask(
 ): void {
   router.put('/tasks/${task.id}', task);
 }
-
 </script>
 
 <template>
-    <div class="kanban grid grid-cols-4 h-full gap-10">
-        <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-            <Stage
-                title="pending"
-                :tasks="pending"
-                @task-drop="handleTaskDrop"
-                @create-task="handleCreateTask"
-                @reorder-task="handleTaskReorder"
-                @task-clicked="openTaskModal"
-            />
-        </div>
-        <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-            <Stage
-                title="active"
-                :tasks="active"
-                @task-drop="handleTaskDrop"
-                @create-task="handleCreateTask"
-                @reorder-task="handleTaskReorder"
-                @task-clicked="openTaskModal"
-            />
-        </div>
-        <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-            <Stage
-                title="delayed"
-                :tasks="delayed"
-                @task-drop="handleTaskDrop"
-                @create-task="handleCreateTask"
-                @reorder-task="handleTaskReorder"
-                @task-clicked="openTaskModal"
-            />
-        </div>
-        <div class="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-            <Stage
-                title="done"
-                :tasks="done"
-                @task-drop="handleTaskDrop"
-                @create-task="handleCreateTask"
-                @reorder-task="handleTaskReorder"
-                @task-clicked="openTaskModal"
-            />
-        </div>
+  <div class="
+    kanban
+    grid
+    grid-cols-4
+    h-full
+    gap-10
+  ">
+    <div class="
+      overflow-hidden
+      rounded-xl
+      border
+      border-sidebar-border/70
+      dark:border-sidebar-border
+    ">
+      <Stage
+        title="pending"
+        :tasks="pending"
+        @task-drop="handleTaskDrop"
+        @create-task="handleCreateTask"
+        @reorder-task="handleTaskReorder"
+        @task-clicked="openTaskModal"
+      />
     </div>
 
-    <TaskModal
-        v-if="selectedTask"
-        :task="selectedTask"
-        @close="closeTaskModal"
-        @update="handleUpdateTask"
-    />
+    <div class="
+      overflow-hidden
+      rounded-xl
+      border
+      border-sidebar-border/70
+      dark:border-sidebar-border
+    ">
+      <Stage
+        title="active"
+        :tasks="active"
+        @task-drop="handleTaskDrop"
+        @create-task="handleCreateTask"
+        @reorder-task="handleTaskReorder"
+        @task-clicked="openTaskModal"
+      />
+    </div>
+
+    <div class="
+      overflow-hidden
+      rounded-xl
+      border
+      border-sidebar-border/70
+      dark:border-sidebar-border
+    ">
+      <Stage
+        title="delayed"
+        :tasks="delayed"
+        @task-drop="handleTaskDrop"
+        @create-task="handleCreateTask"
+        @reorder-task="handleTaskReorder"
+        @task-clicked="openTaskModal"
+      />
+    </div>
+
+    <div class="
+      overflow-hidden
+      rounded-xl
+      border
+      border-sidebar-border/70
+      dark:border-sidebar-border
+    ">
+      <Stage
+        title="done"
+        :tasks="done"
+        @task-drop="handleTaskDrop"
+        @create-task="handleCreateTask"
+        @reorder-task="handleTaskReorder"
+        @task-clicked="openTaskModal"
+      />
+    </div>
+  </div>
+
+  <TaskModal
+    v-if="selectedTask"
+    :task="selectedTask"
+    @close="closeTaskModal"
+    @update="handleUpdateTask"
+  />
 </template>

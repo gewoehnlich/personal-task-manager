@@ -5,25 +5,25 @@ import TaskForm from './TaskForm.vue';
 import { TaskType } from '@/types';
 
 const props = defineProps<{
-    title: string;
-    tasks: Array<TaskType>;
+  title: string;
+  tasks: Array<TaskType>;
 }>();
 
 const emit = defineEmits<{
-    (e: 'task-drop', taskId: number, newStatus: string): void;
-    (e: 'create-task', task: Omit<TaskType, 'id'>): void;
-    (e: 'reorder-task', draggedId: number, targetId: number): void;
-    (e: 'task-clicked', task: TaskType): void;
+  (e: 'task-drop', taskId: number, newStatus: string): void;
+  (e: 'create-task', task: Omit<TaskType, 'id'>): void;
+  (e: 'reorder-task', draggedId: number, targetId: number): void;
+  (e: 'task-clicked', task: TaskType): void;
 }>();
 
 const showForm = ref(false);
 const length = computed(() => props.tasks.length);
 
 function handleDrop(event: DragEvent) {
-    const taskId = parseInt(event.dataTransfer?.getData('task-id') || '', 10);
-    if (!isNaN(taskId)) {
-        emit('task-drop', taskId, props.title);
-    }
+  const taskId = parseInt(event.dataTransfer?.getData('task-id') || '', 10);
+  if (!isNaN(taskId)) {
+    emit('task-drop', taskId, props.title);
+  }
 }
 
 function handleTaskFormSubmit(
@@ -33,12 +33,12 @@ function handleTaskFormSubmit(
     deadline: string
   },
 ): void {
-    emit('create-task', {
-        ...task,
-        stage: props.title,
-    });
+  emit('create-task', {
+    ...task,
+    stage: props.title,
+  });
 
-    showForm.value = false;
+  showForm.value = false;
 }
 
 </script>
