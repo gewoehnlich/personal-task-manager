@@ -9,12 +9,20 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void;
   (e: 'update', updatedTask: TaskType): void;
+  (e: 'delete', task: TaskType): void;
 }>();
 
 const editableTask = reactive({ ...props.task });
 
 function saveChanges() {
   emit('update', {
+    ...editableTask
+  });
+  emit('close');
+}
+
+function deleteTask() {
+  emit('delete', {
     ...editableTask
   });
   emit('close');
@@ -257,6 +265,22 @@ function saveChanges() {
           "
         >
           Save
+        </button>
+
+        <button
+          @click="deleteTask"
+          class="
+            px-4
+            py-2
+            bg-red-600
+            text-white
+            rounded-md
+            hover:bg-red-700
+            transition
+            justify-start
+          "
+        >
+          Delete
         </button>
       </footer>
     </div>

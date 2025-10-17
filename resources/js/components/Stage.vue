@@ -40,7 +40,6 @@ function handleTaskFormSubmit(
 
   showForm.value = false;
 }
-
 </script>
 
 <template>

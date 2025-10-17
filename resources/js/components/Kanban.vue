@@ -13,7 +13,9 @@ const page = usePage<PageProps>();
 const selectedTask = ref<TaskType | null>(null);
 
 const tasks = computed(
-  () => page.props.tasks
+  () => page.props.tasks.filter(
+    (task) => task.deleted === 0,
+  )
 );
 
 const pending = filterTasksByStage(tasks, "pending");
@@ -82,6 +84,12 @@ function handleUpdateTask(
   task: Omit<TaskType, 'id'>,
 ): void {
   router.put(`/tasks/${task.id}`, task);
+}
+
+function handleDeleteTask(
+  task: Omit<TaskType, 'id'>,
+): void {
+  router.delete(`/tasks/${task.id}`);
 }
 </script>
 
@@ -166,6 +174,7 @@ function handleUpdateTask(
     v-if="selectedTask"
     :task="selectedTask"
     @close="closeTaskModal"
+    @delete="handleDeleteTask"
     @update="handleUpdateTask"
   />
 </template>
