@@ -44,9 +44,9 @@ export interface Task {
     description: string;
     stage: string;
     deleted: bool;
-    deadline: string;
-    createdAt: string;
-    updatedAt: string;
+    deadline: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export type TaskType = Task;

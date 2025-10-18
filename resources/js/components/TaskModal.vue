@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { TaskType } from '@/types';
+import DatePicker from 'primevue/datepicker';
 
 const props = defineProps<{
   task: TaskType
@@ -13,6 +14,22 @@ const emit = defineEmits<{
 }>();
 
 const editableTask = reactive({ ...props.task });
+
+function formatDate(date: Date): string {
+    const pad = (num: number) => num.toString().padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+}
+
+const deadlineAsDate = computed({
+  get() {
+    return editableTask.deadline ? new Date(editableTask.deadline.replace(' ', 'T')) : null;
+  },
+  set(val) {
+    if (val) {
+      editableTask.deadline = formatDate(val);
+    }
+  }
+});
 
 function saveChanges() {
   emit('update', {
@@ -191,20 +208,13 @@ function deleteTask() {
               Deadline
             </p>
 
-            <input
-              type="date"
-              v-model="editableTask.deadline"
-              class="
-                w-full
-                bg-input
-                dark:bg-muted
-                rounded-md
-                px-3
-                py-2
-                focus:outline-none
-                focus:ring-2
-                focus:ring-primary
-              "
+            <DatePicker
+              id="deadline"
+              v-model="deadlineAsDate"
+              showTime
+              showSeconds
+              hourFormat="24"
+              fluid
             />
           </div>
         </div>
