@@ -35,7 +35,7 @@ function filterTasksByStage(
 }
 
 function handleTaskDrop(
-  taskId: number,
+  taskId:   number,
   newStage: string,
 ) {
   const task = tasks.value.find(
@@ -44,6 +44,7 @@ function handleTaskDrop(
 
   if (task) {
     task.stage = newStage;
+    router.put(`/tasks/${task.id}`, task);
   }
 }
 
@@ -57,17 +58,18 @@ function handleTaskReorder(
   draggedId: number,
   targetId: number,
 ) {
-  const indexFrom = page.props.tasks.findIndex(
+  const draggedTask = tasks.value.find(
     task => task.id === draggedId
   );
-  const indexTo = page.props.tasks.findIndex(
+
+  const targetTask = tasks.value.find(
     task => task.id === targetId
   );
 
-  if (indexFrom === -1 || indexTo === -1) return;
+  if (!draggedTask || !targetTask) return;
 
-  const [moved] = page.props.tasks.splice(indexFrom, 1);
-  page.props.tasks.splice(indexTo, 0, moved);
+  draggedTask.stage = targetTask.stage;
+  router.put(`/tasks/${draggedTask.id}`, draggedTask);
 }
 
 function openTaskModal(
