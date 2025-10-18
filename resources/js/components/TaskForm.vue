@@ -7,17 +7,17 @@ const deadline    = ref('')
 
 const emit = defineEmits<{
   (e: 'submit', task: {
-    title: string;
+    title:       string;
     description: string;
-    deadline: string
+    deadline:    string;
   }): void
 }>()
 
 function submitForm() {
   emit('submit', {
-    title: title.value,
+    title:       title.value,
     description: description.value,
-    deadline: deadline.value,
+    deadline:    deadline.value.replace('T', ' ') + ':00',
   });
 
   title.value = '';
@@ -64,7 +64,7 @@ function submitForm() {
 
       <input
         v-model="deadline"
-        type="text"
+        type="datetime-local"
         placeholder="deadline"
         class="
           border
