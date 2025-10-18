@@ -59,6 +59,7 @@ function submitForm() {
           p-2
           rounded
         "
+        required
       ></textarea>
 
       <input
