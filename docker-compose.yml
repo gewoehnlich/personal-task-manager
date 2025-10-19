@@ -3,6 +3,8 @@ networks:
     driver: bridge
 volumes:
   personal-task-manager-data:
+  certbot-etc:
+  certbot-var:
 
 services:
   app:
@@ -40,11 +42,14 @@ services:
       dockerfile: ./docker/nginx/Dockerfile
     ports:
       - "80:80"
+      - "443:443"
     networks:
       - personal-task-manager-network
     volumes:
       - .:/var/www/html
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
     depends_on:
       - app
     restart: unless-stopped
@@ -81,3 +86,14 @@ services:
     working_dir: /var/www/html
     restart: unless-stopped
     tty: true
+
+  certbot:
+    container_name: certbot.personal-task-manager
+    build:
+      context: .
+      dockerfile: ./docker/certbot/Dockerfile
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - ./public:/var/www/html/public
+    command: certonly --webroot --webroot-path=/var/www/html/public --email ${CERTBOT_TLS_CERTIFICATE_EMAIL} --agree-tos --no-eff-email -d ${APP_URL}
