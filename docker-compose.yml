@@ -92,8 +92,11 @@ services:
     build:
       context: .
       dockerfile: ./docker/certbot/Dockerfile
+    profiles:
+      - tools
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       - ./public:/var/www/html/public
-    command: certonly --webroot --webroot-path=/var/www/html/public --email ${CERTBOT_TLS_CERTIFICATE_EMAIL} --agree-tos --no-eff-email -d ${APP_URL}
+    tty: true
+    # command: certonly --webroot --webroot-path=/var/www/html/public --email ${CERTBOT_TLS_CERTIFICATE_EMAIL} --agree-tos --no-eff-email -d ${APP_URL}
