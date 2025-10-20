@@ -28,4 +28,11 @@ export default defineConfig({
             'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
         },
     },
+    server: {
+        host: 'localhost',
+        https: {
+            key: '/etc/letsencrypt/live/localhost/privkey.pem',
+            cert: '/etc/letsencrypt/live/localhost/fullchain.pem',
+        },
+    },
 });
