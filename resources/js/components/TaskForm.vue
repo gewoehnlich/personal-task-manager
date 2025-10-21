@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const defaultDeadline = new Date()
+defaultDeadline.setDate(defaultDeadline.getDate() + 7)
+
 const title       = ref('')
 const description = ref('')
-const deadline    = ref('')
+const deadline = ref(formatDateForInput(defaultDeadline))
 
 const emit = defineEmits<{
   (e: 'submit', task: {
@@ -23,6 +26,16 @@ function submitForm() {
   title.value = '';
   description.value = '';
   deadline.value = '';
+}
+
+function formatDateForInput(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, '0')
+  const year = date.getFullYear()
+  const month = pad(date.getMonth() + 1)
+  const day = pad(date.getDate())
+  const hours = pad(date.getHours())
+  const minutes = pad(date.getMinutes())
+  return `${year}-${month}-${day}T${hours}:${minutes}`
 }
 </script>
 
