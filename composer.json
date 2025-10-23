@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.10",
         "prettus/l5-repository": "^2.10",
         "spatie/laravel-data": "^4.17",
+        "spatie/laravel-view-models": "^1.6",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
