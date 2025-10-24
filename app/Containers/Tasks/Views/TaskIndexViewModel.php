@@ -2,48 +2,107 @@
 
 namespace App\Containers\Tasks\Views;
 
+use App\Containers\Tasks\Criteria\FilterByDeletedCriterion;
+use App\Containers\Tasks\Criteria\FilterByStageCriterion;
 use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Ship\Parents\Views\JsonModel;
+use Illuminate\Database\Eloquent\array;
 
 final class TaskIndexViewModel extends JsonModel
 {
+    public function __construct(
+        private readonly TaskRepository $repository,
+    ) {
+        //
+    }
+
     public function pending(): array
     {
-        return TaskRepository::where([
-            'stage' => Stage::PENDING,
-            'deleted' => false,
-        ]);
+        $this->repository->pushCriteria(
+            criteria: new FilterByStageCriterion(
+                stage: Stage::PENDING,
+            ),
+        );
+
+        $this->repository->pushCriteria(
+            criteria: new FilterByDeletedCriterion(
+                deleted: false,
+            ),
+        );
+
+        $result = $this->repository->get();
+
+        return $result->toArray();
     }
 
     public function active(): array
     {
-        return TaskRepository::where([
-            'stage' => Stage::ACTIVE,
-            'deleted' => false,
-        ]);
+        $this->repository->pushCriteria(
+            criteria: new FilterByStageCriterion(
+                stage: Stage::ACTIVE,
+            ),
+        );
+
+        $this->repository->pushCriteria(
+            criteria: new FilterByDeletedCriterion(
+                deleted: false,
+            ),
+        );
+
+        $result = $this->repository->get();
+
+        return $result->toArray();
     }
 
     public function delayed(): array
     {
-        return TaskRepository::where([
-            'stage' => Stage::DELAYED,
-            'deleted' => false,
-        ]);
+        $this->repository->pushCriteria(
+            criteria: new FilterByStageCriterion(
+                stage: Stage::DELAYED,
+            ),
+        );
+
+        $this->repository->pushCriteria(
+            criteria: new FilterByDeletedCriterion(
+                deleted: false,
+            ),
+        );
+
+        $result = $this->repository->get();
+
+        return $result->toArray();
     }
 
     public function done(): array
     {
-        return TaskRepository::where([
-            'stage' => Stage::DONE,
-            'deleted' => false,
-        ]);
+        $this->repository->pushCriteria(
+            criteria: new FilterByStageCriterion(
+                stage: Stage::DONE,
+            ),
+        );
+
+        $this->repository->pushCriteria(
+            criteria: new FilterByDeletedCriterion(
+                deleted: false,
+            ),
+        );
+
+        $result = $this->repository->get();
+
+        return $result->toArray();
     }
 
     public function deleted(): array
     {
-        return TaskRepository::where([
-            'deleted' => true,
-        ]);
+        $this->repository->pushCriteria(
+            criteria: new FilterByDeletedCriterion(
+                deleted: true,
+            ),
+        );
+
+        $result = $this->repository->get();
+
+        return $result->toArray();
     }
 }

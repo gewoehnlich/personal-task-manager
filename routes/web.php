@@ -1,27 +1,7 @@
 <?php
 
-use App\Containers\Tasks\Models\Task;
-use App\Containers\Tasks\Views\TaskIndexViewModel;
 use App\Ship\Actions\RoutesContainersRegisterAction;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('home');
-
-Route::get('test', function () {
-    return new TaskIndexViewModel();
-});
-
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard', [
-        'tasks' => Task::all(),
-    ]);
-})->middleware([
-    'auth',
-    'verified',
-])->name('dashboard');
 
 Route::middleware('web')
     ->group(function () {

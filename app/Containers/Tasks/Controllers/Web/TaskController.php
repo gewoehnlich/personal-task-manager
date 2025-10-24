@@ -7,7 +7,6 @@ use App\Containers\Tasks\Actions\TaskDeleteAction;
 use App\Containers\Tasks\Actions\TaskGetAction;
 use App\Containers\Tasks\Actions\TaskIndexAction;
 use App\Containers\Tasks\Actions\TaskUpdateAction;
-use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Requests\TaskCreateRequest;
 use App\Containers\Tasks\Requests\TaskDeleteRequest;
 use App\Containers\Tasks\Requests\TaskGetRequest;
