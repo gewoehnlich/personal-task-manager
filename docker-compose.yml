@@ -8,7 +8,7 @@ volumes:
 
 services:
   app:
-    container_name: laravel.personal-task-manager
+    container_name: laravel.${APP_NAME}
     build:
       context: .
       dockerfile: ./docker/php-fpm/Dockerfile
@@ -36,7 +36,7 @@ services:
       - "9000"
 
   webserver:
-    container_name: nginx.personal-task-manager
+    container_name: nginx.${APP_NAME}
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
@@ -55,7 +55,7 @@ services:
     restart: unless-stopped
 
   mysql:
-    container_name: mysql.personal-task-manager
+    container_name: mysql.${APP_NAME}
     build:
       context: .
       dockerfile: ./docker/mysql/Dockerfile
@@ -73,7 +73,7 @@ services:
     restart: unless-stopped
 
   node:
-    container_name: node.personal-task-manager
+    container_name: node.${APP_NAME}
     build:
       context: .
       dockerfile: ./docker/node/Dockerfile
@@ -85,11 +85,13 @@ services:
       - .:/var/www/html
       - certbot-etc:/etc/letsencrypt
     working_dir: /var/www/html
+    environment:
+      - APP_ENV=${APP_ENV}
     restart: unless-stopped
     tty: true
 
   certbot:
-    container_name: certbot.personal-task-manager
+    container_name: certbot.${APP_NAME}
     build:
       context: .
       dockerfile: ./docker/certbot/Dockerfile
