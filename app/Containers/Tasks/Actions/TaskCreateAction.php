@@ -7,7 +7,11 @@ use App\Containers\Tasks\Transporters\TaskCreateTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
+use Knuckles\Scribe\Attributes\Authenticated;
+use Knuckles\Scribe\Attributes\Group;
 
+#[Group('TaskActions')]
+#[Authenticated]
 final readonly class TaskCreateAction extends Action
 {
     public function __construct(

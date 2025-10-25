@@ -41,7 +41,7 @@ final class Task extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function bill(): HasMany
+    public function bills(): HasMany
     {
         return $this->hasMany(Bill::class);
     }

@@ -7,7 +7,6 @@ use App\Containers\Tasks\Criteria\FilterByStageCriterion;
 use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Ship\Parents\Views\JsonModel;
-use Illuminate\Database\Eloquent\array;
 
 final class TaskIndexViewModel extends JsonModel
 {
@@ -31,7 +30,9 @@ final class TaskIndexViewModel extends JsonModel
             ),
         );
 
-        $result = $this->repository->get();
+        $result = $this->repository
+            ->with('bills')
+            ->get();
 
         return $result->toArray();
     }
@@ -50,7 +51,9 @@ final class TaskIndexViewModel extends JsonModel
             ),
         );
 
-        $result = $this->repository->get();
+        $result = $this->repository
+            ->with('bills')
+            ->get();
 
         return $result->toArray();
     }
@@ -69,7 +72,9 @@ final class TaskIndexViewModel extends JsonModel
             ),
         );
 
-        $result = $this->repository->get();
+        $result = $this->repository
+            ->with('bills')
+            ->get();
 
         return $result->toArray();
     }
@@ -88,7 +93,9 @@ final class TaskIndexViewModel extends JsonModel
             ),
         );
 
-        $result = $this->repository->get();
+        $result = $this->repository
+            ->with('bills')
+            ->get();
 
         return $result->toArray();
     }
@@ -101,7 +108,9 @@ final class TaskIndexViewModel extends JsonModel
             ),
         );
 
-        $result = $this->repository->get();
+        $result = $this->repository
+            ->with('bills')
+            ->get();
 
         return $result->toArray();
     }
