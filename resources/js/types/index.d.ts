@@ -26,29 +26,4 @@ export interface SharedData extends PageProps {
     sidebarOpen: boolean;
 }
 
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    avatar?: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
-}
-
-export interface Task {
-    id: number;
-    userId: number;
-    parentId: number;
-    title: string;
-    description: string;
-    stage: string;
-    deleted: bool;
-    deadline: Date;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-export type TaskType = Task;
-
 export type BreadcrumbItemType = BreadcrumbItem;
