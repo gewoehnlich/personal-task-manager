@@ -1,176 +1,138 @@
 <script setup lang="ts">
+import type { TaskType } from '@/types/task';
+import { router, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
-import { usePage, router } from '@inertiajs/vue3';
-import Stage       from './Stage.vue';
-import TaskModal   from './TaskModal.vue';
-import type { TaskType } from '@/types';
+import Stage from './Stage.vue';
+import TaskModal from './TaskModal.vue';
 
 type PageProps = {
-  tasks: {
-    pending: TaskType[];
-    active:  TaskType[];
-    delayed: TaskType[];
-    done:    TaskType[];
-    deleted: TaskType[];
-  };
-}
+    tasks: {
+        pending: TaskType[];
+        active: TaskType[];
+        delayed: TaskType[];
+        done: TaskType[];
+        deleted: TaskType[];
+    };
+};
 
 const page = usePage<PageProps>();
 const selectedTask = ref<TaskType | null>(null);
 
-const tasks = computed(
-  () => page.props.tasks
-);
+const tasks = computed(() => [
+    ...(page.props.tasks.pending || []),
+    ...(page.props.tasks.active || []),
+    ...(page.props.tasks.delayed || []),
+    ...(page.props.tasks.done || []),
+    ...(page.props.tasks.deleted || []),
+]);
 
-const pending = computed(() => tasks.value.pending || []);
-const active  = computed(() => tasks.value.active  || []);
-const delayed = computed(() => tasks.value.delayed || []);
-const done    = computed(() => tasks.value.done    || []);
-const deleted = computed(() => tasks.value.deleted || []);
+const pending = computed(() => page.props.tasks.pending || []);
+const active = computed(() => page.props.tasks.active || []);
+const delayed = computed(() => page.props.tasks.delayed || []);
+const done = computed(() => page.props.tasks.done || []);
+const deleted = computed(() => page.props.tasks.deleted || []);
 
-function handleTaskDrop(
-  taskId:   number,
-  newStage: string,
-) {
-  const task = tasks.value.find(
-    task => task.id === taskId
-  );
+function handleTaskDrop(taskId: number, newStage: string) {
+    const task = tasks.value.find((task) => task.id === taskId);
 
-  if (task) {
-    task.stage = newStage;
-    router.put(`/tasks/${task.id}`, task);
-  }
+    if (task) {
+        task.stage = newStage;
+        router.put(`/tasks/${task.id}`, task);
+    }
 }
 
-function handleCreateTask(
-  task: Omit<TaskType, 'id'>,
-): void {
-  router.post('/tasks', task);
+function handleCreateTask(task: Omit<TaskType, 'id'>): void {
+    router.post('/tasks', task);
 }
 
-function handleTaskReorder(
-  draggedId: number,
-  targetId: number,
-) {
-  const draggedTask = tasks.value.find(
-    task => task.id === draggedId
-  );
+function handleTaskReorder(draggedId: number, targetId: number) {
+    const draggedTask = tasks.value.find((task) => task.id === draggedId);
 
-  const targetTask = tasks.value.find(
-    task => task.id === targetId
-  );
+    const targetTask = tasks.value.find((task) => task.id === targetId);
 
-  if (!draggedTask || !targetTask) return;
+    if (!draggedTask || !targetTask) return;
 
-  draggedTask.stage = targetTask.stage;
-  router.put(`/tasks/${draggedTask.id}`, draggedTask);
+    draggedTask.stage = targetTask.stage;
+    router.put(`/tasks/${draggedTask.id}`, draggedTask);
 }
 
-function openTaskModal(
-  task: TaskType
-) {
-  selectedTask.value = task;
+function openTaskModal(task: TaskType) {
+    selectedTask.value = task;
 }
 
 function closeTaskModal() {
-  selectedTask.value = null;
+    selectedTask.value = null;
 }
 
-function handleUpdateTask(
-  task: Omit<TaskType, 'id'>,
-): void {
-  router.put(`/tasks/${task.id}`, task);
+function handleUpdateTask(task: Omit<TaskType, 'id'>): void {
+    router.put(`/tasks/${task.id}`, task);
 }
 
-function handleDeleteTask(
-  task: Omit<TaskType, 'id'>,
-): void {
-  router.delete(`/tasks/${task.id}`);
+function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
+    router.delete(`/tasks/${task.id}`);
 }
 </script>
 
 <template>
-  <div class="
-    kanban
-    grid
-    grid-cols-4
-    h-full
-    gap-10
-  ">
-    <div class="
-      overflow-hidden
-      rounded-xl
-      border
-      border-sidebar-border/70
-      dark:border-sidebar-border
-    ">
-      <Stage
-        title="pending"
-        :tasks="pending"
-        @task-drop="handleTaskDrop"
-        @create-task="handleCreateTask"
-        @reorder-task="handleTaskReorder"
-        @task-clicked="openTaskModal"
-      />
+    <div class="kanban grid h-full grid-cols-4 gap-10">
+        <div
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+        >
+            <Stage
+                title="pending"
+                :tasks="pending"
+                @task-drop="handleTaskDrop"
+                @create-task="handleCreateTask"
+                @reorder-task="handleTaskReorder"
+                @task-clicked="openTaskModal"
+            />
+        </div>
+
+        <div
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+        >
+            <Stage
+                title="active"
+                :tasks="active"
+                @task-drop="handleTaskDrop"
+                @create-task="handleCreateTask"
+                @reorder-task="handleTaskReorder"
+                @task-clicked="openTaskModal"
+            />
+        </div>
+
+        <div
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+        >
+            <Stage
+                title="delayed"
+                :tasks="delayed"
+                @task-drop="handleTaskDrop"
+                @create-task="handleCreateTask"
+                @reorder-task="handleTaskReorder"
+                @task-clicked="openTaskModal"
+            />
+        </div>
+
+        <div
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+        >
+            <Stage
+                title="done"
+                :tasks="done"
+                @task-drop="handleTaskDrop"
+                @create-task="handleCreateTask"
+                @reorder-task="handleTaskReorder"
+                @task-clicked="openTaskModal"
+            />
+        </div>
     </div>
 
-    <div class="
-      overflow-hidden
-      rounded-xl
-      border
-      border-sidebar-border/70
-      dark:border-sidebar-border
-    ">
-      <Stage
-        title="active"
-        :tasks="active"
-        @task-drop="handleTaskDrop"
-        @create-task="handleCreateTask"
-        @reorder-task="handleTaskReorder"
-        @task-clicked="openTaskModal"
-      />
-    </div>
-
-    <div class="
-      overflow-hidden
-      rounded-xl
-      border
-      border-sidebar-border/70
-      dark:border-sidebar-border
-    ">
-      <Stage
-        title="delayed"
-        :tasks="delayed"
-        @task-drop="handleTaskDrop"
-        @create-task="handleCreateTask"
-        @reorder-task="handleTaskReorder"
-        @task-clicked="openTaskModal"
-      />
-    </div>
-
-    <div class="
-      overflow-hidden
-      rounded-xl
-      border
-      border-sidebar-border/70
-      dark:border-sidebar-border
-    ">
-      <Stage
-        title="done"
-        :tasks="done"
-        @task-drop="handleTaskDrop"
-        @create-task="handleCreateTask"
-        @reorder-task="handleTaskReorder"
-        @task-clicked="openTaskModal"
-      />
-    </div>
-  </div>
-
-  <TaskModal
-    v-if="selectedTask"
-    :task="selectedTask"
-    @close="closeTaskModal"
-    @delete="handleDeleteTask"
-    @update="handleUpdateTask"
-  />
+    <TaskModal
+        v-if="selectedTask"
+        :task="selectedTask"
+        @close="closeTaskModal"
+        @delete="handleDeleteTask"
+        @update="handleUpdateTask"
+    />
 </template>

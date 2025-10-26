@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
 import { TaskType } from '@/types';
 import DatePicker from 'primevue/datepicker';
+import { computed, reactive } from 'vue';
 
 const props = defineProps<{
-  task: TaskType
+    task: TaskType;
 }>();
 
 const emit = defineEmits<{
-  (e: 'close'): void;
-  (e: 'update', updatedTask: TaskType): void;
-  (e: 'delete', task: TaskType): void;
+    (e: 'close'): void;
+    (e: 'update', updatedTask: TaskType): void;
+    (e: 'delete', task: TaskType): void;
 }>();
 
 const editableTask = reactive({ ...props.task });
@@ -21,278 +21,143 @@ function formatDate(date: Date): string {
 }
 
 const deadlineAsDate = computed({
-  get() {
-    return editableTask.deadline ? new Date(editableTask.deadline.replace(' ', 'T')) : null;
-  },
-  set(val) {
-    if (val) {
-      editableTask.deadline = formatDate(val);
-    }
-  }
+    get() {
+        return editableTask.deadline
+            ? new Date(editableTask.deadline.replace(' ', 'T'))
+            : null;
+    },
+    set(val) {
+        if (val) {
+            editableTask.deadline = formatDate(val);
+        }
+    },
 });
 
 function saveChanges() {
-  emit('update', {
-    ...editableTask
-  });
-  emit('close');
+    emit('update', {
+        ...editableTask,
+    });
+    emit('close');
 }
 
 function deleteTask() {
-  emit('delete', {
-    ...editableTask
-  });
-  emit('close');
+    emit('delete', {
+        ...editableTask,
+    });
+    emit('close');
 }
 </script>
 
 <template>
-  <div class="
-      fixed
-      inset-0
-      bg-black/50
-      backdrop-blur-sm
-      flex
-      items-center
-      justify-center
-      z-50
-      px-4
-  ">
-    <div class="
-        bg-white
-        dark:bg-card
-        rounded-2xl
-        shadow-xl
-        border
-        border-sidebar-border/70
-        dark:border-sidebar-border
-        w-full
-        max-w-2xl
-        max-h-[90vh]
-        overflow-y-auto
-        p-6
-        space-y-6
-    ">
-      <header class="
-          flex
-          justify-between
-          items-start
-      ">
-        <div>
-          <input
-            v-model="editableTask.title"
-            class="
-              bg-transparent
-              text-3xl
-              font-bold
-              mb-1
-              focus:outline-none
-              focus:ring-2
-              focus:ring-primary
-              px-1
-            "
-          />
-
-          <p class="
-            text-sm
-            text-gray-500
-            dark:text-gray-400
-          ">
-            Task ID: {{ task.id }} | User ID: {{ task.userId }}
-          </p>
-        </div>
-        <button
-          @click="$emit('close')"
-          class="
-            text-gray-500
-            hover:text-red-500
-            transition
-            text-xl
-          "
+    <div
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm"
+    >
+        <div
+            class="dark:bg-card border-sidebar-border/70 dark:border-sidebar-border max-h-[90vh] w-full max-w-2xl space-y-6 overflow-y-auto rounded-2xl border bg-white p-6 shadow-xl"
         >
-          &times;
-        </button>
-      </header>
+            <header class="flex items-start justify-between">
+                <div>
+                    <input
+                        v-model="editableTask.title"
+                        class="focus:ring-primary mb-1 bg-transparent px-1 text-3xl font-bold focus:ring-2 focus:outline-none"
+                    />
 
-      <section class="space-y-4">
-        <div>
-          <p class="
-            text-sm
-            text-gray-500
-            dark:text-gray-400
-          ">
-            Description
-          </p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        Task ID: {{ task.id }} | User ID: {{ task.userId }}
+                    </p>
+                </div>
+                <button
+                    @click="$emit('close')"
+                    class="text-xl text-gray-500 transition hover:text-red-500"
+                >
+                    &times;
+                </button>
+            </header>
 
-          <textarea
-            v-model="editableTask.description"
-            class="
-              w-full
-              bg-input
-              dark:bg-muted
-              text-gray-800
-              dark:text-gray-200
-              rounded-md
-              p-2
-              mt-1
-              resize-none
-              focus:outline-none
-              focus:ring-2
-              focus:ring-primary
-            "
-            rows="4"
-          ></textarea>
-        </div>
+            <section class="space-y-4">
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        Description
+                    </p>
 
-        <div class="
-          flex
-          justify-between
-          gap-4
-          flex-wrap
-        ">
-          <div class="
-            flex-1
-            min-w-[140px]
-          ">
-            <p class="
-              text-sm
-              text-gray-500
-              dark:text-gray-400
-              mb-1
-            ">
-              Stage
-            </p>
+                    <textarea
+                        v-model="editableTask.description"
+                        class="bg-input dark:bg-muted focus:ring-primary mt-1 w-full resize-none rounded-md p-2 text-gray-800 focus:ring-2 focus:outline-none dark:text-gray-200"
+                        rows="4"
+                    ></textarea>
+                </div>
 
-            <select
-              v-model="editableTask.stage"
-              class="
-                w-full
-                bg-input
-                dark:bg-muted
-                rounded-md
-                px-3
-                py-2
-                focus:outline-none
-                focus:ring-2
-                focus:ring-primary
-              "
+                <div class="flex flex-wrap justify-between gap-4">
+                    <div class="min-w-[140px] flex-1">
+                        <p
+                            class="mb-1 text-sm text-gray-500 dark:text-gray-400"
+                        >
+                            Stage
+                        </p>
+
+                        <select
+                            v-model="editableTask.stage"
+                            class="bg-input dark:bg-muted focus:ring-primary w-full rounded-md px-3 py-2 focus:ring-2 focus:outline-none"
+                        >
+                            <option value="pending">Pending</option>
+
+                            <option value="active">Active</option>
+
+                            <option value="delayed">Delayed</option>
+
+                            <option value="done">Done</option>
+                        </select>
+                    </div>
+
+                    <div class="min-w-[140px] flex-1">
+                        <p
+                            class="mb-1 text-sm text-gray-500 dark:text-gray-400"
+                        >
+                            Deadline
+                        </p>
+
+                        <DatePicker
+                            id="deadline"
+                            v-model="deadlineAsDate"
+                            showTime
+                            showSeconds
+                            hourFormat="24"
+                            fluid
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <section
+                class="border-t border-gray-200 pt-4 text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400"
             >
-              <option value="pending">
-                Pending
-              </option>
+                <p>Created at: {{ task.createdAt }}</p>
 
-              <option value="active">
-                Active
-              </option>
+                <p>Updated at: {{ task.updatedAt }}</p>
+            </section>
 
-              <option value="delayed">
-                Delayed
-              </option>
+            <footer class="flex justify-end gap-3 pt-6">
+                <button
+                    @click="$emit('close')"
+                    class="bg-muted rounded-md px-4 py-2 text-gray-800 transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
+                >
+                    Cancel
+                </button>
 
-              <option value="done">
-                Done
-              </option>
-            </select>
-          </div>
+                <button
+                    @click="saveChanges"
+                    class="rounded-md bg-green-600 px-4 py-2 text-white transition hover:bg-green-700"
+                >
+                    Save
+                </button>
 
-          <div class="
-            flex-1
-            min-w-[140px]
-          ">
-            <p class="
-              text-sm
-              text-gray-500
-              dark:text-gray-400
-              mb-1
-            ">
-              Deadline
-            </p>
-
-            <DatePicker
-              id="deadline"
-              v-model="deadlineAsDate"
-              showTime
-              showSeconds
-              hourFormat="24"
-              fluid
-            />
-          </div>
+                <button
+                    @click="deleteTask"
+                    class="justify-start rounded-md bg-red-600 px-4 py-2 text-white transition hover:bg-red-700"
+                >
+                    Delete
+                </button>
+            </footer>
         </div>
-      </section>
-
-      <section class="
-        text-sm
-        text-gray-500
-        dark:text-gray-400
-        border-t
-        border-gray-200
-        dark:border-gray-700
-        pt-4
-      ">
-        <p>
-          Created at: {{ task.createdAt }}
-        </p>
-
-        <p>
-          Updated at: {{ task.updatedAt }}
-        </p>
-      </section>
-
-      <footer class="
-        flex
-        justify-end
-        gap-3
-        pt-6
-      ">
-        <button
-          @click="$emit('close')"
-          class="
-            px-4
-            py-2
-            bg-muted
-            dark:bg-gray-700
-            text-gray-800
-            dark:text-gray-100
-            rounded-md
-            hover:bg-gray-300
-            dark:hover:bg-gray-600
-            transition
-          "
-        >
-          Cancel
-        </button>
-
-        <button
-          @click="saveChanges"
-          class="
-            px-4
-            py-2
-            bg-green-600
-            text-white
-            rounded-md
-            hover:bg-green-700
-            transition
-          "
-        >
-          Save
-        </button>
-
-        <button
-          @click="deleteTask"
-          class="
-            px-4
-            py-2
-            bg-red-600
-            text-white
-            rounded-md
-            hover:bg-red-700
-            transition
-            justify-start
-          "
-        >
-          Delete
-        </button>
-      </footer>
     </div>
-  </div>
 </template>

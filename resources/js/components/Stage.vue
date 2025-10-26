@@ -1,79 +1,80 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { TaskType } from '@/types';
+import { computed, ref } from 'vue';
 import Task from './Task.vue';
 import TaskForm from './TaskForm.vue';
-import { TaskType } from '@/types';
 
 const props = defineProps<{
-  title: string;
-  tasks: Array<TaskType>;
+    title: string;
+    tasks: Array<TaskType>;
 }>();
 
 const emit = defineEmits<{
-  (e: 'task-drop', taskId: number, newStatus: string): void;
-  (e: 'create-task', task: Omit<TaskType, 'id'>): void;
-  (e: 'reorder-task', draggedId: number, targetId: number): void;
-  (e: 'task-clicked', task: TaskType): void;
+    (e: 'task-drop', taskId: number, newStatus: string): void;
+    (e: 'create-task', task: Omit<TaskType, 'id'>): void;
+    (e: 'reorder-task', draggedId: number, targetId: number): void;
+    (e: 'task-clicked', task: TaskType): void;
 }>();
 
 const showForm = ref(false);
 const length = computed(() => props.tasks.length);
 
 function handleDrop(event: DragEvent) {
-  const taskId = parseInt(event.dataTransfer?.getData('task-id') || '', 10);
-  if (!isNaN(taskId)) {
-    emit('task-drop', taskId, props.title);
-  }
+    const taskId = parseInt(event.dataTransfer?.getData('task-id') || '', 10);
+    if (!isNaN(taskId)) {
+        emit('task-drop', taskId, props.title);
+    }
 }
 
-function handleTaskFormSubmit(
-  task: {
+function handleTaskFormSubmit(task: {
     title: string;
     description: string;
-    deadline: string
-  },
-): void {
-  emit('create-task', {
-    ...task,
-    stage: props.title,
-  });
+    deadline: string;
+}): void {
+    emit('create-task', {
+        ...task,
+        stage: props.title,
+    });
 
-  showForm.value = false;
+    showForm.value = false;
 }
 </script>
 
 <template>
-  <div
-    class="stage h-full flex flex-col gap-1"
-    @dragover.prevent
-    @drop="handleDrop"
-  >
-    <div class="flex justify-between py-2 px-5 gap-5">
-      <h2 class="text-2xl font-bold mb-2 text-center">{{ title }}</h2>
-      <h2 class="font-bold text-2xl text-center">{{ length }}</h2>
-    </div>
+    <div
+        class="stage flex h-full flex-col gap-1"
+        @dragover.prevent
+        @drop="handleDrop"
+    >
+        <div class="flex justify-between gap-5 px-5 py-2">
+            <h2 class="mb-2 text-center text-2xl font-bold">{{ title }}</h2>
+            <h2 class="text-center text-2xl font-bold">{{ length }}</h2>
+        </div>
 
-    <div class="px-1">
-      <button class="bg-input hover:bg-popover text-popover-foreground w-full px-4 py-3 rounded-xl"
-        @click="showForm = !showForm"
-      >
-        Добавить новую задачу
-      </button>
-    </div>
+        <div class="px-1">
+            <button
+                class="bg-input hover:bg-popover text-popover-foreground w-full rounded-xl px-4 py-3"
+                @click="showForm = !showForm"
+            >
+                Добавить новую задачу
+            </button>
+        </div>
 
-    <div v-if="showForm" class="px-1">
-      <TaskForm @submit="handleTaskFormSubmit" />
-    </div>
+        <div v-if="showForm" class="px-1">
+            <TaskForm @submit="handleTaskFormSubmit" />
+        </div>
 
-    <div class="grid grid-cols-1 gap-1 px-1 overflow-y-auto">
-      <Task
-        v-for="task in tasks"
-        :key="task.id"
-        :task="task"
-        @reorder-task="(draggedId, targetId) => emit('reorder-task', draggedId, targetId)"
-        @task-clicked="(task) => emit('task-clicked', task)"
-      />
+        <div class="grid grid-cols-1 gap-1 overflow-y-auto px-1">
+            <Task
+                v-for="task in tasks"
+                :key="task.id"
+                :task="task"
+                @reorder-task="
+                    (draggedId, targetId) =>
+                        emit('reorder-task', draggedId, targetId)
+                "
+                @task-clicked="(task) => emit('task-clicked', task)"
+            />
+        </div>
     </div>
-  </div>
 </template>
-

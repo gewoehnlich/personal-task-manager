@@ -1,7 +1,1 @@
-export type Stage =
-    'pending' |
-    'active'  |
-    'delayed' |
-    'done'    |
-    'deleted'
-;
+export type Stage = 'pending' | 'active' | 'delayed' | 'done' | 'deleted';
