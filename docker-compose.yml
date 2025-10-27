@@ -90,6 +90,20 @@ services:
     restart: unless-stopped
     tty: true
 
+  redis:
+    container_name: redis.${APP_NAME}
+    build:
+      context: .
+      dockerfile: ./docker/redis/Dockerfile
+    ports:
+      - "6379:6379"
+    networks:
+      - personal-task-manager-network
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    restart: unless-stopped
+
   certbot:
     container_name: certbot.${APP_NAME}
     build:

@@ -7,6 +7,7 @@ import TaskModal from './TaskModal.vue';
 
 type PageProps = {
     tasks: {
+        all: TaskType[];
         pending: TaskType[];
         active: TaskType[];
         delayed: TaskType[];
@@ -18,14 +19,7 @@ type PageProps = {
 const page = usePage<PageProps>();
 const selectedTask = ref<TaskType | null>(null);
 
-const tasks = computed(() => [
-    ...(page.props.tasks.pending || []),
-    ...(page.props.tasks.active || []),
-    ...(page.props.tasks.delayed || []),
-    ...(page.props.tasks.done || []),
-    ...(page.props.tasks.deleted || []),
-]);
-
+const tasks = computed(() => page.props.tasks.all || []);
 const pending = computed(() => page.props.tasks.pending || []);
 const active = computed(() => page.props.tasks.active || []);
 const delayed = computed(() => page.props.tasks.delayed || []);

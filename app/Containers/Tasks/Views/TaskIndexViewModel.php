@@ -16,6 +16,15 @@ final class TaskIndexViewModel extends JsonModel
         //
     }
 
+    public function all(): array
+    {
+        $result = $this->repository
+            ->with('bills')
+            ->get();
+
+        return $result->toArray();
+    }
+
     public function pending(): array
     {
         $this->repository->pushCriteria(
