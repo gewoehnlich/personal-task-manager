@@ -15,7 +15,10 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
     <Head title="personaltaskmanager" />
 
-    <AppLayout :breadcrumbs="breadcrumbs" class="h-dvh overflow-hidden">
+    <AppLayout
+        :breadcrumbs="breadcrumbs"
+        class="h-dvh overflow-hidden"
+    >
         <div class="bg-background h-full p-15">
             <Kanban />
         </div>
