@@ -33,12 +33,6 @@ final class TaskIndexViewModel extends JsonModel
             ),
         );
 
-        $this->repository->pushCriteria(
-            criteria: new FilterByDeletedCriterion(
-                deleted: false,
-            ),
-        );
-
         $result = $this->repository
             ->with('bills')
             ->get();
@@ -51,12 +45,6 @@ final class TaskIndexViewModel extends JsonModel
         $this->repository->pushCriteria(
             criteria: new FilterByStageCriterion(
                 stage: Stage::ACTIVE,
-            ),
-        );
-
-        $this->repository->pushCriteria(
-            criteria: new FilterByDeletedCriterion(
-                deleted: false,
             ),
         );
 
@@ -75,12 +63,6 @@ final class TaskIndexViewModel extends JsonModel
             ),
         );
 
-        $this->repository->pushCriteria(
-            criteria: new FilterByDeletedCriterion(
-                deleted: false,
-            ),
-        );
-
         $result = $this->repository
             ->with('bills')
             ->get();
@@ -96,12 +78,6 @@ final class TaskIndexViewModel extends JsonModel
             ),
         );
 
-        $this->repository->pushCriteria(
-            criteria: new FilterByDeletedCriterion(
-                deleted: false,
-            ),
-        );
-
         $result = $this->repository
             ->with('bills')
             ->get();
@@ -112,8 +88,8 @@ final class TaskIndexViewModel extends JsonModel
     public function deleted(): array
     {
         $this->repository->pushCriteria(
-            criteria: new FilterByDeletedCriterion(
-                deleted: true,
+            criteria: new FilterByStageCriterion(
+                stage: Stage::DELETED,
             ),
         );
 

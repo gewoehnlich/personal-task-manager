@@ -95,12 +95,6 @@ final readonly class TaskIndexAction extends Action
                 ),
             );
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByDeletedCriterion(
-                    deleted: $transporter->deleted,
-                ),
-            );
-
             $result = $this->repository->get();
 
             return $this->success(

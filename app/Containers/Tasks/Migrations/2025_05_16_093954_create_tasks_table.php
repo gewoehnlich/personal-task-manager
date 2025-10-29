@@ -18,12 +18,6 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('parent_id')
-                ->nullable();
-            $table->foreign('parent_id')
-                ->references('id')
-                ->on('tasks')
-                ->onDelete('cascade');
             $table->string('title');
             $table->text('description');
             $table->enum('stage', [
@@ -31,8 +25,9 @@ return new class extends Migration
                 'active',
                 'delayed',
                 'done',
+                'deleted',
             ]);
-            $table->boolean('deleted')->default(false);
+            $table->boolean('debug');
             $table->timestamp('deadline');
             $table->timestamps();
         });

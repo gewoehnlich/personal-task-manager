@@ -8,4 +8,5 @@ enum Stage: string
     case ACTIVE  = 'active';
     case DELAYED = 'delayed';
     case DONE    = 'done';
+    case DELETED = 'deleted';
 }

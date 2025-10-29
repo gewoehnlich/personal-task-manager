@@ -87,6 +87,27 @@ function deleteTask() {
                     ></textarea>
                 </div>
 
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        Bills
+                    </p>
+                    <ul class="mt-1 space-y-2">
+                        <li
+                            v-for="bill in editableTask.bills"
+                            :key="bill.id"
+                            class="dark:bg-muted flex justify-between rounded-md bg-gray-100 p-2"
+                        >
+                            <span>{{ bill.description }}</span>
+                            <span>{{ bill.timeSpent }} minutes</span>
+                        </li>
+                        <li v-if="editableTask.bills.length === 0">
+                            <p class="text-gray-500 dark:text-gray-400">
+                                No bills for this task.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="flex flex-wrap justify-between gap-4">
                     <div class="min-w-[140px] flex-1">
                         <p
