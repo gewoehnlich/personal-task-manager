@@ -8,4 +8,5 @@ fi
 
 if [ "$APP_ENV" = "production" ]; then
   exec npm run build
+  tail -f /dev/null
 fi
