@@ -68,7 +68,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
 </script>
 
 <template>
-    <div class="kanban grid h-full grid-cols-4 gap-10">
+    <div class="kanban grid h-full grid-cols-5 gap-4">
         <div
             class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
         >
@@ -114,6 +114,19 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
             <Stage
                 title="done"
                 :tasks="done"
+                @task-drop="handleTaskDrop"
+                @create-task="handleCreateTask"
+                @reorder-task="handleTaskReorder"
+                @task-clicked="openTaskModal"
+            />
+        </div>
+
+        <div
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+        >
+            <Stage
+                title="deleted"
+                :tasks="deleted"
                 @task-drop="handleTaskDrop"
                 @create-task="handleCreateTask"
                 @reorder-task="handleTaskReorder"

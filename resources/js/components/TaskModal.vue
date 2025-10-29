@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TaskType } from '@/types';
+import { TaskType } from '@/types/task';
 import DatePicker from 'primevue/datepicker';
 import { computed, reactive } from 'vue';
 

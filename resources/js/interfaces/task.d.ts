@@ -8,7 +8,6 @@ export interface Task {
     title: string;
     description: string;
     stage: Stage;
-    deleted: bool;
     deadline: Date;
     createdAt: Date;
     updatedAt: Date;
