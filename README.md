@@ -1,12 +1,12 @@
-# to-do-app
+# Personal Task Manager
 
 ## Stack:
-* PHP 8.4.6
 * Laravel 12
-* MySQL
-* Vue.js
+* PHP 8.4.13
+* MySQL 9.4.0
+* Node 24.9.0
+* Vue.js ^3.5.13
 
-## Idea:
-A simple to-do application to learn Laravel framework.
-There should be a RESTful API to manage tasks and frontend to view tasks.
-I will add more functionality and technologies later.
+## Prerequisites:
+* docker
+* docker compose

@@ -1,60 +1,7 @@
-MYSQL_CONTAINER = mysql.personal-task-manager
-LARAVEL_CONTAINER = laravel.personal-task-manager
-
-.PHONY = help build up down delete commit enter-db migrate
+.PHONY = gemini
 
 include .env
 export
-
-help:
-	@echo "make build  - Установить образ локально"
-	@echo "make up     - Запустить образ"
-	@echo "make down   - Остановить образ"
-	@echo "make delete - Удалить образ"
-
-build:
-	composer update
-	composer install
-	php artisan key:generate
-	npm install
-	npm run build
-	docker compose build
-
-up:
-	docker compose up
-
-down:
-	docker compose down
-
-delete:
-	docker compose down -v
-
-commit:
-	git add .
-	git commit -m "$(m)"
-	git push origin main
-
-enter-db:
-	docker exec -it $(MYSQL_CONTAINER) mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) $(DB_DATABASE)
-
-migrate:
-	docker exec -i $(LARAVEL_CONTAINER) php artisan migrate
-
-migrate-fresh:
-	docker exec -i $(LARAVEL_CONTAINER) php artisan migrate:fresh
-
-seed:
-	docker exec -i $(LARAVEL_CONTAINER) php artisan db:seed
-
-stats:
-	@git log --since=midnight --author="$$(git config user.name)" \
-		 --pretty=tformat: --numstat | \
-	awk '{ added += $$1; removed += $$2 } \
-	     END { print "Added:", added, "Removed:", removed, \
-	            "Total:", added + removed }'
-
-lint:
-	vendor/bin/pint .
 
 gemini:
 	npx https://github.com/google-gemini/gemini-cli
