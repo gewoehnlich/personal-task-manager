@@ -68,9 +68,9 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
 </script>
 
 <template>
-    <div class="kanban grid h-full grid-cols-5 gap-4">
+    <div id="kanban" class="grid h-full grid-cols-5 gap-4">
         <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
         >
             <Stage
                 title="pending"
@@ -83,7 +83,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
         </div>
 
         <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
         >
             <Stage
                 title="active"
@@ -96,7 +96,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
         </div>
 
         <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
         >
             <Stage
                 title="delayed"
@@ -109,7 +109,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
         </div>
 
         <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
         >
             <Stage
                 title="done"
@@ -122,7 +122,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
         </div>
 
         <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl border"
+            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
         >
             <Stage
                 title="deleted"

@@ -36,7 +36,7 @@ function openTask() {
 
 <template>
     <div
-        class="task bg-card border-sidebar-border/70 dark:border-sidebar-border rounded-xl border p-4 break-words"
+        class="task bg-card border-sidebar-border/10 dark:border-sidebar-border rounded-xl shadow-2xl/100 p-4 break-words"
         draggable="true"
         @dragstart="handleDragStart"
         @dragover="handleDragOver"
@@ -46,13 +46,5 @@ function openTask() {
         <h2 class="text-3xl font-bold">
             {{ task.title }}
         </h2>
-
-        <div
-            class="my-1 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent dark:via-gray-600"
-        ></div>
-
-        <p class="text-lg text-gray-700 dark:text-gray-500">
-            {{ task.description }}
-        </p>
     </div>
 </template>

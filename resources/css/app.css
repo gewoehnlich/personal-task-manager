@@ -82,9 +82,9 @@
 }
 
 :root {
-    --background: transparent;
+    --background: hsl(0 0% 10%);
     --foreground: hsl(0 0% 100%);
-    --card: hsl(0 0% 16%);
+    --card: hsl(0 0% 5%);
     --card-foreground: hsl(0 0% 100%);
     --popover: hsl(0 0% 100%);
     --popover-foreground: hsl(0 0% 3.9%);
@@ -94,7 +94,7 @@
     --secondary-foreground: hsl(0 0% 9%);
     --muted: hsl(0 0% 96.1%);
     --muted-foreground: hsl(0 0% 65.1%);
-    --accent: beige;
+    --accent: hsl(28 30% 40%);
     --accent-foreground: hsl(0 0% 9%);
     --destructive: hsl(0 84.2% 60.2%);
     --destructive-foreground: hsl(0 0% 98%);
@@ -107,8 +107,8 @@
     --chart-4: hsl(43 74% 70%);
     --chart-5: hsl(27 87% 70%);
     --radius: 0.5rem;
-    --sidebar-background: hsl(0 0% 98%);
-    --sidebar-foreground: hsl(240 5.3% 26.1%);
+    --sidebar-background: hsl(0 0% 3%);
+    --sidebar-foreground: hsl(240 5.3% 96.1%);
     --sidebar-primary: hsl(0 0% 10%);
     --sidebar-primary-foreground: hsl(0 0% 98%);
     --sidebar-accent: hsl(0 0% 94%);
@@ -118,40 +118,11 @@
     --sidebar: hsl(0 0% 98%);
 }
 
-@layer base {
-    * {
-        @apply border-border;
-    }
-
-    body {
-        @apply bg-background text-foreground;
-    }
-}
-
-/*
-  ---break---
-*/
-
-@layer base {
-    * {
-        @apply border-border outline-ring/50;
-    }
-    body {
-        @apply text-foreground;
-        background: linear-gradient(180deg, var(--chart-1), var(--chart-2));
-        background-size: 100% 100%;
-        animation: radial-gradient 10s ease infinite;
-    }
-}
-
-@keyframes random-gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px var(--accent) inset !important;
+    -webkit-text-fill-color: var(--color-foreground) !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
