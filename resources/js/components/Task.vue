@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TaskType } from '@/types';
+import { TaskType } from '@/types/task';
 
 const props = defineProps<{
     task: TaskType;
@@ -37,7 +37,7 @@ function openTask() {
 <template>
     <div
         id="task"
-        class="bg-card rounded-xl shadow-2xl/100 p-4 break-words hover:border"
+        class="bg-card rounded-xl shadow-2xl/100 p-4 break-words border border-transparent hover:border-gray-300"
         draggable="true"
         @dragstart="handleDragStart"
         @dragover="handleDragOver"

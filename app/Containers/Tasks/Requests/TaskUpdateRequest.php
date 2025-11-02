@@ -30,8 +30,6 @@ final class TaskUpdateRequest extends Request
             'description' => ['nullable', 'string', 'max:65535'],
             'stage'       => ['required', Rule::enum(Stage::class)],
             'deadline'    => ['required', 'date', 'date_format:Y-m-d H:i:s'],
-            'parent_id'   => ['nullable', 'integer', 'exists:tasks,id'],
-            'deleted'     => ['nullable', 'boolean'],
         ];
     }
 

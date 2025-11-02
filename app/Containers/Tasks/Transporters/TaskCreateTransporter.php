@@ -20,7 +20,6 @@ final class TaskCreateTransporter extends Transporter
         public readonly Stage $stage,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
         public readonly Carbon $deadline,
-        public readonly ?int $parentId,
     ) {
         //
     }

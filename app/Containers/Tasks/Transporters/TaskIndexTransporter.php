@@ -17,7 +17,6 @@ final class TaskIndexTransporter extends Transporter
         public readonly int $userId,
         public readonly ?int $id,
         public readonly ?Stage $stage,
-        public readonly ?int $parentId,
         public readonly ?int $projectId,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
         public readonly ?Carbon $createdAtFrom,
@@ -34,7 +33,6 @@ final class TaskIndexTransporter extends Transporter
         public readonly ?string $orderBy,
         public readonly ?string $orderByField,
         public readonly ?int $limit,
-        public readonly ?bool $deleted,
     ) {
         //
     }

@@ -4,6 +4,7 @@ namespace App\Containers\Tasks\Actions;
 
 use App\Containers\Tasks\Criteria\FilterByIdCriterion;
 use App\Containers\Tasks\Criteria\FilterByUserIdCriterion;
+use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Containers\Tasks\Transporters\TaskDeleteTransporter;
 use App\Ship\Abstracts\Responders\Responder;
@@ -41,7 +42,7 @@ final readonly class TaskDeleteAction extends Action
             }
 
             $task->update([
-                'deleted' => true,
+                'stage' => Stage::DELETED,
             ]);
 
             return $this->success(
