@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Settings;
 
-use App\Models\User;
+use App\Containers\Users\Models\User;
+use App\Ship\Parents\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
 
 class PasswordUpdateTest extends TestCase
 {

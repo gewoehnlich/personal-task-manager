@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Settings;
 
-use App\Models\User;
+use App\Containers\Users\Models\User;
+use App\Ship\Parents\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class ProfileUpdateTest extends TestCase
 {
