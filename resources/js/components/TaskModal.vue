@@ -53,7 +53,7 @@ function deleteTask() {
         class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm"
     >
         <div
-            class="dark:bg-card border-sidebar-border/70 dark:border-sidebar-border max-h-[90vh] w-full max-w-2xl space-y-6 overflow-y-auto rounded-2xl border bg-white p-6 shadow-xl"
+            class="bg-card border-sidebar-border/70 dark:border-sidebar-border max-h-[90vh] w-full max-w-2xl space-y-6 overflow-y-auto rounded-2xl border p-6 shadow-xl"
         >
             <header class="flex items-start justify-between">
                 <div>
@@ -82,7 +82,7 @@ function deleteTask() {
 
                     <textarea
                         v-model="editableTask.description"
-                        class="bg-input dark:bg-muted focus:ring-primary mt-1 w-full resize-none rounded-md p-2 text-gray-800 focus:ring-2 focus:outline-none dark:text-gray-200"
+                        class="bg-input focus:ring-primary mt-1 w-full resize-none rounded-md p-2 text-gray-800 focus:ring-2 focus:outline-none dark:text-gray-200"
                         rows="4"
                     ></textarea>
                 </div>
@@ -95,7 +95,7 @@ function deleteTask() {
                         <li
                             v-for="bill in editableTask.bills"
                             :key="bill.id"
-                            class="dark:bg-muted flex justify-between rounded-md bg-gray-100 p-2"
+                            class="bg-input flex justify-between rounded-md bg-gray-100 p-2"
                         >
                             <span>{{ bill.description }}</span>
                             <span>{{ bill.timeSpent }} minutes</span>
@@ -118,7 +118,7 @@ function deleteTask() {
 
                         <select
                             v-model="editableTask.stage"
-                            class="bg-input dark:bg-muted focus:ring-primary w-full rounded-md px-3 py-2 focus:ring-2 focus:outline-none"
+                            class="bg-input focus:ring-primary w-full rounded-md px-3 py-2 focus:ring-2 focus:outline-none"
                         >
                             <option value="pending">Pending</option>
 

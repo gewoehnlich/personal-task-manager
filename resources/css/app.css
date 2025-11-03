@@ -5,8 +5,6 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
     --font-sans:
         Instrument Sans, ui-sans-serif, system-ui, sans-serif,
@@ -82,40 +80,49 @@
 }
 
 :root {
-    --background: hsl(0 0% 10%);
-    --foreground: hsl(0 0% 100%);
-    --card: hsl(0 0% 5%);
-    --card-foreground: hsl(0 0% 100%);
-    --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(0 0% 3.9%);
-    --primary: hsl(0 0% 9%);
-    --primary-foreground: hsl(0 0% 98%);
-    --secondary: hsl(0 0% 92.1%);
-    --secondary-foreground: hsl(0 0% 9%);
-    --muted: hsl(0 0% 96.1%);
-    --muted-foreground: hsl(0 0% 65.1%);
-    --accent: hsl(28 30% 40%);
-    --accent-foreground: hsl(0 0% 9%);
-    --destructive: hsl(0 84.2% 60.2%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 92.8%);
-    --input: hsl(28 50% 70%);
-    --ring: hsl(0 0% 3.9%);
+    --background: var(--__black__);
+    --foreground: var(--__white__);
+    --card: var(--__darker-black__);
+    --card-foreground: var(--__white__);
+    --popover: var(--__darker-black__);
+    --popover-foreground: var(--__white__);
+    --primary: var(--__green__);
+    --primary-foreground: var(--__black__);
+    --secondary: var(--__brighter-black__);
+    --secondary-foreground: var(--__white__);
+    --muted: var(--__black__);
+    --muted-foreground: var(--__dimmer-white__);
+    --accent: var(--__beige__);
+    --accent-foreground: var(--__black__);
+    --destructive: var(--__red__);
+    --destructive-foreground: var(--__white__);
+    --border: var(--__beige__);
+    --input: var(--__black__);
+    --ring: var(--__beige__);
     --chart-1: hsl(28 50% 70%);
     --chart-2: hsl(347 38% 75%);
     --chart-3: hsl(197 37% 70%);
     --chart-4: hsl(43 74% 70%);
     --chart-5: hsl(27 87% 70%);
     --radius: 0.5rem;
-    --sidebar-background: hsl(0 0% 3%);
-    --sidebar-foreground: hsl(240 5.3% 96.1%);
-    --sidebar-primary: hsl(0 0% 10%);
-    --sidebar-primary-foreground: hsl(0 0% 98%);
-    --sidebar-accent: hsl(0 0% 94%);
-    --sidebar-accent-foreground: hsl(0 0% 30%);
-    --sidebar-border: hsl(0 0% 91%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(0 0% 98%);
+    --sidebar-background: var(--__darker-black__);
+    --sidebar-foreground: var(--__white__);
+    --sidebar-primary: var(--__brighter-black__);
+    --sidebar-primary-foreground: var(--__black__);
+    --sidebar-accent: var(--__black__);
+    --sidebar-accent-foreground: var(--__dimmer-white__);
+    --sidebar-border: var(--__beige__);
+    --sidebar-ring: var(--__beige__);
+    --sidebar: var(--__black__);
+
+    --__darker-black__: hsl(0 0% 5%);
+    --__black__: hsl(0 0% 10%);
+    --__brighter-black__: hsl(0 0% 15%);
+    --__dimmer-white__: hsl(0 0% 65%);
+    --__white__: hsl(0 0% 100%);
+    --__beige__: hsl(28 40% 70%);
+    --__green__: hsl(150 35% 61%);
+    --__red__: hsl(0 50% 50%);
 }
 
 input:-webkit-autofill,

@@ -53,7 +53,7 @@ function handleTaskFormSubmit(task: {
 
         <div class="px-1">
             <button
-                class="bg-input hover:bg-popover text-popover-foreground w-full rounded-xl px-4 py-3 shadow-2xl/100"
+                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl px-4 py-3 shadow-accent shadow-2xl/20"
                 @click="showForm = !showForm"
             >
                 Добавить новую задачу
