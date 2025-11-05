@@ -104,7 +104,7 @@ Route::middleware(
         'store',
     ])->name('password.confirm');
 
-    Route::get('logout', [
+    Route::post('logout', [
         AuthenticatedSessionController::class,
         'destroy',
     ])->name('logout');

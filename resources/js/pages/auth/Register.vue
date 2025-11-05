@@ -90,7 +90,7 @@ const submit = () => {
 
                 <Button
                     type="submit"
-                    class="mt-2 w-full"
+                    class="bg-button mt-2 w-full shadow-button shadow-2xl/70"
                     tabindex="5"
                     :disabled="form.processing"
                 >
