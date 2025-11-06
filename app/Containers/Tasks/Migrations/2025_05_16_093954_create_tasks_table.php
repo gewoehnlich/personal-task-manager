@@ -27,7 +27,7 @@ return new class extends Migration
                 'done',
                 'deleted',
             ]);
-            $table->boolean('debug');
+            $table->boolean('debug')->default(false);
             $table->timestamp('deadline');
             $table->timestamps();
         });
