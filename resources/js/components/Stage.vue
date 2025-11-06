@@ -42,21 +42,22 @@ function handleTaskFormSubmit(task: {
 
 <template>
     <div
-        class="stage flex h-full flex-col gap-1"
+        id="stage"
+        class="flex h-full flex-col gap-1"
         @dragover.prevent
         @drop="handleDrop"
     >
-        <div class="flex justify-between gap-5 px-5 py-2">
+        <div class="bg-card flex justify-between gap-5 px-5 py-2 shadow-card shadow-2xl/100">
             <h2 class="mb-2 text-center text-2xl font-bold">{{ title }}</h2>
-            <h2 class="text-center text-2xl font-bold">{{ length }}</h2>
+            <h2 class="mb-2 text-center text-2xl font-bold">{{ length }}</h2>
         </div>
 
         <div class="px-1">
             <button
-                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl px-4 py-3 shadow-accent shadow-2xl/20"
+                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl px-4 py-3 shadow-card shadow-2xl/100"
                 @click="showForm = !showForm"
             >
-                Добавить новую задачу
+                Add a new task
             </button>
         </div>
 

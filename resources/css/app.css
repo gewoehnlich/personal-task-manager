@@ -73,8 +73,8 @@
     --popover-foreground: var(--__white__);
     --muted: var(--__black__);
     --muted-foreground: var(--__gray__);
-    --accent: var(--__beige__);
-    --accent-foreground: var(--__black__);
+    --accent: var(--__darker-black__);
+    --accent-foreground: var(--__white__);
     --destructive: var(--__red__);
     --destructive-foreground: var(--__white__);
     --border: var(--__beige__);
