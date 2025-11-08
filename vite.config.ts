@@ -29,10 +29,12 @@ export default defineConfig({
         },
     },
     server: {
-        host: 'localhost',
+        host: '0.0.0.0',
         https: {
-            key: '/etc/letsencrypt/live/localhost/privkey.pem',
+            key:  '/etc/letsencrypt/live/localhost/privkey.pem',
             cert: '/etc/letsencrypt/live/localhost/fullchain.pem',
         },
+        strictPort: true
     },
+    clearScreen: false,
 });

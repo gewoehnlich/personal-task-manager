@@ -35,7 +35,7 @@ services:
     expose:
       - "9000"
 
-  webserver:
+  nginx:
     container_name: nginx.${APP_NAME}
     build:
       context: .
