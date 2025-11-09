@@ -26,7 +26,7 @@ return Application::configure(
                 HandleAppearance::class,
                 HandleInertiaRequests::class,
                 AddLinkHeadersForPreloadedAssets::class,
-		HandleCors::class,
+                // HandleCors::class,
             ]);
         }
     )->withExceptions(

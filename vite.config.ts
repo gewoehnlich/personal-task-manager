@@ -30,6 +30,8 @@ export default defineConfig({
     },
     server: {
         host: '0.0.0.0',
+        origin: 'https://localhost:5173',
+        cors: true,
         https: {
             key:  '/etc/letsencrypt/live/localhost/privkey.pem',
             cert: '/etc/letsencrypt/live/localhost/fullchain.pem',
