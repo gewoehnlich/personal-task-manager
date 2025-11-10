@@ -42,30 +42,32 @@ function handleTaskFormSubmit(task: {
 
 <template>
     <div
-        id="stage"
-        class="flex h-full flex-col gap-1"
-        @dragover.prevent
-        @drop="handleDrop"
+        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
     >
-        <div class="bg-card flex justify-between gap-5 px-5 py-2 shadow-card shadow-2xl/100">
-            <h2 class="mb-2 text-center text-2xl font-bold">{{ title }}</h2>
-            <h2 class="mb-2 text-center text-2xl font-bold">{{ length }}</h2>
-        </div>
+        <div
+            id="stage"
+            class="flex h-full flex-col gap-1"
+            @dragover.prevent
+            @drop="handleDrop"
+        >
+            <div class="bg-card flex justify-between gap-5 px-5 py-2 shadow-card shadow-2xl/100">
+                <h2 class="mb-2 text-center text-2xl font-bold">{{ title }}</h2>
+                <h2 class="mb-2 text-center text-2xl font-bold">{{ length }}</h2>
+            </div>
 
-        <div class="px-1">
-            <button
-                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl px-4 py-3 shadow-card shadow-2xl/100"
-                @click="showForm = !showForm"
-            >
-                Add a new task
-            </button>
-        </div>
+            <div class="px-1">
+                <button
+                    class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl px-4 py-3 shadow-card shadow-2xl/100"
+                    @click="showForm = !showForm"
+                >
+                    Add a new task
+                </button>
+            </div>
 
-        <div v-if="showForm" class="px-1">
-            <TaskForm @submit="handleTaskFormSubmit" />
-        </div>
+            <div v-if="showForm" class="px-1">
+                <TaskForm @submit="handleTaskFormSubmit" />
+            </div>
 
-        <div class="grid grid-cols-1 gap-1 overflow-y-auto px-1">
             <Task
                 v-for="task in tasks"
                 :key="task.id"

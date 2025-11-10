@@ -19,7 +19,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         :breadcrumbs="breadcrumbs"
         class="h-dvh overflow-hidden"
     >
-        <div class="bg-background h-full p-15">
+        <div class="bg-background h-full pt-8 px-15">
             <Kanban />
         </div>
     </AppLayout>

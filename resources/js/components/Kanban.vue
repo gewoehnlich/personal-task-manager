@@ -22,7 +22,6 @@ const selectedTask = ref<TaskType | null>(null);
 const tasks = computed(() => page.props.tasks.all || []);
 const pending = computed(() => page.props.tasks.pending || []);
 const active = computed(() => page.props.tasks.active || []);
-const delayed = computed(() => page.props.tasks.delayed || []);
 const done = computed(() => page.props.tasks.done || []);
 const deleted = computed(() => page.props.tasks.deleted || []);
 
@@ -68,71 +67,39 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
 </script>
 
 <template>
-    <div id="kanban" class="grid h-full grid-cols-5 gap-4">
-        <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
-        >
-            <Stage
-                title="pending"
-                :tasks="pending"
-                @task-drop="handleTaskDrop"
-                @create-task="handleCreateTask"
-                @reorder-task="handleTaskReorder"
-                @task-clicked="openTaskModal"
-            />
-        </div>
-
-        <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
-        >
-            <Stage
-                title="active"
-                :tasks="active"
-                @task-drop="handleTaskDrop"
-                @create-task="handleCreateTask"
-                @reorder-task="handleTaskReorder"
-                @task-clicked="openTaskModal"
-            />
-        </div>
-
-        <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
-        >
-            <Stage
-                title="delayed"
-                :tasks="delayed"
-                @task-drop="handleTaskDrop"
-                @create-task="handleCreateTask"
-                @reorder-task="handleTaskReorder"
-                @task-clicked="openTaskModal"
-            />
-        </div>
-
-        <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
-        >
-            <Stage
-                title="done"
-                :tasks="done"
-                @task-drop="handleTaskDrop"
-                @create-task="handleCreateTask"
-                @reorder-task="handleTaskReorder"
-                @task-clicked="openTaskModal"
-            />
-        </div>
-
-        <div
-            class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
-        >
-            <Stage
-                title="deleted"
-                :tasks="deleted"
-                @task-drop="handleTaskDrop"
-                @create-task="handleCreateTask"
-                @reorder-task="handleTaskReorder"
-                @task-clicked="openTaskModal"
-            />
-        </div>
+    <div id="kanban" class="grid h-full grid-cols-4 gap-4">
+        <Stage
+            title="pending"
+            :tasks="pending"
+            @task-drop="handleTaskDrop"
+            @create-task="handleCreateTask"
+            @reorder-task="handleTaskReorder"
+            @task-clicked="openTaskModal"
+        />
+        <Stage
+            title="active"
+            :tasks="active"
+            @task-drop="handleTaskDrop"
+            @create-task="handleCreateTask"
+            @reorder-task="handleTaskReorder"
+            @task-clicked="openTaskModal"
+        />
+        <Stage
+            title="done"
+            :tasks="done"
+            @task-drop="handleTaskDrop"
+            @create-task="handleCreateTask"
+            @reorder-task="handleTaskReorder"
+            @task-clicked="openTaskModal"
+        />
+        <Stage
+            title="deleted"
+            :tasks="deleted"
+            @task-drop="handleTaskDrop"
+            @create-task="handleCreateTask"
+            @reorder-task="handleTaskReorder"
+            @task-clicked="openTaskModal"
+        />
     </div>
 
     <TaskModal
