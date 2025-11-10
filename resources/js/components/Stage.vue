@@ -42,7 +42,7 @@ function handleTaskFormSubmit(task: {
 
 <template>
     <div
-        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl"
+        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl min-w-2xs max-w-xs flex-grow flex-1"
     >
         <div
             id="stage"
@@ -50,21 +50,21 @@ function handleTaskFormSubmit(task: {
             @dragover.prevent
             @drop="handleDrop"
         >
-            <div class="bg-card flex justify-between gap-5 px-5 py-2 shadow-card shadow-2xl/100">
+            <div class="bg-card flex justify-between gap-5 px-5 py-2 shadow-card shadow-2xl/100 rounded-xl h-15">
                 <h2 class="mb-2 text-center text-2xl font-bold">{{ title }}</h2>
                 <h2 class="mb-2 text-center text-2xl font-bold">{{ length }}</h2>
             </div>
 
-            <div class="px-1">
+            <div>
                 <button
-                    class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl px-4 py-3 shadow-card shadow-2xl/100"
+                    class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl px-4 py-3 shadow-card shadow-2xl/100 h-13"
                     @click="showForm = !showForm"
                 >
                     Add a new task
                 </button>
             </div>
 
-            <div v-if="showForm" class="px-1">
+            <div v-if="showForm">
                 <TaskForm @submit="handleTaskFormSubmit" />
             </div>
 
