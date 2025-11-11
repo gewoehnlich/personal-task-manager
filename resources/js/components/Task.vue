@@ -37,14 +37,14 @@ function openTask() {
 <template>
     <div
         id="task"
-        class="bg-card rounded-xl shadow-2xl/100 p-4 break-words border border-transparent hover:border-gray-300 w-full"
+        class="bg-card rounded-xl px-4 py-3 break-words border border-transparent hover:border-ring w-full"
         draggable="true"
         @dragstart="handleDragStart"
         @dragover="handleDragOver"
         @drop="handleDrop"
         @click="openTask"
     >
-        <h2 class="text-3xl font-bold">
+        <h2 class="text-xl font-bold">
             {{ task.title }}
         </h2>
     </div>

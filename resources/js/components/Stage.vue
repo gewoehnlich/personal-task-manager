@@ -50,34 +50,40 @@ function handleTaskFormSubmit(task: {
             @dragover.prevent
             @drop="handleDrop"
         >
-            <div class="bg-card flex justify-between gap-5 px-5 py-2 shadow-card shadow-2xl/100 rounded-xl h-15">
-                <h2 class="mb-2 text-center text-2xl font-bold">{{ title }}</h2>
-                <h2 class="mb-2 text-center text-2xl font-bold">{{ length }}</h2>
+            <div class="bg-card flex justify-between items-center gap-5 px-4 py-2 rounded-xl">
+                <h2 class="text-xl font-bold">{{ title }}</h2>
+                <h2 class="text-xl font-bold">{{ length }}</h2>
             </div>
 
-            <div>
-                <button
-                    class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl px-4 py-3 shadow-card shadow-2xl/100 h-13"
-                    @click="showForm = !showForm"
-                >
-                    Add a new task
-                </button>
-            </div>
+            <button
+                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl min-h-11 flex items-center justify-center gap-2"
+                @click="showForm = !showForm"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Add a new task
+            </button>
 
             <div v-if="showForm">
                 <TaskForm @submit="handleTaskFormSubmit" />
             </div>
 
-            <Task
-                v-for="task in tasks"
-                :key="task.id"
-                :task="task"
-                @reorder-task="
-                    (draggedId, targetId) =>
-                        emit('reorder-task', draggedId, targetId)
-                "
-                @task-clicked="(task) => emit('task-clicked', task)"
-            />
+            <div
+                id="tasks"
+                class="overflow-y-auto flex flex-col gap-1 h-full"
+            >
+                <Task
+                    v-for="task in tasks"
+                    :key="task.id"
+                    :task="task"
+                    @reorder-task="
+                        (draggedId, targetId) =>
+                            emit('reorder-task', draggedId, targetId)
+                    "
+                    @task-clicked="(task) => emit('task-clicked', task)"
+                />
+            </div>
         </div>
     </div>
 </template>

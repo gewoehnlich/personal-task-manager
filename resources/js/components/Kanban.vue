@@ -2,8 +2,7 @@
 import type { TaskType } from '@/types/task';
 import { router, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
-import Stage from './Stage.vue';
-import TaskModal from './TaskModal.vue';
+import Stage from './Stage.vue'; import TaskModal from './TaskModal.vue';
 
 type PageProps = {
     tasks: {
@@ -69,7 +68,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
 <template>
     <div id="kanban" class="flex h-full gap-4">
         <Stage
-            title="pending"
+            title="PENDING"
             :tasks="pending"
             @task-drop="handleTaskDrop"
             @create-task="handleCreateTask"
@@ -77,7 +76,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
             @task-clicked="openTaskModal"
         />
         <Stage
-            title="active"
+            title="ACTIVE"
             :tasks="active"
             @task-drop="handleTaskDrop"
             @create-task="handleCreateTask"
@@ -85,7 +84,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
             @task-clicked="openTaskModal"
         />
         <Stage
-            title="done"
+            title="DONE"
             :tasks="done"
             @task-drop="handleTaskDrop"
             @create-task="handleCreateTask"
@@ -93,7 +92,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
             @task-clicked="openTaskModal"
         />
         <Stage
-            title="deleted"
+            title="DELETED"
             :tasks="deleted"
             @task-drop="handleTaskDrop"
             @create-task="handleCreateTask"
