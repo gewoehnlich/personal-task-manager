@@ -37,7 +37,7 @@ function openTask() {
 <template>
     <div
         id="task"
-        class="bg-card rounded-xl px-4 py-3 break-words border border-transparent hover:border-ring w-full"
+        class="bg-card rounded-xl px-4 py-3 break-words border border-transparent hover:border-ring w-full hover:shadow-lg/20 hover:shadow-ring"
         draggable="true"
         @dragstart="handleDragStart"
         @dragover="handleDragOver"

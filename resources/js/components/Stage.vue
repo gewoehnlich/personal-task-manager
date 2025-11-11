@@ -42,7 +42,7 @@ function handleTaskFormSubmit(task: {
 
 <template>
     <div
-        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl min-w-2xs max-w-xs flex-grow flex-1"
+        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl min-w-3xs max-w-2xs flex-grow flex-1"
     >
         <div
             id="stage"
@@ -56,7 +56,7 @@ function handleTaskFormSubmit(task: {
             </div>
 
             <button
-                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl min-h-11 flex items-center justify-center gap-2"
+                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl min-h-11 flex items-center justify-center gap-2 border border-transparent hover:border-ring hover:shadow-lg/20 hover:shadow-ring"
                 @click="showForm = !showForm"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">

@@ -66,7 +66,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
 </script>
 
 <template>
-    <div id="kanban" class="flex h-full gap-4">
+    <div id="kanban" class="flex h-full gap-2">
         <Stage
             title="PENDING"
             :tasks="pending"
