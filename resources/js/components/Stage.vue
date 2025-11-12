@@ -42,7 +42,7 @@ function handleTaskFormSubmit(task: {
 
 <template>
     <div
-        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl min-w-3xs max-w-2xs flex-grow flex-1"
+        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl min-w-[200px] max-w-2xs flex-grow flex-1"
     >
         <div
             id="stage"
