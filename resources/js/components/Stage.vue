@@ -51,18 +51,22 @@ function handleTaskFormSubmit(task: {
             @drop="handleDrop"
         >
             <div class="bg-card flex justify-between items-center gap-5 px-4 py-2 rounded-xl">
-                <h2 class="text-xl font-bold">{{ title }}</h2>
-                <h2 class="text-xl font-bold">{{ length }}</h2>
+                <h2 class="text-lg font-bold">{{ title }}</h2>
+                <h2 class="text-lg font-bold">{{ length }}</h2>
             </div>
 
             <button
-                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl min-h-11 flex items-center justify-center gap-2 border border-transparent hover:border-ring hover:shadow-lg/20 hover:shadow-ring"
+                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl min-h-11 flex items-center justify-center gap-2 border border-transparent hover:border-ring hover:shadow-lg/25 hover:shadow-ring text-xs flex-row leading-0"
                 @click="showForm = !showForm"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                Add a new task
+                <div class="flex gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    <div class="leading-[1.3]">
+                        ADD A NEW TASK
+                    </div>
+                </div>
             </button>
 
             <div v-if="showForm">
