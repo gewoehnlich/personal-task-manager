@@ -13,7 +13,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
-    <Head title="personaltaskmanager" />
+    <Head title="PTM" />
 
     <AppLayout
         :breadcrumbs="breadcrumbs"
