@@ -22,6 +22,8 @@ const { isMobile, state } = useSidebar();
 </script>
 
 <template>
+    <!-- <div class="flex w-full min-w-0 flex-col gap-1 group/menu-item relative"> -->
+    <!-- </div> -->
     <SidebarMenu>
         <SidebarMenuItem>
             <DropdownMenu>
@@ -31,7 +33,7 @@ const { isMobile, state } = useSidebar();
                         class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                     >
                         <UserInfo :user="user" />
-                        <ChevronsUpDown class="ml-auto size-4" />
+                        <ChevronsUpDown class="ml-auto size-4 text-ring" />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent

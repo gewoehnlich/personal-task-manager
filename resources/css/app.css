@@ -76,7 +76,7 @@
     --card-foreground: var(--__white__);
     --popover: var(--__darker-black__);
     --popover-foreground: var(--__white__);
-    --muted: var(--__black__);
+    --muted: var(--__brighter-black__);
     --muted-foreground: var(--__gray__);
     --accent: var(--__darker-black__);
     --accent-foreground: var(--__white__);

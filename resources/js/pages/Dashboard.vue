@@ -17,7 +17,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout
         :breadcrumbs="breadcrumbs"
-        class="h-dvh overflow-hidden"
     >
         <div class="bg-background h-full pt-8 px-15">
             <Kanban />
