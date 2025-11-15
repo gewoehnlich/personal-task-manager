@@ -1,23 +1,13 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import Kanban from '../components/Kanban.vue';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'tasks',
-        href: '/dashboard',
-    },
-];
 </script>
 
 <template>
     <Head title="PTM" />
 
-    <AppLayout
-        :breadcrumbs="breadcrumbs"
-    >
+    <AppLayout>
         <div class="bg-background h-full pt-8 px-15">
             <Kanban />
         </div>
