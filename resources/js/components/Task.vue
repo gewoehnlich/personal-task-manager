@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { TaskType } from '@/types/task';
+import { vBorderAtHover } from '@/directives/vBorderAtHover';
+import { vShadowAtHover } from '@/directives/vShadowAtHover';
 
 const props = defineProps<{
     task: TaskType;
@@ -37,14 +39,16 @@ function openTask() {
 <template>
     <div
         id="task"
-        class="bg-card rounded-xl px-4 py-3 break-words border border-transparent hover:border-accent w-full hover:shadow-md/25 hover:shadow-accent"
+        class="bg-card rounded-xl px-4 py-3 break-words w-full"
+        v-border-at-hover
+        v-shadow-at-hover
         draggable="true"
         @dragstart="handleDragStart"
         @dragover="handleDragOver"
         @drop="handleDrop"
         @click="openTask"
     >
-        <h2 class="text-lg font-bold leading-[1.1]">
+        <h2 class="text-lg font-bold leading-[1]">
             {{ task.title }}
         </h2>
     </div>

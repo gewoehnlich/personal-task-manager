@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import ButtonBeige from '@/components/ButtonBeige.vue';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthBase from '@/layouts/AuthLayout.vue';
@@ -88,9 +88,8 @@ const submit = () => {
                     <InputError :message="form.errors.password_confirmation" />
                 </div>
 
-                <Button
+                <ButtonBeige
                     type="submit"
-                    class="bg-button mt-2 w-full shadow-button shadow-2xl/70"
                     tabindex="5"
                     :disabled="form.processing"
                 >
@@ -99,7 +98,7 @@ const submit = () => {
                         class="h-4 w-4 animate-spin"
                     />
                     Create account
-                </Button>
+                </ButtonBeige>
             </div>
 
             <div class="text-muted-foreground text-center text-sm">

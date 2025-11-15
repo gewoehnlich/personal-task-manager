@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ButtonBeige from '@/components/ButtonBeige.vue';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -93,9 +94,8 @@ const submit = () => {
                     </Label>
                 </div>
 
-                <Button
+                <ButtonBeige
                     type="submit"
-                    class="bg-button mt-4 w-full shadow-button shadow-2xl/70"
                     :tabindex="4"
                     :disabled="form.processing"
                 >
@@ -104,7 +104,7 @@ const submit = () => {
                         class="h-4 w-4 animate-spin"
                     />
                     Log in
-                </Button>
+                </ButtonBeige>
             </div>
 
             <div class="text-muted-foreground text-center text-sm">

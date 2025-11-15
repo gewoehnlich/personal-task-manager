@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { TaskType } from '@/types';
+import { TaskType } from '@/types/task';
 import { computed, ref } from 'vue';
 import Task from './Task.vue';
 import TaskForm from './TaskForm.vue';
+import ButtonBlack from './ButtonBlack.vue';
 
 const props = defineProps<{
     title: string;
@@ -55,23 +56,11 @@ function handleTaskFormSubmit(task: {
                 <h2 class="text-lg font-bold">{{ length }}</h2>
             </div>
 
-            <button
-                class="bg-accent hover:bg-popover text-accent-foreground w-full rounded-xl min-h-11 flex items-center justify-center gap-2 border border-transparent hover:border-ring hover:shadow-lg/25 hover:shadow-ring text-xs flex-row leading-0"
-                @click="showForm = !showForm"
-            >
-                <div class="flex gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                    <div class="leading-[1.3]">
-                        ADD A NEW TASK
-                    </div>
-                </div>
-            </button>
+            <ButtonBlack @click="showForm = !showForm">
+                ADD A NEW TASK
+            </ButtonBlack>
 
-            <div v-if="showForm">
-                <TaskForm @submit="handleTaskFormSubmit" />
-            </div>
+            <TaskForm v-if="showForm" @submit="handleTaskFormSubmit" />
 
             <div
                 id="tasks"
