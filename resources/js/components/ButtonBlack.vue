@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { vBorderAtHover } from '@/directives/vBorderAtHover';
 import { vShadowAtHover } from '@/directives/vShadowAtHover';
+import { vElementStyling } from '@/directives/vElementStyling';
 import Button from './ui/button/Button.vue';
+
 </script>
 <template>
     <Button
-        class="bg-card text-foreground w-full rounded-xl min-h-11 flex items-center justify-center gap-2 text-xs flex-row leading-0"
+        class="min-h-11 flex items-center justify-center gap-2 text-xs flex-row leading-0"
         v-border-at-hover
         v-shadow-at-hover
+        v-element-styling
     >
         <div class="flex gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">

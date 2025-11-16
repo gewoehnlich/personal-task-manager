@@ -26,7 +26,7 @@
         @inertiaHead
     </head>
     <body
-        class="font-sans antialiased"
+        class="antialiased text-foreground"
         style="margin-bottom: 0px"
     >
         @inertia

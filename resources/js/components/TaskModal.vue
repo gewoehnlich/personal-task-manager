@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { TaskType } from '@/types/task';
-import DatePicker from 'primevue/datepicker';
 import { computed, reactive } from 'vue';
+import Deadline from './Deadline.vue';
 
 const props = defineProps<{
     task: TaskType;
@@ -73,7 +73,6 @@ function deleteTask() {
                     &times;
                 </button>
             </header>
-
             <section class="space-y-4">
                 <div>
                     <p class="text-sm text-gray-500 dark:text-gray-400">
@@ -136,16 +135,9 @@ function deleteTask() {
                         >
                             Deadline
                         </p>
-
-                        <DatePicker
-                            id="deadline"
-                            v-model="deadlineAsDate"
-                            showTime
-                            showSeconds
-                            hourFormat="24"
-                            fluid
-                        />
                     </div>
+
+                    <Deadline />
                 </div>
             </section>
 

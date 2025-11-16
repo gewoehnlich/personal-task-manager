@@ -27,19 +27,8 @@
     --color-accent: var(--accent);
     --color-destructive: var(--destructive);
     --color-confirmative: var(--confirmative);
-    --color-input: var(--input);
     --color-sidebar: var(--sidebar-background);
     --color-sidebar-foreground: var(--sidebar-foreground);
-}
-
-@layer base {
-    *,
-    ::after,
-    ::before,
-    ::backdrop,
-    ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
-    }
 }
 
 @layer utilities {
@@ -58,7 +47,6 @@
     --accent: var(--__beige__);
     --destructive: var(--__red__);
     --confirmative: var(--__green__);
-    --input: var(--__brighter-black__);
     --sidebar-background: var(--__darker-black__);
     --sidebar-foreground: var(--__white__);
 
@@ -66,7 +54,7 @@
     --__black__: hsl(0 0% 10%);
     --__brighter-black__: hsl(0 0% 15%);
     --__gray__: hsl(0 0% 65%);
-    --__white__: hsl(0 0% 100%);
+    --__white__: hsl(0 0% 90%);
     --__beige__: hsl(28 40% 70%);
     --__darker-beige__: hsl(28 17% 50%);
     --__green__: hsl(150 35% 61%);

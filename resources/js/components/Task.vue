@@ -2,6 +2,7 @@
 import { TaskType } from '@/types/task';
 import { vBorderAtHover } from '@/directives/vBorderAtHover';
 import { vShadowAtHover } from '@/directives/vShadowAtHover';
+import Card from './ui/card/Card.vue';
 
 const props = defineProps<{
     task: TaskType;
@@ -37,9 +38,9 @@ function openTask() {
 </script>
 
 <template>
-    <div
+    <Card
         id="task"
-        class="bg-card rounded-xl px-4 py-3 break-words w-full"
+        class="px-4 py-3 break-words"
         v-border-at-hover
         v-shadow-at-hover
         draggable="true"
@@ -51,5 +52,5 @@ function openTask() {
         <h2 class="text-lg font-bold leading-[1]">
             {{ task.title }}
         </h2>
-    </div>
+    </Card>
 </template>

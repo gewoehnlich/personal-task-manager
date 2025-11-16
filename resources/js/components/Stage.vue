@@ -4,6 +4,7 @@ import { computed, ref } from 'vue';
 import Task from './Task.vue';
 import TaskForm from './TaskForm.vue';
 import ButtonBlack from './ButtonBlack.vue';
+import StageHeader from './StageHeader.vue';
 
 const props = defineProps<{
     title: string;
@@ -51,10 +52,7 @@ function handleTaskFormSubmit(task: {
             @dragover.prevent
             @drop="handleDrop"
         >
-            <div class="bg-card flex justify-between items-center gap-5 px-4 py-2 rounded-xl">
-                <h2 class="text-lg font-bold">{{ title }}</h2>
-                <h2 class="text-lg font-bold">{{ length }}</h2>
-            </div>
+            <StageHeader :title="title" :length="length" />
 
             <ButtonBlack @click="showForm = !showForm">
                 ADD A NEW TASK
