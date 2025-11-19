@@ -3,13 +3,13 @@ import { Stage } from '@/types/stage';
 
 export interface Task {
     id: number;
-    userId: number;
-    parentId: number;
+    user_id: number;
+    parent_id: number;
     title: string;
     description: string;
     stage: Stage;
     deadline: Date;
-    createdAt: Date;
-    updatedAt: Date;
+    created_at: Date;
+    updated_at: Date;
     bills: Bill[];
 }

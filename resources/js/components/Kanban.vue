@@ -2,7 +2,8 @@
 import type { TaskType } from '@/types/task';
 import { router, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
-import Stage from './Stage.vue'; import TaskModal from './TaskModal.vue';
+import Stage from './Stage.vue';
+import TaskEdit from './TaskEdit.vue';
 
 type PageProps = {
     tasks: {
@@ -101,7 +102,7 @@ function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
         />
     </div>
 
-    <TaskModal
+    <TaskEdit
         v-if="selectedTask"
         :task="selectedTask"
         @close="closeTaskModal"

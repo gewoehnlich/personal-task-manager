@@ -2,7 +2,7 @@
 import { TaskType } from '@/types/task';
 import { computed, ref } from 'vue';
 import Task from './Task.vue';
-import TaskForm from './TaskForm.vue';
+import TaskCreate from './TaskCreate.vue';
 import ButtonBlack from './ButtonBlack.vue';
 import StageHeader from './StageHeader.vue';
 
@@ -58,7 +58,7 @@ function handleTaskFormSubmit(task: {
                 ADD A NEW TASK
             </ButtonBlack>
 
-            <TaskForm v-if="showForm" @submit="handleTaskFormSubmit" />
+            <TaskCreate v-if="showForm" @submit="handleTaskFormSubmit" />
 
             <div
                 id="tasks"
