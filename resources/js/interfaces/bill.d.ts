@@ -1,10 +1,10 @@
 export interface Bill {
     id: number;
-    taskId: number;
+    task_id: number;
     description: string;
-    timeSpent: number;
+    time_spent: number;
     deleted: boolean;
-    performedAt: Date;
-    createdAt: Date;
-    updatedAt: Date;
+    performed_at: Date;
+    created_at: Date;
+    updated_at: Date;
 }

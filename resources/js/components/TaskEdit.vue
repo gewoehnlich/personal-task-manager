@@ -76,7 +76,7 @@ watch(() => editableTask.description, async () => {
         class="fixed inset-0 flex items-center justify-center bg-card/70 backdrop-blur-sm"
     >
         <Card
-            class="max-h-[90vh] max-w-xl space-y-4 overflow-y-auto p-6 border border-accent shadow-accent shadow-2xl/100"
+            class="max-h-[90vh] max-w-md space-y-4 overflow-y-auto p-6 border border-accent shadow-accent shadow-2xl/100"
         >
             <div>
                 <div class="flex items-start justify-between text-2xl gap-1 font-bold">
@@ -109,20 +109,32 @@ watch(() => editableTask.description, async () => {
                 ></textarea>
             </div>
 
-            <div>
+            <div class="text-sm">
                 <p class="text-sm text-muted-foreground">
-                    Bills
+                    Bills:
                 </p>
-                <ul class="mt-1 space-y-2">
+
+                <ul class="bg-card">
                     <li
+                        v-if="editableTask.bills.length !== 0"
                         v-for="bill in editableTask.bills"
                         :key="bill.id"
-                        class="bg-input flex justify-between rounded-md bg-gray-100 p-2"
+                        class="grid grid-cols-[1fr_auto_auto] gap-1"
                     >
-                        <span>{{ bill.description }}</span>
-                        <span>{{ bill.timeSpent }} minutes</span>
+                        <input
+                            v-model="bill.description"
+                            class="focus:ring-none focus:outline-none"
+                        ></input>
+
+                        <input
+                            v-model="bill.time_spent"
+                            class="text-right tabular-nums min-w max-w-[4ch] focus:ring-none focus:outline-none"
+                        ></input>
+
+                        <span>minutes</span>
                     </li>
-                    <li v-if="editableTask.bills.length === 0">
+
+                    <li v-else>
                         <p class="text-gray-500 dark:text-gray-400">
                             No bills for this task.
                         </p>
@@ -130,48 +142,40 @@ watch(() => editableTask.description, async () => {
                 </ul>
             </div>
 
-            <div class="flex flex-wrap justify-between gap-4">
-                <div class="min-w-[140px] flex-1">
-                    <p
-                        class="mb-1 text-sm text-gray-500 dark:text-gray-400"
-                    >
-                        Stage
-                    </p>
+            <div>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="text-sm flex-1">
+                        <p class="text-muted-foreground">
+                            Stage:
+                        </p>
 
-                    <select
-                        v-model="editableTask.stage"
-                        class="bg-input focus:ring-primary w-full rounded-md px-3 py-2 focus:ring-2 focus:outline-none"
-                    >
-                        <option value="pending">Pending</option>
+                        <select
+                            v-model="editableTask.stage"
+                            class="bg-card w-full rounded-md focus:ring-none focus:outline-none"
+                        >
+                            <option value="pending">Pending</option>
+                            <option value="active">Active</option>
+                            <option value="delayed">Delayed</option>
+                            <option value="done">Done</option>
+                        </select>
+                    </div>
 
-                        <option value="active">Active</option>
+                    <div class="min-w-[140px] flex-1">
+                        <p class="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                            Deadline:
+                        </p>
 
-                        <option value="delayed">Delayed</option>
-
-                        <option value="done">Done</option>
-                    </select>
+                        <!-- <Deadline /> -->
+                    </div>
                 </div>
 
-                <div class="min-w-[140px] flex-1">
-                    <p
-                        class="mb-1 text-sm text-gray-500 dark:text-gray-400"
-                    >
-                        Deadline
-                    </p>
+                <div class="border-t border-muted-foreground text-sm text-muted-foreground">
+                    <p>Created at: {{ task.created_at }}</p>
+                    <p>Updated at: {{ task.updated_at }}</p>
                 </div>
-
-                <Deadline />
             </div>
 
-            <section
-                class="border-t border-gray-200 pt-4 text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400"
-            >
-                <p>Created at: {{ task.createdAt }}</p>
-
-                <p>Updated at: {{ task.updatedAt }}</p>
-            </section>
-
-            <footer class="flex justify-end gap-3 pt-6">
+            <div class="flex justify-end gap-3 pt-6">
                 <button
                     @click="$emit('close')"
                     class="bg-muted rounded-md px-4 py-2 text-gray-800 transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
@@ -192,7 +196,7 @@ watch(() => editableTask.description, async () => {
                 >
                     Delete
                 </button>
-            </footer>
+            </div>
         </Card>
     </div>
 </template>
