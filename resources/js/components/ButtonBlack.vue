@@ -11,6 +11,7 @@ import Button from './ui/button/Button.vue';
         v-border-at-hover
         v-shadow-at-hover
         v-element-styling
+        variant="kanban"
     >
         <div class="flex gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">

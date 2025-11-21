@@ -57,8 +57,8 @@
     --__white__: hsl(0 0% 90%);
     --__beige__: hsl(28 40% 70%);
     --__darker-beige__: hsl(28 17% 50%);
-    --__green__: hsl(150 35% 61%);
-    --__red__: hsl(0 50% 50%);
+    --__green__: hsl(150 20% 50%);
+    --__red__: hsl(0 30% 50%);
 }
 
 input:-webkit-autofill,

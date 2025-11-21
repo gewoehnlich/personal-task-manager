@@ -3,6 +3,7 @@ import { TaskType } from '@/types/task';
 import { computed, reactive, ref, watch, nextTick, onMounted } from 'vue';
 import Deadline from './Deadline.vue';
 import Card from './ui/card/Card.vue';
+import Button from './ui/button/Button.vue';
 
 const props = defineProps<{
     task: TaskType;
@@ -92,34 +93,34 @@ watch(() => editableTask.description, async () => {
                     </button>
                 </div>
 
-                <p class="text-sm text-muted-foreground">
+                <p class="text-xs text-muted-foreground">
                     Task ID: {{ task.id }} | User ID: {{ task.user_id }}
                 </p>
             </div>
 
             <div>
-                <p class="text-sm text-muted-foreground">
+                <p class="text-xs text-muted-foreground">
                     Description:
                 </p>
 
                 <textarea
                     ref="description"
                     v-model="editableTask.description"
-                    class="break-words w-full focus:ring-none focus:outline-none text-md overflow-hidden resize-none"
+                    class="break-words w-full focus:ring-none focus:outline-none text-sm/[18px] overflow-hidden resize-none"
                 ></textarea>
             </div>
 
-            <div class="text-sm">
-                <p class="text-sm text-muted-foreground">
+            <div>
+                <p class="text-xs text-muted-foreground">
                     Bills:
                 </p>
 
-                <ul class="bg-card">
+                <ul class="bg-card text-sm">
                     <li
                         v-if="editableTask.bills.length !== 0"
                         v-for="bill in editableTask.bills"
                         :key="bill.id"
-                        class="grid grid-cols-[1fr_auto_auto] gap-1"
+                        class="grid grid-cols-[1fr_auto_auto] gap-1 text-xs"
                     >
                         <input
                             v-model="bill.description"
@@ -144,14 +145,14 @@ watch(() => editableTask.description, async () => {
 
             <div>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <div class="text-sm flex-1">
-                        <p class="text-muted-foreground">
+                    <div class="flex-1">
+                        <p class="text-muted-foreground text-xs">
                             Stage:
                         </p>
 
                         <select
                             v-model="editableTask.stage"
-                            class="bg-card w-full rounded-md focus:ring-none focus:outline-none"
+                            class="bg-card w-full rounded-md focus:ring-none focus:outline-none text-xs"
                         >
                             <option value="pending">Pending</option>
                             <option value="active">Active</option>
@@ -161,41 +162,48 @@ watch(() => editableTask.description, async () => {
                     </div>
 
                     <div class="min-w-[140px] flex-1">
-                        <p class="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                        <p class="mb-1 text-xs text-muted-foreground">
                             Deadline:
                         </p>
 
-                        <!-- <Deadline /> -->
+                        <Deadline />
                     </div>
                 </div>
 
-                <div class="border-t border-muted-foreground text-sm text-muted-foreground">
+                <div class="py-2">
+                    <div class="border-t border-muted"></div>
+                </div>
+
+                <div class="text-xs text-muted-foreground">
                     <p>Created at: {{ task.created_at }}</p>
                     <p>Updated at: {{ task.updated_at }}</p>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3 pt-6">
-                <button
+            <div class="flex justify-end gap-1 pt-2">
+                <Button
                     @click="$emit('close')"
-                    class="bg-muted rounded-md px-4 py-2 text-gray-800 transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
+                    variant="cancel"
+                    size="sm"
                 >
                     Cancel
-                </button>
+                </Button>
 
-                <button
+                <Button
                     @click="saveChanges"
-                    class="rounded-md bg-green-600 px-4 py-2 text-white transition hover:bg-green-700"
+                    variant="confirmative"
+                    size="sm"
                 >
                     Save
-                </button>
+                </Button>
 
-                <button
+                <Button
                     @click="deleteTask"
-                    class="justify-start rounded-md bg-red-600 px-4 py-2 text-white transition hover:bg-red-700"
+                    variant="destructive"
+                    size="sm"
                 >
                     Delete
-                </button>
+                </Button>
             </div>
         </Card>
     </div>
