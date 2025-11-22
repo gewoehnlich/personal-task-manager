@@ -107,6 +107,9 @@ watch(() => editableTask.description, async () => {
                     ref="description"
                     v-model="editableTask.description"
                     class="break-words w-full focus:ring-none focus:outline-none text-sm/[18px] overflow-hidden resize-none"
+                    autocomplete="off"
+                    autocorrect="off"
+                    spellcheck="false"
                 ></textarea>
             </div>
 
@@ -146,13 +149,13 @@ watch(() => editableTask.description, async () => {
             <div>
                 <div class="flex flex-wrap justify-center gap-4">
                     <div class="flex-1">
-                        <p class="text-muted-foreground text-xs">
+                        <p class="text-muted-foreground text-xs mb-1">
                             Stage:
                         </p>
 
                         <select
                             v-model="editableTask.stage"
-                            class="bg-card w-full rounded-md focus:ring-none focus:outline-none text-xs"
+                            class="bg-muted w-full rounded-lg focus:ring-none focus:outline-none text-sm p-1.5 h-8"
                         >
                             <option value="pending">Pending</option>
                             <option value="active">Active</option>
