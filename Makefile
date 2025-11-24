@@ -1,4 +1,4 @@
-.PHONY = gemini
+.PHONY =
 
 include .env
 export
