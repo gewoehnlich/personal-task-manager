@@ -23,12 +23,20 @@ return new class extends Migration
             $table->enum('stage', [
                 'pending',
                 'active',
-                'delayed',
                 'done',
                 'deleted',
             ]);
-            $table->boolean('debug')->default(false);
             $table->timestamp('deadline');
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')
+                ->references('id')
+                ->on('projects')
+                ->onDelete('cascade')
+                ->nullable();
+            $table->boolean('deleted')
+                ->default(false);
+            $table->boolean('debug')
+                ->default(false);
             $table->timestamps();
         });
     }

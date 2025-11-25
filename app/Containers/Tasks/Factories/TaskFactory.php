@@ -18,7 +18,6 @@ class TaskFactory extends Factory
             'stage' => $this->faker->randomElement([
                 'pending',
                 'active',
-                'delayed',
                 'done',
             ]),
             'deadline' => $this->faker->dateTimeBetween('now', '+10 days'),

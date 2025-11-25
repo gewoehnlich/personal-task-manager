@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\Repositories\TaskRepository;
+use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Transporters\TaskCreateTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
@@ -14,22 +14,18 @@ use Knuckles\Scribe\Attributes\Group;
 #[Authenticated]
 final readonly class TaskCreateAction extends Action
 {
-    public function __construct(
-        private readonly TaskRepository $repository,
-    ) {
-        //
-    }
-
     public function run(
         TaskCreateTransporter $transporter,
     ): Responder {
         try {
-            $result = $this->repository->create(
+            $result = Task::create(
                 attributes: $transporter->toArray()
             );
 
             return $this->success(
-                data: ['result' => $result],
+                data: [
+                    'result' => $result
+                ],
             );
         } catch (Exception $exception) {
             return $this->error(

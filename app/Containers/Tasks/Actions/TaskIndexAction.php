@@ -2,17 +2,7 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\Criteria\FilterByCreatedAtRangeCriterion;
-use App\Containers\Tasks\Criteria\FilterByDeadlineRangeCriterion;
-use App\Containers\Tasks\Criteria\FilterByIdCriterion;
-use App\Containers\Tasks\Criteria\FilterByLimitCriterion;
-use App\Containers\Tasks\Criteria\FilterByOrderByCriterion;
-use App\Containers\Tasks\Criteria\FilterByParentIdCriterion;
-use App\Containers\Tasks\Criteria\FilterByProjectIdCriterion;
-use App\Containers\Tasks\Criteria\FilterByStageCriterion;
-use App\Containers\Tasks\Criteria\FilterByUpdatedAtRangeCriterion;
-use App\Containers\Tasks\Criteria\FilterByUserIdCriterion;
-use App\Containers\Tasks\Repositories\TaskRepository;
+use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Transporters\TaskIndexTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
@@ -20,84 +10,64 @@ use App\Ship\Parents\Exceptions\Exception;
 
 final readonly class TaskIndexAction extends Action
 {
-    public function __construct(
-        private readonly TaskRepository $repository,
-    ) {
-        //
-    }
-
     public function run(
         TaskIndexTransporter $transporter,
     ): Responder {
         try {
-            $this->repository->pushCriteria(
-                criteria: new FilterByUserIdCriterion(
-                    userId: $transporter->userId,
-                ),
-            );
+            $tasks = Task::all();
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByIdCriterion(
-                    id: $transporter->id,
-                ),
-            );
+            if (isset($transporter->userId)) {
+                $tasks = $tasks->where('user_id', $transporter->userId);
+            }
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByStageCriterion(
-                    stage: $transporter->stage,
-                ),
-            );
+            if (isset($transporter->id)) {
+                $tasks = $tasks->where('id', $transporter->id);
+            }
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByParentIdCriterion(
-                    parentId: $transporter->parentId,
-                ),
-            );
+            if (isset($transporter->stage)) {
+                $tasks = $tasks->where('stage', $transporter->stage);
+            }
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByProjectIdCriterion(
-                    projectId: $transporter->projectId,
-                ),
-            );
+            if (isset($transporter->projectId)) {
+                $tasks = $tasks->where('project_id', $transporter->projectId);
+            }
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByCreatedAtRangeCriterion(
-                    createdAtFrom: $transporter->createdAtFrom,
-                    createdAtTo:   $transporter->createdAtTo,
-                ),
-            );
+            if (isset($transporter->createdAtFrom)) {
+                $tasks = $tasks->where('created_at', '>=', $transporter->createdAtFrom);
+            }
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByUpdatedAtRangeCriterion(
-                    updatedAtFrom: $transporter->updatedAtFrom,
-                    updatedAtTo:   $transporter->updatedAtTo,
-                ),
-            );
+            if (isset($transporter->createdAtTo)) {
+                $tasks = $tasks->where('created_at', '<=', $transporter->createdAtTo);
+            }
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByDeadlineRangeCriterion(
-                    deadlineFrom: $transporter->deadlineFrom,
-                    deadlineTo:   $transporter->deadlineTo,
-                ),
-            );
+            if (isset($transporter->updatedAtFrom)) {
+                $tasks = $tasks->where('updated_at', '>=', $transporter->createdAtFrom);
+            }
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByOrderByCriterion(
-                    orderBy: $transporter->orderBy,
-                    field:   $transporter->orderByField,
-                ),
-            );
+            if (isset($transporter->updatedAtTo)) {
+                $tasks = $tasks->where('updated_at', '<=', $transporter->createdAtTo);
+            }
 
-            $this->repository->pushCriteria(
-                criteria: new FilterByLimitCriterion(
-                    limit: $transporter->limit,
-                ),
-            );
+            if (isset($transporter->deadlineFrom)) {
+                $tasks = $tasks->where('deadline', '>=', $transporter->createdAtFrom);
+            }
 
-            $result = $this->repository->get();
+            if (isset($transporter->deadlineTo)) {
+                $tasks = $tasks->where('deadline', '<=', $transporter->createdAtTo);
+            }
+
+            if (isset($transporter->orderBy) && isset($transporter->orderByField)) {
+                $tasks = $tasks->orderBy($transporter->orderByField ?? 'id', $transporter->orderBy);
+            }
+
+            if (isset($transporter->limit)) {
+                $tasks = $tasks->limit($transporter->limit);
+            }
 
             return $this->success(
-                data: ['result' => $result],
+                data: [
+                    'result' => $tasks
+                ],
             );
         } catch (Exception $exception) {
             return $this->error(

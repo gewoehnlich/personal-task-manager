@@ -3,6 +3,7 @@
 namespace App\Containers\Tasks\Models;
 
 use App\Containers\Bills\Models\Bill;
+use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Factories\TaskFactory;
 use App\Containers\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,8 +22,9 @@ final class Task extends Model
         'description',
         'stage',
         'deadline',
-        'parent_id',
+        'project_id',
         'deleted',
+        'debug',
     ];
 
     protected $hidden = [
@@ -44,6 +46,11 @@ final class Task extends Model
     public function bills(): HasMany
     {
         return $this->hasMany(Bill::class);
+    }
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
     }
 
     protected static function newFactory(): Factory
