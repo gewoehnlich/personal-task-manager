@@ -19,14 +19,16 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('cascade');
             $table->string('title');
-            $table->text('description');
+            $table->text('description')
+                ->nullable();
             $table->enum('stage', [
                 'pending',
                 'active',
                 'done',
                 'deleted',
             ]);
-            $table->timestamp('deadline');
+            $table->timestamp('deadline')
+                ->nullable();
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
                 ->references('id')

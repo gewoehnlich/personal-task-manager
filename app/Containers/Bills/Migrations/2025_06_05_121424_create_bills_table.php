@@ -17,7 +17,8 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->text('description')
                 ->nullable();
-            $table->unsignedBigInteger('time_spent');
+            $table->unsignedBigInteger('time_spent')
+                ->nullable();
             $table->boolean('deleted')
                 ->default(false);
             $table->boolean('debug')
