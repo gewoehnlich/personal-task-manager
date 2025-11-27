@@ -12,7 +12,7 @@ final readonly class DashboardWebpageController extends WebController
     public function show(): InertiaResponse
     {
         return $this->action(DashboardWebpageAction::class, [
-            'tasks' => Task::all()
+            'tasks' => Task::with('bills')->get()
         ]);
     }
 }
