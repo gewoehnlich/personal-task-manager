@@ -1,29 +1,32 @@
 <script setup lang="ts">
 import type { TaskType } from '@/types/task';
 import { router, usePage } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { computed, Ref, ref } from 'vue';
 import Stage from './Stage.vue';
 import TaskEdit from './TaskEdit.vue';
 
 type PageProps = {
-    tasks: {
-        all: TaskType[];
-        pending: TaskType[];
-        active: TaskType[];
-        delayed: TaskType[];
-        done: TaskType[];
-        deleted: TaskType[];
-    };
+    tasks: TaskType[];
 };
 
 const page = usePage<PageProps>();
 const selectedTask = ref<TaskType | null>(null);
 
-const tasks = computed(() => page.props.tasks.all || []);
-const pending = computed(() => page.props.tasks.pending || []);
-const active = computed(() => page.props.tasks.active || []);
-const done = computed(() => page.props.tasks.done || []);
-const deleted = computed(() => page.props.tasks.deleted || []);
+const tasks = computed(() => page.props.tasks || []);
+
+const pending = filterTasksByStage(tasks, "pending");
+const active  = filterTasksByStage(tasks, "active");
+const done    = filterTasksByStage(tasks, "done");
+const deleted = filterTasksByStage(tasks, "deleted");
+
+function filterTasksByStage(
+    tasks: Ref<TaskType[]>,
+    stage: string,
+) {
+    return tasks.value.filter(
+        (task) => task.stage === stage
+    );
+}
 
 function handleTaskDrop(taskId: number, newStage: string) {
     const task = tasks.value.find((task) => task.id === taskId);

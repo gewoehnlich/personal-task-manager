@@ -27,14 +27,12 @@ final class Task extends Model
         'debug',
     ];
 
-    protected $hidden = [
-        //
-    ];
-
     protected function casts(): array
     {
         return [
-            //
+            'deadline' => 'datetime',
+            'deleted' => 'boolean',
+            'debug' => 'boolean',
         ];
     }
 
