@@ -2,39 +2,22 @@
 
 namespace App\Containers\Bills\Actions;
 
-use App\Containers\Bills\Criteria\FilterByTaskIdCriterion;
 use App\Containers\Bills\Transporters\BillUpdateTransporter;
-use App\Containers\Bills\Repositories\BillRepository;
-use App\Containers\Bills\Criteria\FilterByIdCriterion;
+use App\Containers\Bills\Models\Bill;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 
 final readonly class BillUpdateAction extends Action
 {
-    public function __construct(
-        private readonly BillRepository $repository,
-    ) {
-        //
-    }
-
     public function run(
         BillUpdateTransporter $transporter,
     ): Responder {
         try {
-            $this->repository->pushCriteria(
-                criteria: new FilterByTaskIdCriterion(
-                    taskId: $transporter->taskId,
-                ),
-            );
-
-            $this->repository->pushCriteria(
-                criteria: new FilterByIdCriterion(
-                    id: $transporter->id,
-                ),
-            );
-
-            $bill = $this->repository->get()->first();
+            $bill = Bill::where('id', $transporter->id)
+                ->where('user_id', $transporter->userId)
+                ->where('task_id', $transporter->taskId)
+                ->first();
 
             if (!isset($bill)) {
                 throw new Exception('can\'t find the bill.');

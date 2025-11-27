@@ -28,7 +28,8 @@ final class Bill extends Model
     protected function casts(): array
     {
         return [
-            //
+            'performed_at' => 'datetime',
+            'deleted' => 'boolean',
         ];
     }
 

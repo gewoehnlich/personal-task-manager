@@ -24,7 +24,6 @@ final class Task extends Model
         'deadline',
         'project_id',
         'deleted',
-        'debug',
     ];
 
     protected function casts(): array
@@ -32,7 +31,6 @@ final class Task extends Model
         return [
             'deadline' => 'datetime',
             'deleted' => 'boolean',
-            'debug' => 'boolean',
         ];
     }
 

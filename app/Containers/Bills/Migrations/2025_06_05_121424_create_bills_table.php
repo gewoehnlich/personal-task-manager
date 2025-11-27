@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('time_spent');
             $table->boolean('deleted')
                 ->default(false);
+            $table->boolean('debug')
+                ->default(false);
             $table->timestamp('performed_at')
                 ->useCurrent();
             $table->timestamps();
