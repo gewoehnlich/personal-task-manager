@@ -2,8 +2,8 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Ship\Parents\Controllers\WebController;
 use App\Containers\Auth\Requests\LoginRequest;
+use App\Ship\Parents\Controllers\WebController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

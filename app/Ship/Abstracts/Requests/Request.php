@@ -3,10 +3,10 @@
 namespace App\Ship\Abstracts\Requests;
 
 use App\Ship\Contracts\Transportable;
-use Illuminate\Foundation\Http\FormRequest as LaravelRequest;
-use Spatie\LaravelData\WithData;
 use App\Ship\Exceptions\TransporterIsMissingException;
 use App\Ship\Parents\Transporters\Transporter;
+use Illuminate\Foundation\Http\FormRequest as LaravelRequest;
+use Spatie\LaravelData\WithData;
 
 abstract class Request extends LaravelRequest implements Transportable
 {
@@ -16,7 +16,7 @@ abstract class Request extends LaravelRequest implements Transportable
 
     public function transported(): Transporter
     {
-        if (! $this->transporter()) {
+        if (!$this->transporter()) {
             throw new TransporterIsMissingException();
         }
 

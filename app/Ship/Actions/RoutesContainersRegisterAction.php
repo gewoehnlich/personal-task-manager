@@ -28,6 +28,7 @@ final readonly class RoutesContainersRegisterAction extends Action
                     );
                 }
             }
+
             return $this->success(
                 data: ['result' => true],
             );

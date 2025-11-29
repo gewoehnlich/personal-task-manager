@@ -17,12 +17,12 @@ final readonly class BillGetAction extends Action
             $bill = Bill::where('task_id', $transporter->taskId)
                 ->first();
 
-            if (!isset($bills)) {
+            if (!isset($bill)) {
                 throw new Exception('can\'t find bills.');
             }
 
             return $this->success(
-                data: ['result' => $bills],
+                data: $bill,
             );
         } catch (Exception $exception) {
             return $this->error(

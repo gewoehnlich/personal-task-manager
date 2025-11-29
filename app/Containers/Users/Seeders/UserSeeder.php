@@ -10,8 +10,8 @@ final class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'test user',
-            'email' => 'email@example.com',
+            'name'     => 'test user',
+            'email'    => 'email@example.com',
             'password' => 'qwerqwer',
         ]);
     }

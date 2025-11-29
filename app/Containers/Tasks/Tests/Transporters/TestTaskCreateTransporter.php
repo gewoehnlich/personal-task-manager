@@ -10,11 +10,11 @@ final class TestTaskCreateTransporter extends TestCase
 {
     public function testConstructorSetsPropertiesCorrectly(): void
     {
-        $userId = 1;
-        $title = 'test title';
+        $userId      = 1;
+        $title       = 'test title';
         $description = 'test description';
-        $stage = Stage::PENDING;
-        $deadline = now()->addMonth();
+        $stage       = Stage::PENDING;
+        $deadline    = now()->addMonth();
 
         $transporter = new TaskCreateTransporter(
             userId: $userId,

@@ -48,7 +48,7 @@ final class BillUpdateRequest extends Request
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'id' => $this->route('id'),
+            'id'      => $this->route('id'),
             'user_id' => $this->user()->id,
             'task_id' => $this->route('task'),
         ]);

@@ -23,7 +23,7 @@ final readonly class MigrationsContainersGetAction extends Action
                 $dir .= '/Migrations';
 
                 if (
-                    ! File::isDirectory(directory: $dir) ||
+                    !File::isDirectory(directory: $dir) ||
                     File::isEmptyDirectory(directory: $dir)
                 ) {
                     continue;

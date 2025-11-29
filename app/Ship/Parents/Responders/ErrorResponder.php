@@ -15,7 +15,6 @@ class ErrorResponder extends AbstractResponder
         //
     }
 
-
     public function toResponse(
         $request,
     ): Response {

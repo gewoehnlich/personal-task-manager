@@ -2,8 +2,8 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Ship\Parents\Controllers\WebController;
 use App\Containers\Users\Models\User;
+use App\Ship\Parents\Controllers\WebController;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

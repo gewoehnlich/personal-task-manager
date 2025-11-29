@@ -17,10 +17,10 @@ class BillFactory extends Factory
                 ->inRandomOrder()
                 ->first()
                 ->id,
-            'description' => $this->faker->text(100),
-            'time_spent' => $this->faker->numberBetween(30, 180),
+            'description'  => $this->faker->text(100),
+            'time_spent'   => $this->faker->numberBetween(30, 180),
             'performed_at' => $this->faker->dateTimeThisYear(),
-            'deleted' => false,
+            'deleted'      => false,
         ];
     }
 }

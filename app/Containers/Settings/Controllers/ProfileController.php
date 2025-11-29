@@ -2,8 +2,8 @@
 
 namespace App\Containers\Settings\Controllers;
 
-use App\Ship\Parents\Controllers\WebController;
 use App\Containers\Settings\Requests\ProfileUpdateRequest;
+use App\Ship\Parents\Controllers\WebController;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

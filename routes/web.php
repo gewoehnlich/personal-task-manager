@@ -13,7 +13,7 @@ Route::middleware('web')
 
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard', [
-                'tasks' => Task::with('bills')->get()
+                'tasks' => Task::with('bills')->get(),
             ]);
         })
             ->middleware([

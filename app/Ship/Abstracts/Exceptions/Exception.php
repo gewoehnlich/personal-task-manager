@@ -29,11 +29,11 @@ abstract class Exception extends SymfonyHttpException
         // detect and set the running environment
         $this->environment = Config::get('app.env');
 
-        $message = $this->prepareMessage($message);
-        $error = $this->prepareError($errors);
+        $message    = $this->prepareMessage($message);
+        $error      = $this->prepareError($errors);
         $statusCode = $this->prepareStatusCode($statusCode);
 
-//        $this->logTheError($statusCode, $message, $code);
+        //        $this->logTheError($statusCode, $message, $code);
 
         parent::__construct($statusCode, $message, $previous, $headers, $code);
 
@@ -62,7 +62,7 @@ abstract class Exception extends SymfonyHttpException
 
     public function hasErrors(): bool
     {
-        return ! $this->errors->isEmpty();
+        return !$this->errors->isEmpty();
     }
 
     private function logTheError(int $statusCode, string $message, int $code): void

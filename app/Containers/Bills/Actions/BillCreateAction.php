@@ -19,7 +19,7 @@ final readonly class BillCreateAction extends Action
             );
 
             return $this->success(
-                data: [$result],
+                data: $result,
             );
         } catch (Exception $exception) {
             return $this->error(

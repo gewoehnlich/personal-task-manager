@@ -10,6 +10,6 @@ final readonly class GenerateUserTokenTask extends Task
     public function run(
         User $user,
     ): string {
-        return $user->createToken("gewoehnlich")->plainTextToken;
+        return $user->createToken('gewoehnlich')->plainTextToken;
     }
 }

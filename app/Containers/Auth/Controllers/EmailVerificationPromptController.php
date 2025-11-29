@@ -21,7 +21,7 @@ final readonly class EmailVerificationPromptController extends WebController
                 default: route('dashboard', absolute: false)
             )
             : Inertia::render('auth/VerifyEmail', [
-                'status' => $request->session()->get('status')
+                'status' => $request->session()->get('status'),
             ]);
     }
 }
