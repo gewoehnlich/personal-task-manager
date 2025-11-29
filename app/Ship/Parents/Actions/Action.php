@@ -17,7 +17,7 @@ abstract readonly class Action extends AbstractAction
     use CanCallCommandTrait;
 
     protected function success(
-        array $data = []
+        mixed $data = null,
     ): Responder {
         return new SuccessResponder(
             data: $data,
@@ -25,17 +25,10 @@ abstract readonly class Action extends AbstractAction
     }
 
     protected function error(
-        string $message
+        string $message,
     ): Responder {
         return new ErrorResponder(
             message: $message
         );
-    }
-
-    protected function response(
-        Responder | string $responder,
-        array | string $data = []
-    ): Responder {
-        return new $responder($data);
     }
 }

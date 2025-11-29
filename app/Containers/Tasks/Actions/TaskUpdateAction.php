@@ -27,7 +27,7 @@ final readonly class TaskUpdateAction extends Action
             );
 
             return $this->success(
-                data: ['result' => $result],
+                data: $result,
             );
         } catch (Exception $exception) {
             return $this->error(

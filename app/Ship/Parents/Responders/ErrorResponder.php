@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 class ErrorResponder extends AbstractResponder
 {
     public function __construct(
-        public int $status = Response::HTTP_BAD_REQUEST,
-        public string $message = '',
+        public readonly int $status = Response::HTTP_BAD_REQUEST,
+        public readonly string $message = '',
     ) {
         //
     }
@@ -22,7 +22,7 @@ class ErrorResponder extends AbstractResponder
         return new JsonResponse(
             data: [
                 'status' => 'error',
-                'message' => $this->message,
+                'result' => $this->message,
             ],
             status: $this->status,
         );

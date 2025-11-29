@@ -28,7 +28,7 @@ final readonly class TaskDeleteAction extends Action
             ]);
 
             return $this->success(
-                data: ['result' => true],
+                data: true,
             );
         } catch (Exception $exception) {
             return $this->error(

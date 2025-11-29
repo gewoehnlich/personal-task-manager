@@ -65,9 +65,7 @@ final readonly class TaskIndexAction extends Action
             }
 
             return $this->success(
-                data: [
-                    'result' => $tasks
-                ],
+                data: $tasks,
             );
         } catch (Exception $exception) {
             return $this->error(

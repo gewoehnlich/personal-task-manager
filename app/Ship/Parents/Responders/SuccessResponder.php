@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 class SuccessResponder extends AbstractResponder
 {
     public function __construct(
-        public int $status = Response::HTTP_OK,
-        public array $data = [],
+        public readonly int $status = Response::HTTP_OK,
+        public readonly mixed $data = null,
     ) {
         //
     }
@@ -21,7 +21,7 @@ class SuccessResponder extends AbstractResponder
         return new JsonResponse(
             data: [
                 'status' => 'success',
-                'data' => $this->data,
+                'result' => $this->data,
             ],
             status: $this->status
         );

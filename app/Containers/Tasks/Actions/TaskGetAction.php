@@ -23,7 +23,7 @@ final readonly class TaskGetAction extends Action
             }
 
             return $this->success(
-                data: ['result' => $task],
+                data: $task,
             );
         } catch (Exception $exception) {
             return $this->error(

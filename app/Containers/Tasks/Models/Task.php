@@ -23,14 +23,13 @@ final class Task extends Model
         'stage',
         'deadline',
         'project_id',
-        'deleted',
     ];
 
     protected function casts(): array
     {
         return [
             'deadline' => 'datetime',
-            'deleted' => 'boolean',
+            'debug' => 'boolean',
         ];
     }
 
