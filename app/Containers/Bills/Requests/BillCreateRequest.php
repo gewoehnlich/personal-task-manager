@@ -34,7 +34,7 @@ final class BillCreateRequest extends Request
     {
         return [
             function (Validator $validator) {
-                if ($this->performed_at > Carbon::now()) {
+                if ($this->performed_at < Carbon::now()) {
                     $validator->errors()->add(
                         'performed_at',
                         'performed_at не должен быть раньше текущего времени.'

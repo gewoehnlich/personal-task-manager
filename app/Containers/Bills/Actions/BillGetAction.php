@@ -14,8 +14,9 @@ final readonly class BillGetAction extends Action
         BillGetTransporter $transporter,
     ): Responder {
         try {
-            $bill = Bill::where('task_id', $transporter->taskId)
-                ->first();
+            $bill = Bill::query()
+                ->where('task_id', $transporter->taskId)
+                ->get();
 
             if (!isset($bill)) {
                 throw new Exception('can\'t find bills.');
