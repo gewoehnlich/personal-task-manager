@@ -2,14 +2,14 @@
 
 namespace App\Containers\Projects\Requests;
 
-use App\Containers\Projects\Transporters\IndexProjectTransporter;
+use App\Containers\Projects\Transporters\UpdateProjectTransporter;
 use App\Ship\Parents\Requests\Request;
 
-final class IndexProjectRequest extends Request
+final class UpdateProjectRequest extends Request
 {
     public function transporter(): string
     {
-        return IndexProjectTransporter::class;
+        return UpdateProjectTransporter::class;
     }
 
     public function authorize(): bool

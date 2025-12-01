@@ -19,6 +19,10 @@ final class Project extends Model
         'deleted',
     ];
 
+    protected $casts = [
+        'deleted' => 'boolean',
+    ];
+
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);

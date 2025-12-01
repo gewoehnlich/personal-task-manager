@@ -2,13 +2,17 @@
 
 namespace App\Containers\Projects\Controllers\Api;
 
+use App\Containers\Projects\Requests\CreateProjectRequest;
+use App\Containers\Projects\Requests\DeleteProjectRequest;
+use App\Containers\Projects\Requests\IndexProjectRequest;
+use App\Containers\Projects\Requests\UpdateProjectRequest;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\ApiController;
 
 final readonly class ProjectController extends ApiController
 {
-    public function get(
-        BillGetRequest $request,
+    public function index(
+        IndexProjectRequest $request,
     ): Responder {
         return $this->action(
             BillGetAction::class,
@@ -17,7 +21,7 @@ final readonly class ProjectController extends ApiController
     }
 
     public function create(
-        BillCreateRequest $request,
+        CreateProjectRequest $request,
     ): Responder {
         return $this->action(
             BillCreateAction::class,
@@ -26,7 +30,7 @@ final readonly class ProjectController extends ApiController
     }
 
     public function update(
-        BillUpdateRequest $request,
+        UpdateProjectRequest $request,
     ): Responder {
         return $this->action(
             BillUpdateAction::class,
@@ -35,7 +39,7 @@ final readonly class ProjectController extends ApiController
     }
 
     public function delete(
-        BillDeleteRequest $request,
+        DeleteProjectRequest $request,
     ): Responder {
         return $this->action(
             BillDeleteAction::class,
