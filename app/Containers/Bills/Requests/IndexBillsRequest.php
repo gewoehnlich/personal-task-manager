@@ -2,14 +2,14 @@
 
 namespace App\Containers\Bills\Requests;
 
-use App\Containers\Bills\Transporters\BillDeleteTransporter;
+use App\Containers\Bills\Transporters\IndexBillsTransporter;
 use App\Ship\Parents\Requests\Request;
 
-final class BillDeleteRequest extends Request
+final class IndexBillsRequest extends Request
 {
     public function transporter(): string
     {
-        return BillDeleteTransporter::class;
+        return IndexBillsTransporter::class;
     }
 
     public function authorize(): bool
@@ -20,8 +20,6 @@ final class BillDeleteRequest extends Request
     public function rules(): array
     {
         return [
-            'id'      => ['required', 'integer', 'exists:bills,id'],
-            'user_id' => ['required', 'integer', 'exists:users,id'],
             'task_id' => ['required', 'integer', 'exists:tasks,id'],
         ];
     }
@@ -36,8 +34,6 @@ final class BillDeleteRequest extends Request
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'id'      => $this->route('id'),
-            'user_id' => $this->user()->id,
             'task_id' => $this->route('task'),
         ]);
     }

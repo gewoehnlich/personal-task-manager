@@ -10,7 +10,7 @@ use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class BillCreateTransporter extends Transporter
+final class CreateBillTransporter extends Transporter
 {
     public function __construct(
         public readonly int $userId,
@@ -18,7 +18,7 @@ final class BillCreateTransporter extends Transporter
         public readonly ?string $description,
         public readonly int $timeSpent,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $performedAt,
+        public readonly Carbon $performedAt,
     ) {
         //
     }

@@ -13,7 +13,6 @@ final class CreateProjectTransporter extends Transporter
         public readonly int $userId,
         public readonly string $name,
         public readonly ?string $description,
-        public readonly ?bool $deleted,
     ) {
         //
     }

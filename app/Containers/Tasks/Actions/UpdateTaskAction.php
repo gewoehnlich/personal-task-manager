@@ -2,17 +2,16 @@
 
 namespace App\Containers\Tasks\Actions;
 
-use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Models\Task;
-use App\Containers\Tasks\Transporters\TaskDeleteTransporter;
+use App\Containers\Tasks\Transporters\UpdateTaskTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 
-final readonly class TaskDeleteAction extends Action
+final readonly class UpdateTaskAction extends Action
 {
     public function run(
-        TaskDeleteTransporter $transporter,
+        UpdateTaskTransporter $transporter,
     ): Responder {
         try {
             $task = Task::where('id', $transporter->id)
@@ -23,12 +22,12 @@ final readonly class TaskDeleteAction extends Action
                 throw new Exception('can\'t find task.');
             }
 
-            $task->update([
-                'stage' => Stage::DELETED,
-            ]);
+            $result = $task->update(
+                attributes: $transporter->toArray()
+            );
 
             return $this->success(
-                data: true,
+                data: $result,
             );
         } catch (Exception $exception) {
             return $this->error(

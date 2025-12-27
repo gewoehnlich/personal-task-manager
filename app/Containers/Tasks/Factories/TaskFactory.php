@@ -20,8 +20,9 @@ class TaskFactory extends Factory
                 'active',
                 'done',
             ]),
-            'deadline' => $this->faker->dateTimeBetween('now', '+10 days'),
-            'debug'    => true,
+            'deadline'    => $this->faker->dateTimeBetween('now', '+10 days'),
+            'debug'       => true,
+            'project_id'  => 1,
         ];
     }
 }

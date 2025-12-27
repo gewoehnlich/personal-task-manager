@@ -2,16 +2,14 @@
 
 namespace App\Containers\Tasks\Controllers\Web;
 
-use App\Containers\Tasks\Actions\TaskCreateAction;
-use App\Containers\Tasks\Actions\TaskDeleteAction;
-use App\Containers\Tasks\Actions\TaskGetAction;
-use App\Containers\Tasks\Actions\TaskIndexAction;
-use App\Containers\Tasks\Actions\TaskUpdateAction;
-use App\Containers\Tasks\Requests\TaskCreateRequest;
-use App\Containers\Tasks\Requests\TaskDeleteRequest;
-use App\Containers\Tasks\Requests\TaskGetRequest;
-use App\Containers\Tasks\Requests\TaskIndexRequest;
-use App\Containers\Tasks\Requests\TaskUpdateRequest;
+use App\Containers\Tasks\Actions\CreateTaskAction;
+use App\Containers\Tasks\Actions\DeleteTaskAction;
+use App\Containers\Tasks\Actions\IndexTasksAction;
+use App\Containers\Tasks\Actions\UpdateTaskAction;
+use App\Containers\Tasks\Requests\CreateTaskRequest;
+use App\Containers\Tasks\Requests\DeleteTaskRequest;
+use App\Containers\Tasks\Requests\IndexTasksRequest;
+use App\Containers\Tasks\Requests\UpdateTaskRequest;
 use App\Ship\Parents\Controllers\WebController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -19,21 +17,10 @@ use Illuminate\Support\Facades\Redirect;
 final readonly class TaskController extends WebController
 {
     public function index(
-        TaskIndexRequest $request,
+        IndexTasksRequest $request,
     ): RedirectResponse {
         $this->action(
-            TaskIndexAction::class,
-            $request->transported(),
-        );
-
-        return Redirect::back();
-    }
-
-    public function get(
-        TaskGetRequest $request,
-    ): RedirectResponse {
-        return $this->action(
-            TaskGetAction::class,
+            IndexTasksAction::class,
             $request->transported(),
         );
 
@@ -41,10 +28,10 @@ final readonly class TaskController extends WebController
     }
 
     public function create(
-        TaskCreateRequest $request,
+        CreateTaskRequest $request,
     ): RedirectResponse {
         $this->action(
-            TaskCreateAction::class,
+            CreateTaskAction::class,
             $request->transported(),
         );
 
@@ -52,10 +39,10 @@ final readonly class TaskController extends WebController
     }
 
     public function update(
-        TaskUpdateRequest $request,
+        UpdateTaskRequest $request,
     ): RedirectResponse {
         $this->action(
-            TaskUpdateAction::class,
+            UpdateTaskAction::class,
             $request->transported(),
         );
 
@@ -63,10 +50,10 @@ final readonly class TaskController extends WebController
     }
 
     public function delete(
-        TaskDeleteRequest $request,
+        DeleteTaskRequest $request,
     ): RedirectResponse {
         $this->action(
-            TaskDeleteAction::class,
+            DeleteTaskAction::class,
             $request->transported(),
         );
 

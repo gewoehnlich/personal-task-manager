@@ -5,7 +5,7 @@ namespace App\Containers\Tasks\Seeders;
 use App\Containers\Tasks\Models\Task;
 use Illuminate\Database\Seeder;
 
-class TaskSeeder extends Seeder
+final class TaskSeeder extends Seeder
 {
     public function run(): void
     {

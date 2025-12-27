@@ -8,7 +8,7 @@ use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 
-final readonly class BillCreateAction extends Action
+final readonly class CreateProjectAction extends Action
 {
     public function run(
         CreateProjectTransporter $transporter,

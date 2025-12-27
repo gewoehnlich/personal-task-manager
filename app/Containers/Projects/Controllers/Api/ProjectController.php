@@ -2,6 +2,10 @@
 
 namespace App\Containers\Projects\Controllers\Api;
 
+use App\Containers\Projects\Actions\CreateProjectAction;
+use App\Containers\Projects\Actions\DeleteProjectAction;
+use App\Containers\Projects\Actions\IndexProjectAction;
+use App\Containers\Projects\Actions\UpdateProjectAction;
 use App\Containers\Projects\Requests\CreateProjectRequest;
 use App\Containers\Projects\Requests\DeleteProjectRequest;
 use App\Containers\Projects\Requests\IndexProjectRequest;
@@ -15,7 +19,7 @@ final readonly class ProjectController extends ApiController
         IndexProjectRequest $request,
     ): Responder {
         return $this->action(
-            BillGetAction::class,
+            IndexProjectAction::class,
             $request->transported(),
         );
     }
@@ -24,7 +28,7 @@ final readonly class ProjectController extends ApiController
         CreateProjectRequest $request,
     ): Responder {
         return $this->action(
-            BillCreateAction::class,
+            CreateProjectAction::class,
             $request->transported(),
         );
     }
@@ -33,7 +37,7 @@ final readonly class ProjectController extends ApiController
         UpdateProjectRequest $request,
     ): Responder {
         return $this->action(
-            BillUpdateAction::class,
+            UpdateProjectAction::class,
             $request->transported(),
         );
     }
@@ -42,7 +46,7 @@ final readonly class ProjectController extends ApiController
         DeleteProjectRequest $request,
     ): Responder {
         return $this->action(
-            BillDeleteAction::class,
+            DeleteProjectAction::class,
             $request->transported(),
         );
     }

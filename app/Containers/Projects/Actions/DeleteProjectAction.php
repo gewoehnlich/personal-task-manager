@@ -23,12 +23,10 @@ final readonly class DeleteProjectAction extends Action
                 throw new Exception('can\'t find project.');
             }
 
-            $result = $project->update([
-                'deleted' => true,
-            ]);
+            $project->delete();
 
             return $this->success(
-                data: $result,
+                data: true,
             );
         } catch (Exception $exception) {
             return $this->error(

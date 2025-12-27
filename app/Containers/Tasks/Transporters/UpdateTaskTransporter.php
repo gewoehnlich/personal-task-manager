@@ -11,7 +11,7 @@ use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class TaskUpdateTransporter extends Transporter
+final class UpdateTaskTransporter extends Transporter
 {
     public function __construct(
         public readonly int $id,
@@ -21,6 +21,7 @@ final class TaskUpdateTransporter extends Transporter
         public readonly Stage $stage,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
         public readonly Carbon $deadline,
+        public readonly int $projectId,
     ) {
         //
     }

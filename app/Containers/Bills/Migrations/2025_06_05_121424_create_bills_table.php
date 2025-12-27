@@ -19,8 +19,7 @@ return new class() extends Migration
                 ->nullable();
             $table->unsignedBigInteger('time_spent')
                 ->nullable();
-            $table->boolean('deleted')
-                ->default(false);
+            $table->softDeletes();
             $table->boolean('debug')
                 ->default(false);
             $table->timestamp('performed_at')

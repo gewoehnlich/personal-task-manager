@@ -10,7 +10,7 @@ use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class BillUpdateTransporter extends Transporter
+final class UpdateBillTransporter extends Transporter
 {
     public function __construct(
         public readonly int $id,

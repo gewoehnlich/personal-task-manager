@@ -3,16 +3,16 @@
 namespace App\Containers\Tasks\Requests;
 
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Transporters\TaskIndexTransporter;
+use App\Containers\Tasks\Transporters\IndexTasksTransporter;
 use App\Ship\Parents\Requests\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
-final class TaskIndexRequest extends Request
+final class IndexTasksRequest extends Request
 {
     public function transporter(): string
     {
-        return TaskIndexTransporter::class;
+        return IndexTasksTransporter::class;
     }
 
     public function authorize(): bool

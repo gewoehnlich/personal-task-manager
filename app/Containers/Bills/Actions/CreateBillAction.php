@@ -1,24 +1,20 @@
 <?php
 
-namespace App\Containers\Tasks\Actions;
+namespace App\Containers\Bills\Actions;
 
-use App\Containers\Tasks\Models\Task;
-use App\Containers\Tasks\Transporters\TaskCreateTransporter;
+use App\Containers\Bills\Models\Bill;
+use App\Containers\Bills\Transporters\CreateBillTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
-use Knuckles\Scribe\Attributes\Authenticated;
-use Knuckles\Scribe\Attributes\Group;
 
-#[Group('TaskActions')]
-#[Authenticated]
-final readonly class TaskCreateAction extends Action
+final readonly class CreateBillAction extends Action
 {
     public function run(
-        TaskCreateTransporter $transporter,
+        CreateBillTransporter $transporter,
     ): Responder {
         try {
-            $result = Task::create(
+            $result = Bill::create(
                 attributes: $transporter->toArray()
             );
 

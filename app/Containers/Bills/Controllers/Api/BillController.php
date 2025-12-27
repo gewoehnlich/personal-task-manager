@@ -2,51 +2,51 @@
 
 namespace App\Containers\Bills\Controllers\Api;
 
-use App\Containers\Bills\Actions\BillCreateAction;
-use App\Containers\Bills\Actions\BillDeleteAction;
-use App\Containers\Bills\Actions\BillGetAction;
-use App\Containers\Bills\Actions\BillUpdateAction;
-use App\Containers\Bills\Requests\BillCreateRequest;
-use App\Containers\Bills\Requests\BillDeleteRequest;
-use App\Containers\Bills\Requests\BillGetRequest;
-use App\Containers\Bills\Requests\BillUpdateRequest;
+use App\Containers\Bills\Actions\CreateBillAction;
+use App\Containers\Bills\Actions\DeleteBillAction;
+use App\Containers\Bills\Actions\IndexBillsAction;
+use App\Containers\Bills\Actions\UpdateBillAction;
+use App\Containers\Bills\Requests\CreateBillRequest;
+use App\Containers\Bills\Requests\DeleteBillRequest;
+use App\Containers\Bills\Requests\IndexBillsRequest;
+use App\Containers\Bills\Requests\UpdateBillRequest;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\ApiController;
 
 final readonly class BillController extends ApiController
 {
-    public function get(
-        BillGetRequest $request,
+    public function index(
+        IndexBillsRequest $request,
     ): Responder {
         return $this->action(
-            BillGetAction::class,
+            IndexBillsAction::class,
             $request->transported(),
         );
     }
 
     public function create(
-        BillCreateRequest $request,
+        CreateBillRequest $request,
     ): Responder {
         return $this->action(
-            BillCreateAction::class,
+            CreateBillAction::class,
             $request->transported(),
         );
     }
 
     public function update(
-        BillUpdateRequest $request,
+        UpdateBillRequest $request,
     ): Responder {
         return $this->action(
-            BillUpdateAction::class,
+            UpdateBillAction::class,
             $request->transported(),
         );
     }
 
     public function delete(
-        BillDeleteRequest $request,
+        DeleteBillRequest $request,
     ): Responder {
         return $this->action(
-            BillDeleteAction::class,
+            DeleteBillAction::class,
             $request->transported(),
         );
     }

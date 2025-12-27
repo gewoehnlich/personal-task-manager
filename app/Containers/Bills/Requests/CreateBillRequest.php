@@ -2,16 +2,16 @@
 
 namespace App\Containers\Bills\Requests;
 
-use App\Containers\Bills\Transporters\BillCreateTransporter;
+use App\Containers\Bills\Transporters\CreateBillTransporter;
 use App\Ship\Parents\Requests\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Validator;
 
-final class BillCreateRequest extends Request
+final class CreateBillRequest extends Request
 {
     public function transporter(): string
     {
-        return BillCreateTransporter::class;
+        return CreateBillTransporter::class;
     }
 
     public function authorize(): bool
@@ -34,7 +34,7 @@ final class BillCreateRequest extends Request
     {
         return [
             function (Validator $validator) {
-                if ($this->performed_at < Carbon::now()) {
+                if ($this->performed_at > Carbon::now()) {
                     $validator->errors()->add(
                         'performed_at',
                         'performed_at не должен быть раньше текущего времени.'

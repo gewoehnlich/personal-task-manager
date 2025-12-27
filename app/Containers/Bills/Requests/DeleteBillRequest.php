@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Containers\Tasks\Requests;
+namespace App\Containers\Bills\Requests;
 
-use App\Containers\Tasks\Transporters\TaskGetTransporter;
+use App\Containers\Bills\Transporters\DeleteBillTransporter;
 use App\Ship\Parents\Requests\Request;
 
-final class TaskGetRequest extends Request
+final class DeleteBillRequest extends Request
 {
     public function transporter(): string
     {
-        return TaskGetTransporter::class;
+        return DeleteBillTransporter::class;
     }
 
     public function authorize(): bool
@@ -20,8 +20,16 @@ final class TaskGetRequest extends Request
     public function rules(): array
     {
         return [
-            'id'      => ['required', 'integer', 'exists:tasks,id'],
+            'id'      => ['required', 'integer', 'exists:bills,id'],
             'user_id' => ['required', 'integer', 'exists:users,id'],
+            'task_id' => ['required', 'integer', 'exists:tasks,id'],
+        ];
+    }
+
+    public function after(): array
+    {
+        return [
+            //
         ];
     }
 
@@ -30,6 +38,7 @@ final class TaskGetRequest extends Request
         $this->merge([
             'id'      => $this->route('id'),
             'user_id' => $this->user()->id,
+            'task_id' => $this->route('task'),
         ]);
     }
 }

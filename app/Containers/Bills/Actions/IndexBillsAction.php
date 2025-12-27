@@ -3,23 +3,27 @@
 namespace App\Containers\Bills\Actions;
 
 use App\Containers\Bills\Models\Bill;
-use App\Containers\Bills\Transporters\BillCreateTransporter;
+use App\Containers\Bills\Transporters\IndexBillsTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 
-final readonly class BillCreateAction extends Action
+final readonly class IndexBillsAction extends Action
 {
     public function run(
-        BillCreateTransporter $transporter,
+        IndexBillsTransporter $transporter,
     ): Responder {
         try {
-            $result = Bill::create(
-                attributes: $transporter->toArray()
-            );
+            $bill = Bill::query()
+                ->where('task_id', $transporter->taskId)
+                ->get();
+
+            if (!isset($bill)) {
+                throw new Exception('can\'t find bills.');
+            }
 
             return $this->success(
-                data: $result,
+                data: $bill,
             );
         } catch (Exception $exception) {
             return $this->error(

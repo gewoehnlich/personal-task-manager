@@ -15,7 +15,7 @@ Route::middleware(
             uri: 'tasks/{task}/bills',
             action: [
                 BillController::class,
-                'get',
+                'index',
             ],
         );
 

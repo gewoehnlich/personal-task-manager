@@ -3,27 +3,23 @@
 namespace App\Containers\Tasks\Actions;
 
 use App\Containers\Tasks\Models\Task;
-use App\Containers\Tasks\Transporters\TaskUpdateTransporter;
+use App\Containers\Tasks\Transporters\CreateTaskTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
+use Knuckles\Scribe\Attributes\Authenticated;
+use Knuckles\Scribe\Attributes\Group;
 
-final readonly class TaskUpdateAction extends Action
+#[Group('TaskActions')]
+#[Authenticated]
+final readonly class CreateTaskAction extends Action
 {
     public function run(
-        TaskUpdateTransporter $transporter,
+        CreateTaskTransporter $transporter,
     ): Responder {
         try {
-            $task = Task::where('id', $transporter->id)
-                ->where('user_id', $transporter->userId)
-                ->first();
-
-            if (!isset($task)) {
-                throw new Exception('can\'t find task.');
-            }
-
-            $result = $task->update(
-                attributes: $transporter->toArray()
+            $result = Task::create(
+                attributes: $transporter->toArray(),
             );
 
             return $this->success(

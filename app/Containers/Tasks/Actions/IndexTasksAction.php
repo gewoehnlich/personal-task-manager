@@ -3,15 +3,15 @@
 namespace App\Containers\Tasks\Actions;
 
 use App\Containers\Tasks\Models\Task;
-use App\Containers\Tasks\Transporters\TaskIndexTransporter;
+use App\Containers\Tasks\Transporters\IndexTasksTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 
-final readonly class TaskIndexAction extends Action
+final readonly class IndexTasksAction extends Action
 {
     public function run(
-        TaskIndexTransporter $transporter,
+        IndexTasksTransporter $transporter,
     ): Responder {
         try {
             $tasks = Task::all();

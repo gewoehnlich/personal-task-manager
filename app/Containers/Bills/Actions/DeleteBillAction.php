@@ -3,16 +3,16 @@
 namespace App\Containers\Bills\Actions;
 
 use App\Containers\Bills\Models\Bill;
-use App\Containers\Bills\Transporters\BillUpdateTransporter;
+use App\Containers\Bills\Transporters\DeleteBillTransporter;
 use App\Containers\Tasks\Models\Task;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 
-final readonly class BillUpdateAction extends Action
+final readonly class DeleteBillAction extends Action
 {
     public function run(
-        BillUpdateTransporter $transporter,
+        DeleteBillTransporter $transporter,
     ): Responder {
         try {
             $task = Task::query()
@@ -33,12 +33,10 @@ final readonly class BillUpdateAction extends Action
                 throw new Exception('can\'t find the bill.');
             }
 
-            $result = $bill->update(
-                attributes: $transporter->toArray(),
-            );
+            $bill->delete();
 
             return $this->success(
-                data: $result,
+                data: true,
             );
         } catch (Exception $exception) {
             return $this->error(

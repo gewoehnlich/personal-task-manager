@@ -2,14 +2,14 @@
 
 namespace App\Containers\Tasks\Requests;
 
-use App\Containers\Tasks\Transporters\TaskDeleteTransporter;
+use App\Containers\Tasks\Transporters\DeleteTaskTransporter;
 use App\Ship\Parents\Requests\Request;
 
-final class TaskDeleteRequest extends Request
+final class DeleteTaskRequest extends Request
 {
     public function transporter(): string
     {
-        return TaskDeleteTransporter::class;
+        return DeleteTaskTransporter::class;
     }
 
     public function authorize(): bool

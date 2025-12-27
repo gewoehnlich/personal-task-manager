@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Containers\Bills\Transporters;
+namespace App\Containers\Tasks\Transporters;
 
 use App\Ship\Parents\Transporters\Transporter;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class BillGetTransporter extends Transporter
+final class DeleteTaskTransporter extends Transporter
 {
     public function __construct(
-        public readonly int $taskId,
+        public readonly int $id,
+        public readonly int $userId,
     ) {
         //
     }

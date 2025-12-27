@@ -2,44 +2,61 @@
 
 namespace App\Containers\Projects\Controllers\Web;
 
-use App\Ship\Abstracts\Responders\Responder;
+use App\Containers\Projects\Actions\CreateProjectAction;
+use App\Containers\Projects\Actions\DeleteProjectAction;
+use App\Containers\Projects\Actions\IndexProjectAction;
+use App\Containers\Projects\Actions\UpdateProjectAction;
+use App\Containers\Projects\Requests\CreateProjectRequest;
+use App\Containers\Projects\Requests\DeleteProjectRequest;
+use App\Containers\Projects\Requests\IndexProjectRequest;
+use App\Containers\Projects\Requests\UpdateProjectRequest;
 use App\Ship\Parents\Controllers\ApiController;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
-final readonly class BillController extends ApiController
+final readonly class ProjectController extends ApiController
 {
-    public function get(
-        BillGetRequest $request,
-    ): Responder {
+    public function index(
+        IndexProjectRequest $request,
+    ): RedirectResponse {
         return $this->action(
-            BillGetAction::class,
+            IndexProjectAction::class,
             $request->transported(),
         );
+
+        return Redirect::back();
     }
 
     public function create(
-        BillCreateRequest $request,
-    ): Responder {
+        CreateProjectRequest $request,
+    ): RedirectResponse {
         return $this->action(
-            BillCreateAction::class,
+            CreateProjectAction::class,
             $request->transported(),
         );
+
+        return Redirect::back();
     }
 
     public function update(
-        BillUpdateRequest $request,
-    ): Responder {
+        UpdateProjectRequest $request,
+    ): RedirectResponse {
         return $this->action(
-            BillUpdateAction::class,
+            UpdateProjectAction::class,
             $request->transported(),
         );
+
+        return Redirect::back();
     }
 
     public function delete(
-        BillDeleteRequest $request,
-    ): Responder {
+        DeleteProjectRequest $request,
+    ): RedirectResponse {
         return $this->action(
-            BillDeleteAction::class,
+            DeleteProjectAction::class,
             $request->transported(),
         );
+
+        return Redirect::back();
     }
 }
