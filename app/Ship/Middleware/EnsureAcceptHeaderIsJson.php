@@ -11,11 +11,12 @@ class EnsureAcceptHeaderIsJson
     /**
      * Handle an incoming request.
      *
-     * @param  Closure(Request): (Response)  $next
+     * @param Request                      $request
+     * @param Closure(Request): (Response) $next
      */
     public function handle(
         Request $request,
-        Closure $next
+        Closure $next,
     ): Response {
         if ($request->expectsJson()) {
             return $next($request);

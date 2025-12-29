@@ -15,9 +15,11 @@ final readonly class AuthenticatedSessionController extends WebController
 {
     /**
      * Show the login page.
+     *
+     * @param Request $request
      */
     public function create(
-        Request $request
+        Request $request,
     ): Response {
         return Inertia::render('auth/Login', [
             'canResetPassword' => Route::has('password.request'),
@@ -27,24 +29,28 @@ final readonly class AuthenticatedSessionController extends WebController
 
     /**
      * Handle an incoming authentication request.
+     *
+     * @param LoginRequest $request
      */
     public function store(
-        LoginRequest $request
+        LoginRequest $request,
     ): RedirectResponse {
         $request->authenticate();
 
         $request->session()->regenerate();
 
         return redirect()->intended(
-            default: route('dashboard', absolute: false)
+            default: route('dashboard', absolute: false),
         );
     }
 
     /**
      * Destroy an authenticated session.
+     *
+     * @param Request $request
      */
     public function destroy(
-        Request $request
+        Request $request,
     ): RedirectResponse {
         Auth::guard('web')->logout();
 

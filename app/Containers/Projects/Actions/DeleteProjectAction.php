@@ -19,7 +19,7 @@ final readonly class DeleteProjectAction extends Action
                 ->where('user_id', $transporter->userId)
                 ->first();
 
-            if (!isset($project)) {
+            if (! isset($project)) {
                 throw new Exception('can\'t find project.');
             }
 

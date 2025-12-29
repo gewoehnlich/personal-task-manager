@@ -4,7 +4,14 @@ namespace Tests\Unit;
 
 use App\Ship\Parents\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 class ExampleTest extends TestCase
 {
     use RefreshDatabase;

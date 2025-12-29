@@ -32,7 +32,7 @@ final readonly class CreateUserTokenAction extends Action
             );
 
             return $this->success(
-                data: ['result' => $token]
+                data: ['result' => $token],
             );
         } catch (Exception $exception) {
             return $this->error(

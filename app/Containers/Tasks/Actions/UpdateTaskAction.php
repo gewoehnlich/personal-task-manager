@@ -18,12 +18,12 @@ final readonly class UpdateTaskAction extends Action
                 ->where('user_id', $transporter->userId)
                 ->first();
 
-            if (!isset($task)) {
+            if (! isset($task)) {
                 throw new Exception('can\'t find task.');
             }
 
             $result = $task->update(
-                attributes: $transporter->toArray()
+                attributes: $transporter->toArray(),
             );
 
             return $this->success(

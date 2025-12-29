@@ -22,12 +22,14 @@ final readonly class ConfirmablePasswordController extends WebController
 
     /**
      * Confirm the user's password.
+     *
+     * @param Request $request
      */
     public function store(
-        Request $request
+        Request $request,
     ): RedirectResponse {
         if (
-            !Auth::guard('web')->validate([
+            ! Auth::guard('web')->validate([
                 'email'    => $request->user()->email,
                 'password' => $request->password,
             ])

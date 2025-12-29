@@ -2,11 +2,13 @@
 
 namespace App\Ship\Traits;
 
+use App\Ship\Components\CallCommandComponent;
+
 trait CanCallCommandTrait
 {
     public function command(...$parameters)
     {
-        return resolve(\App\Ship\Components\CallCommandComponent::class)
+        return resolve(CallCommandComponent::class)
             ->call(...$parameters);
     }
 }

@@ -28,7 +28,7 @@ abstract readonly class Action extends AbstractAction
         string $message,
     ): Responder {
         return new ErrorResponder(
-            message: $message
+            message: $message,
         );
     }
 }

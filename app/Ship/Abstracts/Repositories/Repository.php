@@ -7,7 +7,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 abstract class Repository extends BaseRepository
 {
     public function get(
-        $columns = ['*']
+        $columns = ['*'],
     ) {
         $return = parent::get($columns);
 

@@ -20,7 +20,7 @@ final readonly class RevokeUserTokenAction extends Action
                 user: $user,
             );
 
-            if (!$tokenExists) {
+            if (! $tokenExists) {
                 return $this->error(
                     message: 'there is no token',
                 );
@@ -32,7 +32,7 @@ final readonly class RevokeUserTokenAction extends Action
             );
 
             return $this->success(
-                data: ['result' => 'tokens successfully deleted!']
+                data: ['result' => 'tokens successfully deleted!'],
             );
         } catch (Exception $exception) {
             return $this->error(

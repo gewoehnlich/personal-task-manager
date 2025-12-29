@@ -2,11 +2,13 @@
 
 namespace App\Ship\Traits;
 
+use App\Ship\Components\CallSubactionComponent;
+
 trait CanCallSubactionTrait
 {
     public function subaction(...$parameters)
     {
-        return resolve(\App\Ship\Components\CallSubactionComponent::class)
+        return resolve(CallSubactionComponent::class)
             ->call(...$parameters);
     }
 }

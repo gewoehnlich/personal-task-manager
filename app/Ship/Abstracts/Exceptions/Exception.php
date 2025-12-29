@@ -11,9 +11,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException as SymfonyHttpException
 
 abstract class Exception extends SymfonyHttpException
 {
-    protected MessageBag $errors;
-
     protected const int DEFAULT_STATUS_CODE = Response::HTTP_INTERNAL_SERVER_ERROR;
+
+    protected MessageBag $errors;
 
     protected string $environment;
 
@@ -25,7 +25,6 @@ abstract class Exception extends SymfonyHttpException
         ?BaseException $previous = null,
         array $headers = [],
     ) {
-
         // detect and set the running environment
         $this->environment = Config::get('app.env');
 
@@ -62,7 +61,19 @@ abstract class Exception extends SymfonyHttpException
 
     public function hasErrors(): bool
     {
-        return !$this->errors->isEmpty();
+        return ! $this->errors->isEmpty();
+    }
+
+    public function overrideCustomData(string $customData): static
+    {
+        $this->customData = $customData;
+
+        return $this;
+    }
+
+    public function useErrorCode(): int
+    {
+        return $this->code;
     }
 
     private function logTheError(int $statusCode, string $message, int $code): void
@@ -73,11 +84,11 @@ abstract class Exception extends SymfonyHttpException
         }
 
         Log::error(
-            '[ERROR] ' .
-                'Status Code: ' . $statusCode . ' | ' .
-                'Message: ' . $message . ' | ' .
-                'Errors: ' . $this->errors . ' | ' .
-                'Code: ' . $code
+            '[ERROR] '
+                . 'Status Code: ' . $statusCode . ' | '
+                . 'Message: ' . $message . ' | '
+                . 'Errors: ' . $this->errors . ' | '
+                . 'Code: ' . $code,
         );
     }
 
@@ -104,18 +115,6 @@ abstract class Exception extends SymfonyHttpException
     private function findStatusCode(): int
     {
         return property_exists($this, 'httpStatusCode') ? $this->httpStatusCode : self::DEFAULT_STATUS_CODE;
-    }
-
-    public function overrideCustomData(string $customData): static
-    {
-        $this->customData = $customData;
-
-        return $this;
-    }
-
-    public function useErrorCode(): int
-    {
-        return $this->code;
     }
 
     private function evaluateErrorCode(): int

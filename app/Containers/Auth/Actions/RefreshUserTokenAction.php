@@ -21,7 +21,7 @@ final readonly class RefreshUserTokenAction extends Action
                 user: $user,
             );
 
-            if (!$tokenExists) {
+            if (! $tokenExists) {
                 return $this->error(
                     message: 'there is no token existing',
                 );

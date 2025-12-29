@@ -21,8 +21,8 @@ final class CreateProjectRequest extends Request
     {
         return [
             'user_id'     => ['required', 'integer', 'exists:users,id'],
-            'name'        => ['required', 'string',  'max:255'],
-            'description' => ['nullable', 'string',  'max:65535'],
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:65535'],
             'deleted'     => ['nullable', 'boolean'],
         ];
     }

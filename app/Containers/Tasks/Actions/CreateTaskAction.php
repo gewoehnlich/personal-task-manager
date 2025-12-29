@@ -10,8 +10,8 @@ use App\Ship\Parents\Exceptions\Exception;
 use Knuckles\Scribe\Attributes\Authenticated;
 use Knuckles\Scribe\Attributes\Group;
 
-#[Group('TaskActions')]
 #[Authenticated]
+#[Group('TaskActions')]
 final readonly class CreateTaskAction extends Action
 {
     public function run(

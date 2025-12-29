@@ -56,7 +56,7 @@ final readonly class IndexTasksAction extends Action
                 $tasks = $tasks->where('deadline', '<=', $transporter->createdAtTo);
             }
 
-            if (isset($transporter->orderBy) && isset($transporter->orderByField)) {
+            if (isset($transporter->orderBy, $transporter->orderByField)) {
                 $tasks = $tasks->orderBy($transporter->orderByField ?? 'id', $transporter->orderBy);
             }
 

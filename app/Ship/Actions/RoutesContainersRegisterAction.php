@@ -15,7 +15,7 @@ final readonly class RoutesContainersRegisterAction extends Action
     ): Responder {
         try {
             $containersDirectories = $this->task(
-                DirectoriesContainersGetTask::class
+                DirectoriesContainersGetTask::class,
             );
 
             foreach ($containersDirectories as $dir) {

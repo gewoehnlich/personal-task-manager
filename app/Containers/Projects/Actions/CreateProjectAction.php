@@ -15,7 +15,7 @@ final readonly class CreateProjectAction extends Action
     ): Responder {
         try {
             $result = Project::create(
-                attributes: $transporter->toArray()
+                attributes: $transporter->toArray(),
             );
 
             return $this->success(

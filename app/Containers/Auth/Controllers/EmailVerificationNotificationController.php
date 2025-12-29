@@ -10,9 +10,11 @@ final readonly class EmailVerificationNotificationController extends WebControll
 {
     /**
      * Send a new email verification notification.
+     *
+     * @param Request $request
      */
     public function store(
-        Request $request
+        Request $request,
     ): RedirectResponse {
         if ($request->user()->hasVerifiedEmail()) {
             return redirect()->intended(route('dashboard', absolute: false));

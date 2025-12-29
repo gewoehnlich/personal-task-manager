@@ -14,7 +14,7 @@ final readonly class MigrationsContainersGetAction extends Action
     {
         try {
             $containersDirectories = $this->task(
-                DirectoriesContainersGetTask::class
+                DirectoriesContainersGetTask::class,
             );
 
             $migrations = [];
@@ -23,8 +23,8 @@ final readonly class MigrationsContainersGetAction extends Action
                 $dir .= '/Migrations';
 
                 if (
-                    !File::isDirectory(directory: $dir) ||
-                    File::isEmptyDirectory(directory: $dir)
+                    ! File::isDirectory(directory: $dir)
+                    || File::isEmptyDirectory(directory: $dir)
                 ) {
                     continue;
                 }

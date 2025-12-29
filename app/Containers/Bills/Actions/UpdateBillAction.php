@@ -20,7 +20,7 @@ final readonly class UpdateBillAction extends Action
                 ->where('user_id', $transporter->userId)
                 ->first();
 
-            if (!isset($task)) {
+            if (! isset($task)) {
                 throw new Exception('can\'t find task.');
             }
 
@@ -29,7 +29,7 @@ final readonly class UpdateBillAction extends Action
                 ->where('task_id', $transporter->taskId)
                 ->first();
 
-            if (!isset($bill)) {
+            if (! isset($bill)) {
                 throw new Exception('can\'t find the bill.');
             }
 

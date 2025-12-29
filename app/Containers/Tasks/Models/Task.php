@@ -27,14 +27,6 @@ final class Task extends Model
         'project_id',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'deadline' => 'datetime',
-            'debug'    => 'boolean',
-        ];
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -48,6 +40,14 @@ final class Task extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'deadline' => 'datetime',
+            'debug'    => 'boolean',
+        ];
     }
 
     protected static function newFactory(): Factory

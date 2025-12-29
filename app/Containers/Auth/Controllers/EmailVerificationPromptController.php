@@ -12,13 +12,15 @@ final readonly class EmailVerificationPromptController extends WebController
 {
     /**
      * Show the email verification prompt page.
+     *
+     * @param Request $request
      */
     public function __invoke(
-        Request $request
+        Request $request,
     ): RedirectResponse | Response {
         return $request->user()->hasVerifiedEmail()
             ? redirect()->intended(
-                default: route('dashboard', absolute: false)
+                default: route('dashboard', absolute: false),
             )
             : Inertia::render('auth/VerifyEmail', [
                 'status' => $request->session()->get('status'),

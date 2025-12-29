@@ -24,9 +24,9 @@ final class CreateBillRequest extends Request
         return [
             'user_id'      => ['required', 'integer', 'exists:users,id'],
             'task_id'      => ['required', 'integer', 'exists:tasks,id'],
-            'description'  => ['nullable', 'string',  'max:65535'],
+            'description'  => ['nullable', 'string', 'max:65535'],
             'time_spent'   => ['required', 'integer', 'min:1'],
-            'performed_at' => ['nullable', 'date',    'date_format:Y-m-d H:i:s'],
+            'performed_at' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
         ];
     }
 
@@ -37,7 +37,7 @@ final class CreateBillRequest extends Request
                 if ($this->performed_at > Carbon::now()) {
                     $validator->errors()->add(
                         'performed_at',
-                        'performed_at не должен быть раньше текущего времени.'
+                        'performed_at не должен быть раньше текущего времени.',
                     );
                 }
             },

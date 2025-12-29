@@ -5,10 +5,17 @@ namespace App\Containers\Tasks\Tests\Transporters;
 use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Transporters\TaskCreateTransporter;
 use App\Ship\Parents\Tests\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 final class TestTaskCreateTransporter extends TestCase
 {
-    public function testConstructorSetsPropertiesCorrectly(): void
+    public function test_constructor_sets_properties_correctly(): void
     {
         $userId      = 1;
         $title       = 'test title';

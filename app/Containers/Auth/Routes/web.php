@@ -81,12 +81,12 @@ Route::middleware(
 )->group(function () {
     Route::get(
         'verify-email',
-        EmailVerificationPromptController::class
+        EmailVerificationPromptController::class,
     )->name('verification.notice');
 
     Route::get(
         'verify-email/{id}/{hash}',
-        VerifyEmailController::class
+        VerifyEmailController::class,
     )->middleware([
         'signed',
         'throttle:6,1',

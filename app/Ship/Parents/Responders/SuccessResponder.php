@@ -23,7 +23,7 @@ class SuccessResponder extends AbstractResponder
                 'status' => 'success',
                 'result' => $this->data,
             ],
-            status: $this->status
+            status: $this->status,
         );
     }
 }

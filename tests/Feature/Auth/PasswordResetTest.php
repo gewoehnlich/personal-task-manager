@@ -7,7 +7,14 @@ use App\Ship\Parents\Tests\TestCase;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 class PasswordResetTest extends TestCase
 {
     use RefreshDatabase;

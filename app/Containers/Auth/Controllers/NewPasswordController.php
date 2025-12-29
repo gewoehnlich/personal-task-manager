@@ -18,9 +18,11 @@ final readonly class NewPasswordController extends WebController
 {
     /**
      * Show the password reset page.
+     *
+     * @param Request $request
      */
     public function create(
-        Request $request
+        Request $request,
     ): Response {
         return Inertia::render('auth/ResetPassword', [
             'email' => $request->email,
@@ -31,10 +33,12 @@ final readonly class NewPasswordController extends WebController
     /**
      * Handle an incoming new password request.
      *
+     * @param Request $request
+     *
      * @throws ValidationException
      */
     public function store(
-        Request $request
+        Request $request,
     ): RedirectResponse {
         $request->validate([
             'token'    => 'required',
@@ -54,7 +58,7 @@ final readonly class NewPasswordController extends WebController
                 ])->save();
 
                 event(new PasswordReset($user));
-            }
+            },
         );
 
         // If the password was successfully reset, we will redirect the user back to

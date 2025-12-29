@@ -2,11 +2,13 @@
 
 namespace App\Ship\Traits;
 
+use App\Ship\Components\CallActionComponent;
+
 trait CanCallActionTrait
 {
     public function action(...$parameters)
     {
-        return resolve(\App\Ship\Components\CallActionComponent::class)
+        return resolve(CallActionComponent::class)
             ->call(...$parameters);
     }
 }

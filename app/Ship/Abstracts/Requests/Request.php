@@ -12,14 +12,14 @@ abstract class Request extends LaravelRequest implements Transportable
 {
     use WithData;
 
-    abstract public function transporter(): string;
-
     public function transported(): Transporter
     {
-        if (!$this->transporter()) {
+        if (! $this->transporter()) {
             throw new TransporterIsMissingException();
         }
 
         return $this->transporter()::from($this->validated());
     }
+
+    abstract public function transporter(): string;
 }

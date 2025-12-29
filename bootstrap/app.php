@@ -8,7 +8,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 
 return Application::configure(
-    basePath: dirname(__DIR__)
+    basePath: dirname(__DIR__),
 )
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
@@ -18,7 +18,7 @@ return Application::configure(
     )->withMiddleware(
         function (Middleware $middleware) {
             $middleware->encryptCookies(
-                except: ['appearance', 'sidebar_state']
+                except: ['appearance', 'sidebar_state'],
             );
 
             $middleware->web(append: [
@@ -26,9 +26,9 @@ return Application::configure(
                 HandleInertiaRequests::class,
                 AddLinkHeadersForPreloadedAssets::class,
             ]);
-        }
+        },
     )->withExceptions(
         function (Exceptions $exceptions) {
             //
-        }
+        },
     )->create();

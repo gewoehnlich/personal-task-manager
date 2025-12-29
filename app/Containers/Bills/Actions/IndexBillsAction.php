@@ -18,7 +18,7 @@ final readonly class IndexBillsAction extends Action
                 ->where('task_id', $transporter->taskId)
                 ->get();
 
-            if (!isset($bill)) {
+            if (! isset($bill)) {
                 throw new Exception('can\'t find bills.');
             }
 

@@ -11,7 +11,7 @@ Route::middleware(
 )->group(function () {
     Route::redirect(
         uri: 'settings',
-        destination: '/settings/profile'
+        destination: '/settings/profile',
     );
 
     Route::get('settings/profile', [
@@ -43,6 +43,6 @@ Route::middleware(
         'settings/appearance',
         function () {
             return Inertia::render('settings/Appearance');
-        }
+        },
     )->name('appearance');
 });

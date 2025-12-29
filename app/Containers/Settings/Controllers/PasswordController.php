@@ -22,9 +22,11 @@ final readonly class PasswordController extends WebController
 
     /**
      * Update the user's password.
+     *
+     * @param Request $request
      */
     public function update(
-        Request $request
+        Request $request,
     ): RedirectResponse {
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],

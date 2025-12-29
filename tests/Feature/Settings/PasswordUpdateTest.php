@@ -6,7 +6,14 @@ use App\Containers\Users\Models\User;
 use App\Ship\Parents\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 class PasswordUpdateTest extends TestCase
 {
     use RefreshDatabase;

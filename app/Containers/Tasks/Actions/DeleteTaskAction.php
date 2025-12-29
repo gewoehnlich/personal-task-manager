@@ -19,7 +19,7 @@ final readonly class DeleteTaskAction extends Action
                 ->where('user_id', $transporter->userId)
                 ->first();
 
-            if (!isset($task)) {
+            if (! isset($task)) {
                 throw new Exception('can\'t find task.');
             }
 

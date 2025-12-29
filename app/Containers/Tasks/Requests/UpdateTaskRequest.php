@@ -41,7 +41,7 @@ final class UpdateTaskRequest extends Request
                 if ($this->deadline < Carbon::now()) {
                     $validator->errors()->add(
                         'deadline',
-                        'deadline не должен быть меньше текущего времени.'
+                        'deadline не должен быть меньше текущего времени.',
                     );
                 }
             },

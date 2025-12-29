@@ -4,6 +4,7 @@ namespace App\Ship\Components;
 
 use App\Ship\Exceptions\ClassDoesNotExistException;
 use App\Ship\Exceptions\InvalidArgumentException;
+use Exception;
 
 abstract class CallComponent
 {
@@ -11,8 +12,8 @@ abstract class CallComponent
     {
         [$instance, $args] = $this->getInstance(...$parameters);
 
-        if (!$this->parentInstance($instance)) {
-            throw new \Exception("Class {$parameters[0]} not implement Action");
+        if (! $this->parentInstance($instance)) {
+            throw new Exception("Class {$parameters[0]} not implement Action");
         }
 
         return $instance->run(...$args);
@@ -30,18 +31,18 @@ abstract class CallComponent
 
     protected function validateParameters($parameters)
     {
-        if (empty($parameters) || !is_string($parameters[0])) {
+        if (empty($parameters) || ! is_string($parameters[0])) {
             throw new InvalidArgumentException();
         }
 
-        if (!class_exists($parameters[0]) && !app()->bound($parameters[0])) {
+        if (! class_exists($parameters[0]) && ! app()->bound($parameters[0])) {
             throw new ClassDoesNotExistException();
         }
     }
 
     protected function extractArguments($parameters)
     {
-        if (!is_array($parameters)) {
+        if (! is_array($parameters)) {
             return [$parameters];
         }
 

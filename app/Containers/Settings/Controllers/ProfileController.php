@@ -15,9 +15,11 @@ final readonly class ProfileController extends WebController
 {
     /**
      * Show the user's profile settings page.
+     *
+     * @param Request $request
      */
     public function edit(
-        Request $request
+        Request $request,
     ): Response {
         return Inertia::render('settings/Profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
@@ -27,9 +29,11 @@ final readonly class ProfileController extends WebController
 
     /**
      * Update the user's profile information.
+     *
+     * @param ProfileUpdateRequest $request
      */
     public function update(
-        ProfileUpdateRequest $request
+        ProfileUpdateRequest $request,
     ): RedirectResponse {
         $request->user()->fill($request->validated());
 
@@ -44,9 +48,11 @@ final readonly class ProfileController extends WebController
 
     /**
      * Delete the user's profile.
+     *
+     * @param Request $request
      */
     public function destroy(
-        Request $request
+        Request $request,
     ): RedirectResponse {
         $request->validate([
             'password' => ['required', 'current_password'],

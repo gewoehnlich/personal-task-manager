@@ -27,17 +27,17 @@ final class Bill extends Model
         //
     ];
 
+    public function task(): BelongsTo
+    {
+        return $this->belongsTo(Task::class);
+    }
+
     protected function casts(): array
     {
         return [
             'performed_at' => 'datetime',
             'deleted'      => 'boolean',
         ];
-    }
-
-    public function task(): BelongsTo
-    {
-        return $this->belongsTo(Task::class);
     }
 
     protected static function newFactory(): Factory

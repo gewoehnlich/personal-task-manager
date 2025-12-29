@@ -15,7 +15,7 @@ final readonly class CreateBillAction extends Action
     ): Responder {
         try {
             $result = Bill::create(
-                attributes: $transporter->toArray()
+                attributes: $transporter->toArray(),
             );
 
             return $this->success(

@@ -44,35 +44,35 @@ final class IndexTasksRequest extends Request
         return [
             function (Validator $validator) {
                 if (
-                    $this->createdAtFrom &&
-                    $this->createdAtTo &&
-                    $this->createdAtFrom > $this->createdAtTo
+                    $this->createdAtFrom
+                    && $this->createdAtTo
+                    && $this->createdAtFrom > $this->createdAtTo
                 ) {
                     $validator->errors()->add(
                         'created_at_range',
-                        'created_at_from не может быть позже created_at_to.'
+                        'created_at_from не может быть позже created_at_to.',
                     );
                 }
 
                 if (
-                    $this->updatedAtFrom &&
-                    $this->updatedAtTo &&
-                    $this->updatedAtFrom > $this->updatedAtTo
+                    $this->updatedAtFrom
+                    && $this->updatedAtTo
+                    && $this->updatedAtFrom > $this->updatedAtTo
                 ) {
                     $validator->errors()->add(
                         'updated_at_range',
-                        'updated_at_from не может быть позже updated_at_to.'
+                        'updated_at_from не может быть позже updated_at_to.',
                     );
                 }
 
                 if (
-                    $this->deadlineFrom &&
-                    $this->deadlineTo &&
-                    $this->deadlineFrom > $this->deadlineTo
+                    $this->deadlineFrom
+                    && $this->deadlineTo
+                    && $this->deadlineFrom > $this->deadlineTo
                 ) {
                     $validator->errors()->add(
                         'deadline_range',
-                        'deadline_from не может быть позже deadline_to.'
+                        'deadline_from не может быть позже deadline_to.',
                     );
                 }
             },
