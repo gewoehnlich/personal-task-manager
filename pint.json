@@ -170,7 +170,7 @@
             "use_parentheses": true
         },
         "new_with_parentheses": {
-            "anonymous_class": true,
+            "anonymous_class": false,
             "named_class": true
         },
         "no_alias_language_construct_call": true,
