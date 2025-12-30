@@ -7,7 +7,7 @@ use App\Containers\Bills\Transporters\UpdateBillTransporter;
 use App\Containers\Tasks\Models\Task;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Exceptions\Exception;
+use Exception;
 
 final readonly class UpdateBillAction extends Action
 {
@@ -16,22 +16,14 @@ final readonly class UpdateBillAction extends Action
     ): Responder {
         try {
             $task = Task::query()
-                ->where('id', $transporter->taskId)
-                ->where('user_id', $transporter->userId)
-                ->first();
-
-            if (! isset($task)) {
-                throw new Exception('can\'t find task.');
-            }
+                ->where('uuid', $transporter->taskUuid)
+                ->where('user_uuid', $transporter->userUuid)
+                ->firstOrFail();
 
             $bill = Bill::query()
-                ->where('id', $transporter->id)
-                ->where('task_id', $transporter->taskId)
-                ->first();
-
-            if (! isset($bill)) {
-                throw new Exception('can\'t find the bill.');
-            }
+                ->where('uuid', $transporter->uuid)
+                ->where('task_uuid', $task->uuid)
+                ->firstOrFail();
 
             $result = $bill->update(
                 attributes: $transporter->toArray(),
@@ -42,7 +34,7 @@ final readonly class UpdateBillAction extends Action
             );
         } catch (Exception $exception) {
             return $this->error(
-                message: $exception->getErrors(),
+                message: $exception->getMessage(),
             );
         }
     }

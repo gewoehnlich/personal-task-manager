@@ -20,16 +20,16 @@ final class DeleteProjectRequest extends Request
     public function rules(): array
     {
         return [
-            'id'      => ['required', 'integer', 'exists:projects,id'],
-            'user_id' => ['required', 'integer', 'exists:users,id'],
+            'uuid'      => ['required', 'uuid:7'],
+            'user_uuid' => ['required', 'uuid:7'],
         ];
     }
 
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'id'      => $this->route('id'),
-            'user_id' => $this->user()->id,
+            'uuid'      => $this->route('uuid'),
+            'user_uuid' => $this->user()->uuid,
         ]);
     }
 }

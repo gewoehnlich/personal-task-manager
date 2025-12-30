@@ -8,15 +8,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description')
+            $table->uuid()
+                ->primary();
+            $table->string('name', length: 100);
+            $table->string('description', length: 500)
                 ->nullable();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+            $table->foreignUuid('user_uuid')
+                ->constrained(table: 'users', column: 'uuid')
+                ->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

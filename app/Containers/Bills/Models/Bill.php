@@ -4,6 +4,7 @@ namespace App\Containers\Bills\Models;
 
 use App\Containers\Bills\Factories\BillFactory;
 use App\Containers\Tasks\Models\Task;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,14 +14,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 final class Bill extends Model
 {
     use HasFactory;
+    use HasUuids;
     use SoftDeletes;
 
+    protected $primaryKey = 'uuid';
+
     protected $fillable = [
-        'task_id',
+        'task_uuid',
         'description',
-        'time_spent',
+        'minutes_spent',
         'performed_at',
-        'deleted',
     ];
 
     protected $hidden = [
@@ -36,7 +39,6 @@ final class Bill extends Model
     {
         return [
             'performed_at' => 'datetime',
-            'deleted'      => 'boolean',
         ];
     }
 

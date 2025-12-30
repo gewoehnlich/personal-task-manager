@@ -28,7 +28,7 @@ Route::middleware(
         );
 
         Route::put(
-            uri: 'projects/{id}',
+            uri: 'projects/{uuid}',
             action: [
                 ProjectController::class,
                 'update',
@@ -36,7 +36,7 @@ Route::middleware(
         );
 
         Route::delete(
-            uri: 'projects/{id}',
+            uri: 'projects/{uuid}',
             action: [
                 ProjectController::class,
                 'delete',

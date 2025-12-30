@@ -20,14 +20,14 @@ final class IndexProjectRequest extends Request
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'integer', 'exists:users,id'],
+            'user_uuid' => ['required', 'uuid:7'],
         ];
     }
 
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => $this->user()->id,
+            'user_uuid' => $this->user()->uuid,
         ]);
     }
 }

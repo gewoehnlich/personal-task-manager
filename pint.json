@@ -357,7 +357,7 @@
             ]
         },
         "php_unit_method_casing": {
-            "case": "snake_case"
+            "case": "camel_case"
         },
         "php_unit_size_class": {
             "group": "medium"

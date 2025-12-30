@@ -13,13 +13,13 @@ class BillFactory extends Factory
     public function definition(): array
     {
         return [
-            'task_id' => Task::where('debug', true)
+            'task_uuid'     => Task::where('debug', true)
                 ->inRandomOrder()
                 ->first()
-                ->id,
-            'description'  => $this->faker->text(100),
-            'time_spent'   => $this->faker->numberBetween(30, 180),
-            'performed_at' => $this->faker->dateTimeThisYear(),
+                ->uuid,
+            'description'   => $this->faker->text(100),
+            'minutes_spent' => $this->faker->numberBetween(30, 180),
+            'performed_at'  => $this->faker->dateTimeThisYear(),
         ];
     }
 }

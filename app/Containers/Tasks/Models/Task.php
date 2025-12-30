@@ -6,6 +6,7 @@ use App\Containers\Bills\Models\Bill;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Factories\TaskFactory;
 use App\Containers\Users\Models\User;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,15 +17,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 final class Task extends Model
 {
     use HasFactory;
+    use HasUuids;
     use SoftDeletes;
 
+    protected $primaryKey = 'uuid';
+
     protected $fillable = [
-        'user_id',
+        'user_uuid',
         'title',
         'description',
         'stage',
         'deadline',
-        'project_id',
+        'project_uuid',
     ];
 
     public function user(): BelongsTo

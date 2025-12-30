@@ -6,25 +6,18 @@ use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Transporters\IndexProjectTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
-use Exception;
 
 final readonly class IndexProjectAction extends Action
 {
     public function run(
         IndexProjectTransporter $transporter,
     ): Responder {
-        try {
-            $projects = Project::query()
-                ->where('user_id', $transporter->userId)
-                ->get();
+        $result = Project::query()
+            ->where('user_uuid', $transporter->userUuid)
+            ->get();
 
-            return $this->success(
-                data: $projects,
-            );
-        } catch (Exception $exception) {
-            return $this->error(
-                message: $exception->getMessage(),
-            );
-        }
+        return $this->success(
+            data: $result,
+        );
     }
 }

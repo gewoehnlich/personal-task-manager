@@ -8,21 +8,20 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('bills', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('task_id');
-            $table->foreign('task_id')
-                ->references('id')
-                ->on('tasks')
-                ->onDelete('cascade');
-            $table->text('description')
+            $table->uuid()
+                ->primary();
+            $table->foreignUuid('task_uuid')
+                ->constrained(table: 'tasks', column: 'uuid')
+                ->cascadeOnDelete();
+            $table->string('description', length: 500)
                 ->nullable();
-            $table->unsignedBigInteger('time_spent')
+            $table->unsignedSmallInteger('minutes_spent')
                 ->nullable();
-            $table->softDeletes();
             $table->boolean('debug')
                 ->default(false);
             $table->timestamp('performed_at')
                 ->useCurrent();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

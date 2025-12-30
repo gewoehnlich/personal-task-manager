@@ -22,12 +22,12 @@ final class UpdateBillRequest extends Request
     public function rules(): array
     {
         return [
-            'id'           => ['required', 'integer', 'exists:bills,id'],
-            'user_id'      => ['required', 'integer', 'exists:users,id'],
-            'task_id'      => ['required', 'integer', 'exists:tasks,id'],
-            'description'  => ['nullable', 'string', 'max:65535'],
-            'time_spent'   => ['required', 'integer', 'min:1'],
-            'performed_at' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'uuid'          => ['required', 'uuid:7'],
+            'user_uuid'     => ['required', 'uuid:7'],
+            'task_uuid'     => ['required', 'uuid:7'],
+            'description'   => ['nullable', 'string', 'max:500'],
+            'minutes_spent' => ['nullable', 'integer', 'max:65535'],
+            'performed_at'  => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
         ];
     }
 
@@ -48,9 +48,9 @@ final class UpdateBillRequest extends Request
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'id'      => $this->route('id'),
-            'user_id' => $this->user()->id,
-            'task_id' => $this->route('task'),
+            'uuid'      => $this->route('uuid'),
+            'user_uuid' => $this->user()->uuid,
+            'task_uuid' => $this->route('task_uuid'),
         ]);
     }
 }

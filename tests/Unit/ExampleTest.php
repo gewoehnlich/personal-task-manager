@@ -16,7 +16,7 @@ class ExampleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_that_true_is_true()
+    public function testThatTrueIsTrue()
     {
         $this->assertTrue(true);
     }

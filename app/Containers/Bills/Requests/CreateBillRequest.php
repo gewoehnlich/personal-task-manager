@@ -22,11 +22,11 @@ final class CreateBillRequest extends Request
     public function rules(): array
     {
         return [
-            'user_id'      => ['required', 'integer', 'exists:users,id'],
-            'task_id'      => ['required', 'integer', 'exists:tasks,id'],
-            'description'  => ['nullable', 'string', 'max:65535'],
-            'time_spent'   => ['required', 'integer', 'min:1'],
-            'performed_at' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'user_uuid'     => ['required', 'uuid:7'],
+            'task_uuid'     => ['required', 'uuid:7'],
+            'description'   => ['nullable', 'string', 'max:500'],
+            'minutes_spent' => ['required', 'integer', 'max:65535'],
+            'performed_at'  => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
         ];
     }
 
@@ -47,8 +47,8 @@ final class CreateBillRequest extends Request
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => $this->user()->id,
-            'task_id' => $this->route('task'),
+            'user_uuid' => $this->user()->uuid,
+            'task_uuid' => $this->route('task_uuid'),
         ]);
     }
 }

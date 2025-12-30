@@ -23,7 +23,7 @@ final readonly class CreateBillAction extends Action
             );
         } catch (Exception $exception) {
             return $this->error(
-                message: $exception->getErrors(),
+                message: $exception->getMessage(),
             );
         }
     }

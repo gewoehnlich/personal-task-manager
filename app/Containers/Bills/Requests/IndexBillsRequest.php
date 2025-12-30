@@ -20,7 +20,7 @@ final class IndexBillsRequest extends Request
     public function rules(): array
     {
         return [
-            'task_id' => ['required', 'integer', 'exists:tasks,id'],
+            'task_uuid' => ['required', 'uuid:7'],
         ];
     }
 
@@ -34,7 +34,7 @@ final class IndexBillsRequest extends Request
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'task_id' => $this->route('task'),
+            'task_uuid' => $this->route('task_uuid'),
         ]);
     }
 }

@@ -10,7 +10,7 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class IndexBillsTransporter extends Transporter
 {
     public function __construct(
-        public readonly int $taskId,
+        public readonly int $taskUuid,
     ) {
         //
     }

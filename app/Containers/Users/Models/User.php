@@ -2,6 +2,7 @@
 
 namespace App\Containers\Users\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +13,10 @@ final class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens;
     use HasFactory;
+    use HasUuids;
     use Notifiable;
+
+    protected $primaryKey = 'uuid';
 
     /**
      * The attributes that are mass assignable.

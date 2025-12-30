@@ -10,9 +10,9 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class DeleteBillTransporter extends Transporter
 {
     public function __construct(
-        public readonly int $id,
-        public readonly int $userId,
-        public readonly int $taskId,
+        public readonly int $uuid,
+        public readonly int $userUuid,
+        public readonly int $taskUuid,
     ) {
         //
     }

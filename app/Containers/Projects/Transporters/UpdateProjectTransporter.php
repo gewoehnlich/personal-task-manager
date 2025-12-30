@@ -10,11 +10,10 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class UpdateProjectTransporter extends Transporter
 {
     public function __construct(
-        public readonly int $id,
-        public readonly int $userId,
+        public readonly string $uuid,
+        public readonly string $userUuid,
         public readonly ?string $name,
         public readonly ?string $description,
-        public readonly ?bool $deleted,
     ) {
         //
     }

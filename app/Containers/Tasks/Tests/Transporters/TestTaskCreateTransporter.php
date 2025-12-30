@@ -15,7 +15,7 @@ use PHPUnit\Framework\Attributes\Medium;
 #[Medium]
 final class TestTaskCreateTransporter extends TestCase
 {
-    public function test_constructor_sets_properties_correctly(): void
+    public function testConstructorSetsPropertiesCorrectly(): void
     {
         $userId      = 1;
         $title       = 'test title';

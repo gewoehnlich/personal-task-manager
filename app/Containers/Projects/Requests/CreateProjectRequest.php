@@ -20,17 +20,16 @@ final class CreateProjectRequest extends Request
     public function rules(): array
     {
         return [
-            'user_id'     => ['required', 'integer', 'exists:users,id'],
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:65535'],
-            'deleted'     => ['nullable', 'boolean'],
+            'user_uuid'   => ['required', 'uuid:7'],
+            'name'        => ['required', 'string', 'max:100'],
+            'description' => ['nullable', 'string', 'max:500'],
         ];
     }
 
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => $this->user()->id,
+            'user_uuid' => $this->user()->uuid,
         ]);
     }
 }
