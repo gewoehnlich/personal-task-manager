@@ -3,14 +3,14 @@
 namespace App\Containers\Projects\Actions;
 
 use App\Containers\Projects\Models\Project;
-use App\Containers\Projects\Transporters\IndexProjectTransporter;
+use App\Containers\Projects\Transporters\IndexProjectsTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Actions\Action;
 
-final readonly class IndexProjectAction extends Action
+final readonly class IndexProjectsAction extends Action
 {
     public function run(
-        IndexProjectTransporter $transporter,
+        IndexProjectsTransporter $transporter,
     ): Responder {
         $result = Project::query()
             ->where('user_uuid', $transporter->userUuid)

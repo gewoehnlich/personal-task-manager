@@ -4,11 +4,11 @@ namespace App\Containers\Projects\Controllers\Api;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Actions\DeleteProjectAction;
-use App\Containers\Projects\Actions\IndexProjectAction;
+use App\Containers\Projects\Actions\IndexProjectsAction;
 use App\Containers\Projects\Actions\UpdateProjectAction;
 use App\Containers\Projects\Requests\CreateProjectRequest;
 use App\Containers\Projects\Requests\DeleteProjectRequest;
-use App\Containers\Projects\Requests\IndexProjectRequest;
+use App\Containers\Projects\Requests\IndexProjectsRequest;
 use App\Containers\Projects\Requests\UpdateProjectRequest;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Parents\Controllers\ApiController;
@@ -16,10 +16,10 @@ use App\Ship\Parents\Controllers\ApiController;
 final readonly class ProjectController extends ApiController
 {
     public function index(
-        IndexProjectRequest $request,
+        IndexProjectsRequest $request,
     ): Responder {
         return $this->action(
-            IndexProjectAction::class,
+            IndexProjectsAction::class,
             $request->transported(),
         );
     }

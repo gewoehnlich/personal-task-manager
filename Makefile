@@ -11,3 +11,9 @@ tinker:
 
 optimize:
 	docker compose exec app php artisan optimize
+
+test:
+	docker compose exec app php artisan test
+
+pint:
+	docker compose exec app php artisan pint
