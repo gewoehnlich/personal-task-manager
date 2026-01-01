@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Ship\Parents\Controllers;
+namespace App\Ship\Abstracts\Controllers;
 
 use App\Ship\Abstracts\Controllers\Controller;
-use App\Ship\Traits\CanCallActionTrait;
 
 abstract readonly class ApiController extends Controller
 {
-    use CanCallActionTrait;
+    //
 }

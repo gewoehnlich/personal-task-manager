@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Unit\Actions;
+namespace App\Containers\Projects\Tests\Feature\Actions;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Transporters\CreateProjectTransporter;
@@ -46,16 +46,19 @@ final class CreateProjectActionTest extends TestCase
 
         $projectUuid = $response->data['uuid'];
 
-        $this->assertDatabaseHas('projects', [
-            'uuid'        => $projectUuid,
-            'user_uuid'   => $user->uuid,
-            'name'        => $name,
-            'description' => $description,
-        ]);
+        $this->assertDatabaseHas(
+            table: 'projects',
+            data: [
+                'uuid'        => $projectUuid,
+                'user_uuid'   => $user->uuid,
+                'name'        => $name,
+                'description' => $description,
+            ]
+        );
 
         $this->assertTrue(
-            $user->projects()->exists(),
-            'the project was not created for test user',
+            condition: $user->projects()->exists(),
+            message: 'the project was not created for test user',
         );
     }
 

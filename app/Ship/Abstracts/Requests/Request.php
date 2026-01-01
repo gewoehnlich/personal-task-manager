@@ -6,11 +6,10 @@ use App\Ship\Contracts\Transportable;
 use App\Ship\Exceptions\TransporterIsMissingException;
 use App\Ship\Parents\Transporters\Transporter;
 use Illuminate\Foundation\Http\FormRequest as LaravelRequest;
-use Spatie\LaravelData\WithData;
 
 abstract class Request extends LaravelRequest implements Transportable
 {
-    use WithData;
+    abstract public function transporter(): string;
 
     public function transported(): Transporter
     {
@@ -18,8 +17,8 @@ abstract class Request extends LaravelRequest implements Transportable
             throw new TransporterIsMissingException();
         }
 
-        return $this->transporter()::from($this->validated());
+        return $this->transporter()::from(
+            payloads: $this->validated(),
+        );
     }
-
-    abstract public function transporter(): string;
 }

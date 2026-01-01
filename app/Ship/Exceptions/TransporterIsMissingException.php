@@ -2,12 +2,23 @@
 
 namespace App\Ship\Exceptions;
 
-use App\Ship\Parents\Exceptions\Exception;
+use App\Ship\Abstracts\Exceptions\Exception;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-class TransporterIsMissingException extends Exception
+final class TransporterIsMissingException extends Exception
 {
-    public int $httpStatusCode = SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR;
+    public const int STATUS_CODE = SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR;
 
-    public string $message = 'Transporter is missing.';
+    public const string ERROR_MESSAGE = 'Transporter is missing.';
+
+    public const int CODE = 0;
+
+    public function __construct()
+    {
+        parent::__construct(
+            message: self::ERROR_MESSAGE,
+            statusCode: self::STATUS_CODE,
+            code: self::CODE,
+        );
+    }
 }
