@@ -4,10 +4,16 @@ namespace App\Ship\Components;
 
 use App\Ship\Abstracts\Actions\Action;
 
-final class CallActionComponent extends CallComponent
+final readonly class CallActionComponent extends CallComponent
 {
-    protected function parentInstance($instance): bool
-    {
+    protected static function isInstanceOfComponentClass(
+        object $instance,
+    ): bool {
         return $instance instanceof Action;
+    }
+
+    protected static function componentClassName(): string
+    {
+        return Action::class;
     }
 }

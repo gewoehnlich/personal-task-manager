@@ -4,10 +4,16 @@ namespace App\Ship\Components;
 
 use App\Ship\Abstracts\Commands\Command;
 
-final class CallCommandComponent extends CallComponent
+final readonly class CallCommandComponent extends CallComponent
 {
-    protected function parentInstance($instance): bool
-    {
+    protected static function isInstanceOfComponentClass(
+        object $instance,
+    ): bool {
         return $instance instanceof Command;
+    }
+
+    protected static function componentClassName(): string
+    {
+        return Command::class;
     }
 }

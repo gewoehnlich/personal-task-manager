@@ -1,7 +1,6 @@
 <?php
 
 use App\Containers\Tasks\Models\Task;
-use App\Ship\Actions\RoutesContainersRegisterAction;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -21,8 +20,4 @@ Route::middleware('web')
                 'verified',
             ])
             ->name('dashboard');
-
-        (new RoutesContainersRegisterAction())->run(
-            channel: 'web',
-        );
     });

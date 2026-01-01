@@ -2,13 +2,18 @@
 
 namespace App\Ship\Traits;
 
+use App\Ship\Abstracts\Transporters\Transporter;
 use App\Ship\Components\CallCommandComponent;
 
 trait CanCallCommandTrait
 {
-    public function command(...$parameters)
-    {
-        return resolve(CallCommandComponent::class)
-            ->call(...$parameters);
+    public function command(
+        string $className,
+        Transporter $transporter,
+    ): mixed {
+        return CallCommandComponent::call(
+            className: $className,
+            transporter: $transporter,
+        );
     }
 }

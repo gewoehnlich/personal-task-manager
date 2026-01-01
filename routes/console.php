@@ -1,7 +1,7 @@
 <?php
 
-use App\Ship\Actions\RoutesContainersRegisterAction;
-
-(new RoutesContainersRegisterAction())->run(
-    channel: 'console',
-);
+/*
+ *
+ * Console routes are registered inside app/Containers
+ *
+ **/

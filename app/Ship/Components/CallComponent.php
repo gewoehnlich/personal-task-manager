@@ -2,52 +2,37 @@
 
 namespace App\Ship\Components;
 
+use App\Ship\Abstracts\Transporters\Transporter;
 use App\Ship\Exceptions\ClassDoesNotExistException;
-use App\Ship\Exceptions\InvalidArgumentException;
-use Exception;
+use App\Ship\Exceptions\ClassIsNotAnInstanceOfComponentClassException;
 
-abstract class CallComponent
+abstract readonly class CallComponent
 {
-    public function call(...$parameters)
-    {
-        [$instance, $args] = $this->getInstance(...$parameters);
+    abstract protected static function isInstanceOfComponentClass(object $instance): bool;
 
-        if (! $this->parentInstance($instance)) {
-            throw new Exception("Class {$parameters[0]} not implement Action");
+    abstract protected static function componentClassName(): string;
+
+    public static function call(
+        string $className,
+        Transporter $transporter,
+    ): mixed {
+        if (! class_exists($className) && ! app()->bound($className)) {
+            throw new ClassDoesNotExistException(
+                className: $className,
+            );
         }
 
-        return $instance->run(...$args);
-    }
+        $instance = resolve($className);
 
-    protected function getInstance(...$parameters)
-    {
-        $this->validateParameters($parameters);
-
-        $class = $parameters[0];
-        $args  = array_slice($parameters, 1);
-
-        return [resolve($class), $args];
-    }
-
-    protected function validateParameters($parameters)
-    {
-        if (empty($parameters) || ! is_string($parameters[0])) {
-            throw new InvalidArgumentException();
+        if (! static::isInstanceOfComponentClass($instance)) {
+            throw new ClassIsNotAnInstanceOfComponentClassException(
+                className: $className,
+                componentClassName: static::componentClassName(),
+            );
         }
 
-        if (! class_exists($parameters[0]) && ! app()->bound($parameters[0])) {
-            throw new ClassDoesNotExistException();
-        }
+        return $instance->run(
+            transporter: $transporter,
+        );
     }
-
-    protected function extractArguments($parameters)
-    {
-        if (! is_array($parameters)) {
-            return [$parameters];
-        }
-
-        return $parameters;
-    }
-
-    abstract protected function parentInstance($instance): bool;
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Containers\Auth\Providers;
+namespace App\Containers\Settings\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-final class AuthServiceProvider extends ServiceProvider
+final class SettingsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
@@ -14,10 +14,6 @@ final class AuthServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->loadMigrationsFrom(
-            paths: [ __DIR__ . '/../Migrations' ],
-        );
-
         Route::middleware('web')
             ->group(__DIR__ . '/../Routes/web.php');
     }
