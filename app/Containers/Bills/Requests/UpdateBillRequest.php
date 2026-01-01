@@ -3,7 +3,7 @@
 namespace App\Containers\Bills\Requests;
 
 use App\Containers\Bills\Transporters\UpdateBillTransporter;
-use App\Ship\Parents\Requests\Request;
+use App\Ship\Abstracts\Requests\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Validator;
 

@@ -6,7 +6,7 @@ use App\Containers\Bills\Models\Bill;
 use App\Containers\Tasks\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class BillFactory extends Factory
+final class BillFactory extends Factory
 {
     protected $model = Bill::class;
 

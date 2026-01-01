@@ -3,7 +3,7 @@
 namespace App\Containers\Tasks\Transporters;
 
 use App\Containers\Tasks\Enums\Stage;
-use App\Ship\Parents\Transporters\Transporter;
+use App\Ship\Abstracts\Transporters\Transporter;
 use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\WithCast;

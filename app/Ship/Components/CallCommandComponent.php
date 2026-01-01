@@ -2,9 +2,9 @@
 
 namespace App\Ship\Components;
 
-use App\Ship\Parents\Commands\Command;
+use App\Ship\Abstracts\Commands\Command;
 
-class CallCommandComponent extends CallComponent
+final class CallCommandComponent extends CallComponent
 {
     protected function parentInstance($instance): bool
     {

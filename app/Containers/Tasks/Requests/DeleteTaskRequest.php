@@ -3,7 +3,7 @@
 namespace App\Containers\Tasks\Requests;
 
 use App\Containers\Tasks\Transporters\DeleteTaskTransporter;
-use App\Ship\Parents\Requests\Request;
+use App\Ship\Abstracts\Requests\Request;
 
 final class DeleteTaskRequest extends Request
 {

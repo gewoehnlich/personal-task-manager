@@ -7,8 +7,8 @@ use App\Containers\Auth\Tasks\DeleteExistingTokensTask;
 use App\Containers\Auth\Tasks\GenerateUserTokenTask;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Responders\Responder;
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Exceptions\Exception;
+use App\Ship\Abstracts\Actions\Action;
+use App\Ship\Abstracts\Exceptions\Exception;
 
 final readonly class RefreshUserTokenAction extends Action
 {

@@ -5,7 +5,7 @@ namespace App\Containers\Projects\Actions;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Transporters\CreateProjectTransporter;
 use App\Ship\Abstracts\Responders\Responder;
-use App\Ship\Parents\Actions\Action;
+use App\Ship\Abstracts\Actions\Action;
 
 final readonly class CreateProjectAction extends Action
 {

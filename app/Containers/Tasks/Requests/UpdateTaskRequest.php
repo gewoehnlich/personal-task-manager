@@ -4,7 +4,7 @@ namespace App\Containers\Tasks\Requests;
 
 use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Transporters\UpdateTaskTransporter;
-use App\Ship\Parents\Requests\Request;
+use App\Ship\Abstracts\Requests\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;

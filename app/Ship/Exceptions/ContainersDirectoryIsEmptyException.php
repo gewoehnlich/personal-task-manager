@@ -2,9 +2,9 @@
 
 namespace App\Ship\Exceptions;
 
-use App\Ship\Parents\Exceptions\Exception;
+use App\Ship\Abstracts\Exceptions\Exception;
 
-class ContainersDirectoryIsEmptyException extends Exception
+final class ContainersDirectoryIsEmptyException extends Exception
 {
     public $message = 'Containers directory is empty';
 }

@@ -5,7 +5,7 @@ namespace App\Containers\Bills\Actions;
 use App\Containers\Bills\Models\Bill;
 use App\Containers\Bills\Transporters\IndexBillsTransporter;
 use App\Ship\Abstracts\Responders\Responder;
-use App\Ship\Parents\Actions\Action;
+use App\Ship\Abstracts\Actions\Action;
 use Exception;
 
 final readonly class IndexBillsAction extends Action

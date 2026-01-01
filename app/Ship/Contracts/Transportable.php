@@ -2,7 +2,7 @@
 
 namespace App\Ship\Contracts;
 
-use App\Ship\Parents\Transporters\Transporter;
+use App\Ship\Abstracts\Transporters\Transporter;
 
 interface Transportable
 {

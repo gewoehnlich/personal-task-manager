@@ -8,7 +8,7 @@ use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Transporters\CreateProjectTransporter;
 use App\Containers\Projects\Transporters\DeleteProjectTransporter;
 use App\Containers\Users\Models\User;
-use App\Ship\Parents\Tests\TestCase;
+use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;

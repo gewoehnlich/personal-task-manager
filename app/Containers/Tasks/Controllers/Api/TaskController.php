@@ -11,7 +11,7 @@ use App\Containers\Tasks\Requests\DeleteTaskRequest;
 use App\Containers\Tasks\Requests\IndexTasksRequest;
 use App\Containers\Tasks\Requests\UpdateTaskRequest;
 use App\Ship\Abstracts\Responders\Responder;
-use App\Ship\Parents\Controllers\ApiController;
+use App\Ship\Abstracts\Controllers\ApiController;
 
 final readonly class TaskController extends ApiController
 {

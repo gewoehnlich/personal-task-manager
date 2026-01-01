@@ -2,7 +2,7 @@
 
 namespace App\Ship\Components;
 
-use App\Ship\Parents\Tasks\Task;
+use App\Ship\Abstracts\Tasks\Task;
 
 class CallTaskComponent extends CallComponent
 {

@@ -3,7 +3,7 @@
 namespace App\Containers\Projects\Requests;
 
 use App\Containers\Projects\Transporters\DeleteProjectTransporter;
-use App\Ship\Parents\Requests\Request;
+use App\Ship\Abstracts\Requests\Request;
 
 final class DeleteProjectRequest extends Request
 {

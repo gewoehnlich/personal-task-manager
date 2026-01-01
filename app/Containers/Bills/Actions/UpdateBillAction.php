@@ -6,7 +6,7 @@ use App\Containers\Bills\Models\Bill;
 use App\Containers\Bills\Transporters\UpdateBillTransporter;
 use App\Containers\Tasks\Models\Task;
 use App\Ship\Abstracts\Responders\Responder;
-use App\Ship\Parents\Actions\Action;
+use App\Ship\Abstracts\Actions\Action;
 use Exception;
 
 final readonly class UpdateBillAction extends Action

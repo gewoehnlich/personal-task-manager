@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Containers\Users\Models\User;
-use App\Ship\Parents\Tests\TestCase;
+use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Medium;

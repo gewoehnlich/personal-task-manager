@@ -3,7 +3,7 @@
 namespace Tests\Feature\Settings;
 
 use App\Containers\Users\Models\User;
-use App\Ship\Parents\Tests\TestCase;
+use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\CoversNothing;

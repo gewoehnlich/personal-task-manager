@@ -11,7 +11,7 @@ use App\Containers\Bills\Requests\DeleteBillRequest;
 use App\Containers\Bills\Requests\IndexBillsRequest;
 use App\Containers\Bills\Requests\UpdateBillRequest;
 use App\Ship\Abstracts\Responders\Responder;
-use App\Ship\Parents\Controllers\ApiController;
+use App\Ship\Abstracts\Controllers\ApiController;
 
 final readonly class BillController extends ApiController
 {

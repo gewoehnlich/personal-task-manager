@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 final class SuccessResponder extends Responder
 {
     public function __construct(
+        public readonly mixed $data,
         public readonly int $status = Response::HTTP_OK,
-        public readonly mixed $data = null,
     ) {
         //
     }

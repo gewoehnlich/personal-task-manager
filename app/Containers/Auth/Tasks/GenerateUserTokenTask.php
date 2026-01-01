@@ -3,7 +3,7 @@
 namespace App\Containers\Auth\Tasks;
 
 use App\Containers\Users\Models\User;
-use App\Ship\Parents\Tasks\Task;
+use App\Ship\Abstracts\Tasks\Task;
 
 final readonly class GenerateUserTokenTask extends Task
 {

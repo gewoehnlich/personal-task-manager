@@ -3,7 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Containers\Users\Models\User;
-use App\Ship\Parents\Tests\TestCase;
+use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;

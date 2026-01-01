@@ -2,7 +2,7 @@
 
 namespace App\Containers\Settings\Controllers;
 
-use App\Ship\Parents\Controllers\WebController;
+use App\Ship\Abstracts\Controllers\WebController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;

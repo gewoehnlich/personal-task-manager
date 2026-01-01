@@ -4,7 +4,7 @@ namespace App\Containers\Tasks\Tests\Transporters;
 
 use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Transporters\TaskCreateTransporter;
-use App\Ship\Parents\Tests\TestCase;
+use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Medium;
 

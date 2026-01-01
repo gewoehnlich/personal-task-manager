@@ -4,7 +4,7 @@ namespace App\Ship\Tasks;
 
 use App\Ship\Exceptions\ContainersDirectoryIsEmptyException;
 use App\Ship\Exceptions\ContainersDirectoryNotFoundException;
-use App\Ship\Parents\Tasks\Task;
+use App\Ship\Abstracts\Tasks\Task;
 use Illuminate\Support\Facades\File;
 
 final readonly class DirectoriesContainersGetTask extends Task

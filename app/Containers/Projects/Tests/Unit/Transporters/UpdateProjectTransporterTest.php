@@ -3,7 +3,7 @@
 namespace App\Containers\Projects\Tests\Unit\Transporters;
 
 use App\Containers\Projects\Transporters\UpdateProjectTransporter;
-use App\Ship\Parents\Tests\TestCase;
+use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Small;

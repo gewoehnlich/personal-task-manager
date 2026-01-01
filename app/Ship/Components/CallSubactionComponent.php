@@ -2,7 +2,7 @@
 
 namespace App\Ship\Components;
 
-use App\Ship\Parents\Actions\Subaction;
+use App\Ship\Abstracts\Actions\Subaction;
 
 class CallSubactionComponent extends CallComponent
 {

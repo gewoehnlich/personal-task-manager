@@ -3,7 +3,7 @@
 namespace App\Containers\Bills\Requests;
 
 use App\Containers\Bills\Transporters\DeleteBillTransporter;
-use App\Ship\Parents\Requests\Request;
+use App\Ship\Abstracts\Requests\Request;
 
 final class DeleteBillRequest extends Request
 {

@@ -6,7 +6,7 @@ use App\Containers\Auth\Actions\CreateUserTokenAction;
 use App\Containers\Auth\Actions\RefreshUserTokenAction;
 use App\Containers\Auth\Actions\RevokeUserTokenAction;
 use App\Ship\Abstracts\Responders\Responder;
-use App\Ship\Parents\Controllers\WebController;
+use App\Ship\Abstracts\Controllers\WebController;
 use Illuminate\Http\Request;
 
 final readonly class TokenController extends WebController

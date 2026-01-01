@@ -10,7 +10,7 @@ use App\Containers\Projects\Requests\CreateProjectRequest;
 use App\Containers\Projects\Requests\DeleteProjectRequest;
 use App\Containers\Projects\Requests\IndexProjectsRequest;
 use App\Containers\Projects\Requests\UpdateProjectRequest;
-use App\Ship\Parents\Controllers\ApiController;
+use App\Ship\Abstracts\Controllers\ApiController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 

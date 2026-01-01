@@ -16,7 +16,7 @@ abstract readonly class Action
     use CanCallCommandTrait;
 
     protected function success(
-        mixed $data = null,
+        mixed $data,
     ): Responder {
         return new SuccessResponder(
             data: $data,

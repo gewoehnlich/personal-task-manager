@@ -11,7 +11,7 @@ use App\Containers\Projects\Requests\DeleteProjectRequest;
 use App\Containers\Projects\Requests\IndexProjectsRequest;
 use App\Containers\Projects\Requests\UpdateProjectRequest;
 use App\Ship\Abstracts\Responders\Responder;
-use App\Ship\Parents\Controllers\ApiController;
+use App\Ship\Abstracts\Controllers\ApiController;
 
 final readonly class ProjectController extends ApiController
 {

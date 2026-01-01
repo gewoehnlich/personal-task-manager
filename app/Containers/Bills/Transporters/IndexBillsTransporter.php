@@ -2,7 +2,7 @@
 
 namespace App\Containers\Bills\Transporters;
 
-use App\Ship\Parents\Transporters\Transporter;
+use App\Ship\Abstracts\Transporters\Transporter;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 

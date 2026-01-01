@@ -2,7 +2,7 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Ship\Parents\Controllers\WebController;
+use App\Ship\Abstracts\Controllers\WebController;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

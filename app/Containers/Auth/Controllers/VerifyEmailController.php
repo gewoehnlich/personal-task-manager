@@ -2,7 +2,7 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Ship\Parents\Controllers\WebController;
+use App\Ship\Abstracts\Controllers\WebController;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;

@@ -4,7 +4,7 @@ namespace App\Ship\Abstracts\Requests;
 
 use App\Ship\Contracts\Transportable;
 use App\Ship\Exceptions\TransporterIsMissingException;
-use App\Ship\Parents\Transporters\Transporter;
+use App\Ship\Abstracts\Transporters\Transporter;
 use Illuminate\Foundation\Http\FormRequest as LaravelRequest;
 
 abstract class Request extends LaravelRequest implements Transportable
@@ -18,7 +18,7 @@ abstract class Request extends LaravelRequest implements Transportable
         }
 
         return $this->transporter()::from(
-            payloads: $this->validated(),
+            $this->validated()
         );
     }
 }
