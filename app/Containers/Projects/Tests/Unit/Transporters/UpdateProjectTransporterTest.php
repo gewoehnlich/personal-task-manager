@@ -21,7 +21,7 @@ final class UpdateProjectTransporterTest extends TestCase
     public function testToArrayReturnsSnakeCaseKeys(
         string $uuid,
         string $userUuid,
-        ?string $name,
+        string $name,
         ?string $description,
     ): void {
         $transporter = new UpdateProjectTransporter(
@@ -54,7 +54,7 @@ final class UpdateProjectTransporterTest extends TestCase
             'null name and description' => [
                 '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // uuid
                 '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                null,                                   // name
+                'name',                                 // name
                 null,                                   // description
             ],
         ];

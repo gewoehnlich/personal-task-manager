@@ -23,10 +23,10 @@ final class IndexTasksRequest extends Request
     public function rules(): array
     {
         return [
-            'user_id'         => ['required', 'exists:users,id'],
-            'id'              => ['nullable', 'integer', 'exists:tasks,id'],
-            'stage'           => ['nullable', 'string', Rule::enum(Stage::class)],
-            'project_id'      => ['nullable', 'integer', 'exists:projects,id'],
+            'user_uuid'       => ['required', 'uuid:7'],
+            'uuid'            => ['nullable', 'uuid:7', 'exists:tasks,uuid'],
+            'stage'           => ['nullable', Rule::enum(Stage::class)],
+            'project_uuid'    => ['nullable', 'uuid:7', 'exists:projects,uuid'],
             'created_at_from' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
             'created_at_to'   => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
             'updated_at_from' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
@@ -36,6 +36,7 @@ final class IndexTasksRequest extends Request
             'order_by'        => ['nullable', 'string', 'in:asc,desc'],
             'order_by_field'  => ['nullable', 'string', 'in:id,created_at,updated_at,deadline,stage'],
             'limit'           => ['nullable', 'integer'],
+            'with_deleted'    => ['nullable', 'boolean'],
         ];
     }
 
@@ -82,7 +83,7 @@ final class IndexTasksRequest extends Request
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => $this->user()->id,
+            'user_uuid' => $this->user()->uuid,
         ]);
     }
 }

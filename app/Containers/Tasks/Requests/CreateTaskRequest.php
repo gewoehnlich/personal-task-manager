@@ -24,12 +24,12 @@ final class CreateTaskRequest extends Request
     public function rules(): array
     {
         return [
-            'user_id'     => ['required', 'integer', 'exists:users,id'],
-            'title'       => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:65535'],
-            'stage'       => ['required', Rule::enum(Stage::class)],
-            'deadline'    => ['required', 'date', 'date_format:Y-m-d H:i:s'],
-            'project_id'  => ['nullable', 'integer', 'exists:projects,id'],
+            'user_uuid'    => ['required', 'uuid:7', 'exists:users,uuid'],
+            'title'        => ['required', 'string', 'max:100'],
+            'description'  => ['nullable', 'string', 'max:500'],
+            'stage'        => ['required', Rule::enum(type: Stage::class)],
+            'deadline'     => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'project_uuid' => ['nullable', 'uuid:7', 'exists:projects,uuid'],
         ];
     }
 
@@ -37,7 +37,7 @@ final class CreateTaskRequest extends Request
     {
         return [
             function (Validator $validator) {
-                if ($this->deadline < Carbon::now()) {
+                if (isset($this->deadline) && $this->deadline < Carbon::now()) {
                     $validator->errors()->add(
                         'deadline',
                         'deadline не должен быть меньше текущего времени.',
@@ -50,7 +50,7 @@ final class CreateTaskRequest extends Request
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => $this->user()->id,
+            'user_uuid' => $this->user()->uuid,
         ]);
     }
 }

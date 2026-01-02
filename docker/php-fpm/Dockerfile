@@ -17,7 +17,11 @@ RUN apt-get update && \
         exif \
         pcntl \
         bcmath \
-        gd
+        gd \
+    && pecl install pcov \
+    && docker-php-ext-enable pcov \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN { \
     echo ';; Strict PHP Configuration'; \
@@ -34,16 +38,16 @@ RUN { \
     echo 'opcache.validate_timestamps = 1'; \
     echo 'opcache.save_comments = 1'; \
     echo 'session.use_strict_mode = 1'; \
+    echo 'pcov.enabled = 1'; \
+    echo 'pcov.directory = /var/www/html'; \
 } > /usr/local/etc/php/conf.d/strict.ini
 
 COPY --from=composer:2.8.2 /usr/bin/composer /usr/bin/composer
 
-COPY ../../composer.json ../../composer.lock ./
+COPY . .
 
 RUN git config --global --add safe.directory /var/www/html
 
 RUN composer install --no-scripts
-
-COPY . .
 
 EXPOSE 80

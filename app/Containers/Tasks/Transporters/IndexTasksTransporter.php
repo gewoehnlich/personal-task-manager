@@ -14,10 +14,10 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class IndexTasksTransporter extends Transporter
 {
     public function __construct(
-        public readonly int $userId,
-        public readonly ?int $id,
+        public readonly string $userUuid,
+        public readonly ?string $uuid,
         public readonly ?Stage $stage,
-        public readonly ?int $projectId,
+        public readonly ?string $projectUuid,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
         public readonly ?Carbon $createdAtFrom,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
@@ -33,6 +33,7 @@ final class IndexTasksTransporter extends Transporter
         public readonly ?string $orderBy,
         public readonly ?string $orderByField,
         public readonly ?int $limit,
+        public readonly ?bool $withDeleted,
     ) {
         //
     }

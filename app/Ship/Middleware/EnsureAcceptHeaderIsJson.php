@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureAcceptHeaderIsJson
+final class EnsureAcceptHeaderIsJson
 {
     /**
      * Handle an incoming request.
@@ -18,12 +18,29 @@ class EnsureAcceptHeaderIsJson
         Request $request,
         Closure $next,
     ): Response {
-        if ($request->expectsJson()) {
+        $acceptHeader = $request->headers->get(
+            key: 'Accept',
+        );
+
+        if ($acceptHeader === null) {
+            $request->headers->set(
+                key: 'Accept',
+                values: 'application/json',
+                replace: true,
+            );
+
             return $next($request);
         }
 
-        return response()->json([
-            'message' => 'Необходимо указать Header \'Accept\': \'application/json\'.',
-        ], Response::HTTP_NOT_ACCEPTABLE);
+        if ($acceptHeader !== 'application/json') {
+            return response()->json(
+                data: [
+                    'message' => "'Accept' header must be 'application/json'.",
+                ],
+                status: Response::HTTP_NOT_ACCEPTABLE,
+            );
+        }
+
+        return $next($request);
     }
 }

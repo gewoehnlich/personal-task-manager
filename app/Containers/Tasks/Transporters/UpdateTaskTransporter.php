@@ -14,14 +14,14 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class UpdateTaskTransporter extends Transporter
 {
     public function __construct(
-        public readonly int $id,
-        public readonly int $userId,
+        public readonly string $uuid,
+        public readonly string $userUuid,
         public readonly string $title,
-        public readonly string $description,
+        public readonly ?string $description,
         public readonly Stage $stage,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly Carbon $deadline,
-        public readonly int $projectId,
+        public readonly ?Carbon $deadline,
+        public readonly ?string $projectUuid,
     ) {
         //
     }

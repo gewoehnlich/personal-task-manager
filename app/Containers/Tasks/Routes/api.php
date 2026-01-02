@@ -11,7 +11,7 @@ Route::middleware(
     EnsureAcceptHeaderIsJson::class,
 )->group(function () {
     Route::get(
-        uri: 'tasks/{id}',
+        uri: 'tasks/{uuid}',
         action: [
             TaskController::class,
             'get',
@@ -35,7 +35,7 @@ Route::middleware(
     );
 
     Route::put(
-        uri: 'tasks/{id}',
+        uri: 'tasks/{uuid}',
         action: [
             TaskController::class,
             'update',
@@ -43,7 +43,7 @@ Route::middleware(
     );
 
     Route::delete(
-        uri: 'tasks/{id}',
+        uri: 'tasks/{uuid}',
         action: [
             TaskController::class,
             'delete',

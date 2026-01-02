@@ -6,71 +6,67 @@ use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Transporters\IndexTasksTransporter;
 use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Actions\Action;
-use App\Ship\Abstracts\Exceptions\Exception;
 
 final readonly class IndexTasksAction extends Action
 {
     public function run(
         IndexTasksTransporter $transporter,
     ): Responder {
-        try {
-            $tasks = Task::all();
+        $query = Task::query()
+            ->where('user_uuid', $transporter->userUuid);
 
-            if (isset($transporter->userId)) {
-                $tasks = $tasks->where('user_id', $transporter->userId);
-            }
-
-            if (isset($transporter->id)) {
-                $tasks = $tasks->where('id', $transporter->id);
-            }
-
-            if (isset($transporter->stage)) {
-                $tasks = $tasks->where('stage', $transporter->stage);
-            }
-
-            if (isset($transporter->projectId)) {
-                $tasks = $tasks->where('project_id', $transporter->projectId);
-            }
-
-            if (isset($transporter->createdAtFrom)) {
-                $tasks = $tasks->where('created_at', '>=', $transporter->createdAtFrom);
-            }
-
-            if (isset($transporter->createdAtTo)) {
-                $tasks = $tasks->where('created_at', '<=', $transporter->createdAtTo);
-            }
-
-            if (isset($transporter->updatedAtFrom)) {
-                $tasks = $tasks->where('updated_at', '>=', $transporter->createdAtFrom);
-            }
-
-            if (isset($transporter->updatedAtTo)) {
-                $tasks = $tasks->where('updated_at', '<=', $transporter->createdAtTo);
-            }
-
-            if (isset($transporter->deadlineFrom)) {
-                $tasks = $tasks->where('deadline', '>=', $transporter->createdAtFrom);
-            }
-
-            if (isset($transporter->deadlineTo)) {
-                $tasks = $tasks->where('deadline', '<=', $transporter->createdAtTo);
-            }
-
-            if (isset($transporter->orderBy, $transporter->orderByField)) {
-                $tasks = $tasks->orderBy($transporter->orderByField ?? 'id', $transporter->orderBy);
-            }
-
-            if (isset($transporter->limit)) {
-                $tasks = $tasks->limit($transporter->limit);
-            }
-
-            return $this->success(
-                data: $tasks,
-            );
-        } catch (Exception $exception) {
-            return $this->error(
-                message: $exception->getErrors(),
-            );
+        if (isset($transporter->id)) {
+            $query = $query->where('uuid', $transporter->uuid);
         }
+
+        if (isset($transporter->stage)) {
+            $query = $query->where('stage', $transporter->stage);
+        }
+
+        if (isset($transporter->projectId)) {
+            $query = $query->where('project_uuid', $transporter->projectUuid);
+        }
+
+        if (isset($transporter->createdAtFrom)) {
+            $query = $query->where('created_at', '>=', $transporter->createdAtFrom);
+        }
+
+        if (isset($transporter->createdAtTo)) {
+            $query = $query->where('created_at', '<=', $transporter->createdAtTo);
+        }
+
+        if (isset($transporter->updatedAtFrom)) {
+            $query = $query->where('updated_at', '>=', $transporter->createdAtFrom);
+        }
+
+        if (isset($transporter->updatedAtTo)) {
+            $query = $query->where('updated_at', '<=', $transporter->createdAtTo);
+        }
+
+        if (isset($transporter->deadlineFrom)) {
+            $query = $query->where('deadline', '>=', $transporter->createdAtFrom);
+        }
+
+        if (isset($transporter->deadlineTo)) {
+            $query = $query->where('deadline', '<=', $transporter->createdAtTo);
+        }
+
+        if (isset($transporter->orderBy, $transporter->orderByField)) {
+            $query = $query->orderBy($transporter->orderByField ?? 'id', $transporter->orderBy);
+        }
+
+        if (isset($transporter->limit)) {
+            $query = $query->limit($transporter->limit);
+        }
+
+        if ($transporter->withDeleted === true) {
+            $query = $query->where('deleted_at', null);
+        }
+
+        $tasks = $query->get();
+
+        return $this->success(
+            data: $tasks,
+        );
     }
 }

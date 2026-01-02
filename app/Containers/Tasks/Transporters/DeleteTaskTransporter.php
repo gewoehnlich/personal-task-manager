@@ -10,8 +10,8 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class DeleteTaskTransporter extends Transporter
 {
     public function __construct(
-        public readonly int $id,
-        public readonly int $userId,
+        public readonly string $uuid,
+        public readonly string $userUuid,
     ) {
         //
     }
