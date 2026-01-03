@@ -3,7 +3,7 @@
 namespace App\Containers\Tasks\Tests\Unit\Transporters;
 
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Transporters\CreateTaskTransporter;
+use App\Containers\Tasks\Transporters\UpdateTaskTransporter;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -14,13 +14,14 @@ use PHPUnit\Framework\Attributes\TestDox;
 /**
  * @internal
  */
-#[CoversClass(CreateTaskTransporter::class)]
+#[CoversClass(UpdateTaskTransporter::class)]
 #[Small]
-final class CreateTaskTransporterTest extends TestCase
+final class UpdateTaskTransporterTest extends TestCase
 {
     #[DataProvider('data')]
     #[TestDox('converts transporter properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(
+        string $uuid,
         string $userUuid,
         string $title,
         ?string $description,
@@ -28,7 +29,8 @@ final class CreateTaskTransporterTest extends TestCase
         ?Carbon $deadline,
         ?string $projectUuid,
     ): void {
-        $transporter = new CreateTaskTransporter(
+        $transporter = new UpdateTaskTransporter(
+            uuid: $uuid,
             userUuid: $userUuid,
             title: $title,
             description: $description,
@@ -39,6 +41,7 @@ final class CreateTaskTransporterTest extends TestCase
 
         $this->assertSame(
             expected: [
+                'uuid'         => $uuid,
                 'user_uuid'    => $userUuid,
                 'title'        => $title,
                 'description'  => $description,
@@ -54,16 +57,18 @@ final class CreateTaskTransporterTest extends TestCase
     {
         return [
             'all parameters' => [
+                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // uuid
                 '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'title',                                // title
+                'name',                                 // name
                 'description',                          // description
                 Stage::PENDING,                         // stage,
                 Carbon::now(),                          // deadline
                 '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // projectUuid
             ],
             'all nullable parameters are null' => [
+                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // uuid
                 '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'title',                                // title
+                'name',                                 // name
                 null,                                   // description
                 Stage::PENDING,                         // stage,
                 null,                                   // deadline

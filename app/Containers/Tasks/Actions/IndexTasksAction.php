@@ -15,7 +15,7 @@ final readonly class IndexTasksAction extends Action
         $query = Task::query()
             ->where('user_uuid', $transporter->userUuid);
 
-        if (isset($transporter->id)) {
+        if (isset($transporter->uuid)) {
             $query = $query->where('uuid', $transporter->uuid);
         }
 
@@ -23,7 +23,7 @@ final readonly class IndexTasksAction extends Action
             $query = $query->where('stage', $transporter->stage);
         }
 
-        if (isset($transporter->projectId)) {
+        if (isset($transporter->projectUuid)) {
             $query = $query->where('project_uuid', $transporter->projectUuid);
         }
 
@@ -36,19 +36,19 @@ final readonly class IndexTasksAction extends Action
         }
 
         if (isset($transporter->updatedAtFrom)) {
-            $query = $query->where('updated_at', '>=', $transporter->createdAtFrom);
+            $query = $query->where('updated_at', '>=', $transporter->updatedAtFrom);
         }
 
         if (isset($transporter->updatedAtTo)) {
-            $query = $query->where('updated_at', '<=', $transporter->createdAtTo);
+            $query = $query->where('updated_at', '<=', $transporter->updatedAtTo);
         }
 
         if (isset($transporter->deadlineFrom)) {
-            $query = $query->where('deadline', '>=', $transporter->createdAtFrom);
+            $query = $query->where('deadline', '>=', $transporter->deadlineFrom);
         }
 
         if (isset($transporter->deadlineTo)) {
-            $query = $query->where('deadline', '<=', $transporter->createdAtTo);
+            $query = $query->where('deadline', '<=', $transporter->deadlineTo);
         }
 
         if (isset($transporter->orderBy, $transporter->orderByField)) {
@@ -60,7 +60,7 @@ final readonly class IndexTasksAction extends Action
         }
 
         if ($transporter->withDeleted === true) {
-            $query = $query->where('deleted_at', null);
+            $query = $query->whereNotNull('deleted_at');
         }
 
         $tasks = $query->get();
