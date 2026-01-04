@@ -28,8 +28,6 @@ return new class extends Migration {
                 ->nullable()
                 ->constrained(table: 'projects', column: 'uuid')
                 ->cascadeOnDelete();
-            $table->boolean('debug')
-                ->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

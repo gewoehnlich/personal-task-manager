@@ -17,8 +17,6 @@ return new class extends Migration {
                 ->nullable();
             $table->unsignedSmallInteger('minutes_spent')
                 ->nullable();
-            $table->boolean('debug')
-                ->default(false);
             $table->timestamp('performed_at')
                 ->useCurrent();
             $table->softDeletes();

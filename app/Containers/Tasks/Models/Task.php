@@ -6,14 +6,15 @@ use App\Containers\Bills\Models\Bill;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Factories\TaskFactory;
 use App\Containers\Users\Models\User;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[UseFactory(TaskFactory::class)]
 final class Task extends Model
 {
     use HasFactory;
@@ -52,10 +53,5 @@ final class Task extends Model
             'deadline' => 'datetime',
             'debug'    => 'boolean',
         ];
-    }
-
-    protected static function newFactory(): Factory
-    {
-        return TaskFactory::new();
     }
 }
