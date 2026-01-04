@@ -16,11 +16,11 @@ final class CreateTaskTransporter extends Transporter
     public function __construct(
         public readonly string $userUuid,
         public readonly string $title,
-        public readonly ?string $description,
+        public readonly ?string $description = null,
         public readonly Stage $stage,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $deadline,
-        public readonly ?string $projectUuid,
+        public readonly ?Carbon $deadline = null,
+        public readonly ?string $projectUuid = null,
     ) {
         //
     }

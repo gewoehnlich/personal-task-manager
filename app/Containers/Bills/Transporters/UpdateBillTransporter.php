@@ -16,10 +16,10 @@ final class UpdateBillTransporter extends Transporter
         public readonly int $uuid,
         public readonly int $userUuid,
         public readonly int $taskUuid,
-        public readonly ?string $description,
-        public readonly ?int $timeSpent,
+        public readonly ?string $description = null,
+        public readonly ?int $timeSpent = null,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $performedAt,
+        public readonly ?Carbon $performedAt = null,
     ) {
         //
     }

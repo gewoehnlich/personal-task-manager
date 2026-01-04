@@ -13,7 +13,7 @@ final class UpdateProjectTransporter extends Transporter
         public readonly string $uuid,
         public readonly string $userUuid,
         public readonly string $name,
-        public readonly ?string $description,
+        public readonly ?string $description = null,
     ) {
         //
     }

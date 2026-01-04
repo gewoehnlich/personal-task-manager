@@ -15,7 +15,7 @@ final class CreateBillTransporter extends Transporter
     public function __construct(
         public readonly int $userUuid,
         public readonly int $taskUuid,
-        public readonly ?string $description,
+        public readonly ?string $description = null,
         public readonly int $timeSpent,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
         public readonly Carbon $performedAt,

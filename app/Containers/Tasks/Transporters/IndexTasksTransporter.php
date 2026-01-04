@@ -15,25 +15,25 @@ final class IndexTasksTransporter extends Transporter
 {
     public function __construct(
         public readonly string $userUuid,
-        public readonly ?string $uuid,
-        public readonly ?Stage $stage,
-        public readonly ?string $projectUuid,
+        public readonly ?string $uuid = null,
+        public readonly ?Stage $stage = null,
+        public readonly ?string $projectUuid = null,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $createdAtFrom,
+        public readonly ?Carbon $createdAtFrom = null,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $createdAtTo,
+        public readonly ?Carbon $createdAtTo = null,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $updatedAtFrom,
+        public readonly ?Carbon $updatedAtFrom = null,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $updatedAtTo,
+        public readonly ?Carbon $updatedAtTo = null,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $deadlineFrom,
+        public readonly ?Carbon $deadlineFrom = null,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $deadlineTo,
-        public readonly ?string $orderBy,
-        public readonly ?string $orderByField,
-        public readonly ?int $limit,
-        public readonly ?bool $withDeleted,
+        public readonly ?Carbon $deadlineTo = null,
+        public readonly ?string $orderBy = null,
+        public readonly ?string $orderByField = null,
+        public readonly ?int $limit = null,
+        public readonly ?bool $withDeleted = null,
     ) {
         //
     }
