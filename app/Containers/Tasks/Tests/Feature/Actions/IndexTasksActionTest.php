@@ -122,4 +122,112 @@ final class IndexTasksActionTest extends TestCase
             message: 'action indexing tasks by uuid returns tasks of one user to another user',
         );
     }
+
+    #[TestDox('action index tasks by stage')]
+    public function testIndexTasksByStage(): void
+    {
+        $user = User::factory()->create();
+
+        Task::factory()
+            ->for($user)
+            ->sequence(
+                ['stage' => Stage::PENDING->value],
+                ['stage' => Stage::ACTIVE->value],
+                ['stage' => Stage::DONE->value],
+            )
+            ->count(6)
+            ->create();
+
+        $response = $this->action(
+            IndexTasksAction::class,
+            new IndexTasksTransporter(
+                userUuid: $user->uuid,
+                stage: Stage::PENDING,
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->where('stage', Stage::PENDING->value)
+                ->get(),
+            actual: $response->data,
+            message: 'action indexes tasks by stage wrong',
+        );
+    }
+
+    #[TestDox('action index tasks by project_uuid')]
+    public function testIndexTasksByProjectUuid(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $project = Project::factory()
+            ->for($user)
+            ->create();
+
+        $project2 = Project::factory()
+            ->for($user)
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->for($project)
+            ->count(3)
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->for($project2)
+            ->count(3)
+            ->create();
+
+        $response = $this->action(
+            IndexTasksAction::class,
+            new IndexTasksTransporter(
+                userUuid: $user->uuid,
+                projectUuid: $project->uuid,
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->where('project_uuid', $project->uuid)
+                ->get(),
+            actual: $response->data,
+            message: 'action indexes tasks by project_uuid wrong',
+        );
+    }
+
+    // #[TestDox('action index tasks by created_at range')]
+    // public function testIndexTasksByCreatedAtRange(): void
+    // {
+    //     $user = User::factory()
+    //         ->create();
+    //
+    //     for ($day = 1; $day >= 7; ++$day) {
+    //         Task::factory()
+    //             ->for($user)
+    //             ->
+    //             ->create();
+    //     }
+    //
+    //     $response = $this->action(
+    //         IndexTasksAction::class,
+    //         new IndexTasksTransporter(
+    //             userUuid: $user->uuid,
+    //             projectUuid: $project->uuid,
+    //         ),
+    //     );
+    //
+    //     $this->assertEquals(
+    //         expected: Task::query()
+    //             ->where('user_uuid', $user->uuid)
+    //             ->where('project_uuid', $project->uuid)
+    //             ->get(),
+    //         actual: $response->data,
+    //         message: 'action indexes tasks by project_uuid wrong',
+    //     );
+    // }
 }
