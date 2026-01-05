@@ -2,12 +2,13 @@
 
 namespace App\Containers\Tasks\Routes;
 
-use App\Containers\Tasks\Controllers\Web\TaskController;
+use App\Containers\Tasks\Controllers\Api\TaskController;
+use App\Ship\Middleware\EnsureAcceptHeaderIsJson;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(
-    'web',
-    'auth',
+    'auth:sanctum',
+    EnsureAcceptHeaderIsJson::class,
 )->group(function () {
     Route::get(
         uri: 'tasks/{uuid}',
