@@ -17,7 +17,7 @@ final readonly class CreateProjectAction extends Action
         );
 
         return $this->success(
-            data: $project->toArray(),
+            data: $project,
         );
     }
 }

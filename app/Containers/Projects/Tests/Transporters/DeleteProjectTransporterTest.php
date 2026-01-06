@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Unit\Transporters;
+namespace App\Containers\Projects\Tests\Transporters;
 
 use App\Containers\Projects\Transporters\DeleteProjectTransporter;
 use App\Ship\Abstracts\Tests\TestCase;

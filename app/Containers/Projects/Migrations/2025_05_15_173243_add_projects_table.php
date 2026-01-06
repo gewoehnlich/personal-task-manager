@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid()
                 ->primary();
-            $table->string('name', length: 100);
+            $table->string('title', length: 100);
             $table->string('description', length: 500)
                 ->nullable();
             $table->foreignUuid('user_uuid')

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Feature\Actions;
+namespace App\Containers\Projects\Tests\Actions;
 
 use App\Containers\Projects\Actions\UpdateProjectAction;
 use App\Containers\Projects\Models\Project;
@@ -37,7 +37,7 @@ final class UpdateProjectActionTest extends TestCase
             transporter: new UpdateProjectTransporter(
                 uuid: $project->uuid,
                 userUuid: $project->user_uuid,
-                name: 'test name',
+                title: 'test name',
                 description: 'test description',
             ),
         );
@@ -46,7 +46,7 @@ final class UpdateProjectActionTest extends TestCase
 
         $this->assertEquals(
             expected: 'test name',
-            actual: $updatedProject->name,
+            actual: $updatedProject->title,
             message: 'project\'s name did not update',
         );
 

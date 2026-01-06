@@ -11,7 +11,7 @@ final class CreateProjectTransporter extends Transporter
 {
     public function __construct(
         public readonly string $userUuid,
-        public readonly string $name,
+        public readonly string $title,
         public readonly ?string $description = null,
     ) {
         //

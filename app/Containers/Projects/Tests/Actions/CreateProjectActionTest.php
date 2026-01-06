@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Feature\Actions;
+namespace App\Containers\Projects\Tests\Actions;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Transporters\CreateProjectTransporter;
@@ -23,42 +23,28 @@ final class CreateProjectActionTest extends TestCase
     #[DataProvider('data')]
     #[TestDox('action creates a project')]
     public function testAction(
-        string $name,
+        string $title,
         ?string $description,
     ): void {
         $user = User::factory()->create();
 
-        $this->assertFalse(
-            condition: $user->projects()->exists(),
-            message: 'test user should not have created projects',
-        );
-
-        $transporter = new CreateProjectTransporter(
-            userUuid: $user->uuid,
-            name: $name,
-            description: $description,
-        );
-
         $response = $this->action(
-            CreateProjectAction::class,
-            $transporter,
+            className: CreateProjectAction::class,
+            transporter: new CreateProjectTransporter(
+                userUuid: $user->uuid,
+                title: $title,
+                description: $description,
+            ),
         );
-
-        $projectUuid = $response->data['uuid'];
 
         $this->assertDatabaseHas(
             table: 'projects',
             data: [
-                'uuid'        => $projectUuid,
+                'uuid'        => $response->data->uuid,
                 'user_uuid'   => $user->uuid,
-                'name'        => $name,
+                'title'       => $title,
                 'description' => $description,
             ]
-        );
-
-        $this->assertTrue(
-            condition: $user->projects()->exists(),
-            message: 'the project was not created for test user',
         );
     }
 
@@ -66,12 +52,12 @@ final class CreateProjectActionTest extends TestCase
     {
         return [
             'all parameters' => [
-                'name',        // name
+                'title',       // title
                 'description', // description
             ],
-            'null description' => [
-                'name', // name
-                null,   // description
+            'all nullable parameters are null' => [
+                'title', // title
+                null,    // description
             ],
         ];
     }

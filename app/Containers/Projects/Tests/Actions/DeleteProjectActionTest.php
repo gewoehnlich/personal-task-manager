@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Feature\Actions;
+namespace App\Containers\Projects\Tests\Actions;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Actions\DeleteProjectAction;
@@ -8,8 +8,8 @@ use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Transporters\CreateProjectTransporter;
 use App\Containers\Projects\Transporters\DeleteProjectTransporter;
 use App\Containers\Users\Models\User;
+use App\Ship\Abstracts\Responders\ErrorResponder;
 use App\Ship\Abstracts\Tests\TestCase;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use PHPUnit\Framework\Attributes\TestDox;
@@ -21,11 +21,8 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(CreateProjectAction::class)]
 final class DeleteProjectActionTest extends TestCase
 {
-    private const string INVALID_PROJECT_UUID = '00000000-0000-0000-0000-000000000000';
-    private const string INVALID_USER_UUID    = '00000000-0000-0000-0000-000000000001';
-
-    #[TestDox('owner can delete their project')]
-    public function testProjectIsDeleted(): void
+    #[TestDox('user can delete his project')]
+    public function testProjectGetsSoftDeleted(): void
     {
         $user = User::factory()
             ->create();
@@ -47,32 +44,31 @@ final class DeleteProjectActionTest extends TestCase
         ]);
     }
 
-    #[TestDox('exception is thrown when project uuid is invalid')]
+    #[TestDox('ErrorResponder is returned when project uuid is invalid')]
     public function testDeleteFailsWithInvalidProjectUuid(): void
     {
         $user = User::factory()
             ->create();
 
-        $project = Project::factory()
+        Project::factory()
             ->for($user)
             ->create();
 
         $response = $this->action(
             DeleteProjectAction::class,
             new DeleteProjectTransporter(
-                uuid: self::INVALID_PROJECT_UUID,
+                uuid: '00000000-0000-0000-0000-000000000000',
                 userUuid: $user->uuid,
             ),
         );
 
-        // $this->assertEquals(
-        //     expected: 'error',
-        //     actual: $response->status,
-        //     message: 'the response is wrong for delete project action'
-        // );
+        $this->assertTrue(
+            condition: $response instanceof ErrorResponder,
+            message: 'the response is wrong for delete project action'
+        );
     }
 
-    #[TestDox('exception is thrown when user uuid is invalid')]
+    #[TestDox('ErrorResponder is returned when user_uuid is invalid')]
     public function testDeleteFailsWithInvalidUserUuid(): void
     {
         $user = User::factory()
@@ -86,13 +82,13 @@ final class DeleteProjectActionTest extends TestCase
             DeleteProjectAction::class,
             new DeleteProjectTransporter(
                 uuid: $project->uuid,
-                userUuid: self::INVALID_USER_UUID,
+                userUuid: '00000000-0000-0000-0000-000000000000',
             ),
         );
 
-        // $this->assertNotNull(
-        //     actual: $response->error,
-        //     message: 'the response is wrong for delete project action'
-        // );
+        $this->assertTrue(
+            condition: $response instanceof ErrorResponder,
+            message: 'the response is wrong for delete project action'
+        );
     }
 }

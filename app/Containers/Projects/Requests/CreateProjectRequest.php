@@ -21,7 +21,7 @@ final class CreateProjectRequest extends Request
     {
         return [
             'user_uuid'   => ['required', 'uuid:7'],
-            'name'        => ['required', 'string', 'max:100'],
+            'title'       => ['required', 'string', 'max:100'],
             'description' => ['nullable', 'string', 'max:500'],
         ];
     }

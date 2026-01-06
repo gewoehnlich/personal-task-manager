@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Unit\Transporters;
+namespace App\Containers\Projects\Tests\Transporters;
 
-use App\Containers\Projects\Transporters\UpdateProjectTransporter;
+use App\Containers\Projects\Transporters\CreateProjectTransporter;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -12,30 +12,27 @@ use PHPUnit\Framework\Attributes\TestDox;
 /**
  * @internal
  */
-#[CoversClass(UpdateProjectTransporter::class)]
+#[CoversClass(CreateProjectTransporter::class)]
 #[Small]
-final class UpdateProjectTransporterTest extends TestCase
+final class CreateProjectTransporterTest extends TestCase
 {
     #[DataProvider('data')]
     #[TestDox('converts transporter properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(
-        string $uuid,
         string $userUuid,
-        string $name,
+        string $title,
         ?string $description,
     ): void {
-        $transporter = new UpdateProjectTransporter(
-            uuid: $uuid,
+        $transporter = new CreateProjectTransporter(
             userUuid: $userUuid,
-            name: $name,
+            title: $title,
             description: $description,
         );
 
         $this->assertSame(
             expected: [
-                'uuid'        => $uuid,
                 'user_uuid'   => $userUuid,
-                'name'        => $name,
+                'title'       => $title,
                 'description' => $description,
             ],
             actual: $transporter->toArray(),
@@ -46,15 +43,13 @@ final class UpdateProjectTransporterTest extends TestCase
     {
         return [
             'all parameters' => [
-                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // uuid
                 '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'name',                                 // name
+                'title',                                // title
                 'description',                          // description
             ],
-            'null name and description' => [
-                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // uuid
+            'null description' => [
                 '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'name',                                 // name
+                'title',                                // title
                 null,                                   // description
             ],
         ];

@@ -22,7 +22,7 @@ final class UpdateProjectRequest extends Request
         return [
             'uuid'         => ['required', 'uuid:7'],
             'user_uuid'    => ['required', 'uuid:7'],
-            'name'         => ['required', 'string', 'max:100'],
+            'title'        => ['required', 'string', 'max:100'],
             'description'  => ['nullable', 'string', 'max:500'],
         ];
     }

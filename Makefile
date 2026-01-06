@@ -13,7 +13,7 @@ optimize:
 	docker compose exec app php artisan optimize
 
 test:
-	docker compose exec app php artisan test --parallel
+	docker compose exec app php artisan test --coverage
 
 pint:
 	docker compose exec app php artisan pint

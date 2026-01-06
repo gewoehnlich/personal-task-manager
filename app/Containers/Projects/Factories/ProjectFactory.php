@@ -12,7 +12,7 @@ final class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'        => $this->faker->word(),
+            'title'       => $this->faker->word(),
             'description' => $this->faker->text(100),
         ];
     }

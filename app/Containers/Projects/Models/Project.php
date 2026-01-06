@@ -23,7 +23,7 @@ final class Project extends Model
     protected $primaryKey = 'uuid';
 
     protected $fillable = [
-        'name',
+        'title',
         'description',
         'user_uuid',
     ];
