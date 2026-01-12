@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Actions;
+namespace App\Containers\Projects\Tests\Unit\Actions;
 
 use App\Containers\Projects\Actions\UpdateProjectAction;
 use App\Containers\Projects\Models\Project;

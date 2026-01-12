@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Actions;
+namespace App\Containers\Projects\Tests\Unit\Actions;
 
 use App\Containers\Projects\Actions\IndexProjectsAction;
 use App\Containers\Projects\Models\Project;

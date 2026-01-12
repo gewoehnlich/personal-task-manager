@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests;
+namespace App\Containers\Projects\Tests\Feature;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Controllers\Api\ProjectController;
