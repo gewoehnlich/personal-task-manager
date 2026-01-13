@@ -3,12 +3,13 @@ networks:
     driver: bridge
 volumes:
   personal-task-manager-data:
+  personal-task-manager-test-data:
   certbot-etc:
   certbot-var:
 
 services:
   app:
-    container_name: laravel.${APP_NAME}
+    container_name: app.${APP_NAME}
     build:
       context: .
       dockerfile: ./docker/php-fpm/Dockerfile
@@ -70,6 +71,24 @@ services:
       - personal-task-manager-network
     volumes:
       - personal-task-manager-data:/var/lib/mysql/
+    restart: unless-stopped
+
+  mysqltest:
+    container_name: mysqltest.${APP_NAME}
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}_test
+      MYSQL_USER:     ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3307:3306"
+    networks:
+      - personal-task-manager-network
+    volumes:
+      - personal-task-manager-test-data:/var/lib/mysql/
     restart: unless-stopped
 
   node:
