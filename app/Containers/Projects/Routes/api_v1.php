@@ -10,6 +10,7 @@ Route::middleware(
     'auth:sanctum',
     EnsureAcceptHeaderIsJson::class,
 )
+    ->name('projects.')
     ->group(function () {
         Route::get(
             uri: 'projects',
@@ -17,7 +18,7 @@ Route::middleware(
                 ProjectController::class,
                 'index',
             ],
-        );
+        )->name('index');
 
         Route::post(
             uri: 'projects',
@@ -25,7 +26,7 @@ Route::middleware(
                 ProjectController::class,
                 'create',
             ],
-        );
+        )->name('create');
 
         Route::put(
             uri: 'projects/{uuid}',
@@ -33,7 +34,7 @@ Route::middleware(
                 ProjectController::class,
                 'update',
             ],
-        );
+        )->name('update');
 
         Route::delete(
             uri: 'projects/{uuid}',
@@ -41,5 +42,5 @@ Route::middleware(
                 ProjectController::class,
                 'delete',
             ],
-        );
+        )->name('delete');
     });
