@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Feature;
+namespace App\Containers\Projects\Tests\Api;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Controllers\Api\ProjectController;
+use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Requests\CreateProjectRequest;
 use App\Containers\Projects\Transporters\CreateProjectTransporter;
 use App\Containers\Users\Models\User;
@@ -17,11 +18,12 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(CreateProjectRequest::class)]
 #[UsesClass(CreateProjectTransporter::class)]
 #[UsesClass(ProjectController::class)]
-final class CreateProjectTest extends TestCase
+final class CreateProjectApiEndpointTest extends TestCase
 {
-    #[TestDox('create project through API request')]
-    public function testCreatingProjectThroughApi(): void
+    #[TestDox('happy path')]
+    public function testHappyPath(): void
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
@@ -34,8 +36,30 @@ final class CreateProjectTest extends TestCase
             );
 
         $this->assertEquals(
-            "success",
-            $response["status"],
+            'success',
+            $response['status'],
+        );
+
+        $project = Project::query()
+            ->where('uuid', $response['result']['uuid'])
+            ->where('user_uuid', $response['result']['user_uuid'])
+            ->first();
+
+        $this->assertNotNull(
+            actual: $project,
+            message: 'project not found',
+        );
+
+        $this->assertEquals(
+            expected: 'title',
+            actual: $project->title,
+            message: 'title is wrong',
+        );
+
+        $this->assertEquals(
+            expected: 'description',
+            actual: $project->description,
+            message: 'description is wrong'
         );
     }
 }
