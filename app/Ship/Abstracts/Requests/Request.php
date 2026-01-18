@@ -18,7 +18,7 @@ abstract class Request extends LaravelRequest implements Transportable
         }
 
         return $this->transporter()::from(
-            $this->validated()
+            data: $this->validated()
         );
     }
 }

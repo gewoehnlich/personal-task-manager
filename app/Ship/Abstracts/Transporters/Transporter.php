@@ -2,9 +2,9 @@
 
 namespace App\Ship\Abstracts\Transporters;
 
-use Spatie\LaravelData\Data;
+use Illuminate\Contracts\Support\Arrayable;
 
-abstract class Transporter extends Data
+abstract readonly class Transporter implements Arrayable
 {
     //
 }

@@ -11,11 +11,15 @@ abstract class Exception extends SymfonyHttpException
     protected const int DEFAULT_STATUS_CODE = Response::HTTP_INTERNAL_SERVER_ERROR;
 
     public function __construct(
-        public readonly string $message,
-        public readonly ?int $statusCode = self::DEFAULT_STATUS_CODE,
-        public readonly ?int $code = 0,
+        string $message,
+        int $statusCode = self::DEFAULT_STATUS_CODE,
+        int $code = 0,
     ) {
-        $this->log();
+        $this->log(
+            message: $message,
+            statusCode: $statusCode,
+            code: $code,
+        );
 
         parent::__construct(
             statusCode: $statusCode,
@@ -26,13 +30,16 @@ abstract class Exception extends SymfonyHttpException
         );
     }
 
-    private function log(): void
-    {
+    private function log(
+        string $message,
+        int $statusCode,
+        int $code,
+    ): void {
         Log::error(
             '[ERROR] '
-                . 'Status Code: ' . $this->statusCode . ' | '
-                . 'Message: ' . $this->message . ' | '
-                . 'Code: ' . $this->code,
+                . 'Status Code: ' . $statusCode . ' | '
+                . 'Message: ' . $message . ' | '
+                . 'Code: ' . $code,
         );
     }
 }
