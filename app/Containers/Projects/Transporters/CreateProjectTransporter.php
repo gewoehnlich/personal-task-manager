@@ -26,7 +26,9 @@ final readonly class CreateProjectTransporter extends Transporter
         return new self(
             userUuid: new UserUuidValue(uuid: $data['user_uuid']),
             title: new TitleValue(string: $data['title']),
-            description: new DescriptionValue(string: $data['description']) ?? null,
+            description: $data['description'] === null
+                ? null
+                : new DescriptionValue(string: $data['description']),
         );
     }
 
@@ -35,7 +37,7 @@ final readonly class CreateProjectTransporter extends Transporter
         return [
             'user_uuid'   => $this->userUuid->uuid,
             'title'       => $this->title->string,
-            'description' => $this->description->string,
+            'description' => $this->description?->string,
         ];
     }
 }

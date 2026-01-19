@@ -3,6 +3,7 @@
 namespace App\Containers\Projects\Tests\Unit\Transporters;
 
 use App\Containers\Projects\Transporters\CreateProjectTransporter;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -17,24 +18,60 @@ use PHPUnit\Framework\Attributes\TestDox;
 final class CreateProjectTransporterTest extends TestCase
 {
     #[DataProvider('data')]
-    #[TestDox('converts transporter properties to snake_case array keys')]
-    public function testToArrayReturnsSnakeCaseKeys(
-        string $userUuid,
+    #[TestDox('transporter should be creatable with from() method')]
+    public function testFromMethodTransporterCreation(
         string $title,
         ?string $description,
     ): void {
-        $transporter = new CreateProjectTransporter(
-            userUuid: $userUuid,
-            title: $title,
-            description: $description,
+        $userUuid = User::factory()
+            ->create()
+            ->uuid;
+
+        $transporter = CreateProjectTransporter::from([
+            'user_uuid'   => $userUuid,
+            'title'       => $title,
+            'description' => $description,
+        ]);
+
+        $this->assertSame(
+            expected: $userUuid,
+            actual: $transporter->userUuid->uuid,
+            message: 'userUuid differs',
         );
 
         $this->assertSame(
-            expected: [
-                'user_uuid'   => $userUuid,
-                'title'       => $title,
-                'description' => $description,
-            ],
+            expected: $title,
+            actual: $transporter->title->string,
+            message: 'title differs',
+        );
+
+        $this->assertSame(
+            expected: $description,
+            actual: $transporter->description?->string,
+            message: 'description differs',
+        );
+    }
+
+    #[DataProvider('data')]
+    #[TestDox('transporter should be convertable to array with toArray() method')]
+    public function testToArrayReturnsSnakeCaseKeys(
+        string $title,
+        ?string $description,
+    ): void {
+        $data = [
+            'user_uuid'   => User::factory()
+                ->create()
+                ->uuid,
+            'title'       => $title,
+            'description' => $description,
+        ];
+
+        $transporter = CreateProjectTransporter::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $data,
             actual: $transporter->toArray(),
         );
     }
@@ -43,14 +80,12 @@ final class CreateProjectTransporterTest extends TestCase
     {
         return [
             'all parameters' => [
-                '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'title',                                // title
-                'description',                          // description
+                'title',       // title
+                'description', // description
             ],
             'null description' => [
-                '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'title',                                // title
-                null,                                   // description
+                'title', // title
+                null,    // description
             ],
         ];
     }
