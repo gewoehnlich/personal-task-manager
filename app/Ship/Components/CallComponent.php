@@ -2,7 +2,7 @@
 
 namespace App\Ship\Components;
 
-use App\Ship\Abstracts\Transporters\Transporter;
+use App\Ship\Abstracts\Dto\Dto;
 use App\Ship\Exceptions\ClassDoesNotExistException;
 use App\Ship\Exceptions\ClassIsNotAnInstanceOfComponentClassException;
 
@@ -10,29 +10,29 @@ abstract readonly class CallComponent
 {
     abstract protected static function isInstanceOfComponentClass(object $instance): bool;
 
-    abstract protected static function componentClassName(): string;
+    abstract protected static function componentClass(): string;
 
     public static function call(
-        string $className,
-        Transporter $transporter,
+        string $class,
+        Dto $dto,
     ): mixed {
-        if (! class_exists($className) && ! app()->bound($className)) {
+        if (! class_exists($class) && ! app()->bound($class)) {
             throw new ClassDoesNotExistException(
-                className: $className,
+                class: $class,
             );
         }
 
-        $instance = resolve($className);
+        $instance = resolve($class);
 
         if (! static::isInstanceOfComponentClass($instance)) {
             throw new ClassIsNotAnInstanceOfComponentClassException(
-                className: $className,
-                componentClassName: static::componentClassName(),
+                class: $class,
+                componentClass: static::componentClass(),
             );
         }
 
         return $instance->run(
-            transporter: $transporter,
+            dto: $dto,
         );
     }
 }

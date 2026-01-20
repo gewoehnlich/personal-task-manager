@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Containers\Projects\Transporters;
+namespace App\Containers\Projects\Dto;
 
 use App\Containers\Projects\Values\DescriptionValue;
 use App\Containers\Projects\Values\TitleValue;
 use App\Containers\Users\Values\UserUuidValue;
-use App\Ship\Abstracts\Transporters\Transporter;
+use App\Ship\Abstracts\Dto\Dto;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final readonly class CreateProjectTransporter extends Transporter
+final readonly class CreateProjectDto extends Dto
 {
     public function __construct(
         public readonly UserUuidValue $userUuid,
@@ -18,6 +18,21 @@ final readonly class CreateProjectTransporter extends Transporter
         public readonly ?DescriptionValue $description = null,
     ) {
         //
+    }
+
+    public function userUuid(): string
+    {
+        return $this->userUuid->uuid;
+    }
+
+    public function title(): string
+    {
+        return $this->title->string;
+    }
+
+    public function description(): ?string
+    {
+        return $this->description?->string;
     }
 
     public static function from(

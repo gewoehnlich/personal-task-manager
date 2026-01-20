@@ -29,7 +29,7 @@ final readonly class ProjectController extends ApiController
     ): Responder {
         return $this->action(
             CreateProjectAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 

@@ -14,12 +14,12 @@ final class ClassDoesNotExistException extends Exception
     public const int CODE = 0;
 
     public function __construct(
-        string $className,
+        string $class,
     ) {
         parent::__construct(
             message: sprintf(
                 self::ERROR_MESSAGE,
-                $className,
+                $class,
             ),
             statusCode: self::STATUS_CODE,
             code: self::CODE,

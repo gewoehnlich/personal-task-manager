@@ -14,14 +14,14 @@ final class ClassIsNotAnInstanceOfComponentClassException extends Exception
     public const int CODE = 0;
 
     public function __construct(
-        string $className,
-        string $componentClassName,
+        string $class,
+        string $componentClass,
     ) {
         parent::__construct(
             message: sprintf(
                 self::ERROR_MESSAGE,
-                $className,
-                $componentClassName,
+                $class,
+                $componentClass,
             ),
             statusCode: self::STATUS_CODE,
             code: self::CODE,

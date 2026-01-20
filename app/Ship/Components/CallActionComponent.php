@@ -12,7 +12,7 @@ final readonly class CallActionComponent extends CallComponent
         return $instance instanceof Action;
     }
 
-    protected static function componentClassName(): string
+    protected static function componentClass(): string
     {
         return Action::class;
     }

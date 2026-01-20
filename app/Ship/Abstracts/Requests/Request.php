@@ -2,23 +2,23 @@
 
 namespace App\Ship\Abstracts\Requests;
 
-use App\Ship\Contracts\Transportable;
+use App\Ship\Abstracts\Dto\Dto;
+use App\Ship\Contracts\Dtoable;
 use App\Ship\Exceptions\TransporterIsMissingException;
-use App\Ship\Abstracts\Transporters\Transporter;
-use Illuminate\Foundation\Http\FormRequest as LaravelRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-abstract class Request extends LaravelRequest implements Transportable
+abstract class Request extends FormRequest implements Dtoable
 {
-    abstract public function transporter(): string;
+    abstract public function dto(): string;
 
-    public function transported(): Transporter
+    public function toDto(): Dto
     {
-        if (! $this->transporter()) {
+        if (! $this->dto()) {
             throw new TransporterIsMissingException();
         }
 
-        return $this->transporter()::from(
-            data: $this->validated()
+        return $this->dto()::from(
+            data: $this->validated(),
         );
     }
 }
