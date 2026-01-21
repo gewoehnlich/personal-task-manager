@@ -1,7 +1,3 @@
 <?php
 
-/*
- *
- * Console routes are registered inside app/Containers
- *
- **/
+// Console routes are registered inside app/Containers

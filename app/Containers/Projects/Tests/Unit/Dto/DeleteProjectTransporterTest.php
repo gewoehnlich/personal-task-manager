@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Unit\Transporters;
+namespace App\Containers\Projects\Tests\Unit\Dto;
 
-use App\Containers\Projects\Transporters\DeleteProjectTransporter;
+use App\Containers\Projects\Dto\DeleteProjectDto;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -12,17 +12,17 @@ use PHPUnit\Framework\Attributes\TestDox;
 /**
  * @internal
  */
-#[CoversClass(DeleteProjectTransporter::class)]
+#[CoversClass(DeleteProjectDto::class)]
 #[Small]
-final class DeleteProjectTransporterTest extends TestCase
+final class DeleteProjectDtoTest extends TestCase
 {
     #[DataProvider('data')]
-    #[TestDox('converts transporter properties to snake_case array keys')]
+    #[TestDox('converts dto properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(
         string $uuid,
         string $userUuid,
     ): void {
-        $transporter = new DeleteProjectTransporter(
+        $dto = new DeleteProjectDto(
             uuid: $uuid,
             userUuid: $userUuid,
         );
@@ -32,7 +32,7 @@ final class DeleteProjectTransporterTest extends TestCase
                 'uuid'      => $uuid,
                 'user_uuid' => $userUuid,
             ],
-            actual: $transporter->toArray(),
+            actual: $dto->toArray(),
         );
     }
 

@@ -4,9 +4,9 @@ namespace App\Containers\Projects\Tests\Unit\Actions;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Actions\DeleteProjectAction;
+use App\Containers\Projects\Dto\CreateProjectDto;
+use App\Containers\Projects\Dto\DeleteProjectDto;
 use App\Containers\Projects\Models\Project;
-use App\Containers\Projects\Transporters\CreateProjectTransporter;
-use App\Containers\Projects\Transporters\DeleteProjectTransporter;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Responders\ErrorResponder;
 use App\Ship\Abstracts\Tests\TestCase;
@@ -15,9 +15,12 @@ use PHPUnit\Framework\Attributes\Medium;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 
+/**
+ * @internal
+ */
 #[CoversClass(DeleteProjectAction::class)]
 #[Medium]
-#[UsesClass(CreateProjectTransporter::class)]
+#[UsesClass(CreateProjectDto::class)]
 #[UsesClass(CreateProjectAction::class)]
 final class DeleteProjectActionTest extends TestCase
 {
@@ -33,7 +36,7 @@ final class DeleteProjectActionTest extends TestCase
 
         $this->action(
             DeleteProjectAction::class,
-            new DeleteProjectTransporter(
+            new DeleteProjectDto(
                 uuid: $project->uuid,
                 userUuid: $user->uuid,
             ),
@@ -56,7 +59,7 @@ final class DeleteProjectActionTest extends TestCase
 
         $response = $this->action(
             DeleteProjectAction::class,
-            new DeleteProjectTransporter(
+            new DeleteProjectDto(
                 uuid: '00000000-0000-0000-0000-000000000000',
                 userUuid: $user->uuid,
             ),
@@ -64,7 +67,7 @@ final class DeleteProjectActionTest extends TestCase
 
         $this->assertTrue(
             condition: $response instanceof ErrorResponder,
-            message: 'the response is wrong for delete project action'
+            message: 'the response is wrong for delete project action',
         );
     }
 
@@ -80,7 +83,7 @@ final class DeleteProjectActionTest extends TestCase
 
         $response = $this->action(
             DeleteProjectAction::class,
-            new DeleteProjectTransporter(
+            new DeleteProjectDto(
                 uuid: $project->uuid,
                 userUuid: '00000000-0000-0000-0000-000000000000',
             ),
@@ -88,7 +91,7 @@ final class DeleteProjectActionTest extends TestCase
 
         $this->assertTrue(
             condition: $response instanceof ErrorResponder,
-            message: 'the response is wrong for delete project action'
+            message: 'the response is wrong for delete project action',
         );
     }
 }

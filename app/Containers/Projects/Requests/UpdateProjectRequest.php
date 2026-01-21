@@ -2,14 +2,14 @@
 
 namespace App\Containers\Projects\Requests;
 
-use App\Containers\Projects\Transporters\UpdateProjectTransporter;
+use App\Containers\Projects\Dto\UpdateProjectDto;
 use App\Ship\Abstracts\Requests\Request;
 
 final class UpdateProjectRequest extends Request
 {
-    public function transporter(): string
+    public function dto(): string
     {
-        return UpdateProjectTransporter::class;
+        return UpdateProjectDto::class;
     }
 
     public function authorize(): bool

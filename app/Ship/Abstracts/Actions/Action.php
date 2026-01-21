@@ -2,8 +2,8 @@
 
 namespace App\Ship\Abstracts\Actions;
 
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Responders\ErrorResponder;
+use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Responders\SuccessResponder;
 use App\Ship\Traits\CanCallCommandTrait;
 use App\Ship\Traits\CanCallSubactionTrait;

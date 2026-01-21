@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\Tasks\Transporters;
+namespace App\Containers\Tasks\Dto;
 
 use App\Containers\Tasks\Enums\Stage;
-use App\Ship\Abstracts\Transporters\Transporter;
+use App\Ship\Abstracts\Dto\Dto;
 use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\WithCast;
@@ -11,7 +11,7 @@ use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class IndexTasksTransporter extends Transporter
+final class IndexTasksDto extends Dto
 {
     public function __construct(
         public readonly string $userUuid,

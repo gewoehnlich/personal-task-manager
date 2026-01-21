@@ -4,19 +4,24 @@ namespace App\Containers\Projects\Tests\Api;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Controllers\Api\ProjectController;
+use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Requests\CreateProjectRequest;
-use App\Containers\Projects\Transporters\CreateProjectTransporter;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Large;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
 #[Large]
 #[UsesClass(CreateProjectAction::class)]
 #[UsesClass(CreateProjectRequest::class)]
-#[UsesClass(CreateProjectTransporter::class)]
+#[UsesClass(CreateProjectDto::class)]
 #[UsesClass(ProjectController::class)]
 final class CreateProjectApiEndpointTest extends TestCase
 {
@@ -30,9 +35,9 @@ final class CreateProjectApiEndpointTest extends TestCase
             ->postJson(
                 uri: route('api.v1.projects.index'),
                 data: [
-                    'title' => 'title',
+                    'title'       => 'title',
                     'description' => 'description',
-                ]
+                ],
             );
 
         $this->assertEquals(
@@ -59,7 +64,7 @@ final class CreateProjectApiEndpointTest extends TestCase
         $this->assertEquals(
             expected: 'description',
             actual: $project->description,
-            message: 'description is wrong'
+            message: 'description is wrong',
         );
     }
 }

@@ -2,18 +2,18 @@
 
 namespace App\Ship\Traits;
 
-use App\Ship\Abstracts\Transporters\Transporter;
+use App\Ship\Abstracts\Dto\Dto;
 use App\Ship\Components\CallSubactionComponent;
 
 trait CanCallSubactionTrait
 {
     public function subaction(
-        string $className,
-        Transporter $transporter,
+        string $class,
+        Dto $dto,
     ): mixed {
         return CallSubactionComponent::call(
-            className: $className,
-            transporter: $transporter,
+            class: $class,
+            dto: $dto,
         );
     }
 }

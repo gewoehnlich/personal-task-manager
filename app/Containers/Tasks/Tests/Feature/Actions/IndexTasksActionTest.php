@@ -4,9 +4,9 @@ namespace App\Containers\Tasks\Tests\Feature\Actions;
 
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Actions\IndexTasksAction;
+use App\Containers\Tasks\Dto\IndexTasksDto;
 use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Models\Task;
-use App\Containers\Tasks\Transporters\IndexTasksTransporter;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -19,7 +19,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
  */
 #[CoversClass(IndexTasksAction::class)]
 #[Medium]
-#[UsesClass(IndexTasksTransporter::class)]
+#[UsesClass(IndexTasksDto::class)]
 final class IndexTasksActionTest extends TestCase
 {
     #[TestDox('action indexes tasks by user_uuid')]
@@ -41,7 +41,7 @@ final class IndexTasksActionTest extends TestCase
 
         $response = $this->action(
             IndexTasksAction::class,
-            new IndexTasksTransporter(
+            new IndexTasksDto(
                 userUuid: $user->uuid,
             ),
         );
@@ -69,7 +69,7 @@ final class IndexTasksActionTest extends TestCase
 
         $response = $this->action(
             IndexTasksAction::class,
-            new IndexTasksTransporter(
+            new IndexTasksDto(
                 userUuid: $user->uuid,
                 uuid: $task->uuid,
             ),
@@ -105,7 +105,7 @@ final class IndexTasksActionTest extends TestCase
 
         $response = $this->action(
             IndexTasksAction::class,
-            new IndexTasksTransporter(
+            new IndexTasksDto(
                 userUuid: $user2->uuid,
                 uuid: $task->uuid,
             ),
@@ -140,7 +140,7 @@ final class IndexTasksActionTest extends TestCase
 
         $response = $this->action(
             IndexTasksAction::class,
-            new IndexTasksTransporter(
+            new IndexTasksDto(
                 userUuid: $user->uuid,
                 stage: Stage::PENDING,
             ),
@@ -184,7 +184,7 @@ final class IndexTasksActionTest extends TestCase
 
         $response = $this->action(
             IndexTasksAction::class,
-            new IndexTasksTransporter(
+            new IndexTasksDto(
                 userUuid: $user->uuid,
                 projectUuid: $project->uuid,
             ),
@@ -215,7 +215,7 @@ final class IndexTasksActionTest extends TestCase
     //
     //     $response = $this->action(
     //         IndexTasksAction::class,
-    //         new IndexTasksTransporter(
+    //         new IndexTasksDto(
     //             userUuid: $user->uuid,
     //             projectUuid: $project->uuid,
     //         ),

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Containers\Projects\Transporters;
+namespace App\Containers\Bills\Dto;
 
-use App\Ship\Abstracts\Transporters\Transporter;
+use App\Ship\Abstracts\Dto\Dto;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class IndexProjectsTransporter extends Transporter
+final class IndexBillsDto extends Dto
 {
     public function __construct(
-        public readonly string $userUuid,
+        public readonly int $taskUuid,
     ) {
         //
     }

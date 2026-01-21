@@ -21,7 +21,7 @@ final readonly class ProjectController extends ApiController
     ): RedirectResponse {
         return $this->action(
             IndexProjectsAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
 
         return Redirect::back();
@@ -32,7 +32,7 @@ final readonly class ProjectController extends ApiController
     ): RedirectResponse {
         return $this->action(
             CreateProjectAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
 
         return Redirect::back();
@@ -43,7 +43,7 @@ final readonly class ProjectController extends ApiController
     ): RedirectResponse {
         return $this->action(
             UpdateProjectAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
 
         return Redirect::back();
@@ -54,7 +54,7 @@ final readonly class ProjectController extends ApiController
     ): RedirectResponse {
         return $this->action(
             DeleteProjectAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
 
         return Redirect::back();

@@ -4,8 +4,8 @@ namespace App\Containers\Tasks\Tests\Feature\Actions;
 
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Actions\DeleteTaskAction;
+use App\Containers\Tasks\Dto\DeleteTaskDto;
 use App\Containers\Tasks\Models\Task;
-use App\Containers\Tasks\Transporters\DeleteTaskTransporter;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -18,7 +18,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
  */
 #[CoversClass(DeleteTaskAction::class)]
 #[Medium]
-#[UsesClass(DeleteTaskTransporter::class)]
+#[UsesClass(DeleteTaskDto::class)]
 final class DeleteTaskActionTest extends TestCase
 {
     #[TestDox('action deletes a task')]
@@ -32,7 +32,7 @@ final class DeleteTaskActionTest extends TestCase
 
         $this->action(
             DeleteTaskAction::class,
-            new DeleteTaskTransporter(
+            new DeleteTaskDto(
                 uuid: $task->uuid,
                 userUuid: $user->uuid,
             ),
@@ -43,7 +43,7 @@ final class DeleteTaskActionTest extends TestCase
             data: [
                 'uuid'      => $task->uuid,
                 'user_uuid' => $user->uuid,
-            ]
+            ],
         );
     }
 }

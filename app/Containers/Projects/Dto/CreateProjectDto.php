@@ -35,6 +35,15 @@ final readonly class CreateProjectDto extends Dto
         return $this->description?->string;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'user_uuid'   => $this->userUuid->uuid,
+            'title'       => $this->title->string,
+            'description' => $this->description?->string,
+        ];
+    }
+
     public static function from(
         array $data,
     ): self {
@@ -45,14 +54,5 @@ final readonly class CreateProjectDto extends Dto
                 ? null
                 : new DescriptionValue(string: $data['description']),
         );
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'user_uuid'   => $this->userUuid->uuid,
-            'title'       => $this->title->string,
-            'description' => $this->description?->string,
-        ];
     }
 }

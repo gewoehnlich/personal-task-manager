@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Unit\Transporters;
+namespace App\Containers\Projects\Tests\Unit\Dto;
 
-use App\Containers\Projects\Transporters\IndexProjectsTransporter;
+use App\Containers\Projects\Dto\IndexProjectsDto;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -12,16 +12,16 @@ use PHPUnit\Framework\Attributes\TestDox;
 /**
  * @internal
  */
-#[CoversClass(IndexProjectsTransporter::class)]
+#[CoversClass(IndexProjectsDto::class)]
 #[Small]
-final class IndexProjectsTransporterTest extends TestCase
+final class IndexProjectsDtoTest extends TestCase
 {
     #[DataProvider('data')]
-    #[TestDox('converts transporter properties to snake_case array keys')]
+    #[TestDox('converts dto properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(
         string $userUuid,
     ): void {
-        $transporter = new IndexProjectsTransporter(
+        $dto = new IndexProjectsDto(
             userUuid: $userUuid,
         );
 
@@ -29,7 +29,7 @@ final class IndexProjectsTransporterTest extends TestCase
             expected: [
                 'user_uuid' => $userUuid,
             ],
-            actual: $transporter->toArray(),
+            actual: $dto->toArray(),
         );
     }
 

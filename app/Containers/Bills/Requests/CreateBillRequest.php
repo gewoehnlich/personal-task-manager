@@ -2,16 +2,16 @@
 
 namespace App\Containers\Bills\Requests;
 
-use App\Containers\Bills\Transporters\CreateBillTransporter;
+use App\Containers\Bills\Dto\CreateBillDto;
 use App\Ship\Abstracts\Requests\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Validator;
 
 final class CreateBillRequest extends Request
 {
-    public function transporter(): string
+    public function dto(): string
     {
-        return CreateBillTransporter::class;
+        return CreateBillDto::class;
     }
 
     public function authorize(): bool

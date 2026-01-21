@@ -3,14 +3,17 @@
 namespace App\Containers\Projects\Tests\Unit\Actions;
 
 use App\Containers\Projects\Actions\IndexProjectsAction;
+use App\Containers\Projects\Dto\IndexProjectsDto;
 use App\Containers\Projects\Models\Project;
-use App\Containers\Projects\Transporters\IndexProjectsTransporter;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use PHPUnit\Framework\Attributes\TestDox;
 
+/**
+ * @internal
+ */
 #[CoversClass(IndexProjectsAction::class)]
 #[Medium]
 final class IndexProjectsActionTest extends TestCase
@@ -28,7 +31,7 @@ final class IndexProjectsActionTest extends TestCase
 
         $response = $this->action(
             IndexProjectsAction::class,
-            new IndexProjectsTransporter(
+            new IndexProjectsDto(
                 userUuid: $user->uuid,
             ),
         );

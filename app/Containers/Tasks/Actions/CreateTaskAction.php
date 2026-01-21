@@ -2,10 +2,10 @@
 
 namespace App\Containers\Tasks\Actions;
 
+use App\Containers\Tasks\Dto\CreateTaskDto;
 use App\Containers\Tasks\Models\Task;
-use App\Containers\Tasks\Transporters\CreateTaskTransporter;
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Actions\Action;
+use App\Ship\Abstracts\Responders\Responder;
 use Knuckles\Scribe\Attributes\Authenticated;
 use Knuckles\Scribe\Attributes\Group;
 
@@ -14,10 +14,10 @@ use Knuckles\Scribe\Attributes\Group;
 final readonly class CreateTaskAction extends Action
 {
     public function run(
-        CreateTaskTransporter $transporter,
+        CreateTaskDto $dto,
     ): Responder {
         $result = Task::create(
-            attributes: $transporter->toArray(),
+            attributes: $dto->toArray(),
         );
 
         return $this->success(

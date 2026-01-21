@@ -4,8 +4,8 @@ namespace App\Containers\Tasks\Tests\Feature\Actions;
 
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Actions\CreateTaskAction;
+use App\Containers\Tasks\Dto\CreateTaskDto;
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Transporters\CreateTaskTransporter;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
@@ -20,7 +20,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
  */
 #[CoversClass(CreateTaskAction::class)]
 #[Medium]
-#[UsesClass(CreateTaskTransporter::class)]
+#[UsesClass(CreateTaskDto::class)]
 final class CreateTaskActionTest extends TestCase
 {
     #[DataProvider('data')]
@@ -43,7 +43,7 @@ final class CreateTaskActionTest extends TestCase
             message: 'test user should not have tasks',
         );
 
-        $transporter = new CreateTaskTransporter(
+        $dto = new CreateTaskDto(
             userUuid: $user->uuid,
             title: $title,
             description: $description,
@@ -54,7 +54,7 @@ final class CreateTaskActionTest extends TestCase
 
         $response = $this->action(
             CreateTaskAction::class,
-            $transporter,
+            $dto,
         );
 
         $taskUuid = $response->data['uuid'];
@@ -68,7 +68,7 @@ final class CreateTaskActionTest extends TestCase
                 'stage'        => $stage?->value,
                 'deadline'     => $deadline,
                 'project_uuid' => $project->uuid ?? null,
-            ]
+            ],
         );
     }
 

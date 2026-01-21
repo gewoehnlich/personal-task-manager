@@ -2,14 +2,14 @@
 
 namespace App\Containers\Bills\Requests;
 
-use App\Containers\Bills\Transporters\IndexBillsTransporter;
+use App\Containers\Bills\Dto\IndexBillsDto;
 use App\Ship\Abstracts\Requests\Request;
 
 final class IndexBillsRequest extends Request
 {
-    public function transporter(): string
+    public function dto(): string
     {
-        return IndexBillsTransporter::class;
+        return IndexBillsDto::class;
     }
 
     public function authorize(): bool

@@ -2,64 +2,64 @@
 
 namespace App\Containers\Tasks\Actions;
 
+use App\Containers\Tasks\Dto\IndexTasksDto;
 use App\Containers\Tasks\Models\Task;
-use App\Containers\Tasks\Transporters\IndexTasksTransporter;
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Actions\Action;
+use App\Ship\Abstracts\Responders\Responder;
 
 final readonly class IndexTasksAction extends Action
 {
     public function run(
-        IndexTasksTransporter $transporter,
+        IndexTasksDto $dto,
     ): Responder {
         $query = Task::query()
-            ->where('user_uuid', $transporter->userUuid);
+            ->where('user_uuid', $dto->userUuid);
 
-        if (isset($transporter->uuid)) {
-            $query = $query->where('uuid', $transporter->uuid);
+        if (isset($dto->uuid)) {
+            $query = $query->where('uuid', $dto->uuid);
         }
 
-        if (isset($transporter->stage)) {
-            $query = $query->where('stage', $transporter->stage);
+        if (isset($dto->stage)) {
+            $query = $query->where('stage', $dto->stage);
         }
 
-        if (isset($transporter->projectUuid)) {
-            $query = $query->where('project_uuid', $transporter->projectUuid);
+        if (isset($dto->projectUuid)) {
+            $query = $query->where('project_uuid', $dto->projectUuid);
         }
 
-        if (isset($transporter->createdAtFrom)) {
-            $query = $query->where('created_at', '>=', $transporter->createdAtFrom);
+        if (isset($dto->createdAtFrom)) {
+            $query = $query->where('created_at', '>=', $dto->createdAtFrom);
         }
 
-        if (isset($transporter->createdAtTo)) {
-            $query = $query->where('created_at', '<=', $transporter->createdAtTo);
+        if (isset($dto->createdAtTo)) {
+            $query = $query->where('created_at', '<=', $dto->createdAtTo);
         }
 
-        if (isset($transporter->updatedAtFrom)) {
-            $query = $query->where('updated_at', '>=', $transporter->updatedAtFrom);
+        if (isset($dto->updatedAtFrom)) {
+            $query = $query->where('updated_at', '>=', $dto->updatedAtFrom);
         }
 
-        if (isset($transporter->updatedAtTo)) {
-            $query = $query->where('updated_at', '<=', $transporter->updatedAtTo);
+        if (isset($dto->updatedAtTo)) {
+            $query = $query->where('updated_at', '<=', $dto->updatedAtTo);
         }
 
-        if (isset($transporter->deadlineFrom)) {
-            $query = $query->where('deadline', '>=', $transporter->deadlineFrom);
+        if (isset($dto->deadlineFrom)) {
+            $query = $query->where('deadline', '>=', $dto->deadlineFrom);
         }
 
-        if (isset($transporter->deadlineTo)) {
-            $query = $query->where('deadline', '<=', $transporter->deadlineTo);
+        if (isset($dto->deadlineTo)) {
+            $query = $query->where('deadline', '<=', $dto->deadlineTo);
         }
 
-        if (isset($transporter->orderBy, $transporter->orderByField)) {
-            $query = $query->orderBy($transporter->orderByField ?? 'id', $transporter->orderBy);
+        if (isset($dto->orderBy, $dto->orderByField)) {
+            $query = $query->orderBy($dto->orderByField ?? 'id', $dto->orderBy);
         }
 
-        if (isset($transporter->limit)) {
-            $query = $query->limit($transporter->limit);
+        if (isset($dto->limit)) {
+            $query = $query->limit($dto->limit);
         }
 
-        if ($transporter->withDeleted === true) {
+        if ($dto->withDeleted === true) {
             $query = $query->whereNotNull('deleted_at');
         }
 

@@ -2,25 +2,25 @@
 
 namespace App\Containers\Projects\Actions;
 
+use App\Containers\Projects\Dto\UpdateProjectDto;
 use App\Containers\Projects\Models\Project;
-use App\Containers\Projects\Transporters\UpdateProjectTransporter;
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Actions\Action;
+use App\Ship\Abstracts\Responders\Responder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final readonly class UpdateProjectAction extends Action
 {
     public function run(
-        UpdateProjectTransporter $transporter,
+        UpdateProjectDto $dto,
     ): Responder {
         try {
             $project = Project::query()
-                ->where('uuid', $transporter->uuid)
-                ->where('user_uuid', $transporter->userUuid)
+                ->where('uuid', $dto->uuid)
+                ->where('user_uuid', $dto->userUuid)
                 ->firstOrFail();
 
             $result = $project->update(
-                attributes: $transporter->toArray(),
+                attributes: $dto->toArray(),
             );
 
             return $this->success(

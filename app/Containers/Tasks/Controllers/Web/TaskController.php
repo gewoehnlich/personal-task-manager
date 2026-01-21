@@ -21,7 +21,7 @@ final readonly class TaskController extends WebController
     ): RedirectResponse {
         $this->action(
             IndexTasksAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
 
         return Redirect::back();
@@ -32,7 +32,7 @@ final readonly class TaskController extends WebController
     ): RedirectResponse {
         $this->action(
             CreateTaskAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
 
         return Redirect::back();
@@ -43,7 +43,7 @@ final readonly class TaskController extends WebController
     ): RedirectResponse {
         $this->action(
             UpdateTaskAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
 
         return Redirect::back();
@@ -54,7 +54,7 @@ final readonly class TaskController extends WebController
     ): RedirectResponse {
         $this->action(
             DeleteTaskAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
 
         return Redirect::back();

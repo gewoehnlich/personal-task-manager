@@ -3,9 +3,9 @@
 namespace App\Containers\Projects\Tests\Unit\Actions;
 
 use App\Containers\Projects\Actions\UpdateProjectAction;
+use App\Containers\Projects\Dto\CreateProjectDto;
+use App\Containers\Projects\Dto\UpdateProjectDto;
 use App\Containers\Projects\Models\Project;
-use App\Containers\Projects\Transporters\CreateProjectTransporter;
-use App\Containers\Projects\Transporters\UpdateProjectTransporter;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -18,8 +18,8 @@ use PHPUnit\Framework\Attributes\UsesClass;
  */
 #[CoversClass(UpdateProjectAction::class)]
 #[Medium]
-#[UsesClass(CreateProjectTransporter::class)]
-#[UsesClass(UpdateProjectTransporter::class)]
+#[UsesClass(CreateProjectDto::class)]
+#[UsesClass(UpdateProjectDto::class)]
 final class UpdateProjectActionTest extends TestCase
 {
     #[TestDox('action updates a project')]
@@ -33,8 +33,8 @@ final class UpdateProjectActionTest extends TestCase
             ->create();
 
         $this->action(
-            className: UpdateProjectAction::class,
-            transporter: new UpdateProjectTransporter(
+            class: UpdateProjectAction::class,
+            dto: new UpdateProjectDto(
                 uuid: $project->uuid,
                 userUuid: $project->user_uuid,
                 title: 'test name',

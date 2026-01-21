@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\Tasks\Tests\Unit\Transporters;
+namespace App\Containers\Tasks\Tests\Unit\Dto;
 
+use App\Containers\Tasks\Dto\CreateTaskDto;
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Transporters\UpdateTaskTransporter;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -14,14 +14,13 @@ use PHPUnit\Framework\Attributes\TestDox;
 /**
  * @internal
  */
-#[CoversClass(UpdateTaskTransporter::class)]
+#[CoversClass(CreateTaskDto::class)]
 #[Small]
-final class UpdateTaskTransporterTest extends TestCase
+final class CreateTaskDtoTest extends TestCase
 {
     #[DataProvider('data')]
-    #[TestDox('converts transporter properties to snake_case array keys')]
+    #[TestDox('converts dto properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(
-        string $uuid,
         string $userUuid,
         string $title,
         ?string $description,
@@ -29,8 +28,7 @@ final class UpdateTaskTransporterTest extends TestCase
         ?Carbon $deadline,
         ?string $projectUuid,
     ): void {
-        $transporter = new UpdateTaskTransporter(
-            uuid: $uuid,
+        $dto = new CreateTaskDto(
             userUuid: $userUuid,
             title: $title,
             description: $description,
@@ -41,7 +39,6 @@ final class UpdateTaskTransporterTest extends TestCase
 
         $this->assertSame(
             expected: [
-                'uuid'         => $uuid,
                 'user_uuid'    => $userUuid,
                 'title'        => $title,
                 'description'  => $description,
@@ -49,7 +46,7 @@ final class UpdateTaskTransporterTest extends TestCase
                 'deadline'     => $deadline?->toIso8601String(),
                 'project_uuid' => $projectUuid,
             ],
-            actual: $transporter->toArray(),
+            actual: $dto->toArray(),
         );
     }
 
@@ -57,18 +54,16 @@ final class UpdateTaskTransporterTest extends TestCase
     {
         return [
             'all parameters' => [
-                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // uuid
                 '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'name',                                 // name
+                'title',                                // title
                 'description',                          // description
                 Stage::PENDING,                         // stage,
                 Carbon::now(),                          // deadline
                 '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // projectUuid
             ],
             'all nullable parameters are null' => [
-                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // uuid
                 '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'name',                                 // name
+                'title',                                // title
                 null,                                   // description
                 Stage::PENDING,                         // stage,
                 null,                                   // deadline

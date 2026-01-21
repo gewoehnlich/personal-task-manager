@@ -2,14 +2,14 @@
 
 namespace App\Containers\Bills\Requests;
 
-use App\Containers\Bills\Transporters\DeleteBillTransporter;
+use App\Containers\Bills\Dto\DeleteBillDto;
 use App\Ship\Abstracts\Requests\Request;
 
 final class DeleteBillRequest extends Request
 {
-    public function transporter(): string
+    public function dto(): string
     {
-        return DeleteBillTransporter::class;
+        return DeleteBillDto::class;
     }
 
     public function authorize(): bool

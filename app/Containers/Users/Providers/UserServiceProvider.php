@@ -14,7 +14,7 @@ final class UserServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(
-            paths: [ __DIR__ . '/../Migrations' ],
+            paths: [__DIR__ . '/../Migrations'],
         );
     }
 }

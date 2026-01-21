@@ -10,8 +10,8 @@ use App\Containers\Bills\Requests\CreateBillRequest;
 use App\Containers\Bills\Requests\DeleteBillRequest;
 use App\Containers\Bills\Requests\IndexBillsRequest;
 use App\Containers\Bills\Requests\UpdateBillRequest;
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Controllers\ApiController;
+use App\Ship\Abstracts\Responders\Responder;
 
 final readonly class BillController extends ApiController
 {
@@ -20,7 +20,7 @@ final readonly class BillController extends ApiController
     ): Responder {
         return $this->action(
             IndexBillsAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 
@@ -29,7 +29,7 @@ final readonly class BillController extends ApiController
     ): Responder {
         return $this->action(
             CreateBillAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 
@@ -38,7 +38,7 @@ final readonly class BillController extends ApiController
     ): Responder {
         return $this->action(
             UpdateBillAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 
@@ -47,7 +47,7 @@ final readonly class BillController extends ApiController
     ): Responder {
         return $this->action(
             DeleteBillAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 }

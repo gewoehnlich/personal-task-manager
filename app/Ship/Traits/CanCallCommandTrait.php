@@ -2,18 +2,18 @@
 
 namespace App\Ship\Traits;
 
-use App\Ship\Abstracts\Transporters\Transporter;
+use App\Ship\Abstracts\Dto\Dto;
 use App\Ship\Components\CallCommandComponent;
 
 trait CanCallCommandTrait
 {
     public function command(
-        string $className,
-        Transporter $transporter,
+        string $class,
+        Dto $dto,
     ): mixed {
         return CallCommandComponent::call(
-            className: $className,
-            transporter: $transporter,
+            class: $class,
+            dto: $dto,
         );
     }
 }

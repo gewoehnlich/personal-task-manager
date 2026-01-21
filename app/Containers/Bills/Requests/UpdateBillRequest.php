@@ -2,16 +2,16 @@
 
 namespace App\Containers\Bills\Requests;
 
-use App\Containers\Bills\Transporters\UpdateBillTransporter;
+use App\Containers\Bills\Dto\UpdateBillDto;
 use App\Ship\Abstracts\Requests\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Validator;
 
 final class UpdateBillRequest extends Request
 {
-    public function transporter(): string
+    public function dto(): string
     {
-        return UpdateBillTransporter::class;
+        return UpdateBillDto::class;
     }
 
     public function authorize(): bool

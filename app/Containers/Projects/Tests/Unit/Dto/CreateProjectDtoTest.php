@@ -97,7 +97,7 @@ final class CreateProjectDtoTest extends TestCase
         $this->assertSame(
             expected: $dto->userUuid->uuid,
             actual: $dto->userUuid(),
-            message: "userUuid() method works the wrong way",
+            message: 'userUuid() method works the wrong way',
         );
     }
 
@@ -122,7 +122,7 @@ final class CreateProjectDtoTest extends TestCase
         $this->assertSame(
             expected: $dto->title->string,
             actual: $dto->title(),
-            message: "title() method works the wrong way",
+            message: 'title() method works the wrong way',
         );
     }
 
@@ -147,7 +147,7 @@ final class CreateProjectDtoTest extends TestCase
         $this->assertSame(
             expected: $dto->description?->string,
             actual: $dto->description(),
-            message: "description() method works the wrong way",
+            message: 'description() method works the wrong way',
         );
     }
 

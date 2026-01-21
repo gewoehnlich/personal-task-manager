@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Containers\Tasks\Tests\Unit\Transporters;
+namespace App\Containers\Tasks\Tests\Unit\Dto;
 
+use App\Containers\Tasks\Dto\IndexTasksDto;
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Transporters\DeleteTaskTransporter;
-use App\Containers\Tasks\Transporters\IndexTasksTransporter;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -15,12 +14,12 @@ use PHPUnit\Framework\Attributes\TestDox;
 /**
  * @internal
  */
-#[CoversClass(IndexTasksTransporter::class)]
+#[CoversClass(IndexTasksDto::class)]
 #[Small]
-final class IndexTasksTransporterTest extends TestCase
+final class IndexTasksDtoTest extends TestCase
 {
     #[DataProvider('data')]
-    #[TestDox('converts transporter properties to snake_case array keys')]
+    #[TestDox('converts dto properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(
         string $userUuid,
         ?string $uuid,
@@ -37,7 +36,7 @@ final class IndexTasksTransporterTest extends TestCase
         ?int $limit,
         ?bool $withDeleted,
     ): void {
-        $transporter = new IndexTasksTransporter(
+        $dto = new IndexTasksDto(
             userUuid: $userUuid,
             uuid: $uuid,
             stage: $stage,
@@ -56,22 +55,22 @@ final class IndexTasksTransporterTest extends TestCase
 
         $this->assertSame(
             expected: [
-                'user_uuid'       => $transporter->userUuid,
-                'uuid'            => $transporter->uuid,
-                'stage'           => $transporter->stage?->value,
-                'project_uuid'    => $transporter->projectUuid,
-                'created_at_from' => $transporter->createdAtFrom?->toIso8601String(),
-                'created_at_to'   => $transporter->createdAtTo?->toIso8601String(),
-                'updated_at_from' => $transporter->updatedAtFrom?->toIso8601String(),
-                'updated_at_to'   => $transporter->updatedAtTo?->toIso8601String(),
-                'deadline_from'   => $transporter->deadlineFrom?->toIso8601String(),
-                'deadline_to'     => $transporter->deadlineTo?->toIso8601String(),
-                'order_by'        => $transporter->orderBy,
-                'order_by_field'  => $transporter->orderByField,
-                'limit'           => $transporter->limit,
-                'with_deleted'    => $transporter->withDeleted,
+                'user_uuid'       => $dto->userUuid,
+                'uuid'            => $dto->uuid,
+                'stage'           => $dto->stage?->value,
+                'project_uuid'    => $dto->projectUuid,
+                'created_at_from' => $dto->createdAtFrom?->toIso8601String(),
+                'created_at_to'   => $dto->createdAtTo?->toIso8601String(),
+                'updated_at_from' => $dto->updatedAtFrom?->toIso8601String(),
+                'updated_at_to'   => $dto->updatedAtTo?->toIso8601String(),
+                'deadline_from'   => $dto->deadlineFrom?->toIso8601String(),
+                'deadline_to'     => $dto->deadlineTo?->toIso8601String(),
+                'order_by'        => $dto->orderBy,
+                'order_by_field'  => $dto->orderByField,
+                'limit'           => $dto->limit,
+                'with_deleted'    => $dto->withDeleted,
             ],
-            actual: $transporter->toArray(),
+            actual: $dto->toArray(),
         );
     }
 

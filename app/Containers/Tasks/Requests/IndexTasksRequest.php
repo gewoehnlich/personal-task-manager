@@ -2,17 +2,17 @@
 
 namespace App\Containers\Tasks\Requests;
 
+use App\Containers\Tasks\Dto\IndexTasksDto;
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Transporters\IndexTasksTransporter;
 use App\Ship\Abstracts\Requests\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
 final class IndexTasksRequest extends Request
 {
-    public function transporter(): string
+    public function dto(): string
     {
-        return IndexTasksTransporter::class;
+        return IndexTasksDto::class;
     }
 
     public function authorize(): bool

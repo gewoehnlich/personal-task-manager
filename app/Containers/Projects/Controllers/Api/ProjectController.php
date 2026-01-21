@@ -10,8 +10,8 @@ use App\Containers\Projects\Requests\CreateProjectRequest;
 use App\Containers\Projects\Requests\DeleteProjectRequest;
 use App\Containers\Projects\Requests\IndexProjectsRequest;
 use App\Containers\Projects\Requests\UpdateProjectRequest;
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Controllers\ApiController;
+use App\Ship\Abstracts\Responders\Responder;
 
 final readonly class ProjectController extends ApiController
 {
@@ -20,7 +20,7 @@ final readonly class ProjectController extends ApiController
     ): Responder {
         return $this->action(
             IndexProjectsAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 
@@ -38,7 +38,7 @@ final readonly class ProjectController extends ApiController
     ): Responder {
         return $this->action(
             UpdateProjectAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 
@@ -47,7 +47,7 @@ final readonly class ProjectController extends ApiController
     ): Responder {
         return $this->action(
             DeleteProjectAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 }

@@ -5,9 +5,9 @@ namespace App\Containers\Auth\Actions;
 use App\Containers\Auth\Tasks\CheckIfUserTokenAlreadyExistsTask;
 use App\Containers\Auth\Tasks\GenerateUserTokenTask;
 use App\Containers\Users\Models\User;
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Actions\Action;
 use App\Ship\Abstracts\Exceptions\Exception;
+use App\Ship\Abstracts\Responders\Responder;
 
 final readonly class CreateUserTokenAction extends Action
 {

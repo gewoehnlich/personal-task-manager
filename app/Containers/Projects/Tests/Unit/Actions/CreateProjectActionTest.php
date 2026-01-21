@@ -3,7 +3,7 @@
 namespace App\Containers\Projects\Tests\Unit\Actions;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
-use App\Containers\Projects\Transporters\CreateProjectTransporter;
+use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -17,7 +17,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
  */
 #[CoversClass(CreateProjectAction::class)]
 #[Medium]
-#[UsesClass(CreateProjectTransporter::class)]
+#[UsesClass(CreateProjectDto::class)]
 final class CreateProjectActionTest extends TestCase
 {
     #[DataProvider('data')]
@@ -29,8 +29,8 @@ final class CreateProjectActionTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->action(
-            className: CreateProjectAction::class,
-            transporter: new CreateProjectTransporter(
+            class: CreateProjectAction::class,
+            dto: new CreateProjectDto(
                 userUuid: $user->uuid,
                 title: $title,
                 description: $description,
@@ -44,7 +44,7 @@ final class CreateProjectActionTest extends TestCase
                 'user_uuid'   => $user->uuid,
                 'title'       => $title,
                 'description' => $description,
-            ]
+            ],
         );
     }
 

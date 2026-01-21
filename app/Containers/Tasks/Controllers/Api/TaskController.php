@@ -10,8 +10,8 @@ use App\Containers\Tasks\Requests\CreateTaskRequest;
 use App\Containers\Tasks\Requests\DeleteTaskRequest;
 use App\Containers\Tasks\Requests\IndexTasksRequest;
 use App\Containers\Tasks\Requests\UpdateTaskRequest;
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Controllers\ApiController;
+use App\Ship\Abstracts\Responders\Responder;
 
 final readonly class TaskController extends ApiController
 {
@@ -20,7 +20,7 @@ final readonly class TaskController extends ApiController
     ): Responder {
         return $this->action(
             IndexTasksAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 
@@ -29,7 +29,7 @@ final readonly class TaskController extends ApiController
     ): Responder {
         return $this->action(
             CreateTaskAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 
@@ -38,7 +38,7 @@ final readonly class TaskController extends ApiController
     ): Responder {
         return $this->action(
             UpdateTaskAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 
@@ -47,7 +47,7 @@ final readonly class TaskController extends ApiController
     ): Responder {
         return $this->action(
             DeleteTaskAction::class,
-            $request->transported(),
+            $request->toDto(),
         );
     }
 }

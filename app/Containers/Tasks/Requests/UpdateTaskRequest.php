@@ -2,8 +2,8 @@
 
 namespace App\Containers\Tasks\Requests;
 
+use App\Containers\Tasks\Dto\UpdateTaskDto;
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Transporters\UpdateTaskTransporter;
 use App\Ship\Abstracts\Requests\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
@@ -11,9 +11,9 @@ use Illuminate\Validation\Validator;
 
 final class UpdateTaskRequest extends Request
 {
-    public function transporter(): string
+    public function dto(): string
     {
-        return UpdateTaskTransporter::class;
+        return UpdateTaskDto::class;
     }
 
     public function authorize(): bool

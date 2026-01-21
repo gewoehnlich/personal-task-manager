@@ -2,21 +2,21 @@
 
 namespace App\Containers\Projects\Actions;
 
+use App\Containers\Projects\Dto\DeleteProjectDto;
 use App\Containers\Projects\Models\Project;
-use App\Containers\Projects\Transporters\DeleteProjectTransporter;
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Actions\Action;
+use App\Ship\Abstracts\Responders\Responder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final readonly class DeleteProjectAction extends Action
 {
     public function run(
-        DeleteProjectTransporter $transporter,
+        DeleteProjectDto $dto,
     ): Responder {
         try {
             $project = Project::query()
-                ->where('uuid', $transporter->uuid)
-                ->where('user_uuid', $transporter->userUuid)
+                ->where('uuid', $dto->uuid)
+                ->where('user_uuid', $dto->userUuid)
                 ->firstOrFail();
 
             $result = $project->delete();

@@ -2,20 +2,20 @@
 
 namespace App\Containers\Bills\Actions;
 
+use App\Containers\Bills\Dto\IndexBillsDto;
 use App\Containers\Bills\Models\Bill;
-use App\Containers\Bills\Transporters\IndexBillsTransporter;
-use App\Ship\Abstracts\Responders\Responder;
 use App\Ship\Abstracts\Actions\Action;
+use App\Ship\Abstracts\Responders\Responder;
 use Exception;
 
 final readonly class IndexBillsAction extends Action
 {
     public function run(
-        IndexBillsTransporter $transporter,
+        IndexBillsDto $dto,
     ): Responder {
         try {
             $bill = Bill::query()
-                ->where('task_uuid', $transporter->taskUuid)
+                ->where('task_uuid', $dto->taskUuid)
                 ->firstOrFail();
 
             return $this->success(

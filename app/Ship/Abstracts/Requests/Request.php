@@ -4,21 +4,21 @@ namespace App\Ship\Abstracts\Requests;
 
 use App\Ship\Abstracts\Dto\Dto;
 use App\Ship\Contracts\Dtoable;
-use App\Ship\Exceptions\TransporterIsMissingException;
+use App\Ship\Exceptions\DtoIsMissingException;
 use Illuminate\Foundation\Http\FormRequest;
 
 abstract class Request extends FormRequest implements Dtoable
 {
-    abstract public function dto(): string;
-
     public function toDto(): Dto
     {
         if (! $this->dto()) {
-            throw new TransporterIsMissingException();
+            throw new DtoIsMissingException();
         }
 
         return $this->dto()::from(
             data: $this->validated(),
         );
     }
+
+    abstract public function dto(): string;
 }

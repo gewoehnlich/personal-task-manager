@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Bills\Transporters;
+namespace App\Containers\Bills\Dto;
 
-use App\Ship\Abstracts\Transporters\Transporter;
+use App\Ship\Abstracts\Dto\Dto;
 use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\WithCast;
@@ -10,7 +10,7 @@ use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class UpdateBillTransporter extends Transporter
+final class UpdateBillDto extends Dto
 {
     public function __construct(
         public readonly int $uuid,
