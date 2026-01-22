@@ -5,7 +5,9 @@ namespace App\Containers\Tasks\Models;
 use App\Containers\Bills\Models\Bill;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Factories\TaskFactory;
+use App\Containers\Tasks\Values\DeadlineValue;
 use App\Containers\Users\Models\User;
+use App\Ship\Values\DatetimeValue;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,6 +34,12 @@ final class Task extends Model
         'project_uuid',
     ];
 
+    protected $casts = [
+        'deadline'   => 'datetime:' . DatetimeValue::FORMAT,
+        'created_at' => 'datetime:' . DatetimeValue::FORMAT,
+        'updated_at' => 'datetime:' . DatetimeValue::FORMAT,
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -45,13 +53,5 @@ final class Task extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'deadline' => 'datetime',
-            'debug'    => 'boolean',
-        ];
     }
 }

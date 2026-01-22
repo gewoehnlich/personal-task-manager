@@ -2,19 +2,74 @@
 
 namespace App\Containers\Projects\Dto;
 
+use App\Containers\Projects\Values\DescriptionValue;
+use App\Containers\Projects\Values\ProjectUuidValue;
+use App\Containers\Projects\Values\TitleValue;
+use App\Containers\Users\Values\UserUuidValue;
 use App\Ship\Abstracts\Dto\Dto;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapName(SnakeCaseMapper::class)]
-final class UpdateProjectDto extends Dto
+final readonly class UpdateProjectDto extends Dto
 {
     public function __construct(
-        public readonly string $uuid,
-        public readonly string $userUuid,
-        public readonly string $title,
-        public readonly ?string $description = null,
+        public readonly ProjectUuidValue $uuid,
+        public readonly UserUuidValue $userUuid,
+        public readonly TitleValue $title,
+        public readonly ?DescriptionValue $description = null,
     ) {
         //
+    }
+
+    public function uuid(): string
+    {
+        return $this->uuid->uuid;
+    }
+
+    public function userUuid(): string
+    {
+        return $this->userUuid->uuid;
+    }
+
+    public function title(): string
+    {
+        return $this->title->string;
+    }
+
+    public function description(): ?string
+    {
+        return $this->description?->string;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'uuid'        => $this->uuid(),
+            'user_uuid'   => $this->userUuid(),
+            'title'       => $this->title(),
+            'description' => $this->description(),
+        ];
+    }
+
+    public static function from(
+        array $data,
+    ): self {
+        return new self(
+            uuid: new ProjectUuidValue(
+                uuid: $data['uuid'],
+            ),
+            userUuid: new UserUuidValue(
+                uuid: $data['user_uuid'],
+            ),
+            title: new TitleValue(
+                string: $data['title'],
+            ),
+            description: $data['description'] === null
+                ? null
+                : new DescriptionValue(
+                    string: $data['description'],
+                ),
+        );
     }
 }

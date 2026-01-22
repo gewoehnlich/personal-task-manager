@@ -38,9 +38,9 @@ final readonly class CreateProjectDto extends Dto
     public function toArray(): array
     {
         return [
-            'user_uuid'   => $this->userUuid->uuid,
-            'title'       => $this->title->string,
-            'description' => $this->description?->string,
+            'user_uuid'   => $this->userUuid(),
+            'title'       => $this->title(),
+            'description' => $this->description(),
         ];
     }
 
@@ -48,11 +48,17 @@ final readonly class CreateProjectDto extends Dto
         array $data,
     ): self {
         return new self(
-            userUuid: new UserUuidValue(uuid: $data['user_uuid']),
-            title: new TitleValue(string: $data['title']),
+            userUuid: new UserUuidValue(
+                uuid: $data['user_uuid'],
+            ),
+            title: new TitleValue(
+                string: $data['title'],
+            ),
             description: $data['description'] === null
                 ? null
-                : new DescriptionValue(string: $data['description']),
+                : new DescriptionValue(
+                    string: $data['description'],
+                ),
         );
     }
 }

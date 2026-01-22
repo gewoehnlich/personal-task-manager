@@ -13,7 +13,7 @@ final readonly class IndexProjectsAction extends Action
         IndexProjectsDto $dto,
     ): Responder {
         $result = Project::query()
-            ->where('user_uuid', $dto->userUuid)
+            ->where('user_uuid', $dto->userUuid())
             ->get();
 
         return $this->success(

@@ -15,8 +15,8 @@ final readonly class DeleteProjectAction extends Action
     ): Responder {
         try {
             $project = Project::query()
-                ->where('uuid', $dto->uuid)
-                ->where('user_uuid', $dto->userUuid)
+                ->where('uuid', $dto->uuid())
+                ->where('user_uuid', $dto->userUuid())
                 ->firstOrFail();
 
             $result = $project->delete();

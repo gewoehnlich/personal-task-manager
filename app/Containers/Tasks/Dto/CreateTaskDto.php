@@ -2,26 +2,97 @@
 
 namespace App\Containers\Tasks\Dto;
 
+use App\Containers\Projects\Values\ProjectUuidValue;
 use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Values\DeadlineValue;
+use App\Containers\Tasks\Values\DescriptionValue;
+use App\Containers\Tasks\Values\TitleValue;
+use App\Containers\Users\Values\UserUuidValue;
 use App\Ship\Abstracts\Dto\Dto;
-use Illuminate\Support\Carbon;
-use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Attributes\WithCast;
-use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
-use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
-#[MapName(SnakeCaseMapper::class)]
-final class CreateTaskDto extends Dto
+final readonly class CreateTaskDto extends Dto
 {
     public function __construct(
-        public readonly string $userUuid,
-        public readonly string $title,
-        public readonly ?string $description = null,
+        public readonly UserUuidValue $userUuid,
+        public readonly TitleValue $title,
+        public readonly ?DescriptionValue $description = null,
         public readonly Stage $stage,
-        #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $deadline = null,
-        public readonly ?string $projectUuid = null,
+        public readonly ?DeadlineValue $deadline = null,
+        public readonly ?ProjectUuidValue $projectUuid = null,
     ) {
         //
+    }
+
+    public function userUuid(): string
+    {
+        return $this->userUuid->uuid;
+    }
+
+    public function title(): string
+    {
+        return $this->title->string;
+    }
+
+    public function description(): ?string
+    {
+        return $this->description?->string;
+    }
+
+    public function stage(): string
+    {
+        return $this->stage->value;
+    }
+
+    public function deadline(): ?string
+    {
+        return $this->deadline?->carbon->toAtomString();
+    }
+
+    public function projectUuid(): ?string
+    {
+        return $this->projectUuid?->uuid;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'user_uuid'    => $this->userUuid(),
+            'title'        => $this->title(),
+            'description'  => $this->description(),
+            'stage'        => $this->stage(),
+            'deadline'     => $this->deadline(),
+            'project_uuid' => $this->projectUuid(),
+        ];
+    }
+
+    public static function from(
+        array $data,
+    ): self {
+        return new self(
+            userUuid: new UserUuidValue(
+                uuid: $data['user_uuid'],
+            ),
+            title: new TitleValue(
+                string: $data['title'],
+            ),
+            description: $data['description'] === null
+                ? null
+                : new DescriptionValue(
+                    string: $data['description'],
+                ),
+            stage: Stage::from(
+                value: $data['stage'],
+            ),
+            deadline: $data['deadline'] === null
+                ? null
+                : DeadlineValue::from(
+                    value: $data['deadline'],
+                ),
+            projectUuid: $data['project_uuid'] === null
+                ? null
+                : new ProjectUuidValue(
+                    uuid: $data['project_uuid'],
+                ),
+        );
     }
 }

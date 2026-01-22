@@ -4,6 +4,7 @@ namespace App\Containers\Tasks\Requests;
 
 use App\Containers\Tasks\Dto\CreateTaskDto;
 use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Values\DeadlineValue;
 use App\Ship\Abstracts\Requests\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
@@ -25,10 +26,10 @@ final class CreateTaskRequest extends Request
     {
         return [
             'user_uuid'    => ['required', 'uuid:7', 'exists:users,uuid'],
-            'title'        => ['required', 'string', 'max:100'],
-            'description'  => ['nullable', 'string', 'max:500'],
+            'title'        => ['required', 'string'],
+            'description'  => ['nullable', 'string'],
             'stage'        => ['required', Rule::enum(type: Stage::class)],
-            'deadline'     => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'deadline'     => ['nullable', 'date', 'date_format:' . DeadlineValue::FORMAT],
             'project_uuid' => ['nullable', 'uuid:7', 'exists:projects,uuid'],
         ];
     }

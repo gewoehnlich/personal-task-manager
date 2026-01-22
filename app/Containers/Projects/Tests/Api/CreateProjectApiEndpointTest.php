@@ -25,18 +25,22 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(ProjectController::class)]
 final class CreateProjectApiEndpointTest extends TestCase
 {
-    #[TestDox('happy path')]
-    public function testHappyPath(): void
+    #[TestDox('sending correct data to POST api/v1/projects should create a project')]
+    public function testCreatingProjectWithValidData(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
+
+        $title = 'title';
+
+        $description = 'description';
 
         $response = $this->actingAs($user)
             ->postJson(
                 uri: route('api.v1.projects.index'),
                 data: [
-                    'title'       => 'title',
-                    'description' => 'description',
+                    'title'       => $title,
+                    'description' => $description,
                 ],
             );
 
@@ -45,26 +49,32 @@ final class CreateProjectApiEndpointTest extends TestCase
             $response['status'],
         );
 
+        $this->assertEquals(
+            expected: $user->uuid,
+            actual: $response['result']['user_uuid'],
+            message: 'actual user is not the expected one',
+        );
+
         $project = Project::query()
             ->where('uuid', $response['result']['uuid'])
-            ->where('user_uuid', $response['result']['user_uuid'])
+            ->where('user_uuid', $user->uuid)
             ->first();
 
         $this->assertNotNull(
             actual: $project,
-            message: 'project not found',
+            message: 'the project from response not found in the database',
         );
 
         $this->assertEquals(
-            expected: 'title',
+            expected: $title,
             actual: $project->title,
-            message: 'title is wrong',
+            message: 'actual title differs from expected title',
         );
 
         $this->assertEquals(
-            expected: 'description',
+            expected: $description,
             actual: $project->description,
-            message: 'description is wrong',
+            message: 'actual description differs from expected description',
         );
     }
 }
