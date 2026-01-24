@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Unit\Actions;
+namespace App\Containers\Projects\Tests\Feature\Actions;
 
 use App\Containers\Projects\Actions\IndexProjectsAction;
 use App\Containers\Projects\Dto\IndexProjectsDto;
