@@ -34,12 +34,12 @@ final class UpdateProjectActionTest extends TestCase
 
         $this->action(
             class: UpdateProjectAction::class,
-            dto: new UpdateProjectDto(
-                uuid: $project->uuid,
-                userUuid: $project->user_uuid,
-                title: 'test name',
-                description: 'test description',
-            ),
+            dto: UpdateProjectDto::from([
+                'uuid'        => $project->uuid,
+                'user_uuid'   => $project->user_uuid,
+                'title'       => 'test name',
+                'description' => 'test description',
+            ]),
         );
 
         $updatedProject = Project::firstWhere('uuid', $project->uuid);

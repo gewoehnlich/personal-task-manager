@@ -30,11 +30,11 @@ final class CreateProjectActionTest extends TestCase
 
         $response = $this->action(
             class: CreateProjectAction::class,
-            dto: new CreateProjectDto(
-                userUuid: $user->uuid,
-                title: $title,
-                description: $description,
-            ),
+            dto: CreateProjectDto::from([
+                'user_uuid'   => $user->uuid,
+                'title'       => $title,
+                'description' => $description,
+            ]),
         );
 
         $this->assertDatabaseHas(
@@ -55,7 +55,7 @@ final class CreateProjectActionTest extends TestCase
                 'title',       // title
                 'description', // description
             ],
-            'all nullable parameters are null' => [
+            'null description' => [
                 'title', // title
                 null,    // description
             ],

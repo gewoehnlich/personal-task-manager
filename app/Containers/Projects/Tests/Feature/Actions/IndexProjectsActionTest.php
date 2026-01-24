@@ -30,10 +30,10 @@ final class IndexProjectsActionTest extends TestCase
             ->create();
 
         $response = $this->action(
-            IndexProjectsAction::class,
-            new IndexProjectsDto(
-                userUuid: $user->uuid,
-            ),
+            class: IndexProjectsAction::class,
+            dto: IndexProjectsDto::from([
+                'user_uuid' => $user->uuid,
+            ]),
         );
 
         $this->assertNotEmpty(

@@ -3,9 +3,9 @@
 namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\IndexProjectsDto;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 
@@ -16,29 +16,20 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class IndexProjectsDtoTest extends TestCase
 {
-    #[DataProvider('data')]
     #[TestDox('converts dto properties to snake_case array keys')]
-    public function testToArrayReturnsSnakeCaseKeys(
-        string $userUuid,
-    ): void {
-        $dto = new IndexProjectsDto(
-            userUuid: $userUuid,
-        );
+    public function testToArrayReturnsSnakeCaseKeys(): void
+    {
+        $user = User::factory()->create();
+
+        $dto = IndexProjectsDto::from([
+            'user_uuid' => $user->uuid,
+        ]);
 
         $this->assertSame(
             expected: [
-                'user_uuid' => $userUuid,
+                'user_uuid' => $user->uuid,
             ],
             actual: $dto->toArray(),
         );
-    }
-
-    public static function data(): array
-    {
-        return [
-            'data' => [
-                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-            ],
-        ];
     }
 }

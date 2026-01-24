@@ -3,9 +3,10 @@
 namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\DeleteProjectDto;
+use App\Containers\Projects\Models\Project;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 
@@ -16,33 +17,24 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class DeleteProjectDtoTest extends TestCase
 {
-    #[DataProvider('data')]
     #[TestDox('converts dto properties to snake_case array keys')]
-    public function testToArrayReturnsSnakeCaseKeys(
-        string $uuid,
-        string $userUuid,
-    ): void {
-        $dto = new DeleteProjectDto(
-            uuid: $uuid,
-            userUuid: $userUuid,
-        );
+    public function testToArrayReturnsSnakeCaseKeys(): void
+    {
+        $user = User::factory()->create();
+
+        $project = Project::factory()->for($user)->create();
+
+        $dto = DeleteProjectDto::from([
+            'uuid'      => $project->uuid,
+            'user_uuid' => $user->uuid,
+        ]);
 
         $this->assertSame(
             expected: [
-                'uuid'      => $uuid,
-                'user_uuid' => $userUuid,
+                'uuid'      => $project->uuid,
+                'user_uuid' => $user->uuid,
             ],
             actual: $dto->toArray(),
         );
-    }
-
-    public static function data(): array
-    {
-        return [
-            'data' => [
-                '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // uuid
-                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-            ],
-        ];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Containers\Projects\Tests\Feature\Actions;
 
-use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Actions\DeleteProjectAction;
-use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Dto\DeleteProjectDto;
+use App\Containers\Projects\Exceptions\ProjectWithThisUuidDoesNotExistException;
 use App\Containers\Projects\Models\Project;
+use App\Containers\Users\Exceptions\UserWithThisUuidDoesNotExistException;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Responders\ErrorResponder;
 use App\Ship\Abstracts\Tests\TestCase;
@@ -20,11 +20,10 @@ use PHPUnit\Framework\Attributes\UsesClass;
  */
 #[CoversClass(DeleteProjectAction::class)]
 #[Medium]
-#[UsesClass(CreateProjectDto::class)]
-#[UsesClass(CreateProjectAction::class)]
+#[UsesClass(DeleteProjectDto::class)]
 final class DeleteProjectActionTest extends TestCase
 {
-    #[TestDox('user can delete his project')]
+    #[TestDox('user can soft-delete his project')]
     public function testProjectGetsSoftDeleted(): void
     {
         $user = User::factory()
@@ -35,11 +34,11 @@ final class DeleteProjectActionTest extends TestCase
             ->create();
 
         $this->action(
-            DeleteProjectAction::class,
-            new DeleteProjectDto(
-                uuid: $project->uuid,
-                userUuid: $user->uuid,
-            ),
+            class: DeleteProjectAction::class,
+            dto: DeleteProjectDto::from([
+                'uuid'      => $project->uuid,
+                'user_uuid' => $user->uuid,
+            ]),
         );
 
         $this->assertSoftDeleted('projects', [
@@ -57,12 +56,16 @@ final class DeleteProjectActionTest extends TestCase
             ->for($user)
             ->create();
 
+        $this->expectException(
+            exception: ProjectWithThisUuidDoesNotExistException::class,
+        );
+
         $response = $this->action(
-            DeleteProjectAction::class,
-            new DeleteProjectDto(
-                uuid: '00000000-0000-0000-0000-000000000000',
-                userUuid: $user->uuid,
-            ),
+            class: DeleteProjectAction::class,
+            dto: DeleteProjectDto::from([
+                'uuid'      => '00000000-0000-0000-0000-000000000000',
+                'user_uuid' => $user->uuid,
+            ]),
         );
 
         $this->assertTrue(
@@ -81,12 +84,16 @@ final class DeleteProjectActionTest extends TestCase
             ->for($user)
             ->create();
 
+        $this->expectException(
+            exception: UserWithThisUuidDoesNotExistException::class,
+        );
+
         $response = $this->action(
-            DeleteProjectAction::class,
-            new DeleteProjectDto(
-                uuid: $project->uuid,
-                userUuid: '00000000-0000-0000-0000-000000000000',
-            ),
+            class: DeleteProjectAction::class,
+            dto: DeleteProjectDto::from([
+                'uuid'      => $project->uuid,
+                'user_uuid' => '00000000-0000-0000-0000-000000000000',
+            ]),
         );
 
         $this->assertTrue(
