@@ -5,14 +5,14 @@ namespace App\Containers\Projects\Actions;
 use App\Containers\Projects\Dto\UpdateProjectDto;
 use App\Containers\Projects\Models\Project;
 use App\Ship\Abstracts\Actions\Action;
-use App\Ship\Abstracts\Responders\Responder;
+use App\Ship\Abstracts\Responses\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final readonly class UpdateProjectAction extends Action
 {
     public function run(
         UpdateProjectDto $dto,
-    ): Responder {
+    ): Response {
         try {
             $project = Project::query()
                 ->where('uuid', $dto->uuid())

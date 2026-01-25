@@ -5,14 +5,14 @@ namespace App\Containers\Projects\Actions;
 use App\Containers\Projects\Dto\DeleteProjectDto;
 use App\Containers\Projects\Models\Project;
 use App\Ship\Abstracts\Actions\Action;
-use App\Ship\Abstracts\Responders\Responder;
+use App\Ship\Abstracts\Responses\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final readonly class DeleteProjectAction extends Action
 {
     public function run(
         DeleteProjectDto $dto,
-    ): Responder {
+    ): Response {
         try {
             $project = Project::query()
                 ->where('uuid', $dto->uuid())

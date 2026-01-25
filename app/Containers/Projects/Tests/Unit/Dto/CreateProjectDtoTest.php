@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Unit\DTO;
+namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Users\Models\User;

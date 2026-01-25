@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Ship\Abstracts\Responders;
+namespace App\Ship\Abstracts\Responses;
 
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
-final class ErrorResponder extends Responder
+final readonly class ErrorResponse extends Response
 {
+    protected const string STATUS_MESSAGE = 'error';
+
     public function __construct(
         public readonly string $message,
-        public readonly int $status = Response::HTTP_BAD_REQUEST,
+        public readonly int $status = Response::ERROR_STATUS_CODE,
     ) {
         //
     }
 
-    public function toResponse(
-        $request,
-    ): Response {
+    public function toResponse($request)
+    {
         return new JsonResponse(
             data: [
-                'status' => 'error',
+                'status' => self::STATUS_MESSAGE,
                 'result' => $this->message,
             ],
             status: $this->status,
