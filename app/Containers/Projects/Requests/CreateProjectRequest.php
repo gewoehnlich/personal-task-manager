@@ -20,9 +20,9 @@ final class CreateProjectRequest extends Request
     public function rules(): array
     {
         return [
-            'user_uuid'   => ['required', 'uuid:7'],
-            'title'       => ['required', 'string', 'max:100'],
-            'description' => ['nullable', 'string', 'max:500'],
+            'user_uuid'   => ['required'],
+            'title'       => ['required'],
+            'description' => ['nullable'],
         ];
     }
 

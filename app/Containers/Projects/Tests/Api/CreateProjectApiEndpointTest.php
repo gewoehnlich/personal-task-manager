@@ -7,9 +7,12 @@ use App\Containers\Projects\Controllers\Api\ProjectController;
 use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Requests\CreateProjectRequest;
+use App\Containers\Projects\Values\TitleValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Large;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
@@ -25,15 +28,14 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(ProjectController::class)]
 final class CreateProjectApiEndpointTest extends TestCase
 {
+    #[DataProvider('data')]
     #[TestDox('sending correct data to POST api/v1/projects should create a project')]
-    public function testCreatingProjectWithValidData(): void
-    {
+    public function testCreatingProjectWithValidData(
+        string $title,
+        ?string $description,
+    ): void {
         /** @var User $user */
         $user = User::factory()->create();
-
-        $title = 'title';
-
-        $description = 'description';
 
         $response = $this->actingAs($user)
             ->postJson(
@@ -45,8 +47,9 @@ final class CreateProjectApiEndpointTest extends TestCase
             );
 
         $this->assertEquals(
-            'success',
-            $response['status'],
+            expected: 'success',
+            actual: $response['status'],
+            message: 'status should be success',
         );
 
         $this->assertEquals(
@@ -76,5 +79,40 @@ final class CreateProjectApiEndpointTest extends TestCase
             actual: $project->description,
             message: 'actual description differs from expected description',
         );
+    }
+
+    public function testCreatingProjectWithTooLongTitle(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->postJson(
+                uri: route('api.v1.projects.index'),
+                data: [
+                    'title'       => Str::repeat('a', TitleValue::MAX_LENGTH + 1),
+                    'description' => null,
+                ],
+            );
+
+        $this->assertEquals(
+            expected: 'error',
+            actual: $response['status'],
+            message: 'status should be error',
+        );
+    }
+
+    public static function data(): array
+    {
+        return [
+            'all parameters' => [
+                'title',       // title
+                'description', // description
+            ],
+            'null description' => [
+                'title', // title
+                null,    // description
+            ],
+        ];
     }
 }
