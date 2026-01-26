@@ -37,6 +37,7 @@ final class Task extends Model
         'deadline'   => 'datetime:' . DatetimeValue::FORMAT,
         'created_at' => 'datetime:' . DatetimeValue::FORMAT,
         'updated_at' => 'datetime:' . DatetimeValue::FORMAT,
+        'deleted_at' => 'datetime:' . DatetimeValue::FORMAT,
     ];
 
     public function user(): BelongsTo

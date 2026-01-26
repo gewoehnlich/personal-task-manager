@@ -6,7 +6,7 @@ use App\Containers\Projects\Values\ProjectUuidValue;
 use App\Containers\Users\Values\UserUuidValue;
 use App\Ship\Abstracts\Dto\Dto;
 
-final readonly class DeleteProjectDto extends Dto
+final readonly class FindProjectByUuidAndUserUuidDto extends Dto
 {
     public function __construct(
         public readonly ProjectUuidValue $uuid,
@@ -31,18 +31,5 @@ final readonly class DeleteProjectDto extends Dto
             'uuid'        => $this->uuid(),
             'user_uuid'   => $this->userUuid(),
         ];
-    }
-
-    public static function from(
-        array $data,
-    ): self {
-        return new self(
-            uuid: new ProjectUuidValue(
-                uuid: $data['uuid'],
-            ),
-            userUuid: new UserUuidValue(
-                uuid: $data['user_uuid'],
-            ),
-        );
     }
 }

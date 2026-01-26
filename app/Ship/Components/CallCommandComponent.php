@@ -12,7 +12,7 @@ final readonly class CallCommandComponent extends CallComponent
         return $instance instanceof Command;
     }
 
-    protected static function componentClassName(): string
+    protected static function componentClass(): string
     {
         return Command::class;
     }

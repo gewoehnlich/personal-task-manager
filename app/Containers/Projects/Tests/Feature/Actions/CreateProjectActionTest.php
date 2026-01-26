@@ -40,7 +40,7 @@ final class CreateProjectActionTest extends TestCase
         $this->assertDatabaseHas(
             table: 'projects',
             data: [
-                'uuid'        => $response->data->uuid,
+                'uuid'        => $response->uuid,
                 'user_uuid'   => $user->uuid,
                 'title'       => $title,
                 'description' => $description,

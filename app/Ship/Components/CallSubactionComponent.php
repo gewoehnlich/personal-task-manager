@@ -12,7 +12,7 @@ final readonly class CallSubactionComponent extends CallComponent
         return $instance instanceof Subaction;
     }
 
-    protected static function componentClassName(): string
+    protected static function componentClass(): string
     {
         return Subaction::class;
     }

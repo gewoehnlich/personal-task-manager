@@ -46,6 +46,22 @@ final class CreateProjectApiEndpointTest extends TestCase
                 ],
             );
 
+        $response->assertSuccessful();
+
+        $response->assertExactJsonStructure(
+            structure: [
+                'status',
+                'result' => [
+                    'uuid',
+                    'user_uuid',
+                    'title',
+                    'description',
+                    'created_at',
+                    'updated_at',
+                ],
+            ]
+        );
+
         $this->assertEquals(
             expected: 'success',
             actual: $response['status'],

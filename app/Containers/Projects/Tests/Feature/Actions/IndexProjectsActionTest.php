@@ -37,7 +37,7 @@ final class IndexProjectsActionTest extends TestCase
         );
 
         $this->assertNotEmpty(
-            actual: $response->data,
+            actual: $response,
             message: 'empty response',
         );
     }

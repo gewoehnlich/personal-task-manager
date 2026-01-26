@@ -11,6 +11,7 @@ use App\Containers\Projects\Requests\DeleteProjectRequest;
 use App\Containers\Projects\Requests\IndexProjectsRequest;
 use App\Containers\Projects\Requests\UpdateProjectRequest;
 use App\Ship\Abstracts\Controllers\ApiController;
+use App\Ship\Abstracts\Exceptions\Exception;
 use App\Ship\Abstracts\Responses\Response;
 
 final readonly class ProjectController extends ApiController
@@ -18,36 +19,76 @@ final readonly class ProjectController extends ApiController
     public function index(
         IndexProjectsRequest $request,
     ): Response {
-        return $this->action(
-            IndexProjectsAction::class,
-            $request->toDto(),
-        );
+        try {
+            $result = $this->action(
+                class: IndexProjectsAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
     }
 
     public function create(
         CreateProjectRequest $request,
     ): Response {
-        return $this->action(
-            CreateProjectAction::class,
-            $request->toDto(),
-        );
+        try {
+            $result = $this->action(
+                class: CreateProjectAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
     }
 
     public function update(
         UpdateProjectRequest $request,
     ): Response {
-        return $this->action(
-            UpdateProjectAction::class,
-            $request->toDto(),
-        );
+        try {
+            $result = $this->action(
+                class: UpdateProjectAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
     }
 
     public function delete(
         DeleteProjectRequest $request,
     ): Response {
-        return $this->action(
-            DeleteProjectAction::class,
-            $request->toDto(),
-        );
+        try {
+            $result = $this->action(
+                class: DeleteProjectAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
     }
 }

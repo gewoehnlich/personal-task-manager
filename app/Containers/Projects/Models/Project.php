@@ -5,6 +5,7 @@ namespace App\Containers\Projects\Models;
 use App\Containers\Projects\Factories\ProjectFactory;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
+use App\Ship\Values\DatetimeValue;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,7 +30,9 @@ final class Project extends Model
     ];
 
     protected $casts = [
-        'deleted_at' => 'datetime',
+        'created_at' => 'datetime:' . DatetimeValue::FORMAT,
+        'updated_at' => 'datetime:' . DatetimeValue::FORMAT,
+        'deleted_at' => 'datetime:' . DatetimeValue::FORMAT,
     ];
 
     public function user(): BelongsTo

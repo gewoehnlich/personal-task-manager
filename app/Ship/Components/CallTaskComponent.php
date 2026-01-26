@@ -12,7 +12,7 @@ final readonly class CallTaskComponent extends CallComponent
         return $instance instanceof Task;
     }
 
-    protected static function componentClassName(): string
+    protected static function componentClass(): string
     {
         return Task::class;
     }
