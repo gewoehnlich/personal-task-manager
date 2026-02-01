@@ -4,16 +4,13 @@ namespace App\Containers\Tasks\Dto;
 
 use App\Containers\Projects\Values\ProjectUuidValue;
 use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Values\CreatedAtValue;
+use App\Containers\Tasks\Values\DeadlineValue;
 use App\Containers\Tasks\Values\TaskUuidValue;
+use App\Containers\Tasks\Values\UpdatedAtValue;
 use App\Containers\Users\Values\UserUuidValue;
 use App\Ship\Abstracts\Dto\Dto;
-use Illuminate\Support\Carbon;
-use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Attributes\WithCast;
-use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
-use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
-#[MapName(SnakeCaseMapper::class)]
 final readonly class IndexTasksDto extends Dto
 {
     public function __construct(
@@ -21,18 +18,12 @@ final readonly class IndexTasksDto extends Dto
         public readonly ?TaskUuidValue $uuid = null,
         public readonly ?Stage $stage = null,
         public readonly ?ProjectUuidValue $projectUuid = null,
-        #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $createdAtFrom = null,
-        #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $createdAtTo = null,
-        #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $updatedAtFrom = null,
-        #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $updatedAtTo = null,
-        #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $deadlineFrom = null,
-        #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d H:i:s')]
-        public readonly ?Carbon $deadlineTo = null,
+        public readonly ?CreatedAtValue $createdAtFrom = null,
+        public readonly ?CreatedAtValue $createdAtTo = null,
+        public readonly ?UpdatedAtValue $updatedAtFrom = null,
+        public readonly ?UpdatedAtValue $updatedAtTo = null,
+        public readonly ?DeadlineValue $deadlineFrom = null,
+        public readonly ?DeadlineValue $deadlineTo = null,
         public readonly ?string $orderBy = null,
         public readonly ?string $orderByField = null,
         public readonly ?int $limit = null,
@@ -51,24 +42,158 @@ final readonly class IndexTasksDto extends Dto
         return $this->uuid->uuid;
     }
 
+    public function stage(): string
+    {
+        return $this->stage->value;
+    }
+
+    public function projectUuid(): ?string
+    {
+        return $this->projectUuid?->uuid;
+    }
+
+    public function createdAtFrom(): ?string
+    {
+        return $this->createdAtFrom?->carbon->toAtomString();
+    }
+
+    public function createdAtTo(): ?string
+    {
+        return $this->createdAtTo?->carbon->toAtomString();
+    }
+
+    public function updatedAtFrom(): ?string
+    {
+        return $this->updatedAtFrom?->carbon->toAtomString();
+    }
+
+    public function updatedAtTo(): ?string
+    {
+        return $this->updatedAtTo?->carbon->toAtomString();
+    }
+
+    public function deadlineFrom(): ?string
+    {
+        return $this->deadlineFrom?->carbon->toAtomString();
+    }
+
+    public function deadlineTo(): ?string
+    {
+        return $this->deadlineTo?->carbon->toAtomString();
+    }
+
+    public function orderBy(): ?string
+    {
+        return $this->orderBy;
+    }
+
+    public function orderByField(): ?string
+    {
+        return $this->orderByField;
+    }
+
+    public function limit(): ?int
+    {
+        return $this->limit;
+    }
+
+    public function withDeleted(): ?string
+    {
+        return $this->withDeleted;
+    }
+
     public function toArray(): array
     {
         return [
-            'uuid'      => $this->uuid(),
-            'user_uuid' => $this->userUuid(),
+            'user_uuid'     => $this->userUuid(),
+            'uuid'          => $this->uuid(),
+            'stage'         => $this->stage(),
+            'projectUuid'   => $this->projectUuid(),
+            'createdAtFrom' => $this->createdAtFrom(),
+            'createdAtTo'   => $this->createdAtTo(),
+            'updatedAtFrom' => $this->updatedAtFrom(),
+            'updatedAtTo'   => $this->updatedAtTo(),
+            'deadlineFrom'  => $this->deadlineFrom(),
+            'deadlineTo'    => $this->deadlineTo(),
+            'orderBy'       => $this->orderBy(),
+            'orderByField'  => $this->orderByField(),
+            'limit'         => $this->limit(),
+            'withDeleted'   => $this->withDeleted(),
         ];
     }
 
     public static function from(
         array $data,
     ): self {
+        $data = array_merge([
+            'uuid' => null,
+            'stage' => null,
+            'project_uuid' => null,
+            'created_at_from' => null,
+            'created_at_to' => null,
+            'updated_at_from' => null,
+            'updated_at_to' => null,
+            'deadline_from' => null,
+            'deadline_to' => null,
+            'order_by' => null,
+            'order_by_field' => null,
+            'limit' => null,
+            'with_deleted' => null,
+        ], $data);
+
         return new self(
-            uuid: new TaskUuidValue(
-                uuid: $data['uuid'],
-            ),
             userUuid: new UserUuidValue(
                 uuid: $data['user_uuid'],
             ),
+            uuid: $data['uuid'] === null
+                ? null
+                : new TaskUuidValue(
+                    uuid: $data['uuid'],
+                ),
+            stage: $data['stage'] === null
+                ? null
+                : Stage::from(
+                    value: $data['stage'],
+                ),
+            projectUuid: $data['project_uuid'] === null
+                ? null
+                : new ProjectUuidValue(
+                    uuid: $data['project_uuid'],
+                ),
+            createdAtFrom: $data['created_at_from'] === null
+                ? null
+                : CreatedAtValue::from(
+                    value: $data['created_at_from'],
+                ),
+            createdAtTo: $data['created_at_to'] === null
+                ? null
+                : CreatedAtValue::from(
+                    value: $data['created_at_to'],
+                ),
+            updatedAtFrom: $data['updated_at_from'] === null
+                ? null
+                : UpdatedAtValue::from(
+                    value: $data['updated_at_from'],
+                ),
+            updatedAtTo: $data['updated_at_to'] === null
+                ? null
+                : UpdatedAtValue::from(
+                    value: $data['updated_at_to'],
+                ),
+            deadlineFrom: $data['deadline_from'] === null
+                ? null
+                : DeadlineValue::from(
+                    value: $data['deadline_from'],
+                ),
+            deadlineTo: $data['deadline_to'] === null
+                ? null
+                : DeadlineValue::from(
+                    value: $data['deadline_to'],
+                ),
+            orderBy: $data['order_by'],
+            orderByField: $data['order_by_field'],
+            limit: $data['limit'],
+            withDeleted: $data['with_deleted'],
         );
     }
 }

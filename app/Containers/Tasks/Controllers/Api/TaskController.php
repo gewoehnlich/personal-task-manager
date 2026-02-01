@@ -11,43 +11,84 @@ use App\Containers\Tasks\Requests\DeleteTaskRequest;
 use App\Containers\Tasks\Requests\IndexTasksRequest;
 use App\Containers\Tasks\Requests\UpdateTaskRequest;
 use App\Ship\Abstracts\Controllers\ApiController;
-use App\Ship\Abstracts\Responders\Responder;
+use App\Ship\Abstracts\Exceptions\Exception;
+use App\Ship\Abstracts\Responses\Response;
 
 final readonly class TaskController extends ApiController
 {
     public function index(
         IndexTasksRequest $request,
-    ): Responder {
-        return $this->action(
-            IndexTasksAction::class,
-            $request->toDto(),
-        );
+    ): Response {
+        try {
+            $result = $this->action(
+                class: IndexTasksAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
     }
 
     public function create(
         CreateTaskRequest $request,
-    ): Responder {
-        return $this->action(
-            CreateTaskAction::class,
-            $request->toDto(),
-        );
+    ): Response {
+        try {
+            $result = $this->action(
+                class: CreateTaskAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
     }
 
     public function update(
         UpdateTaskRequest $request,
-    ): Responder {
-        return $this->action(
-            UpdateTaskAction::class,
-            $request->toDto(),
-        );
+    ): Response {
+        try {
+            $result = $this->action(
+                class: UpdateTaskAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
     }
 
     public function delete(
         DeleteTaskRequest $request,
-    ): Responder {
-        return $this->action(
-            DeleteTaskAction::class,
-            $request->toDto(),
-        );
+    ): Response {
+        try {
+            $result = $this->action(
+                class: DeleteTaskAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
     }
 }
