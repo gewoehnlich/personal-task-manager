@@ -15,51 +15,51 @@ final readonly class IndexTasksAction extends Action
         $query = Task::query()
             ->where('user_uuid', $dto->userUuid());
 
-        if (isset($dto->uuid())) {
+        if ($dto->uuid() !== null) {
             $query = $query->where('uuid', $dto->uuid());
         }
 
-        if (isset($dto->stage())) {
+        if ($dto->stage() !== null) {
             $query = $query->where('stage', $dto->stage());
         }
 
-        if (isset($dto->projectUuid())) {
+        if ($dto->projectUuid() !== null) {
             $query = $query->where('project_uuid', $dto->projectUuid());
         }
 
-        if (isset($dto->createdAtFrom())) {
+        if ($dto->createdAtFrom() !== null) {
             $query = $query->where('created_at', '>=', $dto->createdAtFrom());
         }
 
-        if (isset($dto->createdAtTo())) {
+        if ($dto->createdAtTo() !== null) {
             $query = $query->where('created_at', '<=', $dto->createdAtTo());
         }
 
-        if (isset($dto->updatedAtFrom())) {
+        if ($dto->updatedAtFrom() !== null) {
             $query = $query->where('updated_at', '>=', $dto->updatedAtFrom());
         }
 
-        if (isset($dto->updatedAtTo())) {
+        if ($dto->updatedAtTo() !== null) {
             $query = $query->where('updated_at', '<=', $dto->updatedAtTo());
         }
 
-        if (isset($dto->deadlineFrom())) {
+        if ($dto->deadlineFrom() !== null) {
             $query = $query->where('deadline', '>=', $dto->deadlineFrom());
         }
 
-        if (isset($dto->deadlineTo())) {
+        if ($dto->deadlineTo() !== null) {
             $query = $query->where('deadline', '<=', $dto->deadlineTo());
         }
 
-        if (isset($dto->orderBy(), $dto->orderByField())) {
+        if ($dto->orderBy() !== null && $dto->orderByField() !== null) {
             $query = $query->orderBy($dto->orderByField() ?? 'id', $dto->orderBy());
         }
 
-        if (isset($dto->limit())) {
+        if ($dto->limit() !== null) {
             $query = $query->limit($dto->limit());
         }
 
-        if ($dto->withDeleted === true) {
+        if ($dto->withDeleted() === true) {
             $query = $query->whereNotNull('deleted_at');
         }
 

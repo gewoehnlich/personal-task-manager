@@ -37,14 +37,14 @@ final readonly class IndexTasksDto extends Dto
         return $this->userUuid->uuid;
     }
 
-    public function uuid(): string
+    public function uuid(): ?string
     {
-        return $this->uuid->uuid;
+        return $this->uuid?->uuid;
     }
 
-    public function stage(): string
+    public function stage(): ?string
     {
-        return $this->stage->value;
+        return $this->stage?->value;
     }
 
     public function projectUuid(): ?string
