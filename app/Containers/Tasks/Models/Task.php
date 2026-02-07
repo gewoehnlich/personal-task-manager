@@ -33,13 +33,6 @@ final class Task extends Model
         'project_uuid',
     ];
 
-    protected $casts = [
-        'deadline'   => 'datetime:' . DatetimeValue::FORMAT,
-        'created_at' => 'datetime:' . DatetimeValue::FORMAT,
-        'updated_at' => 'datetime:' . DatetimeValue::FORMAT,
-        'deleted_at' => 'datetime:' . DatetimeValue::FORMAT,
-    ];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -53,5 +46,15 @@ final class Task extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'deadline'   => 'datetime:' . DatetimeValue::format(),
+            'created_at' => 'datetime:' . DatetimeValue::format(),
+            'updated_at' => 'datetime:' . DatetimeValue::format(),
+            'deleted_at' => 'datetime:' . DatetimeValue::format(),
+        ];
     }
 }

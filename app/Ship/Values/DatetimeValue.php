@@ -3,13 +3,13 @@
 namespace App\Ship\Values;
 
 use App\Ship\Abstracts\Values\Value;
+use App\Ship\Exceptions\DatetimeFormatIsInvalidException;
 use App\Ship\Exceptions\DatetimeValueInvalidInputStringException;
+use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Support\Carbon;
 
 abstract readonly class DatetimeValue extends Value
 {
-    public const string FORMAT = Carbon::ATOM;
-
     public function __construct(
         public readonly Carbon $carbon,
     ) {
@@ -21,14 +21,23 @@ abstract readonly class DatetimeValue extends Value
         //
     }
 
+    public static function format(): string
+    {
+        return config('datetime.format');
+    }
+
     public static function from(
         string $value,
     ): static {
-        $datetime = Carbon::createFromFormat(
-            format: self::FORMAT,
-            time: $value,
-            timezone: null,
-        );
+        try {
+            $datetime = Carbon::createFromFormat(
+                format: static::format(),
+                time: $value,
+                timezone: null,
+            );
+        } catch (InvalidFormatException $exception) {
+            throw new DatetimeFormatIsInvalidException();
+        }
 
         $errors = Carbon::getLastErrors();
 
