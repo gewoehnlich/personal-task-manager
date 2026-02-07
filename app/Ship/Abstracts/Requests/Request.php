@@ -9,6 +9,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 abstract class Request extends FormRequest implements Dtoable
 {
+    abstract public function dto(): string;
+
     public function toDto(): Dto
     {
         if (! $this->dto()) {
@@ -19,6 +21,4 @@ abstract class Request extends FormRequest implements Dtoable
             data: $this->validated(),
         );
     }
-
-    abstract public function dto(): string;
 }

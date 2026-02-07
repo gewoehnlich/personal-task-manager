@@ -97,7 +97,7 @@ final readonly class IndexTasksDto extends Dto
         return $this->limit;
     }
 
-    public function withDeleted(): ?string
+    public function withDeleted(): ?bool
     {
         return $this->withDeleted;
     }
@@ -105,20 +105,20 @@ final readonly class IndexTasksDto extends Dto
     public function toArray(): array
     {
         return [
-            'user_uuid'     => $this->userUuid(),
-            'uuid'          => $this->uuid(),
-            'stage'         => $this->stage(),
-            'projectUuid'   => $this->projectUuid(),
-            'createdAtFrom' => $this->createdAtFrom(),
-            'createdAtTo'   => $this->createdAtTo(),
-            'updatedAtFrom' => $this->updatedAtFrom(),
-            'updatedAtTo'   => $this->updatedAtTo(),
-            'deadlineFrom'  => $this->deadlineFrom(),
-            'deadlineTo'    => $this->deadlineTo(),
-            'orderBy'       => $this->orderBy(),
-            'orderByField'  => $this->orderByField(),
-            'limit'         => $this->limit(),
-            'withDeleted'   => $this->withDeleted(),
+            'user_uuid'       => $this->userUuid(),
+            'uuid'            => $this->uuid(),
+            'stage'           => $this->stage(),
+            'project_uuid'    => $this->projectUuid(),
+            'created_at_from' => $this->createdAtFrom(),
+            'created_at_to'   => $this->createdAtTo(),
+            'updated_at_from' => $this->updatedAtFrom(),
+            'updated_at_to'   => $this->updatedAtTo(),
+            'deadline_from'   => $this->deadlineFrom(),
+            'deadline_to'     => $this->deadlineTo(),
+            'order_by'        => $this->orderBy(),
+            'order_by_field'  => $this->orderByField(),
+            'limit'           => $this->limit(),
+            'with_deleted'    => $this->withDeleted(),
         ];
     }
 
@@ -126,19 +126,19 @@ final readonly class IndexTasksDto extends Dto
         array $data,
     ): self {
         $data = array_merge([
-            'uuid' => null,
-            'stage' => null,
-            'project_uuid' => null,
+            'uuid'            => null,
+            'stage'           => null,
+            'project_uuid'    => null,
             'created_at_from' => null,
-            'created_at_to' => null,
+            'created_at_to'   => null,
             'updated_at_from' => null,
-            'updated_at_to' => null,
-            'deadline_from' => null,
-            'deadline_to' => null,
-            'order_by' => null,
-            'order_by_field' => null,
-            'limit' => null,
-            'with_deleted' => null,
+            'updated_at_to'   => null,
+            'deadline_from'   => null,
+            'deadline_to'     => null,
+            'order_by'        => null,
+            'order_by_field'  => null,
+            'limit'           => null,
+            'with_deleted'    => null,
         ], $data);
 
         return new self(

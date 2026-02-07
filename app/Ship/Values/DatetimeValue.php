@@ -16,11 +16,6 @@ abstract readonly class DatetimeValue extends Value
         $this->validate();
     }
 
-    protected function validate(): void
-    {
-        //
-    }
-
     public static function format(): string
     {
         return config('datetime.format');
@@ -42,9 +37,9 @@ abstract readonly class DatetimeValue extends Value
         $errors = Carbon::getLastErrors();
 
         if (
-            $datetime === false ||
-            $errors['warning_count'] > 0 ||
-            $errors['error_count'] > 0
+            $datetime === false
+            || $errors['warning_count'] > 0
+            || $errors['error_count'] > 0
         ) {
             throw new DatetimeValueInvalidInputStringException();
         }
@@ -52,5 +47,10 @@ abstract readonly class DatetimeValue extends Value
         return new static(
             carbon: $datetime,
         );
+    }
+
+    protected function validate(): void
+    {
+        //
     }
 }

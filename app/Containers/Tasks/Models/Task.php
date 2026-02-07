@@ -51,10 +51,10 @@ final class Task extends Model
     protected function casts(): array
     {
         return [
-            'deadline'   => 'datetime:' . DatetimeValue::format(),
-            'created_at' => 'datetime:' . DatetimeValue::format(),
-            'updated_at' => 'datetime:' . DatetimeValue::format(),
-            'deleted_at' => 'datetime:' . DatetimeValue::format(),
+            'deadline'    => 'datetime:' . DatetimeValue::format(),
+            'created_at'  => 'datetime:' . DatetimeValue::format(),
+            'updated_at'  => 'datetime:' . DatetimeValue::format(),
+            'deleted_at'  => 'datetime:' . DatetimeValue::format(),
         ];
     }
 }

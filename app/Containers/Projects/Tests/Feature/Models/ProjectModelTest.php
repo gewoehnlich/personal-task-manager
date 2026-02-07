@@ -6,8 +6,15 @@ use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Medium;
 use PHPUnit\Framework\Attributes\TestDox;
 
+/**
+ * @internal
+ */
+#[CoversClass(Project::class)]
+#[Medium]
 final class ProjectModelTest extends TestCase
 {
     #[TestDox('user() method should return project\'s user')]

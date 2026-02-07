@@ -59,7 +59,7 @@ final class CreateProjectApiEndpointTest extends TestCase
                     'created_at',
                     'updated_at',
                 ],
-            ]
+            ],
         );
 
         $this->assertEquals(
@@ -97,6 +97,20 @@ final class CreateProjectApiEndpointTest extends TestCase
         );
     }
 
+    public static function data(): array
+    {
+        return [
+            'all parameters' => [
+                'title',       // title
+                'description', // description
+            ],
+            'null description' => [
+                'title', // title
+                null,    // description
+            ],
+        ];
+    }
+
     public function testCreatingProjectWithTooLongTitle(): void
     {
         /** @var User $user */
@@ -116,19 +130,5 @@ final class CreateProjectApiEndpointTest extends TestCase
             actual: $response['status'],
             message: 'status should be error',
         );
-    }
-
-    public static function data(): array
-    {
-        return [
-            'all parameters' => [
-                'title',       // title
-                'description', // description
-            ],
-            'null description' => [
-                'title', // title
-                null,    // description
-            ],
-        ];
     }
 }

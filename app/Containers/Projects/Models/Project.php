@@ -29,12 +29,6 @@ final class Project extends Model
         'user_uuid',
     ];
 
-    protected $casts = [
-        'created_at' => 'datetime:' . DatetimeValue::FORMAT,
-        'updated_at' => 'datetime:' . DatetimeValue::FORMAT,
-        'deleted_at' => 'datetime:' . DatetimeValue::FORMAT,
-    ];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -43,5 +37,14 @@ final class Project extends Model
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime:' . DatetimeValue::format(),
+            'updated_at' => 'datetime:' . DatetimeValue::format(),
+            'deleted_at' => 'datetime:' . DatetimeValue::format(),
+        ];
     }
 }

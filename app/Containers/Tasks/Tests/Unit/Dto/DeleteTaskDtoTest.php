@@ -3,6 +3,8 @@
 namespace App\Containers\Tasks\Tests\Unit\Dto;
 
 use App\Containers\Tasks\Dto\DeleteTaskDto;
+use App\Containers\Tasks\Models\Task;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
@@ -18,16 +20,24 @@ final class DeleteTaskDtoTest extends TestCase
     #[TestDox('converts dto properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(): void
     {
-        $dto = new DeleteTaskDto(
-            uuid: '219b6eb2-ef9a-70b8-999e-e6835a07e4d2',
-            userUuid: '019b6eb2-ef9a-70b8-999e-e6835a07e4d2',
+        $user = User::factory()
+            ->create();
+
+        $task = Task::factory()
+            ->for($user)
+            ->create();
+
+        $data = [
+            'uuid'      => $task->uuid,
+            'user_uuid' => $user->uuid,
+        ];
+
+        $dto = DeleteTaskDto::from(
+            data: $data,
         );
 
         $this->assertSame(
-            expected: [
-                'uuid'      => $dto->uuid,
-                'user_uuid' => $dto->userUuid,
-            ],
+            expected: $data,
             actual: $dto->toArray(),
         );
     }

@@ -32,7 +32,7 @@ final class DeadlineValueTest extends TestCase
         $this->assertEquals(
             expected: $dateString,
             actual: $value->carbon->toAtomString(),
-            message: "deadline value date format should be the same",
+            message: 'deadline value date format should be the same',
         );
     }
 
@@ -55,7 +55,7 @@ final class DeadlineValueTest extends TestCase
     #[TestDox('deadline value should not be creatable with valid date format, but invalid date string')]
     public function testValidDateFormatWithInvalidDateString(): void
     {
-        $dateString = "2026-13-06T11:59:40+00:00";
+        $dateString = '2026-13-06T11:59:40+00:00';
 
         $this->expectException(
             exception: DatetimeValueInvalidInputStringException::class,

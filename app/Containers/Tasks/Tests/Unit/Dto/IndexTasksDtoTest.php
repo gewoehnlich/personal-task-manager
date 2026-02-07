@@ -2,12 +2,14 @@
 
 namespace App\Containers\Tasks\Tests\Unit\Dto;
 
+use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\IndexTasksDto;
 use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Models\Task;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 
@@ -18,97 +20,102 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class IndexTasksDtoTest extends TestCase
 {
-    #[DataProvider('data')]
-    #[TestDox('converts dto properties to snake_case array keys')]
-    public function testToArrayReturnsSnakeCaseKeys(
-        string $userUuid,
-        ?string $uuid,
-        ?Stage $stage,
-        ?string $projectUuid,
-        ?Carbon $createdAtFrom,
-        ?Carbon $createdAtTo,
-        ?Carbon $updatedAtFrom,
-        ?Carbon $updatedAtTo,
-        ?Carbon $deadlineFrom,
-        ?Carbon $deadlineTo,
-        ?string $orderBy,
-        ?string $orderByField,
-        ?int $limit,
-        ?bool $withDeleted,
-    ): void {
-        $dto = new IndexTasksDto(
-            userUuid: $userUuid,
-            uuid: $uuid,
-            stage: $stage,
-            projectUuid: $projectUuid,
-            createdAtFrom: $createdAtFrom,
-            createdAtTo: $createdAtTo,
-            updatedAtFrom: $updatedAtFrom,
-            updatedAtTo: $updatedAtTo,
-            deadlineFrom: $deadlineFrom,
-            deadlineTo: $deadlineTo,
-            orderBy: $orderBy,
-            orderByField: $orderByField,
-            limit: $limit,
-            withDeleted: $withDeleted,
+    #[TestDox('converts dto properties to snake_case array keys with all parameters filled')]
+    public function testToArrayReturnsSnakeCaseKeysWithAllParametersFilled(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $project = Project::factory()
+            ->for($user)
+            ->create();
+
+        $task = Task::factory()
+            ->for($user)
+            ->for($project)
+            ->create();
+
+        $stage = Stage::PENDING;
+
+        $createdAtFrom = Carbon::now();
+
+        $createdAtTo = Carbon::now();
+
+        $updatedAtFrom = Carbon::now();
+
+        $updatedAtTo = Carbon::now();
+
+        $deadlineFrom = Carbon::now();
+
+        $deadlineTo = Carbon::now();
+
+        $orderBy = 'asc';
+
+        $orderByField = 'id';
+
+        $limit = 1;
+
+        $withDeleted = true;
+
+        $data = [
+            'user_uuid'       => $user->uuid,
+            'uuid'            => $task->uuid,
+            'stage'           => $stage->value,
+            'project_uuid'    => $project->uuid,
+            'created_at_from' => $createdAtFrom->toAtomString(),
+            'created_at_to'   => $createdAtTo->toAtomString(),
+            'updated_at_from' => $updatedAtFrom->toAtomString(),
+            'updated_at_to'   => $updatedAtTo->toAtomString(),
+            'deadline_from'   => $deadlineFrom->toAtomString(),
+            'deadline_to'     => $deadlineTo->toAtomString(),
+            'order_by'        => $orderBy,
+            'order_by_field'  => $orderByField,
+            'limit'           => $limit,
+            'with_deleted'    => $withDeleted,
+        ];
+
+        $dto = IndexTasksDto::from(
+            data: $data,
         );
 
         $this->assertSame(
-            expected: [
-                'user_uuid'       => $dto->userUuid,
-                'uuid'            => $dto->uuid,
-                'stage'           => $dto->stage?->value,
-                'project_uuid'    => $dto->projectUuid,
-                'created_at_from' => $dto->createdAtFrom?->toIso8601String(),
-                'created_at_to'   => $dto->createdAtTo?->toIso8601String(),
-                'updated_at_from' => $dto->updatedAtFrom?->toIso8601String(),
-                'updated_at_to'   => $dto->updatedAtTo?->toIso8601String(),
-                'deadline_from'   => $dto->deadlineFrom?->toIso8601String(),
-                'deadline_to'     => $dto->deadlineTo?->toIso8601String(),
-                'order_by'        => $dto->orderBy,
-                'order_by_field'  => $dto->orderByField,
-                'limit'           => $dto->limit,
-                'with_deleted'    => $dto->withDeleted,
-            ],
+            expected: $data,
             actual: $dto->toArray(),
+            message: 'arrays should be the same',
         );
     }
 
-    public static function data(): array
+    #[TestDox('converts dto properties to snake_case array keys with nullable parameters being null')]
+    public function testToArrayReturnsSnakeCaseKeysWithNullableParametersBeingNull(): void
     {
-        return [
-            'all parameters' => [
-                '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // uuid
-                Stage::PENDING,                         // stage
-                '619b6eb2-ef9a-70b8-999e-e6835a07e4d2', // projectUuid
-                Carbon::now(),                          // createdAtFrom
-                Carbon::now(),                          // createdAtTo
-                Carbon::now(),                          // updatedAtFrom
-                Carbon::now(),                          // updatedAtTo
-                Carbon::now(),                          // deadlineFrom
-                Carbon::now(),                          // deadlineTo
-                'asc',                                  // orderBy
-                'id',                                   // orderByField
-                1,                                      // limit
-                true,                                   // withDeleted
-            ],
-            'all nullable parameters are null' => [
-                '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                null,                                   // uuid
-                null,                                   // stage
-                null,                                   // projectUuid
-                null,                                   // createdAtFrom
-                null,                                   // createdAtTo
-                null,                                   // updatedAtFrom
-                null,                                   // updatedAtTo
-                null,                                   // deadlineFrom
-                null,                                   // deadlineTo
-                null,                                   // orderBy
-                null,                                   // orderByField
-                null,                                   // limit
-                null,                                   // withDeleted
-            ],
+        $user = User::factory()
+            ->create();
+
+        $data = [
+            'user_uuid'       => $user->uuid,
+            'uuid'            => null,
+            'stage'           => null,
+            'project_uuid'    => null,
+            'created_at_from' => null,
+            'created_at_to'   => null,
+            'updated_at_from' => null,
+            'updated_at_to'   => null,
+            'deadline_from'   => null,
+            'deadline_to'     => null,
+            'order_by'        => null,
+            'order_by_field'  => null,
+            'limit'           => null,
+            'with_deleted'    => null,
         ];
+
+        $dto = IndexTasksDto::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $data,
+            actual: $dto->toArray(),
+            message: 'arrays should be the same',
+        );
     }
 }

@@ -2,12 +2,13 @@
 
 namespace App\Containers\Tasks\Tests\Unit\Dto;
 
+use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\CreateTaskDto;
 use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 
@@ -18,57 +19,70 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class CreateTaskDtoTest extends TestCase
 {
-    #[DataProvider('data')]
-    #[TestDox('converts dto properties to snake_case array keys')]
-    public function testToArrayReturnsSnakeCaseKeys(
-        string $userUuid,
-        string $title,
-        ?string $description,
-        Stage $stage,
-        ?Carbon $deadline,
-        ?string $projectUuid,
-    ): void {
-        $dto = new CreateTaskDto(
-            userUuid: $userUuid,
-            title: $title,
-            description: $description,
-            stage: $stage,
-            deadline: $deadline,
-            projectUuid: $projectUuid,
+    #[TestDox('converts dto properties to snake_case array keys with all parameters filled')]
+    public function testToArrayReturnsSnakeCaseKeysWithAllParametersFilled(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $title = 'title';
+
+        $description = 'description';
+
+        $stage = Stage::PENDING;
+
+        $deadline = Carbon::now()
+            ->plus(days: 1);
+
+        $project = Project::factory()
+            ->for($user)
+            ->create();
+
+        $data = [
+            'user_uuid'    => $user->uuid,
+            'title'        => $title,
+            'description'  => $description,
+            'stage'        => $stage->value,
+            'deadline'     => $deadline->toAtomString(),
+            'project_uuid' => $project->uuid,
+        ];
+
+        $dto = CreateTaskDto::from(
+            data: $data,
         );
 
         $this->assertSame(
-            expected: [
-                'user_uuid'    => $userUuid,
-                'title'        => $title,
-                'description'  => $description,
-                'stage'        => $stage->value,
-                'deadline'     => $deadline?->toIso8601String(),
-                'project_uuid' => $projectUuid,
-            ],
+            expected: $data,
             actual: $dto->toArray(),
         );
     }
 
-    public static function data(): array
+    #[TestDox('converts dto properties to snake_case array keys with nullable parameters being null')]
+    public function testToArrayReturnsSnakeCaseKeysWithNullableParametersBeingNull(): void
     {
-        return [
-            'all parameters' => [
-                '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'title',                                // title
-                'description',                          // description
-                Stage::PENDING,                         // stage,
-                Carbon::now(),                          // deadline
-                '219b6eb2-ef9a-70b8-999e-e6835a07e4d2', // projectUuid
-            ],
-            'all nullable parameters are null' => [
-                '019b6eb2-ef9a-70b8-999e-e6835a07e4d2', // userUuid
-                'title',                                // title
-                null,                                   // description
-                Stage::PENDING,                         // stage,
-                null,                                   // deadline
-                null,                                   // projectUuid
-            ],
+        $user = User::factory()
+            ->create();
+
+        $title = 'title';
+
+        $stage = Stage::PENDING;
+
+        $data = [
+            'user_uuid'    => $user->uuid,
+            'title'        => $title,
+            'description'  => null,
+            'stage'        => $stage->value,
+            'deadline'     => null,
+            'project_uuid' => null,
         ];
+
+        $dto = CreateTaskDto::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $data,
+            actual: $dto->toArray(),
+        );
     }
 }
