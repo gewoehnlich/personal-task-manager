@@ -2,7 +2,6 @@
 
 namespace App\Containers\Tasks\Tests\Feature\Actions;
 
-use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Actions\DeleteTaskAction;
 use App\Containers\Tasks\Dto\DeleteTaskDto;
 use App\Containers\Tasks\Models\Task;
@@ -26,24 +25,23 @@ final class DeleteTaskActionTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $project = Project::factory()->for($user)->create();
-
         $task = Task::factory()->for($user)->create();
 
+        $data = [
+            'uuid' => $task->uuid,
+            'user_uuid' => $user->uuid,
+        ];
+
         $this->action(
-            DeleteTaskAction::class,
-            new DeleteTaskDto(
-                uuid: $task->uuid,
-                userUuid: $user->uuid,
+            class: DeleteTaskAction::class,
+            dto: DeleteTaskDto::from(
+                data: $data,
             ),
         );
 
         $this->assertSoftDeleted(
             table: 'tasks',
-            data: [
-                'uuid'      => $task->uuid,
-                'user_uuid' => $user->uuid,
-            ],
+            data: $data,
         );
     }
 }

@@ -40,16 +40,18 @@ final class IndexTasksActionTest extends TestCase
             ->create();
 
         $response = $this->action(
-            IndexTasksAction::class,
-            new IndexTasksDto(
-                userUuid: $user->uuid,
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                ],
             ),
         );
 
         $this->assertEquals(
             expected: Task::where('user_uuid', $user->uuid)->get(),
-            actual: $response->data,
-            message: 'action indexes tasks by user_uuid wrong',
+            actual: $response,
+            message: 'action should index tasks by user_uuid',
         );
     }
 
@@ -68,10 +70,12 @@ final class IndexTasksActionTest extends TestCase
             ->create();
 
         $response = $this->action(
-            IndexTasksAction::class,
-            new IndexTasksDto(
-                userUuid: $user->uuid,
-                uuid: $task->uuid,
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'uuid' => $task->uuid,
+                ],
             ),
         );
 
@@ -79,15 +83,13 @@ final class IndexTasksActionTest extends TestCase
             expected: Task::query()
                 ->where('uuid', $task->uuid)
                 ->where('user_uuid', $user->uuid)
-                ->get()
-                ->isNotEmpty(),
-            actual: $response->data
-                ->isNotEmpty(),
-            message: 'action indexes tasks by uuid wrong',
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by uuid',
         );
     }
 
-    #[TestDox('action does not index tasks of one user for another user by task uuid')]
+    #[TestDox('action should not index tasks of one user for another user by task uuid')]
     public function testIndexingTasksOfOneUserForAnotherUserByUuid(): void
     {
         $user = User::factory()->create();
@@ -104,10 +106,12 @@ final class IndexTasksActionTest extends TestCase
             ->create();
 
         $response = $this->action(
-            IndexTasksAction::class,
-            new IndexTasksDto(
-                userUuid: $user2->uuid,
-                uuid: $task->uuid,
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user2->uuid,
+                    'uuid' => $task->uuid,
+                ],
             ),
         );
 
@@ -115,15 +119,13 @@ final class IndexTasksActionTest extends TestCase
             expected: Task::query()
                 ->where('uuid', $task->uuid)
                 ->where('user_uuid', $user2->uuid)
-                ->get()
-                ->isEmpty(),
-            actual: $response->data
-                ->isEmpty(),
-            message: 'action indexing tasks by uuid returns tasks of one user to another user',
+                ->get(),
+            actual: $response,
+            message: 'action should not index tasks of one user to another user by task uuid',
         );
     }
 
-    #[TestDox('action index tasks by stage')]
+    #[TestDox('action should index tasks by stage')]
     public function testIndexTasksByStage(): void
     {
         $user = User::factory()->create();
@@ -139,10 +141,12 @@ final class IndexTasksActionTest extends TestCase
             ->create();
 
         $response = $this->action(
-            IndexTasksAction::class,
-            new IndexTasksDto(
-                userUuid: $user->uuid,
-                stage: Stage::PENDING,
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'stage' => Stage::PENDING->value,
+                ],
             ),
         );
 
@@ -151,12 +155,12 @@ final class IndexTasksActionTest extends TestCase
                 ->where('user_uuid', $user->uuid)
                 ->where('stage', Stage::PENDING->value)
                 ->get(),
-            actual: $response->data,
-            message: 'action indexes tasks by stage wrong',
+            actual: $response,
+            message: 'action should index tasks by stage',
         );
     }
 
-    #[TestDox('action index tasks by project_uuid')]
+    #[TestDox('action should index tasks by project_uuid')]
     public function testIndexTasksByProjectUuid(): void
     {
         $user = User::factory()
@@ -183,10 +187,12 @@ final class IndexTasksActionTest extends TestCase
             ->create();
 
         $response = $this->action(
-            IndexTasksAction::class,
-            new IndexTasksDto(
-                userUuid: $user->uuid,
-                projectUuid: $project->uuid,
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'project_uuid' => $project->uuid,
+                ],
             ),
         );
 
@@ -195,8 +201,8 @@ final class IndexTasksActionTest extends TestCase
                 ->where('user_uuid', $user->uuid)
                 ->where('project_uuid', $project->uuid)
                 ->get(),
-            actual: $response->data,
-            message: 'action indexes tasks by project_uuid wrong',
+            actual: $response,
+            message: 'action should index tasks by project_uuid',
         );
     }
 
