@@ -9,6 +9,7 @@ use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
+use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 use PHPUnit\Framework\Attributes\TestDox;
@@ -206,34 +207,276 @@ final class IndexTasksActionTest extends TestCase
         );
     }
 
-    // #[TestDox('action index tasks by created_at range')]
-    // public function testIndexTasksByCreatedAtRange(): void
+    #[TestDox('action should index tasks by created_at_from')]
+    public function testIndexTasksByCreatedAtFrom(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $tasks = Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $tasks->first()->forceFill([
+            'created_at' => Carbon::now()
+                ->minus(days: 1),
+        ])->save();
+
+        $createdAtFrom = Carbon::now()
+            ->minus(hours: 1);
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'created_at_from' => $createdAtFrom->toAtomString(),
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->where('created_at', '>=', $createdAtFrom)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by created_at_from',
+        );
+    }
+
+    #[TestDox('action should index tasks by created_at_to')]
+    public function testIndexTasksByCreatedAtTo(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $tasks = Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $tasks->first()->forceFill([
+            'created_at' => Carbon::now()
+                ->plus(days: 1),
+        ])->save();
+
+        $createdAtTo = Carbon::now()
+            ->plus(hours: 1);
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'created_at_to' => $createdAtTo->toAtomString(),
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->where('created_at', '<=', $createdAtTo)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by created_at_to',
+        );
+    }
+
+    #[TestDox('action should index tasks by updated_at_from')]
+    public function testIndexTasksByUpdatedAtFrom(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $tasks = Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $tasks->first()->forceFill([
+            'updated_at' => Carbon::now()
+                ->minus(days: 1),
+        ])->save();
+
+        $updatedAtFrom = Carbon::now()
+            ->minus(hours: 1);
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'updated_at_from' => $updatedAtFrom->toAtomString(),
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->where('updated_at', '>=', $updatedAtFrom)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by updated_at_from',
+        );
+    }
+
+    #[TestDox('action should index tasks by updated_at_to')]
+    public function testIndexTasksByUpdatedAtTo(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $tasks = Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $tasks->first()->forceFill([
+            'updated_at' => Carbon::now()
+                ->plus(days: 1),
+        ])->save();
+
+        $updatedAtTo = Carbon::now()
+            ->plus(hours: 1);
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'updated_at_to' => $updatedAtTo->toAtomString(),
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->where('updated_at', '<=', $updatedAtTo)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by updated_at_to',
+        );
+    }
+
+    #[TestDox('action should index tasks by deadline_from')]
+    public function testIndexTasksByDeadlineFrom(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $tasks = Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $tasks->first()->forceFill([
+            'deadline' => Carbon::now()
+                ->minus(days: 1),
+        ])->save();
+
+        $deadlineFrom = Carbon::now()
+            ->minus(hours: 1);
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'deadline_from' => $deadlineFrom->toAtomString(),
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->where('deadline', '>=', $deadlineFrom)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by deadline_from',
+        );
+    }
+
+    #[TestDox('action should index tasks by deadline_to')]
+    public function testIndexTasksByDeadlineTo(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $tasks = Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $tasks->first()->forceFill([
+            'deadline' => Carbon::now()
+                ->plus(days: 1),
+        ])->save();
+
+        $deadlineTo = Carbon::now()
+            ->plus(hours: 1);
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'deadline_to' => $deadlineTo->toAtomString(),
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->where('deadline', '<=', $deadlineTo)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by deadline_to',
+        );
+    }
+
+    // #[TestDox('action should index tasks by query_by')]
+    // public function testIndexTasksByQueryBy(): void
     // {
     //     $user = User::factory()
     //         ->create();
     //
-    //     for ($day = 1; $day >= 7; ++$day) {
-    //         Task::factory()
-    //             ->for($user)
-    //             ->
-    //             ->create();
-    //     }
+    //     $tasks = Task::factory()
+    //         ->for($user)
+    //         ->count(3)
+    //         ->create();
+    //
+    //     $tasks->first()->forceFill([
+    //         'deadline' => Carbon::now()
+    //             ->plus(days: 1),
+    //     ])->save();
+    //
+    //     $deadlineTo = Carbon::now()
+    //         ->plus(hours: 1);
     //
     //     $response = $this->action(
-    //         IndexTasksAction::class,
-    //         new IndexTasksDto(
-    //             userUuid: $user->uuid,
-    //             projectUuid: $project->uuid,
+    //         class: IndexTasksAction::class,
+    //         dto: IndexTasksDto::from(
+    //             data: [
+    //                 'user_uuid' => $user->uuid,
+    //                 'deadline_to' => $deadlineTo->toAtomString(),
+    //             ]
     //         ),
     //     );
     //
     //     $this->assertEquals(
     //         expected: Task::query()
     //             ->where('user_uuid', $user->uuid)
-    //             ->where('project_uuid', $project->uuid)
+    //             ->where('deadline', '<=', $deadlineTo)
     //             ->get(),
-    //         actual: $response->data,
-    //         message: 'action indexes tasks by project_uuid wrong',
+    //         actual: $response,
+    //         message: 'action should index tasks by deadline_to',
     //     );
     // }
 }

@@ -51,8 +51,8 @@ final readonly class IndexTasksAction extends Action
             $query = $query->where('deadline', '<=', $dto->deadlineTo());
         }
 
-        if ($dto->orderBy() !== null && $dto->orderByField() !== null) {
-            $query = $query->orderBy($dto->orderByField() ?? 'id', $dto->orderBy());
+        if ($dto->orderBy() !== null) {
+            $query = $query->orderBy($dto->orderByField() ?? 'updated_at', $dto->orderBy());
         }
 
         if ($dto->limit() !== null) {
