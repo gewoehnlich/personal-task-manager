@@ -6,6 +6,7 @@ use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Actions\IndexTasksAction;
 use App\Containers\Tasks\Dto\IndexTasksDto;
 use App\Containers\Tasks\Enums\OrderBy;
+use App\Containers\Tasks\Enums\OrderByField;
 use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
@@ -453,12 +454,14 @@ final class IndexTasksActionTest extends TestCase
             ->count(3)
             ->create();
 
+        $orderBy = OrderBy::ASC->value;
+
         $response = $this->action(
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
                     'user_uuid' => $user->uuid,
-                    'order_by' => OrderBy::ASC->value,
+                    'order_by' => $orderBy,
                 ]
             ),
         );
@@ -466,7 +469,7 @@ final class IndexTasksActionTest extends TestCase
         $this->assertEquals(
             expected: Task::query()
                 ->where('user_uuid', $user->uuid)
-                ->orderBy('updated_at', OrderBy::ASC->value)
+                ->orderBy('updated_at', $orderBy)
                 ->get(),
             actual: $response,
             message: 'action should index tasks by query_by asc',
@@ -484,12 +487,14 @@ final class IndexTasksActionTest extends TestCase
             ->count(3)
             ->create();
 
+        $orderBy = OrderBy::DESC->value;
+
         $response = $this->action(
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
                     'user_uuid' => $user->uuid,
-                    'order_by' => OrderBy::DESC->value,
+                    'order_by' => $orderBy,
                 ]
             ),
         );
@@ -497,10 +502,226 @@ final class IndexTasksActionTest extends TestCase
         $this->assertEquals(
             expected: Task::query()
                 ->where('user_uuid', $user->uuid)
-                ->orderBy('updated_at', OrderBy::DESC->value)
+                ->orderBy('updated_at', $orderBy)
                 ->get(),
             actual: $response,
             message: 'action should index tasks by query_by asc',
+        );
+    }
+
+    #[TestDox('action should index tasks by query_by desc and query_by_field uuid')]
+    public function testIndexTasksByQueryByAndQueryByFieldUuid(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $orderBy = OrderBy::DESC->value;
+
+        $orderByField = OrderByField::UUID->value;
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'order_by' => $orderBy,
+                    'order_by_field' => $orderByField,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->orderBy($orderByField, $orderBy)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by query_by desc and query_by_field uuid',
+        );
+    }
+
+    #[TestDox('action should index tasks by query_by desc and query_by_field stage')]
+    public function testIndexTasksByQueryByAndQueryByFieldStage(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $orderBy = OrderBy::DESC->value;
+
+        $orderByField = OrderByField::STAGE->value;
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'order_by' => $orderBy,
+                    'order_by_field' => $orderByField,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->orderBy($orderByField, $orderBy)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by query_by desc and query_by_field uuid',
+        );
+    }
+
+    #[TestDox('action should index tasks by query_by desc and query_by_field project_uuid')]
+    public function testIndexTasksByQueryByAndQueryByFieldProjectUuid(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $orderBy = OrderBy::DESC->value;
+
+        $orderByField = OrderByField::PROJECT_UUID->value;
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'order_by' => $orderBy,
+                    'order_by_field' => $orderByField,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->orderBy($orderByField, $orderBy)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by query_by desc and query_by_field project_uuid',
+        );
+    }
+
+    #[TestDox('action should index tasks by query_by desc and query_by_field created_at')]
+    public function testIndexTasksByQueryByAndQueryByFieldCreatedAt(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $orderBy = OrderBy::DESC->value;
+
+        $orderByField = OrderByField::CREATED_AT->value;
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'order_by' => $orderBy,
+                    'order_by_field' => $orderByField,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->orderBy($orderByField, $orderBy)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by query_by desc and query_by_field created_at',
+        );
+    }
+
+    #[TestDox('action should index tasks by query_by desc and query_by_field updated_at')]
+    public function testIndexTasksByQueryByAndQueryByFieldUpdatedAt(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $orderBy = OrderBy::DESC->value;
+
+        $orderByField = OrderByField::UPDATED_AT->value;
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'order_by' => $orderBy,
+                    'order_by_field' => $orderByField,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->orderBy($orderByField, $orderBy)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by query_by desc and query_by_field updated_at',
+        );
+    }
+
+    #[TestDox('action should index tasks by query_by desc and query_by_field deadline')]
+    public function testIndexTasksByQueryByAndQueryByFieldDeadline(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $orderBy = OrderBy::DESC->value;
+
+        $orderByField = OrderByField::DEADLINE->value;
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'order_by' => $orderBy,
+                    'order_by_field' => $orderByField,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->orderBy($orderByField, $orderBy)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by query_by desc and query_by_field deadline',
         );
     }
 }
