@@ -5,6 +5,7 @@ namespace App\Containers\Tasks\Tests\Feature\Actions;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Actions\IndexTasksAction;
 use App\Containers\Tasks\Dto\IndexTasksDto;
+use App\Containers\Tasks\Enums\OrderBy;
 use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
@@ -441,42 +442,65 @@ final class IndexTasksActionTest extends TestCase
         );
     }
 
-    // #[TestDox('action should index tasks by query_by')]
-    // public function testIndexTasksByQueryBy(): void
-    // {
-    //     $user = User::factory()
-    //         ->create();
-    //
-    //     $tasks = Task::factory()
-    //         ->for($user)
-    //         ->count(3)
-    //         ->create();
-    //
-    //     $tasks->first()->forceFill([
-    //         'deadline' => Carbon::now()
-    //             ->plus(days: 1),
-    //     ])->save();
-    //
-    //     $deadlineTo = Carbon::now()
-    //         ->plus(hours: 1);
-    //
-    //     $response = $this->action(
-    //         class: IndexTasksAction::class,
-    //         dto: IndexTasksDto::from(
-    //             data: [
-    //                 'user_uuid' => $user->uuid,
-    //                 'deadline_to' => $deadlineTo->toAtomString(),
-    //             ]
-    //         ),
-    //     );
-    //
-    //     $this->assertEquals(
-    //         expected: Task::query()
-    //             ->where('user_uuid', $user->uuid)
-    //             ->where('deadline', '<=', $deadlineTo)
-    //             ->get(),
-    //         actual: $response,
-    //         message: 'action should index tasks by deadline_to',
-    //     );
-    // }
+    #[TestDox('action should index tasks by query_by asc')]
+    public function testIndexTasksByQueryByAsc(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'order_by' => OrderBy::ASC->value,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->orderBy('updated_at', OrderBy::ASC->value)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by query_by asc',
+        );
+    }
+
+    #[TestDox('action should index tasks by query_by desc')]
+    public function testIndexTasksByQueryByDesc(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'order_by' => OrderBy::DESC->value,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->orderBy('updated_at', OrderBy::DESC->value)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by query_by asc',
+        );
+    }
 }
