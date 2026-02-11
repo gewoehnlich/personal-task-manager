@@ -724,4 +724,106 @@ final class IndexTasksActionTest extends TestCase
             message: 'action should index tasks by query_by desc and query_by_field deadline',
         );
     }
+
+    #[TestDox('action should index tasks by limit')]
+    public function testIndexTasksByLimit(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $limit = 2;
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'limit' => $limit,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->limit($limit)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by limit',
+        );
+    }
+
+    #[TestDox('action should index tasks by with_deleted not true')]
+    public function testIndexTasksByWithDeletedNotTrue(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $tasks = Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $tasks->first()->delete();
+
+        $withDeleted = false;
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'with_deleted' => $withDeleted,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->whereNull('deleted_at')
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by with_deleted not true',
+        );
+    }
+
+    #[TestDox('action should index tasks by with_deleted true')]
+    public function testIndexTasksByWithDeletedTrue(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $tasks = Task::factory()
+            ->for($user)
+            ->count(3)
+            ->create();
+
+        $tasks->first()->delete();
+
+        $withDeleted = true;
+
+        $response = $this->action(
+            class: IndexTasksAction::class,
+            dto: IndexTasksDto::from(
+                data: [
+                    'user_uuid' => $user->uuid,
+                    'with_deleted' => $withDeleted,
+                ]
+            ),
+        );
+
+        $this->assertEquals(
+            expected: Task::query()
+                ->where('user_uuid', $user->uuid)
+                ->get(),
+            actual: $response,
+            message: 'action should index tasks by with_deleted true',
+        );
+    }
 }

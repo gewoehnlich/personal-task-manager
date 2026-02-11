@@ -59,8 +59,8 @@ final readonly class IndexTasksAction extends Action
             $query = $query->limit($dto->limit());
         }
 
-        if ($dto->withDeleted() === true) {
-            $query = $query->whereNotNull('deleted_at');
+        if ($dto->withDeleted() !== true) {
+            $query = $query->whereNull('deleted_at');
         }
 
         return $query->get();
