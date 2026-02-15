@@ -28,7 +28,7 @@ final class DeleteTaskActionTest extends TestCase
         $task = Task::factory()->for($user)->create();
 
         $data = [
-            'uuid' => $task->uuid,
+            'uuid'      => $task->uuid,
             'user_uuid' => $user->uuid,
         ];
 

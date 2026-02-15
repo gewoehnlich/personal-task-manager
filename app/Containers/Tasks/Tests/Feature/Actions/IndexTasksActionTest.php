@@ -77,7 +77,7 @@ final class IndexTasksActionTest extends TestCase
             dto: IndexTasksDto::from(
                 data: [
                     'user_uuid' => $user->uuid,
-                    'uuid' => $task->uuid,
+                    'uuid'      => $task->uuid,
                 ],
             ),
         );
@@ -113,7 +113,7 @@ final class IndexTasksActionTest extends TestCase
             dto: IndexTasksDto::from(
                 data: [
                     'user_uuid' => $user2->uuid,
-                    'uuid' => $task->uuid,
+                    'uuid'      => $task->uuid,
                 ],
             ),
         );
@@ -148,7 +148,7 @@ final class IndexTasksActionTest extends TestCase
             dto: IndexTasksDto::from(
                 data: [
                     'user_uuid' => $user->uuid,
-                    'stage' => Stage::PENDING->value,
+                    'stage'     => Stage::PENDING->value,
                 ],
             ),
         );
@@ -193,7 +193,7 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
+                    'user_uuid'    => $user->uuid,
                     'project_uuid' => $project->uuid,
                 ],
             ),
@@ -232,9 +232,9 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
+                    'user_uuid'       => $user->uuid,
                     'created_at_from' => $createdAtFrom->toAtomString(),
-                ]
+                ],
             ),
         );
 
@@ -271,9 +271,9 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
+                    'user_uuid'     => $user->uuid,
                     'created_at_to' => $createdAtTo->toAtomString(),
-                ]
+                ],
             ),
         );
 
@@ -310,9 +310,9 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
+                    'user_uuid'       => $user->uuid,
                     'updated_at_from' => $updatedAtFrom->toAtomString(),
-                ]
+                ],
             ),
         );
 
@@ -349,9 +349,9 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
+                    'user_uuid'     => $user->uuid,
                     'updated_at_to' => $updatedAtTo->toAtomString(),
-                ]
+                ],
             ),
         );
 
@@ -388,9 +388,9 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
+                    'user_uuid'     => $user->uuid,
                     'deadline_from' => $deadlineFrom->toAtomString(),
-                ]
+                ],
             ),
         );
 
@@ -427,9 +427,9 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
+                    'user_uuid'   => $user->uuid,
                     'deadline_to' => $deadlineTo->toAtomString(),
-                ]
+                ],
             ),
         );
 
@@ -461,8 +461,8 @@ final class IndexTasksActionTest extends TestCase
             dto: IndexTasksDto::from(
                 data: [
                     'user_uuid' => $user->uuid,
-                    'order_by' => $orderBy,
-                ]
+                    'order_by'  => $orderBy,
+                ],
             ),
         );
 
@@ -494,8 +494,8 @@ final class IndexTasksActionTest extends TestCase
             dto: IndexTasksDto::from(
                 data: [
                     'user_uuid' => $user->uuid,
-                    'order_by' => $orderBy,
-                ]
+                    'order_by'  => $orderBy,
+                ],
             ),
         );
 
@@ -528,10 +528,10 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
-                    'order_by' => $orderBy,
+                    'user_uuid'      => $user->uuid,
+                    'order_by'       => $orderBy,
                     'order_by_field' => $orderByField,
-                ]
+                ],
             ),
         );
 
@@ -564,10 +564,10 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
-                    'order_by' => $orderBy,
+                    'user_uuid'      => $user->uuid,
+                    'order_by'       => $orderBy,
                     'order_by_field' => $orderByField,
-                ]
+                ],
             ),
         );
 
@@ -600,10 +600,10 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
-                    'order_by' => $orderBy,
+                    'user_uuid'      => $user->uuid,
+                    'order_by'       => $orderBy,
                     'order_by_field' => $orderByField,
-                ]
+                ],
             ),
         );
 
@@ -636,10 +636,10 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
-                    'order_by' => $orderBy,
+                    'user_uuid'      => $user->uuid,
+                    'order_by'       => $orderBy,
                     'order_by_field' => $orderByField,
-                ]
+                ],
             ),
         );
 
@@ -672,10 +672,10 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
-                    'order_by' => $orderBy,
+                    'user_uuid'      => $user->uuid,
+                    'order_by'       => $orderBy,
                     'order_by_field' => $orderByField,
-                ]
+                ],
             ),
         );
 
@@ -708,10 +708,10 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
-                    'order_by' => $orderBy,
+                    'user_uuid'      => $user->uuid,
+                    'order_by'       => $orderBy,
                     'order_by_field' => $orderByField,
-                ]
+                ],
             ),
         );
 
@@ -743,8 +743,8 @@ final class IndexTasksActionTest extends TestCase
             dto: IndexTasksDto::from(
                 data: [
                     'user_uuid' => $user->uuid,
-                    'limit' => $limit,
-                ]
+                    'limit'     => $limit,
+                ],
             ),
         );
 
@@ -777,9 +777,9 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
+                    'user_uuid'    => $user->uuid,
                     'with_deleted' => $withDeleted,
-                ]
+                ],
             ),
         );
 
@@ -812,9 +812,9 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: IndexTasksDto::from(
                 data: [
-                    'user_uuid' => $user->uuid,
+                    'user_uuid'    => $user->uuid,
                     'with_deleted' => $withDeleted,
-                ]
+                ],
             ),
         );
 

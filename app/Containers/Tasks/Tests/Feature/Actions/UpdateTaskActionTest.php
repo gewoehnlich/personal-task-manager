@@ -60,7 +60,7 @@ final class UpdateTaskActionTest extends TestCase
         $this->assertNotSame(
             expected: $task->toArray(),
             actual: $data,
-            message: "these two arrays should not be the same",
+            message: 'these two arrays should not be the same',
         );
 
         $dto = UpdateTaskDto::from(
@@ -105,7 +105,7 @@ final class UpdateTaskActionTest extends TestCase
         $this->assertNotSame(
             expected: $task->toArray(),
             actual: $data,
-            message: "these two arrays should not be the same",
+            message: 'these two arrays should not be the same',
         );
 
         $dto = UpdateTaskDto::from(
