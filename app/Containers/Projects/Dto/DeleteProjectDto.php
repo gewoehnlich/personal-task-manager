@@ -28,8 +28,8 @@ final readonly class DeleteProjectDto extends Dto
     public function toArray(): array
     {
         return [
-            'uuid'        => $this->uuid(),
-            'user_uuid'   => $this->userUuid(),
+            'uuid'      => $this->uuid(),
+            'user_uuid' => $this->userUuid(),
         ];
     }
 

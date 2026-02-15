@@ -32,4 +32,25 @@ final class IndexProjectsDtoTest extends TestCase
             actual: $dto->toArray(),
         );
     }
+
+    #[TestDox('userUuid() method should return a string')]
+    public function testUserUuidMethod(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $data = [
+            'user_uuid' => $user->uuid,
+        ];
+
+        $dto = IndexProjectsDto::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $dto->userUuid->uuid,
+            actual: $dto->userUuid(),
+            message: 'userUuid() method should return actual value',
+        );
+    }
 }

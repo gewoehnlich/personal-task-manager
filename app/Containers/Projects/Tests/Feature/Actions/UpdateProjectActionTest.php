@@ -3,7 +3,6 @@
 namespace App\Containers\Projects\Tests\Feature\Actions;
 
 use App\Containers\Projects\Actions\UpdateProjectAction;
-use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Dto\UpdateProjectDto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Users\Models\User;
@@ -18,11 +17,10 @@ use PHPUnit\Framework\Attributes\UsesClass;
  */
 #[CoversClass(UpdateProjectAction::class)]
 #[Medium]
-#[UsesClass(CreateProjectDto::class)]
 #[UsesClass(UpdateProjectDto::class)]
 final class UpdateProjectActionTest extends TestCase
 {
-    #[TestDox('action updates a project')]
+    #[TestDox('action should update the project')]
     public function testFullUpdate(): void
     {
         $user = User::factory()

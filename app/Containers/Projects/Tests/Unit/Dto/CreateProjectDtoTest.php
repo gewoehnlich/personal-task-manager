@@ -23,32 +23,31 @@ final class CreateProjectDtoTest extends TestCase
         string $title,
         ?string $description,
     ): void {
-        $userUuid = User::factory()
-            ->create()
-            ->uuid;
+        $user = User::factory()
+            ->create();
 
         $dto = CreateProjectDto::from([
-            'user_uuid'   => $userUuid,
+            'user_uuid'   => $user->uuid,
             'title'       => $title,
             'description' => $description,
         ]);
 
         $this->assertSame(
-            expected: $userUuid,
+            expected: $user->uuid,
             actual: $dto->userUuid(),
-            message: 'userUuid differs',
+            message: 'userUuid should be the same',
         );
 
         $this->assertSame(
             expected: $title,
             actual: $dto->title(),
-            message: 'title differs',
+            message: 'title should be the same',
         );
 
         $this->assertSame(
             expected: $description,
             actual: $dto->description(),
-            message: 'description differs',
+            message: 'description should be the same',
         );
     }
 
@@ -97,7 +96,7 @@ final class CreateProjectDtoTest extends TestCase
         $this->assertSame(
             expected: $dto->userUuid->uuid,
             actual: $dto->userUuid(),
-            message: 'userUuid() method works the wrong way',
+            message: 'userUuid() method should return actual value',
         );
     }
 
@@ -122,7 +121,7 @@ final class CreateProjectDtoTest extends TestCase
         $this->assertSame(
             expected: $dto->title->string,
             actual: $dto->title(),
-            message: 'title() method works the wrong way',
+            message: 'title() method should return actual value',
         );
     }
 
@@ -147,7 +146,7 @@ final class CreateProjectDtoTest extends TestCase
         $this->assertSame(
             expected: $dto->description?->string,
             actual: $dto->description(),
-            message: 'description() method works the wrong way',
+            message: 'description() method should return actual value',
         );
     }
 

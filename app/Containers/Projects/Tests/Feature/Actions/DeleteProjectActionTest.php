@@ -46,7 +46,7 @@ final class DeleteProjectActionTest extends TestCase
         ]);
     }
 
-    #[TestDox('ErrorResponder is returned when project uuid is invalid')]
+    #[TestDox('ProjectWithThisUuidDoesNotExistException should be thrown when project_uuid is invalid')]
     public function testDeleteFailsWithInvalidProjectUuid(): void
     {
         $user = User::factory()
@@ -60,21 +60,16 @@ final class DeleteProjectActionTest extends TestCase
             exception: ProjectWithThisUuidDoesNotExistException::class,
         );
 
-        $response = $this->action(
+        $this->action(
             class: DeleteProjectAction::class,
             dto: DeleteProjectDto::from([
                 'uuid'      => '00000000-0000-0000-0000-000000000000',
                 'user_uuid' => $user->uuid,
             ]),
         );
-
-        $this->assertTrue(
-            condition: $response instanceof ErrorResponder,
-            message: 'the response is wrong for delete project action',
-        );
     }
 
-    #[TestDox('ErrorResponder is returned when user_uuid is invalid')]
+    #[TestDox('UserWithThisUuidDoesNotExistException should be thrown when user_uuid is invalid')]
     public function testDeleteFailsWithInvalidUserUuid(): void
     {
         $user = User::factory()
@@ -88,17 +83,12 @@ final class DeleteProjectActionTest extends TestCase
             exception: UserWithThisUuidDoesNotExistException::class,
         );
 
-        $response = $this->action(
+        $this->action(
             class: DeleteProjectAction::class,
             dto: DeleteProjectDto::from([
                 'uuid'      => $project->uuid,
                 'user_uuid' => '00000000-0000-0000-0000-000000000000',
             ]),
-        );
-
-        $this->assertTrue(
-            condition: $response instanceof ErrorResponder,
-            message: 'the response is wrong for delete project action',
         );
     }
 }

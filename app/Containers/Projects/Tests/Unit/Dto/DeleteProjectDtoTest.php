@@ -37,4 +37,56 @@ final class DeleteProjectDtoTest extends TestCase
             actual: $dto->toArray(),
         );
     }
+
+    #[TestDox('uuid() method should return a string')]
+    public function testUuidMethod(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $project = Project::factory()
+            ->for($user)
+            ->create();
+
+        $data = [
+            'uuid'      => $project->uuid,
+            'user_uuid' => $user->uuid,
+        ];
+
+        $dto = DeleteProjectDto::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $dto->uuid->uuid,
+            actual: $dto->uuid(),
+            message: 'uuid() method should return actual value',
+        );
+    }
+
+    #[TestDox('userUuid() method should return a string')]
+    public function testUserUuidMethod(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $project = Project::factory()
+            ->for($user)
+            ->create();
+
+        $data = [
+            'uuid'      => $project->uuid,
+            'user_uuid' => $user->uuid,
+        ];
+
+        $dto = DeleteProjectDto::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $dto->userUuid->uuid,
+            actual: $dto->userUuid(),
+            message: 'userUuid() method should return actual value',
+        );
+    }
 }

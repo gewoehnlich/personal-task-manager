@@ -24,9 +24,12 @@ final class UpdateProjectDtoTest extends TestCase
         string $title,
         ?string $description,
     ): void {
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->create();
 
-        $project = Project::factory()->for($user)->create();
+        $project = Project::factory()
+            ->for($user)
+            ->create();
 
         $dto = UpdateProjectDto::from([
             'uuid'        => $project->uuid,
@@ -43,6 +46,121 @@ final class UpdateProjectDtoTest extends TestCase
                 'description' => $description,
             ],
             actual: $dto->toArray(),
+        );
+    }
+
+    #[TestDox('uuid() method should return a string')]
+    public function testUuidMethod(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $project = Project::factory()
+            ->for($user)
+            ->create();
+
+        $data = [
+            'uuid'        => $project->uuid,
+            'user_uuid'   => $user->uuid,
+            'title'       => 'title',
+            'description' => 'description',
+        ];
+
+        $dto = UpdateProjectDto::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $dto->uuid->uuid,
+            actual: $dto->uuid(),
+            message: 'uuid() method should return actual value',
+        );
+    }
+
+    #[TestDox('userUuid() method should return a string')]
+    public function testUserUuidMethod(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $project = Project::factory()
+            ->for($user)
+            ->create();
+
+        $data = [
+            'uuid'        => $project->uuid,
+            'user_uuid'   => $user->uuid,
+            'title'       => 'title',
+            'description' => 'description',
+        ];
+
+        $dto = UpdateProjectDto::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $dto->userUuid->uuid,
+            actual: $dto->userUuid(),
+            message: 'userUuid() method should return actual value',
+        );
+    }
+
+    #[TestDox('title() method should return a string')]
+    public function testTitleMethod(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $project = Project::factory()
+            ->for($user)
+            ->create();
+
+        $data = [
+            'uuid'        => $project->uuid,
+            'user_uuid'   => $user->uuid,
+            'title'       => 'title',
+            'description' => 'description',
+        ];
+
+        $dto = UpdateProjectDto::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $dto->title->string,
+            actual: $dto->title(),
+            message: 'title() method should return actual value',
+        );
+    }
+
+    #[DataProvider('data')]
+    #[TestDox('description() method should return a string or null')]
+    public function testDescriptionMethod(
+        string $title,
+        ?string $description,
+    ): void {
+        $user = User::factory()
+            ->create();
+
+        $project = Project::factory()
+            ->for($user)
+            ->create();
+
+        $data = [
+            'uuid'        => $project->uuid,
+            'user_uuid'   => $user->uuid,
+            'title'       => $title,
+            'description' => $description,
+        ];
+
+        $dto = UpdateProjectDto::from(
+            data: $data,
+        );
+
+        $this->assertSame(
+            expected: $dto->description?->string,
+            actual: $dto->description(),
+            message: 'description() method should return actual value',
         );
     }
 
