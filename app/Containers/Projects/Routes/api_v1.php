@@ -6,10 +6,10 @@ use App\Containers\Projects\Controllers\Api\ProjectController;
 use App\Ship\Middleware\EnsureAcceptHeaderIsJson;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(
+Route::middleware([
     'auth:sanctum',
     EnsureAcceptHeaderIsJson::class,
-)
+])
     ->name('projects.')
     ->group(function () {
         Route::get(

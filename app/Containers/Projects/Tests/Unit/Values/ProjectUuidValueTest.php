@@ -35,7 +35,7 @@ final class ProjectUuidValueTest extends TestCase
         $this->assertSame(
             expected: $project->uuid,
             actual: $value->uuid,
-            message: 'the uuid is not the same',
+            message: 'the uuid should be the same',
         );
     }
 

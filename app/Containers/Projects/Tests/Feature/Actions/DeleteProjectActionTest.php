@@ -8,7 +8,6 @@ use App\Containers\Projects\Exceptions\ProjectWithThisUuidDoesNotExistException;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Users\Exceptions\UserWithThisUuidDoesNotExistException;
 use App\Containers\Users\Models\User;
-use App\Ship\Abstracts\Responders\ErrorResponder;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;

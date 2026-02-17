@@ -7,6 +7,7 @@ use App\Containers\Projects\Controllers\Api\ProjectController;
 use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Requests\CreateProjectRequest;
+use App\Containers\Projects\Values\DescriptionValue;
 use App\Containers\Projects\Values\TitleValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
@@ -35,7 +36,8 @@ final class CreateProjectApiEndpointTest extends TestCase
         ?string $description,
     ): void {
         /** @var User $user */
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->create();
 
         $response = $this->actingAs($user)
             ->postJson(
@@ -58,6 +60,7 @@ final class CreateProjectApiEndpointTest extends TestCase
                     'description',
                     'created_at',
                     'updated_at',
+                    'deleted_at',
                 ],
             ],
         );
@@ -71,7 +74,7 @@ final class CreateProjectApiEndpointTest extends TestCase
         $this->assertEquals(
             expected: $user->uuid,
             actual: $response['result']['user_uuid'],
-            message: 'actual user is not the expected one',
+            message: 'actual user should be the expected one',
         );
 
         $project = Project::query()
@@ -81,19 +84,19 @@ final class CreateProjectApiEndpointTest extends TestCase
 
         $this->assertNotNull(
             actual: $project,
-            message: 'the project from response not found in the database',
+            message: 'the project from response should be found in the database',
         );
 
         $this->assertEquals(
             expected: $title,
             actual: $project->title,
-            message: 'actual title differs from expected title',
+            message: 'actual title should be the same as expected title',
         );
 
         $this->assertEquals(
             expected: $description,
             actual: $project->description,
-            message: 'actual description differs from expected description',
+            message: 'actual description should be the same as expected description',
         );
     }
 
@@ -116,11 +119,13 @@ final class CreateProjectApiEndpointTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
 
+        $title = Str::repeat('a', TitleValue::MAX_LENGTH + 1);
+
         $response = $this->actingAs($user)
             ->postJson(
                 uri: route('api.v1.projects.index'),
                 data: [
-                    'title'       => Str::repeat('a', TitleValue::MAX_LENGTH + 1),
+                    'title'       => $title,
                     'description' => null,
                 ],
             );
@@ -129,6 +134,49 @@ final class CreateProjectApiEndpointTest extends TestCase
             expected: 'error',
             actual: $response['status'],
             message: 'status should be error',
+        );
+
+        $this->assertEquals(
+            expected: sprintf(
+                'String value %s for %s is too long!',
+                $title,
+                TitleValue::class,
+            ),
+            actual: $response['result'],
+            message: 'error should be the same as expected one',
+        );
+    }
+
+    public function testCreatingProjectWithTooLongDescription(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $description = Str::repeat('a', DescriptionValue::MAX_LENGTH + 1);
+
+        $response = $this->actingAs($user)
+            ->postJson(
+                uri: route('api.v1.projects.index'),
+                data: [
+                    'title'       => Str::repeat('a', TitleValue::MAX_LENGTH),
+                    'description' => $description,
+                ],
+            );
+
+        $this->assertEquals(
+            expected: 'error',
+            actual: $response['status'],
+            message: 'status should be error',
+        );
+
+        $this->assertEquals(
+            expected: sprintf(
+                'String value %s for %s is too long!',
+                $description,
+                DescriptionValue::class,
+            ),
+            actual: $response['result'],
+            message: 'error should be the same as expected one',
         );
     }
 }

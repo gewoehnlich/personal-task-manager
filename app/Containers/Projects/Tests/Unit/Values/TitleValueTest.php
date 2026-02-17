@@ -30,7 +30,7 @@ final class TitleValueTest extends TestCase
         $this->assertSame(
             expected: $value,
             actual: $title->string,
-            message: 'the value is not the same',
+            message: 'the value should be the same',
         );
     }
 
@@ -47,7 +47,7 @@ final class TitleValueTest extends TestCase
         $this->assertSame(
             expected: $value,
             actual: $title->string,
-            message: 'the value is not the same',
+            message: 'the value should be the same',
         );
     }
 

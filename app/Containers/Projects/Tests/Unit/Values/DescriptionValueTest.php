@@ -30,7 +30,7 @@ final class DescriptionValueTest extends TestCase
         $this->assertSame(
             expected: $value,
             actual: $description->string,
-            message: 'the value is not the same',
+            message: 'the value should be the same',
         );
     }
 
@@ -47,7 +47,7 @@ final class DescriptionValueTest extends TestCase
         $this->assertSame(
             expected: $value,
             actual: $description->string,
-            message: 'the value is not the same',
+            message: 'the value should be the same',
         );
     }
 

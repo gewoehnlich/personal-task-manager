@@ -20,9 +20,12 @@ final class DeleteProjectDtoTest extends TestCase
     #[TestDox('converts dto properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->create();
 
-        $project = Project::factory()->for($user)->create();
+        $project = Project::factory()
+            ->for($user)
+            ->create();
 
         $dto = DeleteProjectDto::from([
             'uuid'      => $project->uuid,
