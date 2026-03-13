@@ -3,7 +3,7 @@
 namespace App\Ship\Values;
 
 use App\Ship\Abstracts\Values\Value;
-use App\Ship\Exceptions\StringValueTooLongException;
+use App\Ship\Exceptions\StringValueIsTooLongException;
 use Illuminate\Support\Str;
 
 abstract readonly class StringValue extends Value
@@ -29,7 +29,7 @@ abstract readonly class StringValue extends Value
     private function isNotLongerThanMaxLength(): void
     {
         if (Str::length(value: $this->string) > static::MAX_LENGTH) {
-            throw new StringValueTooLongException(
+            throw new StringValueIsTooLongException(
                 string: $this->string,
                 entity: static::class,
             );

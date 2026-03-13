@@ -17,17 +17,16 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class CreateProjectDtoTest extends TestCase
 {
-    #[DataProvider('data')]
+    #[DataProvider('inputDataProvider')]
     #[TestDox('dto should be creatable with from() method')]
     public function testFromMethodDtoCreation(
         string $title,
         ?string $description,
     ): void {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
         $dto = CreateProjectDto::from([
-            'user_uuid'   => $user->uuid,
+            'user'        => $user,
             'title'       => $title,
             'description' => $description,
         ]);
@@ -51,106 +50,32 @@ final class CreateProjectDtoTest extends TestCase
         );
     }
 
-    #[DataProvider('data')]
+    #[DataProvider('inputDataProvider')]
     #[TestDox('dto should be convertable to array with toArray() method')]
     public function testToArrayReturnsSnakeCaseKeys(
         string $title,
         ?string $description,
     ): void {
-        $data = [
-            'user_uuid'   => User::factory()
-                ->create()
-                ->uuid,
+        $user = $this->user();
+
+        $dto = CreateProjectDto::from([
+            'user'        => $user,
             'title'       => $title,
             'description' => $description,
-        ];
-
-        $dto = CreateProjectDto::from(
-            data: $data,
-        );
+        ]);
 
         $this->assertSame(
-            expected: $data,
+            expected: [
+                'user_uuid'   => $user->uuid,
+                'title'       => $title,
+                'description' => $description,
+            ],
             actual: $dto->toArray(),
+            message: "toArray() method should return expected data",
         );
     }
 
-    #[DataProvider('data')]
-    #[TestDox('userUuid() method should return a string')]
-    public function testUserUuidMethod(
-        string $title,
-        ?string $description,
-    ): void {
-        $data = [
-            'user_uuid'   => User::factory()
-                ->create()
-                ->uuid,
-            'title'       => $title,
-            'description' => $description,
-        ];
-
-        $dto = CreateProjectDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->userUuid->uuid,
-            actual: $dto->userUuid(),
-            message: 'userUuid() method should return actual value',
-        );
-    }
-
-    #[DataProvider('data')]
-    #[TestDox('title() method should return a string')]
-    public function testTitleMethod(
-        string $title,
-        ?string $description,
-    ): void {
-        $data = [
-            'user_uuid'   => User::factory()
-                ->create()
-                ->uuid,
-            'title'       => $title,
-            'description' => $description,
-        ];
-
-        $dto = CreateProjectDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->title->string,
-            actual: $dto->title(),
-            message: 'title() method should return actual value',
-        );
-    }
-
-    #[DataProvider('data')]
-    #[TestDox('description() method should return a string or null')]
-    public function testDescriptionMethod(
-        string $title,
-        ?string $description,
-    ): void {
-        $data = [
-            'user_uuid'   => User::factory()
-                ->create()
-                ->uuid,
-            'title'       => $title,
-            'description' => $description,
-        ];
-
-        $dto = CreateProjectDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->description?->string,
-            actual: $dto->description(),
-            message: 'description() method should return actual value',
-        );
-    }
-
-    public static function data(): array
+    public static function inputDataProvider(): array
     {
         return [
             'all parameters' => [

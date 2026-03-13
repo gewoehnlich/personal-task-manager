@@ -3,6 +3,8 @@
 namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\DeleteProjectDto;
+use App\Containers\Projects\Exceptions\ProjectDoesNotBelongToAuthenticatedUserException;
+use App\Containers\Projects\Exceptions\ProjectWithThisUuidDoesNotExistException;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
@@ -17,19 +19,81 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class DeleteProjectDtoTest extends TestCase
 {
-    #[TestDox('converts dto properties to snake_case array keys')]
-    public function testToArrayReturnsSnakeCaseKeys(): void
+    #[TestDox('dto should be creatable with existing project uuid')]
+    public function testFromMethodCreatesDtoWithExistingProjectUuid(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $project = Project::factory()
-            ->for($user)
-            ->create();
+        $project = $this->project(
+            user: $user,
+        );
 
         $dto = DeleteProjectDto::from([
-            'uuid'      => $project->uuid,
-            'user_uuid' => $user->uuid,
+            'uuid' => $project->uuid,
+            'user' => $user,
+        ]);
+
+        $this->assertEquals(
+            expected: $project->uuid,
+            actual: $dto->project->uuid,
+            message: "project should be the same as expected",
+        );
+
+        $this->assertEquals(
+            expected: $user->uuid,
+            actual: $dto->user->uuid,
+            message: "user should be the same as expected",
+        );
+    }
+
+    #[TestDox('from method should throw an exception with invalid project uuid')]
+    public function testFromMethodWithInvalidProjectUuidShouldThrowAnException(): void
+    {
+        $user = $this->user();
+
+        $this->expectException(
+            exception: ProjectWithThisUuidDoesNotExistException::class,
+        );
+
+        DeleteProjectDto::from([
+            'uuid' => $user->uuid, // not project uuid
+            'user' => $user,
+        ]);
+    }
+
+    #[TestDox('from method with project that belongs to another user should throw an exception')]
+    public function testFromMethodWithProjectThatBelongsToAnotherUserShouldThrowAnException(): void
+    {
+        $user = $this->user();
+
+        $user2 = $this->user();
+
+        $project = $this->project(
+            user: $user,
+        );
+
+        $this->expectException(
+            exception: ProjectDoesNotBelongToAuthenticatedUserException::class,
+        );
+
+        DeleteProjectDto::from([
+            'uuid' => $project->uuid,
+            'user' => $user2, // another user
+        ]);
+    }
+
+    #[TestDox('converts dto properties to snake_case array keys')]
+    public function testToArrayMethodReturnsSnakeCaseKeys(): void
+    {
+        $user = $this->user();
+
+        $project = $this->project(
+            user: $user,
+        );
+
+        $dto = DeleteProjectDto::from([
+            'uuid' => $project->uuid,
+            'user' => $user,
         ]);
 
         $this->assertSame(
@@ -38,58 +102,6 @@ final class DeleteProjectDtoTest extends TestCase
                 'user_uuid' => $user->uuid,
             ],
             actual: $dto->toArray(),
-        );
-    }
-
-    #[TestDox('uuid() method should return a string')]
-    public function testUuidMethod(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $project = Project::factory()
-            ->for($user)
-            ->create();
-
-        $data = [
-            'uuid'      => $project->uuid,
-            'user_uuid' => $user->uuid,
-        ];
-
-        $dto = DeleteProjectDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->uuid->uuid,
-            actual: $dto->uuid(),
-            message: 'uuid() method should return actual value',
-        );
-    }
-
-    #[TestDox('userUuid() method should return a string')]
-    public function testUserUuidMethod(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $project = Project::factory()
-            ->for($user)
-            ->create();
-
-        $data = [
-            'uuid'      => $project->uuid,
-            'user_uuid' => $user->uuid,
-        ];
-
-        $dto = DeleteProjectDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->userUuid->uuid,
-            actual: $dto->userUuid(),
-            message: 'userUuid() method should return actual value',
         );
     }
 }

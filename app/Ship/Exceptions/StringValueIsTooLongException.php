@@ -5,7 +5,7 @@ namespace App\Ship\Exceptions;
 use App\Ship\Abstracts\Exceptions\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-final class StringValueTooLongException extends Exception
+final class StringValueIsTooLongException extends Exception
 {
     public const int STATUS_CODE = Response::HTTP_INTERNAL_SERVER_ERROR;
 
