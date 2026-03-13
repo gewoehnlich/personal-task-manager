@@ -2,23 +2,20 @@
 
 namespace App\Containers\Projects\Dto;
 
-use App\Containers\Users\Values\UserUuidValue;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Dto\Dto;
-use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
-#[MapName(SnakeCaseMapper::class)]
 final readonly class IndexProjectsDto extends Dto
 {
     public function __construct(
-        public readonly UserUuidValue $userUuid,
+        public readonly User $user,
     ) {
         //
     }
 
     public function userUuid(): string
     {
-        return $this->userUuid->uuid;
+        return $this->user->uuid;
     }
 
     public function toArray(): array
@@ -29,12 +26,10 @@ final readonly class IndexProjectsDto extends Dto
     }
 
     public static function from(
-        array $data,
+        array $inputData,
     ): self {
         return new self(
-            userUuid: new UserUuidValue(
-                uuid: $data['user_uuid'],
-            ),
+            user: $inputData['user'],
         );
     }
 }

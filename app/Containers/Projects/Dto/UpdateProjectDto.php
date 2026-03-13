@@ -2,34 +2,32 @@
 
 namespace App\Containers\Projects\Dto;
 
+use App\Containers\Projects\Models\Project;
+use App\Containers\Projects\Repositories\ProjectRepository;
 use App\Containers\Projects\Values\DescriptionValue;
-use App\Containers\Projects\Values\ProjectUuidValue;
 use App\Containers\Projects\Values\TitleValue;
-use App\Containers\Users\Values\UserUuidValue;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Dto\Dto;
-use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
-#[MapName(SnakeCaseMapper::class)]
 final readonly class UpdateProjectDto extends Dto
 {
     public function __construct(
-        public readonly ProjectUuidValue $uuid,
-        public readonly UserUuidValue $userUuid,
+        public readonly Project $project,
+        public readonly User $user,
         public readonly TitleValue $title,
         public readonly ?DescriptionValue $description = null,
     ) {
         //
     }
 
-    public function uuid(): string
+    public function projectUuid(): string
     {
-        return $this->uuid->uuid;
+        return $this->project->uuid;
     }
 
     public function userUuid(): string
     {
-        return $this->userUuid->uuid;
+        return $this->user->uuid;
     }
 
     public function title(): string
@@ -45,7 +43,7 @@ final readonly class UpdateProjectDto extends Dto
     public function toArray(): array
     {
         return [
-            'uuid'        => $this->uuid(),
+            'uuid'        => $this->projectUuid(),
             'user_uuid'   => $this->userUuid(),
             'title'       => $this->title(),
             'description' => $this->description(),
@@ -53,23 +51,19 @@ final readonly class UpdateProjectDto extends Dto
     }
 
     public static function from(
-        array $data,
+        array $inputData,
     ): self {
         return new self(
-            uuid: new ProjectUuidValue(
-                uuid: $data['uuid'],
+            project: ProjectRepository::byUuid(
+                uuid: $inputData['uuid'],
             ),
-            userUuid: new UserUuidValue(
-                uuid: $data['user_uuid'],
+            user: $inputData['user'],
+            title: TitleValue::from(
+                string: $inputData['title'],
             ),
-            title: new TitleValue(
-                string: $data['title'],
+            description: DescriptionValue::fromNullable(
+                input: $inputData['description'],
             ),
-            description: $data['description'] === null
-                ? null
-                : new DescriptionValue(
-                    string: $data['description'],
-                ),
         );
     }
 }

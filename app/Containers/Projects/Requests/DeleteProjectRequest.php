@@ -12,24 +12,11 @@ final class DeleteProjectRequest extends Request
         return DeleteProjectDto::class;
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
+    public function extract(): array
     {
         return [
-            'uuid'      => ['required', 'uuid:7'],
-            'user_uuid' => ['required', 'uuid:7'],
+            'user' => $this->user(),
+            'uuid' => $this->route('uuid', default: null),
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'uuid'      => $this->route('uuid'),
-            'user_uuid' => $this->user()->uuid,
-        ]);
     }
 }

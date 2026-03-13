@@ -14,6 +14,11 @@ abstract readonly class UuidValue extends Value
         $this->validate();
     }
 
+    public function value(): string
+    {
+        return $this->uuid;
+    }
+
     protected function validate(): void
     {
         $this->isValidUuid();

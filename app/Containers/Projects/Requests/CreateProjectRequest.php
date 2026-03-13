@@ -12,24 +12,12 @@ final class CreateProjectRequest extends Request
         return CreateProjectDto::class;
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
+    protected function extract(): array
     {
         return [
-            'user_uuid'   => ['required'],
-            'title'       => ['required'],
-            'description' => ['nullable'],
+            'user'        => $this->user(),
+            'title'       => $this->input('title', default: null),
+            'description' => $this->input('description', default: null),
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'user_uuid' => $this->user()->uuid,
-        ]);
     }
 }

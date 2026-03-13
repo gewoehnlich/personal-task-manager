@@ -11,6 +11,8 @@ abstract class Request extends FormRequest implements Dtoable
 {
     abstract public function dto(): string;
 
+    abstract protected function extract(): array;
+
     public function toDto(): Dto
     {
         if (! $this->dto()) {
@@ -18,7 +20,12 @@ abstract class Request extends FormRequest implements Dtoable
         }
 
         return $this->dto()::from(
-            data: $this->validated(),
+            inputData: $this->extract(),
         );
+    }
+
+    public function authorize(): bool
+    {
+        return true;
     }
 }

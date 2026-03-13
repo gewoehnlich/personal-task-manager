@@ -12,22 +12,10 @@ final class IndexProjectsRequest extends Request
         return IndexProjectsDto::class;
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
+    public function extract(): array
     {
         return [
-            'user_uuid' => ['required', 'uuid:7'],
+            'user' => $this->user(),
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'user_uuid' => $this->user()->uuid,
-        ]);
     }
 }

@@ -12,26 +12,13 @@ final class UpdateProjectRequest extends Request
         return UpdateProjectDto::class;
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
+    public function extract(): array
     {
         return [
-            'uuid'         => ['required', 'uuid:7'],
-            'user_uuid'    => ['required', 'uuid:7'],
-            'title'        => ['required', 'string', 'max:100'],
-            'description'  => ['nullable', 'string', 'max:500'],
+            'uuid'        => $this->route('uuid', default: null),
+            'user'        => $this->user(),
+            'title'       => $this->input('title', default: null),
+            'description' => $this->input('description', default: null),
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'uuid'      => $this->route('uuid'),
-            'user_uuid' => $this->user()->uuid,
-        ]);
     }
 }

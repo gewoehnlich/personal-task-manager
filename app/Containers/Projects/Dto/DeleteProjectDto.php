@@ -2,47 +2,46 @@
 
 namespace App\Containers\Projects\Dto;
 
-use App\Containers\Projects\Values\ProjectUuidValue;
-use App\Containers\Users\Values\UserUuidValue;
+use App\Containers\Projects\Models\Project;
+use App\Containers\Projects\Repositories\ProjectRepository;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Dto\Dto;
 
 final readonly class DeleteProjectDto extends Dto
 {
     public function __construct(
-        public readonly ProjectUuidValue $uuid,
-        public readonly UserUuidValue $userUuid,
+        public readonly Project $project,
+        public readonly User $user,
     ) {
         //
     }
 
-    public function uuid(): string
+    public function projectUuid(): string
     {
-        return $this->uuid->uuid;
+        return $this->project->uuid;
     }
 
     public function userUuid(): string
     {
-        return $this->userUuid->uuid;
+        return $this->user->uuid;
     }
 
     public function toArray(): array
     {
         return [
-            'uuid'      => $this->uuid(),
+            'uuid'      => $this->projectUuid(),
             'user_uuid' => $this->userUuid(),
         ];
     }
 
     public static function from(
-        array $data,
+        array $inputData,
     ): self {
         return new self(
-            uuid: new ProjectUuidValue(
-                uuid: $data['uuid'],
+            project: ProjectRepository::byUuid(
+                uuid: $inputData['uuid'],
             ),
-            userUuid: new UserUuidValue(
-                uuid: $data['user_uuid'],
-            ),
+            user: $inputData['user'],
         );
     }
 }

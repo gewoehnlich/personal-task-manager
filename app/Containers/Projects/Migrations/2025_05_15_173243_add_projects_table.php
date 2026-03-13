@@ -1,7 +1,5 @@
 <?php
 
-use App\Containers\Projects\Values\DescriptionValue;
-use App\Containers\Projects\Values\TitleValue;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,8 +10,8 @@ return new class extends Migration {
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid()
                 ->primary();
-            $table->string('title', length: TitleValue::MAX_LENGTH);
-            $table->string('description', length: DescriptionValue::MAX_LENGTH)
+            $table->string('title', length: 100);
+            $table->string('description', length: 500)
                 ->nullable();
             $table->foreignUuid('user_uuid')
                 ->constrained(table: 'users', column: 'uuid')

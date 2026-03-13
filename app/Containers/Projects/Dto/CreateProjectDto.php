@@ -4,16 +4,13 @@ namespace App\Containers\Projects\Dto;
 
 use App\Containers\Projects\Values\DescriptionValue;
 use App\Containers\Projects\Values\TitleValue;
-use App\Containers\Users\Values\UserUuidValue;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Dto\Dto;
-use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
-#[MapName(SnakeCaseMapper::class)]
 final readonly class CreateProjectDto extends Dto
 {
     public function __construct(
-        public readonly UserUuidValue $userUuid,
+        public readonly User $user,
         public readonly TitleValue $title,
         public readonly ?DescriptionValue $description = null,
     ) {
@@ -22,17 +19,17 @@ final readonly class CreateProjectDto extends Dto
 
     public function userUuid(): string
     {
-        return $this->userUuid->uuid;
+        return $this->user->uuid;
     }
 
     public function title(): string
     {
-        return $this->title->string;
+        return $this->title->value();
     }
 
     public function description(): ?string
     {
-        return $this->description?->string;
+        return $this->description?->value();
     }
 
     public function toArray(): array
@@ -45,20 +42,16 @@ final readonly class CreateProjectDto extends Dto
     }
 
     public static function from(
-        array $data,
+        array $inputData,
     ): self {
         return new self(
-            userUuid: new UserUuidValue(
-                uuid: $data['user_uuid'],
+            user: $inputData['user'],
+            title: TitleValue::from(
+                string: $inputData['title'],
             ),
-            title: new TitleValue(
-                string: $data['title'],
+            description: DescriptionValue::fromNullable(
+                input: $inputData['description'],
             ),
-            description: $data['description'] === null
-                ? null
-                : new DescriptionValue(
-                    string: $data['description'],
-                ),
         );
     }
 }
