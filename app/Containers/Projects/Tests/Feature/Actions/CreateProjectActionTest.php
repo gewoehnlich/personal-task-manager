@@ -4,7 +4,6 @@ namespace App\Containers\Projects\Tests\Feature\Actions;
 
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Dto\CreateProjectDto;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -20,18 +19,18 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(CreateProjectDto::class)]
 final class CreateProjectActionTest extends TestCase
 {
-    #[DataProvider('data')]
+    #[DataProvider('inputDataProvider')]
     #[TestDox('action creates a project')]
     public function testAction(
         string $title,
         ?string $description,
     ): void {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $response = $this->action(
             class: CreateProjectAction::class,
             dto: CreateProjectDto::from([
-                'user_uuid'   => $user->uuid,
+                'user'        => $user,
                 'title'       => $title,
                 'description' => $description,
             ]),
@@ -48,7 +47,7 @@ final class CreateProjectActionTest extends TestCase
         );
     }
 
-    public static function data(): array
+    public static function inputDataProvider(): array
     {
         return [
             'all parameters' => [

@@ -5,7 +5,6 @@ namespace App\Containers\Projects\Tests\Feature\Actions;
 use App\Containers\Projects\Actions\UpdateProjectAction;
 use App\Containers\Projects\Dto\UpdateProjectDto;
 use App\Containers\Projects\Models\Project;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
@@ -21,37 +20,41 @@ use PHPUnit\Framework\Attributes\UsesClass;
 final class UpdateProjectActionTest extends TestCase
 {
     #[TestDox('action should update the project')]
-    public function testFullUpdate(): void
+    public function testActionUpdatesTheProject(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $project = Project::factory()
-            ->for($user)
-            ->create();
+        $project = $this->project(
+            user: $user,
+        );
+
+        $title = 'title';
+
+        $description = 'description';
 
         $this->action(
             class: UpdateProjectAction::class,
             dto: UpdateProjectDto::from([
                 'uuid'        => $project->uuid,
-                'user_uuid'   => $project->user_uuid,
-                'title'       => 'test name',
-                'description' => 'test description',
+                'user'        => $user,
+                'title'       => $title,
+                'description' => $description,
             ]),
         );
 
-        $updatedProject = Project::firstWhere('uuid', $project->uuid);
+        $updatedProject = Project::where('uuid', $project->uuid)
+            ->first();
 
         $this->assertEquals(
-            expected: 'test name',
+            expected: $title,
             actual: $updatedProject->title,
-            message: 'project\'s name did not update',
+            message: 'updatedProject title should be the updated one',
         );
 
         $this->assertEquals(
-            expected: 'test description',
+            expected: $description,
             actual: $updatedProject->description,
-            message: 'project\'s description did not update',
+            message: 'updatedProject description should be the updated one',
         );
     }
 }
