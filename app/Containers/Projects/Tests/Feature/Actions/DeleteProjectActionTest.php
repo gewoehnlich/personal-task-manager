@@ -30,12 +30,36 @@ final class DeleteProjectActionTest extends TestCase
         $this->action(
             class: DeleteProjectAction::class,
             dto: DeleteProjectDto::from([
-                'uuid' => $project->uuid,
-                'user' => $user,
+                'uuid'  => $project->uuid,
+                'user'  => $user,
+                'force' => false, // force is false
             ]),
         );
 
         $this->assertSoftDeleted('projects', [
+            'uuid' => $project->uuid,
+        ]);
+    }
+
+    #[TestDox('user can forceDelete his project')]
+    public function testActionForceDeletesTheProjectIfForceParameterIsTrue(): void
+    {
+        $user = $this->user();
+
+        $project = $this->project(
+            user: $user,
+        );
+
+        $this->action(
+            class: DeleteProjectAction::class,
+            dto: DeleteProjectDto::from([
+                'uuid'  => $project->uuid,
+                'user'  => $user,
+                'force' => true, // force is true
+            ]),
+        );
+
+        $this->assertDatabaseMissing('projects', [
             'uuid' => $project->uuid,
         ]);
     }

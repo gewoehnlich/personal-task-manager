@@ -12,6 +12,7 @@ final readonly class DeleteProjectDto extends Dto
     public function __construct(
         public readonly Project $project,
         public readonly User $user,
+        public readonly bool $force,
     ) {
         //
     }
@@ -26,11 +27,17 @@ final readonly class DeleteProjectDto extends Dto
         return $this->user->uuid;
     }
 
+    public function force(): bool
+    {
+        return $this->force;
+    }
+
     public function toArray(): array
     {
         return [
             'uuid'      => $this->projectUuid(),
             'user_uuid' => $this->userUuid(),
+            'force'     => $this->force(),
         ];
     }
 
@@ -42,6 +49,7 @@ final readonly class DeleteProjectDto extends Dto
                 uuid: $inputData['uuid'],
             ),
             user: $inputData['user'],
+            force: $inputData['force'],
         );
     }
 }
