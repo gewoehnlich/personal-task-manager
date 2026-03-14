@@ -4,8 +4,6 @@ namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\UpdateProjectDto;
 use App\Containers\Projects\Exceptions\ProjectWithThisUuidDoesNotExistException;
-use App\Containers\Projects\Models\Project;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -32,7 +30,7 @@ final class UpdateProjectDtoTest extends TestCase
         );
 
         $dto = UpdateProjectDto::from([
-            'project'     => $project,
+            'uuid'        => $project->uuid,
             'user'        => $user,
             'title'       => $title,
             'description' => $description,
@@ -40,25 +38,25 @@ final class UpdateProjectDtoTest extends TestCase
 
         $this->assertSame(
             expected: $project->uuid,
-            actual: $dto->project->uuid,
+            actual: $dto->projectUuid(),
             message: "the value should be the same as expected",
         );
 
         $this->assertSame(
             expected: $user->uuid,
-            actual: $dto->user->uuid,
+            actual: $dto->userUuid(),
             message: "the value should be the same as expected",
         );
 
         $this->assertSame(
             expected: $title,
-            actual: $dto->title->value(),
+            actual: $dto->title(),
             message: "the value should be the same as expected",
         );
 
         $this->assertSame(
             expected: $description,
-            actual: $dto->description->value(),
+            actual: $dto->description(),
             message: "the value should be the same as expected",
         );
     }
@@ -73,7 +71,7 @@ final class UpdateProjectDtoTest extends TestCase
         );
 
         UpdateProjectDto::from([
-            'project'     => $user, // not actual project
+            'uuid'        => $user->uuid, // not actual project uuid
             'user'        => $user,
             'title'       => 'title',
             'description' => 'description',
@@ -93,7 +91,7 @@ final class UpdateProjectDtoTest extends TestCase
         );
 
         $dto = UpdateProjectDto::from([
-            'project'     => $project,
+            'uuid'        => $project->uuid,
             'user'        => $user,
             'title'       => $title,
             'description' => $description,
