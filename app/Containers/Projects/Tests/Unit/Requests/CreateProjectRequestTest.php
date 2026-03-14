@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Feature\Requests;
+namespace App\Containers\Projects\Tests\Unit\Requests;
 
 use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Requests\CreateProjectRequest;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 
 final class CreateProjectRequestTest extends TestCase
@@ -14,6 +13,9 @@ final class CreateProjectRequestTest extends TestCase
         $user = $this->user();
 
         $request = $this->request(
+            class: CreateProjectRequest::class,
+            routeName: 'api.v1.projects.create',
+            method: 'POST',
             parameters: [
                 'title' => 'title',
                 'description' => 'description',
@@ -27,19 +29,6 @@ final class CreateProjectRequestTest extends TestCase
             expected: CreateProjectDto::class,
             actual: $dto,
             message: "toDto() method should create CreateProjectDto",
-        );
-    }
-
-    private function request(
-        array $parameters,
-        User $user,
-    ): CreateProjectRequest {
-        return $this->createRequestObject(
-            class: CreateProjectRequest::class,
-            routeName: 'api.v1.projects.create',
-            method: 'POST',
-            parameters: $parameters,
-            user: $user,
         );
     }
 }

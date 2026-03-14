@@ -61,7 +61,7 @@ abstract class TestCase extends BaseTestCase
             ]);
     }
 
-    public function createRequestObject(
+    public function request(
         string $class,
         string $routeName,
         string $method,
