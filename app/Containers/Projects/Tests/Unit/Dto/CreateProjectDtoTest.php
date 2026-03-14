@@ -3,7 +3,6 @@
 namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\CreateProjectDto;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;

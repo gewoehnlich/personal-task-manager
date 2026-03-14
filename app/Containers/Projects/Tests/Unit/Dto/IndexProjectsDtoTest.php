@@ -3,7 +3,6 @@
 namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\IndexProjectsDto;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
@@ -16,13 +15,29 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class IndexProjectsDtoTest extends TestCase
 {
+    #[TestDox('from() method should create the dto')]
+    public function testFromMethodDtoCreation(): void
+    {
+        $user = $this->user();
+
+        $dto = IndexProjectsDto::from([
+            'user' => $user,
+        ]);
+
+        $this->assertSame(
+            expected: $user->uuid,
+            actual: $dto->user->uuid,
+            message: "dto user should be the same as expected",
+        );
+    }
+
     #[TestDox('converts dto properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(): void
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $dto = IndexProjectsDto::from([
-            'user_uuid' => $user->uuid,
+            'user' => $user,
         ]);
 
         $this->assertSame(
@@ -30,27 +45,7 @@ final class IndexProjectsDtoTest extends TestCase
                 'user_uuid' => $user->uuid,
             ],
             actual: $dto->toArray(),
-        );
-    }
-
-    #[TestDox('userUuid() method should return a string')]
-    public function testUserUuidMethod(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $data = [
-            'user_uuid' => $user->uuid,
-        ];
-
-        $dto = IndexProjectsDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->userUuid->uuid,
-            actual: $dto->userUuid(),
-            message: 'userUuid() method should return actual value',
+            message: "toArray() should return the same array as expected",
         );
     }
 }

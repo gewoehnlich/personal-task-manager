@@ -20,11 +20,11 @@ final class ProjectModelTest extends TestCase
     #[TestDox('user() method should return project\'s user')]
     public function testUserRelationship(): void
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
-        $project = Project::factory()
-            ->for($user)
-            ->create();
+        $project = $this->project(
+            user: $user,
+        );
 
         $this->assertEquals(
             expected: $user->uuid,

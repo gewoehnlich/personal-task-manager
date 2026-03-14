@@ -3,6 +3,7 @@
 namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\UpdateProjectDto;
+use App\Containers\Projects\Exceptions\ProjectWithThisUuidDoesNotExistException;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
@@ -18,22 +19,82 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class UpdateProjectDtoTest extends TestCase
 {
-    #[DataProvider('data')]
+    #[DataProvider('inputDataProvider')]
+    #[TestDox('from() method should create a dto with valid project uuid')]
+    public function testFromMethodDtoCreationWithExistingProjectUuid(
+        string $title,
+        ?string $description,
+    ): void {
+        $user = $this->user();
+
+        $project = $this->project(
+            user: $user,
+        );
+
+        $dto = UpdateProjectDto::from([
+            'project'     => $project,
+            'user'        => $user,
+            'title'       => $title,
+            'description' => $description,
+        ]);
+
+        $this->assertSame(
+            expected: $project->uuid,
+            actual: $dto->project->uuid,
+            message: "the value should be the same as expected",
+        );
+
+        $this->assertSame(
+            expected: $user->uuid,
+            actual: $dto->user->uuid,
+            message: "the value should be the same as expected",
+        );
+
+        $this->assertSame(
+            expected: $title,
+            actual: $dto->title->value(),
+            message: "the value should be the same as expected",
+        );
+
+        $this->assertSame(
+            expected: $description,
+            actual: $dto->description->value(),
+            message: "the value should be the same as expected",
+        );
+    }
+
+    #[TestDox('from() method should throw an exception with invalid project uuid')]
+    public function testFromMethodShouldThrowAnExceptionWithInvalidProjectUuid(): void
+    {
+        $user = $this->user();
+
+        $this->expectException(
+            exception: ProjectWithThisUuidDoesNotExistException::class,
+        );
+
+        UpdateProjectDto::from([
+            'project'     => $user, // not actual project
+            'user'        => $user,
+            'title'       => 'title',
+            'description' => 'description',
+        ]);
+    }
+
+    #[DataProvider('inputDataProvider')]
     #[TestDox('converts dto properties to snake_case array keys')]
     public function testToArrayReturnsSnakeCaseKeys(
         string $title,
         ?string $description,
     ): void {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $project = Project::factory()
-            ->for($user)
-            ->create();
+        $project = $this->project(
+            user: $user,
+        );
 
         $dto = UpdateProjectDto::from([
-            'uuid'        => $project->uuid,
-            'user_uuid'   => $user->uuid,
+            'project'     => $project,
+            'user'        => $user,
             'title'       => $title,
             'description' => $description,
         ]);
@@ -49,122 +110,7 @@ final class UpdateProjectDtoTest extends TestCase
         );
     }
 
-    #[TestDox('uuid() method should return a string')]
-    public function testUuidMethod(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $project = Project::factory()
-            ->for($user)
-            ->create();
-
-        $data = [
-            'uuid'        => $project->uuid,
-            'user_uuid'   => $user->uuid,
-            'title'       => 'title',
-            'description' => 'description',
-        ];
-
-        $dto = UpdateProjectDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->uuid->uuid,
-            actual: $dto->uuid(),
-            message: 'uuid() method should return actual value',
-        );
-    }
-
-    #[TestDox('userUuid() method should return a string')]
-    public function testUserUuidMethod(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $project = Project::factory()
-            ->for($user)
-            ->create();
-
-        $data = [
-            'uuid'        => $project->uuid,
-            'user_uuid'   => $user->uuid,
-            'title'       => 'title',
-            'description' => 'description',
-        ];
-
-        $dto = UpdateProjectDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->userUuid->uuid,
-            actual: $dto->userUuid(),
-            message: 'userUuid() method should return actual value',
-        );
-    }
-
-    #[TestDox('title() method should return a string')]
-    public function testTitleMethod(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $project = Project::factory()
-            ->for($user)
-            ->create();
-
-        $data = [
-            'uuid'        => $project->uuid,
-            'user_uuid'   => $user->uuid,
-            'title'       => 'title',
-            'description' => 'description',
-        ];
-
-        $dto = UpdateProjectDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->title->string,
-            actual: $dto->title(),
-            message: 'title() method should return actual value',
-        );
-    }
-
-    #[DataProvider('data')]
-    #[TestDox('description() method should return a string or null')]
-    public function testDescriptionMethod(
-        string $title,
-        ?string $description,
-    ): void {
-        $user = User::factory()
-            ->create();
-
-        $project = Project::factory()
-            ->for($user)
-            ->create();
-
-        $data = [
-            'uuid'        => $project->uuid,
-            'user_uuid'   => $user->uuid,
-            'title'       => $title,
-            'description' => $description,
-        ];
-
-        $dto = UpdateProjectDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $dto->description?->string,
-            actual: $dto->description(),
-            message: 'description() method should return actual value',
-        );
-    }
-
-    public static function data(): array
+    public static function inputDataProvider(): array
     {
         return [
             'all parameters' => [

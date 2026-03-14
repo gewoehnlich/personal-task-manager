@@ -39,7 +39,6 @@ final readonly class ProjectRepository extends Repository
     public static function byUser(
         User $user,
     ): Collection {
-        /** @var Collection $projects */
         return Project::query()
             ->with('user')
             ->where('user_uuid', $user->uuid)
