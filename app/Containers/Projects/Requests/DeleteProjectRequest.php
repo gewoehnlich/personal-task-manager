@@ -12,7 +12,7 @@ final class DeleteProjectRequest extends Request
         return DeleteProjectDto::class;
     }
 
-    public function extract(): array
+    protected function extract(): array
     {
         return [
             'user' => $this->user(),

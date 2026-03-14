@@ -12,7 +12,7 @@ final class UpdateProjectRequest extends Request
         return UpdateProjectDto::class;
     }
 
-    public function extract(): array
+    protected function extract(): array
     {
         return [
             'uuid'        => $this->route('uuid', default: null),

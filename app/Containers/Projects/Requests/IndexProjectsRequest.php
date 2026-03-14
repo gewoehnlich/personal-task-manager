@@ -12,7 +12,7 @@ final class IndexProjectsRequest extends Request
         return IndexProjectsDto::class;
     }
 
-    public function extract(): array
+    protected function extract(): array
     {
         return [
             'user' => $this->user(),

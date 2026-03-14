@@ -2,42 +2,39 @@
 
 namespace App\Containers\Projects\Tests\Feature\Requests;
 
-use App\Containers\Projects\Dto\CreateProjectDto;
-use App\Containers\Projects\Requests\CreateProjectRequest;
+use App\Containers\Projects\Dto\IndexProjectsDto;
+use App\Containers\Projects\Requests\IndexProjectsRequest;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 
-final class CreateProjectRequestTest extends TestCase
+final class IndexProjectsRequestTest extends TestCase
 {
     public function testToDtoMethodDtoCreation(): void
     {
         $user = $this->user();
 
         $request = $this->request(
-            parameters: [
-                'title' => 'title',
-                'description' => 'description',
-            ],
+            parameters: [],
             user: $user,
         );
 
         $dto = $request->toDto();
 
         $this->assertInstanceOf(
-            expected: CreateProjectDto::class,
+            expected: IndexProjectsDto::class,
             actual: $dto,
-            message: "toDto() method should create CreateProjectDto",
+            message: "toDto() method should create IndexProjectsDto",
         );
     }
 
     private function request(
         array $parameters,
         User $user,
-    ): CreateProjectRequest {
+    ): IndexProjectsRequest {
         return $this->createRequestObject(
-            class: CreateProjectRequest::class,
-            routeName: 'api.v1.projects.create',
-            method: 'POST',
+            class: IndexProjectsRequest::class,
+            routeName: 'api.v1.projects.index',
+            method: 'GET',
             parameters: $parameters,
             user: $user,
         );

@@ -12,7 +12,7 @@ final class CreateProjectRequest extends Request
         return CreateProjectDto::class;
     }
 
-    public function extract(): array
+    protected function extract(): array
     {
         return [
             'user'        => $this->user(),

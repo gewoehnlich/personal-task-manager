@@ -11,7 +11,7 @@ abstract class Request extends FormRequest implements Dtoable
 {
     abstract public function dto(): string;
 
-    abstract public function extract(): array;
+    abstract protected function extract(): array;
 
     public function toDto(): Dto
     {
