@@ -14,8 +14,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Route as Router;
+use Illuminate\Support\Carbon;
 
 /**
  * @internal
@@ -92,5 +91,10 @@ abstract class TestCase extends BaseTestCase
         $request->setUserResolver(fn () => $user);
 
         return $request;
+    }
+
+    public function datetimeString(): string
+    {
+        return Carbon::now()->toAtomString();
     }
 }

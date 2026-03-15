@@ -3,6 +3,7 @@
 namespace App\Ship\Values;
 
 use App\Ship\Abstracts\Values\Value;
+use App\Ship\Exceptions\DatetimeFormatHasToBeSetInConfigException;
 use App\Ship\Exceptions\DatetimeFormatIsInvalidException;
 use App\Ship\Exceptions\DatetimeValueInvalidInputStringException;
 use Carbon\Exceptions\InvalidFormatException;
@@ -16,8 +17,19 @@ abstract readonly class DatetimeValue extends Value
         $this->validate();
     }
 
+    public function value(): string
+    {
+        return $this->carbon->format(
+            format: self::format(),
+        );
+    }
+
     public static function format(): string
     {
+        if (config('datetime.format') === null) {
+            throw new DatetimeFormatHasToBeSetInConfigException();
+        }
+
         return config('datetime.format');
     }
 
@@ -36,16 +48,24 @@ abstract readonly class DatetimeValue extends Value
 
         $errors = Carbon::getLastErrors();
 
-        if (
-            $datetime === false
-            || $errors['warning_count'] > 0
-            || $errors['error_count'] > 0
-        ) {
+        if ($datetime === false || $errors !== false) {
             throw new DatetimeValueInvalidInputStringException();
         }
 
         return new static(
             carbon: $datetime,
+        );
+    }
+
+    public static function fromNullable(
+        ?string $value,
+    ): ?static {
+        if ($value === null) {
+            return null;
+        }
+
+        return self::from(
+            value: $value,
         );
     }
 

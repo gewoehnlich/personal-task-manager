@@ -5,9 +5,7 @@ namespace App\Containers\Projects\Repositories;
 use App\Containers\Projects\Exceptions\ProjectDoesNotBelongToAuthenticatedUserException;
 use App\Containers\Projects\Exceptions\ProjectWithThisUuidDoesNotExistException;
 use App\Containers\Projects\Models\Project;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Repositories\Repository;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 final readonly class ProjectRepository extends Repository
@@ -37,12 +35,15 @@ final readonly class ProjectRepository extends Repository
         return $project;
     }
 
-    public static function byUser(
-        User $user,
-    ): Collection {
-        return Project::query()
-            ->with('user')
-            ->where('user_uuid', $user->uuid)
-            ->get();
+    public static function byNullableUuid(
+        ?string $uuid,
+    ): ?Project {
+        if ($uuid === null) {
+            return null;
+        }
+
+        return self::byUuid(
+            uuid: $uuid,
+        );
     }
 }
