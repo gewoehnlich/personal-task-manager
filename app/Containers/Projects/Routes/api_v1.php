@@ -43,4 +43,12 @@ Route::middleware([
                 'delete',
             ],
         )->name('delete');
+
+        Route::post(
+            uri: 'projects/{uuid}/restore',
+            action: [
+                ProjectController::class,
+                'restore',
+            ],
+        )->name('restore');
     });

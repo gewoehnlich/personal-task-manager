@@ -17,6 +17,7 @@ final readonly class ProjectRepository extends Repository
     ): Project {
         /** @var Project | null $project */
         $project = Project::query()
+            ->withTrashed()
             ->with('user')
             ->where('uuid', $uuid)
             ->first();

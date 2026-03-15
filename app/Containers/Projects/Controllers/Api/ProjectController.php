@@ -5,10 +5,12 @@ namespace App\Containers\Projects\Controllers\Api;
 use App\Containers\Projects\Actions\CreateProjectAction;
 use App\Containers\Projects\Actions\DeleteProjectAction;
 use App\Containers\Projects\Actions\IndexProjectsAction;
+use App\Containers\Projects\Actions\RestoreProjectAction;
 use App\Containers\Projects\Actions\UpdateProjectAction;
 use App\Containers\Projects\Requests\CreateProjectRequest;
 use App\Containers\Projects\Requests\DeleteProjectRequest;
 use App\Containers\Projects\Requests\IndexProjectsRequest;
+use App\Containers\Projects\Requests\RestoreProjectRequest;
 use App\Containers\Projects\Requests\UpdateProjectRequest;
 use App\Ship\Abstracts\Controllers\ApiController;
 use App\Ship\Abstracts\Exceptions\Exception;
@@ -79,6 +81,25 @@ final readonly class ProjectController extends ApiController
         try {
             $result = $this->action(
                 class: DeleteProjectAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
+    }
+
+    public function restore(
+        RestoreProjectRequest $request,
+    ): Response {
+        try {
+            $result = $this->action(
+                class: RestoreProjectAction::class,
                 dto: $request->toDto(),
             );
 
