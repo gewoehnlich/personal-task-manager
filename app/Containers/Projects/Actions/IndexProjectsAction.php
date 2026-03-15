@@ -29,11 +29,11 @@ final readonly class IndexProjectsAction extends Action
             $query = $query->where('description', $dto->description());
         }
 
-        if ($dto->deleted()) {
-            match ($dto->deleted()) {
+        if ($dto->deleted) {
+            match ($dto->deleted) {
                 DeletedEnum::WITHOUT => $query,
-                DeletedEnum::WITH => $query = $query->withTrashed(),
-                DeletedEnum::ONLY => $query = $query->whereNot('deleted_at', null),
+                DeletedEnum::WITH    => $query = $query->withTrashed(),
+                DeletedEnum::ONLY    => $query = $query->onlyTrashed(),
             };
         }
 

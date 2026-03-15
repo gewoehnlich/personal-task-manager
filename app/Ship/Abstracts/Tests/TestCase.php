@@ -2,8 +2,12 @@
 
 namespace App\Ship\Abstracts\Tests;
 
+use App\Containers\Projects\Enums\DeletedEnum;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Repositories\ProjectRepository;
+use App\Containers\Projects\Values\CreatedAtValue;
+use App\Containers\Projects\Values\DeletedAtValue;
+use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Traits\CanCallActionTrait;
 use App\Ship\Traits\CanCallCommandTrait;
@@ -52,12 +56,29 @@ abstract class TestCase extends BaseTestCase
     }
 
     public function project(
-        ?User $user = null,
+        User $user,
+        ?CreatedAtValue $createdAt = null,
+        ?UpdatedAtValue $updatedAt = null,
+        ?DeletedAtValue $deletedAt = null,
     ): Project {
+        $data = [
+            'user_uuid' => $user->uuid,
+        ];
+
+        if ($createdAt) {
+            $data['created_at'] = $createdAt->value();
+        }
+
+        if ($updatedAt) {
+            $data['updated_at'] = $updatedAt->value();
+        }
+
+        if ($deletedAt) {
+            $data['deleted_at'] = $deletedAt->value();
+        }
+
         return Project::factory()
-            ->create([
-                'user_uuid' => $user?->uuid,
-            ]);
+            ->create($data);
     }
 
     public function request(
