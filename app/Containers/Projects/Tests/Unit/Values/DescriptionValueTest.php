@@ -68,7 +68,7 @@ final class DescriptionValueTest extends TestCase
         );
 
         DescriptionValue::from(
-            string: $value
+            string: $value,
         );
     }
 }

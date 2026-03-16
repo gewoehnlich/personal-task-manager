@@ -5,7 +5,14 @@ namespace App\Containers\Projects\Tests\Unit\Requests;
 use App\Containers\Projects\Dto\RestoreProjectDto;
 use App\Containers\Projects\Requests\RestoreProjectRequest;
 use App\Ship\Abstracts\Tests\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 final class RestoreProjectRequestTest extends TestCase
 {
     public function testToDtoMethodDtoCreation(): void
@@ -32,7 +39,7 @@ final class RestoreProjectRequestTest extends TestCase
         $this->assertInstanceOf(
             expected: RestoreProjectDto::class,
             actual: $dto,
-            message: "toDto() method should create RestoreProjectDto",
+            message: 'toDto() method should create RestoreProjectDto',
         );
     }
 }

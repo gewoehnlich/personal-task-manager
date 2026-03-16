@@ -21,6 +21,26 @@ abstract readonly class StringValue extends Value
         return $this->string;
     }
 
+    public static function from(
+        string $string,
+    ): static {
+        return new static(
+            string: $string,
+        );
+    }
+
+    public static function fromNullable(
+        ?string $input,
+    ): ?static {
+        if ($input === null) {
+            return null;
+        }
+
+        return self::from(
+            string: $input,
+        );
+    }
+
     protected function validate(): void
     {
         $this->isNotLongerThanMaxLength();
@@ -34,25 +54,5 @@ abstract readonly class StringValue extends Value
                 entity: static::class,
             );
         }
-    }
-
-    public static function from(
-        string $string,
-    ): static {
-        return new static(
-            string: $string,
-        );
-    }
-
-    public static function fromNullable(
-        ?string $input,
-    ): static | null {
-        if ($input === null) {
-            return null;
-        }
-
-        return self::from(
-            string: $input,
-        );
     }
 }

@@ -26,7 +26,7 @@ final class TitleValueTest extends TestCase
         );
 
         $title = TitleValue::from(
-            string: $value
+            string: $value,
         );
 
         $this->assertSame(

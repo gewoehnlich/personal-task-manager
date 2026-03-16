@@ -22,25 +22,25 @@ final class IndexProjectsDtoTest extends TestCase
         $user = $this->user();
 
         $dto = IndexProjectsDto::from([
-            'user' => $user,
-            'uuid' => null,
-            'title' => null,
-            'description' => null,
-            'deleted' => null,
+            'user'            => $user,
+            'uuid'            => null,
+            'title'           => null,
+            'description'     => null,
+            'deleted'         => null,
             'created_at_from' => null,
-            'created_at_to' => null,
+            'created_at_to'   => null,
             'updated_at_from' => null,
-            'updated_at_to' => null,
+            'updated_at_to'   => null,
             'deleted_at_from' => null,
-            'deleted_at_to' => null,
-            'order_by' => null,
-            'order_by_field' => null,
+            'deleted_at_to'   => null,
+            'order_by'        => null,
+            'order_by_field'  => null,
         ]);
 
         $this->assertSame(
             expected: $user->uuid,
             actual: $dto->user->uuid,
-            message: "dto user should be the same as expected",
+            message: 'dto user should be the same as expected',
         );
     }
 
@@ -75,19 +75,19 @@ final class IndexProjectsDtoTest extends TestCase
         $orderByField = OrderByFieldEnum::CREATED_AT->value;
 
         $dto = IndexProjectsDto::from([
-            'user' => $user,
-            'uuid' => $project->uuid,
-            'title' => $title,
-            'description' => $description,
-            'deleted' => $deleted,
+            'user'            => $user,
+            'uuid'            => $project->uuid,
+            'title'           => $title,
+            'description'     => $description,
+            'deleted'         => $deleted,
             'created_at_from' => $createdAtFrom,
-            'created_at_to' => $createdAtTo,
+            'created_at_to'   => $createdAtTo,
             'updated_at_from' => $updatedAtFrom,
-            'updated_at_to' => $updatedAtTo,
+            'updated_at_to'   => $updatedAtTo,
             'deleted_at_from' => $deletedAtFrom,
-            'deleted_at_to' => $deletedAtTo,
-            'order_by' => $orderBy,
-            'order_by_field' => $orderByField,
+            'deleted_at_to'   => $deletedAtTo,
+            'order_by'        => $orderBy,
+            'order_by_field'  => $orderByField,
         ]);
 
         $this->assertSame(

@@ -6,6 +6,8 @@ use App\Ship\Abstracts\Tests\TestCase;
 use App\Ship\Exceptions\DatetimeFormatHasToBeSetInConfigException;
 use App\Ship\Values\DatetimeValue;
 use Illuminate\Support\Carbon;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
 final readonly class TestDatetimeValue extends DatetimeValue
 {
@@ -13,6 +15,11 @@ final readonly class TestDatetimeValue extends DatetimeValue
 }
 
 // phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 final class DatetimeValueTest extends TestCase
 {
     public function testFormatMethodReturnsDatetimeStringFormatWhenConfigValueIsSet(): void

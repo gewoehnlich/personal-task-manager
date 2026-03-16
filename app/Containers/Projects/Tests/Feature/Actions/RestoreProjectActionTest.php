@@ -6,7 +6,14 @@ use App\Containers\Projects\Actions\RestoreProjectAction;
 use App\Containers\Projects\Dto\RestoreProjectDto;
 use App\Containers\Projects\Exceptions\ProjectIsNotSoftDeletedException;
 use App\Ship\Abstracts\Tests\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 final class RestoreProjectActionTest extends TestCase
 {
     public function testActionRestoresProjectWhenProjectIsSoftDeleted(): void

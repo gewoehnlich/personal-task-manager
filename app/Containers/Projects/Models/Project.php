@@ -2,14 +2,12 @@
 
 namespace App\Containers\Projects\Models;
 
-use App\Containers\Projects\Casts\AsCreatedAtValue;
 use App\Containers\Projects\Factories\ProjectFactory;
 use App\Containers\Projects\Values\CreatedAtValue;
 use App\Containers\Projects\Values\DeletedAtValue;
 use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,7 +45,6 @@ final class Project extends Model
     {
         return [
             'created_at' => 'datetime:' . CreatedAtValue::format(),
-            // 'created_at' => AsCreatedAtValue::class,
             'updated_at' => 'datetime:' . UpdatedAtValue::format(),
             'deleted_at' => 'datetime:' . DeletedAtValue::format(),
         ];

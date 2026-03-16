@@ -5,7 +5,14 @@ namespace App\Containers\Projects\Tests\Feature\Requests;
 use App\Containers\Projects\Dto\UpdateProjectDto;
 use App\Containers\Projects\Requests\UpdateProjectRequest;
 use App\Ship\Abstracts\Tests\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 final class UpdateProjectRequestTest extends TestCase
 {
     public function testToDtoMethodDtoCreation(): void
@@ -21,7 +28,7 @@ final class UpdateProjectRequestTest extends TestCase
             routeName: 'api.v1.projects.update',
             method: 'PUT',
             parameters: [
-                'title' => 'title',
+                'title'       => 'title',
                 'description' => 'description',
             ],
             user: $user,
@@ -35,7 +42,7 @@ final class UpdateProjectRequestTest extends TestCase
         $this->assertInstanceOf(
             expected: UpdateProjectDto::class,
             actual: $dto,
-            message: "toDto() method should create UpdateProjectDto",
+            message: 'toDto() method should create UpdateProjectDto',
         );
     }
 }

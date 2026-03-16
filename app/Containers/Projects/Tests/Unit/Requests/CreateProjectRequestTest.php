@@ -5,7 +5,14 @@ namespace App\Containers\Projects\Tests\Unit\Requests;
 use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Requests\CreateProjectRequest;
 use App\Ship\Abstracts\Tests\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 final class CreateProjectRequestTest extends TestCase
 {
     public function testToDtoMethodDtoCreation(): void
@@ -17,7 +24,7 @@ final class CreateProjectRequestTest extends TestCase
             routeName: 'api.v1.projects.create',
             method: 'POST',
             parameters: [
-                'title' => 'title',
+                'title'       => 'title',
                 'description' => 'description',
             ],
             user: $user,
@@ -28,7 +35,7 @@ final class CreateProjectRequestTest extends TestCase
         $this->assertInstanceOf(
             expected: CreateProjectDto::class,
             actual: $dto,
-            message: "toDto() method should create CreateProjectDto",
+            message: 'toDto() method should create CreateProjectDto',
         );
     }
 }

@@ -35,19 +35,19 @@ final class DeleteProjectDtoTest extends TestCase
         $this->assertEquals(
             expected: $project->uuid,
             actual: $dto->projectUuid(),
-            message: "project should be the same as expected",
+            message: 'project should be the same as expected',
         );
 
         $this->assertEquals(
             expected: $user->uuid,
             actual: $dto->userUuid(),
-            message: "user should be the same as expected",
+            message: 'user should be the same as expected',
         );
 
         $this->assertEquals(
             expected: $force,
             actual: $dto->force(),
-            message: "force should be the same as expected",
+            message: 'force should be the same as expected',
         );
     }
 

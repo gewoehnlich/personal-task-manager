@@ -2,7 +2,6 @@
 
 namespace App\Ship\Abstracts\Tests;
 
-use App\Containers\Projects\Enums\DeletedEnum;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Repositories\ProjectRepository;
 use App\Containers\Projects\Values\CreatedAtValue;

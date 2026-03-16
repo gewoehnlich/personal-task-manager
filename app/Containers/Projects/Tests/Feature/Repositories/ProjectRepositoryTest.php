@@ -5,8 +5,15 @@ namespace App\Containers\Projects\Tests\Feature\Repositories;
 use App\Containers\Projects\Exceptions\ProjectDoesNotBelongToAuthenticatedUserException;
 use App\Containers\Projects\Exceptions\ProjectWithThisUuidDoesNotExistException;
 use App\Ship\Abstracts\Tests\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 use PHPUnit\Framework\Attributes\TestDox;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 final class ProjectRepositoryTest extends TestCase
 {
     #[TestDox('byUuid() method should return project when the project exists')]
@@ -25,7 +32,7 @@ final class ProjectRepositoryTest extends TestCase
         $this->assertSame(
             expected: $result->uuid,
             actual: $project->uuid,
-            message: "project from the ProjectRepository should be the same as expected",
+            message: 'project from the ProjectRepository should be the same as expected',
         );
     }
 

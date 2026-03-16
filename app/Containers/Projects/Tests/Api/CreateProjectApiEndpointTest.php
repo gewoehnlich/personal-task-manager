@@ -8,7 +8,6 @@ use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Requests\CreateProjectRequest;
 use App\Containers\Projects\Values\CreatedAtValue;
-use App\Containers\Projects\Values\DeletedAtValue;
 use App\Containers\Projects\Values\DescriptionValue;
 use App\Containers\Projects\Values\TitleValue;
 use App\Containers\Projects\Values\UpdatedAtValue;
@@ -16,11 +15,9 @@ use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Large;
-use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
@@ -41,7 +38,6 @@ final class CreateProjectApiEndpointTest extends TestCase
     ): void {
         $user = $this->user();
 
-        /** @var TestResponse $response */
         $response = $this->actingAs($user)
             ->postJson(
                 uri: route('api.v1.projects.create'),
@@ -58,23 +54,39 @@ final class CreateProjectApiEndpointTest extends TestCase
 
         $this->assertNotNull(
             actual: $project,
-            message: "project has to be in the database",
+            message: 'project has to be in the database',
         );
 
         $response->assertJson(
             value: fn (AssertableJson $json) => $json
                 ->where('status', 'success')
                 ->whereType('result', 'array')
-                ->has('result', fn (AssertableJson $result) => $result
-                    ->where('uuid', $project->uuid)
-                    ->where('user_uuid', $user->uuid)
-                    ->where('title', $project->title)
-                    ->where('description', $project->description)
-                    ->where('created_at', $project->created_at->format(CreatedAtValue::format()))
-                    ->where('updated_at', $project->updated_at->format(UpdatedAtValue::format()))
+                ->has(
+                    'result',
+                    fn (AssertableJson $result) => $result
+                        ->where('uuid', $project->uuid)
+                        ->where('user_uuid', $user->uuid)
+                        ->where('title', $project->title)
+                        ->where('description', $project->description)
+                        ->where('created_at', $project->created_at->format(CreatedAtValue::format()))
+                        ->where('updated_at', $project->updated_at->format(UpdatedAtValue::format())),
                 ),
             strict: true,
         );
+    }
+
+    public static function inputDataProvider(): array
+    {
+        return [
+            'all parameters' => [
+                'title',       // title
+                'description', // description
+            ],
+            'null description' => [
+                'title', // title
+                null,    // description
+            ],
+        ];
     }
 
     public function testCreatingProjectWithTooLongTitle(): void
@@ -141,19 +153,5 @@ final class CreateProjectApiEndpointTest extends TestCase
             actual: $response['result'],
             message: 'error should be the same as expected one',
         );
-    }
-
-    public static function inputDataProvider(): array
-    {
-        return [
-            'all parameters' => [
-                'title',       // title
-                'description', // description
-            ],
-            'null description' => [
-                'title', // title
-                null,    // description
-            ],
-        ];
     }
 }

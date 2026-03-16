@@ -70,7 +70,7 @@ final class CreateProjectDtoTest extends TestCase
                 'description' => $description,
             ],
             actual: $dto->toArray(),
-            message: "toArray() method should return expected data",
+            message: 'toArray() method should return expected data',
         );
     }
 

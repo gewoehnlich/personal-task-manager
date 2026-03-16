@@ -4,7 +4,14 @@ namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\RestoreProjectDto;
 use App\Ship\Abstracts\Tests\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Medium;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
+#[Medium]
 final class RestoreProjectDtoTest extends TestCase
 {
     public function testFromMethodDtoCreation(): void
@@ -22,7 +29,7 @@ final class RestoreProjectDtoTest extends TestCase
         $this->assertSame(
             expected: $project->uuid,
             actual: $dto->projectUuid(),
-            message: "projectUuid has to be the same as expected",
+            message: 'projectUuid has to be the same as expected',
         );
     }
 
@@ -43,7 +50,7 @@ final class RestoreProjectDtoTest extends TestCase
                 'uuid' => $project->uuid,
             ],
             actual: $dto->toArray(),
-            message: "toArray() output has to be the same as expected",
+            message: 'toArray() output has to be the same as expected',
         );
     }
 }

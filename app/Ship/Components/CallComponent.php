@@ -8,6 +8,10 @@ use App\Ship\Exceptions\ClassIsNotAnInstanceOfComponentClassException;
 
 abstract readonly class CallComponent
 {
+    abstract protected static function isInstanceOfComponentClass(object $instance): bool;
+
+    abstract protected static function componentClass(): string;
+
     public static function call(
         string $class,
         Dto $dto,
@@ -31,8 +35,4 @@ abstract readonly class CallComponent
             dto: $dto,
         );
     }
-
-    abstract protected static function isInstanceOfComponentClass(object $instance): bool;
-
-    abstract protected static function componentClass(): string;
 }

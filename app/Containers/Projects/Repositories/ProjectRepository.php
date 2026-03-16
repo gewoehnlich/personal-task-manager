@@ -13,7 +13,7 @@ final readonly class ProjectRepository extends Repository
     public static function byUuid(
         string $uuid,
     ): Project {
-        /** @var Project | null $project */
+        /** @var Project|null $project */
         $project = Project::query()
             ->withTrashed()
             ->with('user')

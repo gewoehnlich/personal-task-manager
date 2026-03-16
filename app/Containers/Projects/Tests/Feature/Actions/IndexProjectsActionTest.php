@@ -52,22 +52,22 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 2,
             haystack: $result,
-            message: "the expectedCount should be 2, because there are 2 projects created for this user",
+            message: 'the expectedCount should be 2, because there are 2 projects created for this user',
         );
 
         $this->assertNotNull(
             actual: $result->where('uuid', $project1->uuid)->first(),
-            message: "there should be a project with this uuid in the result",
+            message: 'there should be a project with this uuid in the result',
         );
 
         $this->assertNotNull(
             actual: $result->where('uuid', $project2->uuid)->first(),
-            message: "there should be a project with this uuid in the result",
+            message: 'there should be a project with this uuid in the result',
         );
 
         $this->assertNull(
             actual: $result->where('uuid', $project3->uuid)->first(),
-            message: "there should be this project because it belongs to another user",
+            message: 'there should be this project because it belongs to another user',
         );
     }
 
@@ -94,7 +94,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 1,
             haystack: $result,
-            message: "the expectedCount should be 1, because action should filter by uuid",
+            message: 'the expectedCount should be 1, because action should filter by uuid',
         );
 
         $this->assertEquals(
@@ -128,7 +128,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 1,
             haystack: $result,
-            message: "the expectedCount should be 1, because action should filter by title",
+            message: 'the expectedCount should be 1, because action should filter by title',
         );
 
         $this->assertEquals(
@@ -162,7 +162,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 1,
             haystack: $result,
-            message: "the expectedCount should be 1, because action should filter by description",
+            message: 'the expectedCount should be 1, because action should filter by description',
         );
 
         $this->assertEquals(
@@ -194,7 +194,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->project(
             user: $user,
             createdAt: new CreatedAtValue(
-                carbon: Carbon::now()
+                carbon: Carbon::now(),
             ),
         );
 
@@ -209,7 +209,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 2,
             haystack: $result,
-            message: "the expectedCount should be 2, because action should filter out 2 projects",
+            message: 'the expectedCount should be 2, because action should filter out 2 projects',
         );
     }
 
@@ -236,7 +236,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->project(
             user: $user,
             createdAt: new CreatedAtValue(
-                carbon: Carbon::now()
+                carbon: Carbon::now(),
             ),
         );
 
@@ -251,7 +251,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 2,
             haystack: $result,
-            message: "the expectedCount should be 2, because action should filter out 2 projects",
+            message: 'the expectedCount should be 2, because action should filter out 2 projects',
         );
     }
 
@@ -278,7 +278,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->project(
             user: $user,
             updatedAt: new UpdatedAtValue(
-                carbon: Carbon::now()
+                carbon: Carbon::now(),
             ),
         );
 
@@ -293,7 +293,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 2,
             haystack: $result,
-            message: "the expectedCount should be 2, because action should filter out 2 projects",
+            message: 'the expectedCount should be 2, because action should filter out 2 projects',
         );
     }
 
@@ -320,7 +320,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->project(
             user: $user,
             updatedAt: new UpdatedAtValue(
-                carbon: Carbon::now()
+                carbon: Carbon::now(),
             ),
         );
 
@@ -335,7 +335,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 2,
             haystack: $result,
-            message: "the expectedCount should be 2, because action should filter out 2 projects",
+            message: 'the expectedCount should be 2, because action should filter out 2 projects',
         );
     }
 
@@ -362,7 +362,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->project(
             user: $user,
             deletedAt: new DeletedAtValue(
-                carbon: Carbon::now()
+                carbon: Carbon::now(),
             ),
         );
 
@@ -378,7 +378,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 2,
             haystack: $result,
-            message: "the expectedCount should be 2, because action should filter out 2 projects",
+            message: 'the expectedCount should be 2, because action should filter out 2 projects',
         );
     }
 
@@ -405,7 +405,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->project(
             user: $user,
             deletedAt: new DeletedAtValue(
-                carbon: Carbon::now()
+                carbon: Carbon::now(),
             ),
         );
 
@@ -421,7 +421,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->assertCount(
             expectedCount: 2,
             haystack: $result,
-            message: "the expectedCount should be 2, because action should filter out 2 projects",
+            message: 'the expectedCount should be 2, because action should filter out 2 projects',
         );
     }
 
@@ -439,7 +439,7 @@ final class IndexProjectsActionTest extends TestCase
         $this->project(
             user: $user,
             updatedAt: new UpdatedAtValue(
-                carbon: Carbon::now()
+                carbon: Carbon::now(),
             ),
         );
 
@@ -454,7 +454,7 @@ final class IndexProjectsActionTest extends TestCase
 
         $this->assertTrue(
             condition: $result->first()->updated_at > $result->last()->updated_at,
-            message: "result has to be sorted desc by updated_at",
+            message: 'result has to be sorted desc by updated_at',
         );
     }
 }

@@ -39,25 +39,25 @@ final class UpdateProjectDtoTest extends TestCase
         $this->assertSame(
             expected: $project->uuid,
             actual: $dto->projectUuid(),
-            message: "the value should be the same as expected",
+            message: 'the value should be the same as expected',
         );
 
         $this->assertSame(
             expected: $user->uuid,
             actual: $dto->userUuid(),
-            message: "the value should be the same as expected",
+            message: 'the value should be the same as expected',
         );
 
         $this->assertSame(
             expected: $title,
             actual: $dto->title(),
-            message: "the value should be the same as expected",
+            message: 'the value should be the same as expected',
         );
 
         $this->assertSame(
             expected: $description,
             actual: $dto->description(),
-            message: "the value should be the same as expected",
+            message: 'the value should be the same as expected',
         );
     }
 
