@@ -7,11 +7,16 @@ use App\Containers\Projects\Controllers\Api\ProjectController;
 use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Requests\CreateProjectRequest;
+use App\Containers\Projects\Values\CreatedAtValue;
+use App\Containers\Projects\Values\DeletedAtValue;
 use App\Containers\Projects\Values\DescriptionValue;
 use App\Containers\Projects\Values\TitleValue;
+use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Str;
+use Illuminate\Testing\Fluent\AssertableJson;
+use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Large;
@@ -29,89 +34,47 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(ProjectController::class)]
 final class CreateProjectApiEndpointTest extends TestCase
 {
-    #[DataProvider('data')]
-    #[TestDox('sending correct data to POST api/v1/projects should create a project')]
-    public function testCreatingProjectWithValidData(
+    #[DataProvider('inputDataProvider')]
+    public function testCreatingProjectThroughApiEndpoint(
         string $title,
         ?string $description,
     ): void {
-        /** @var User $user */
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
+        /** @var TestResponse $response */
         $response = $this->actingAs($user)
             ->postJson(
-                uri: route('api.v1.projects.index'),
+                uri: route('api.v1.projects.create'),
                 data: [
                     'title'       => $title,
                     'description' => $description,
                 ],
             );
 
-        $response->assertSuccessful();
+        $response->assertOk();
 
-        $response->assertExactJsonStructure(
-            structure: [
-                'status',
-                'result' => [
-                    'uuid',
-                    'user_uuid',
-                    'title',
-                    'description',
-                    'created_at',
-                    'updated_at',
-                    'deleted_at',
-                ],
-            ],
-        );
-
-        $this->assertEquals(
-            expected: 'success',
-            actual: $response['status'],
-            message: 'status should be success',
-        );
-
-        $this->assertEquals(
-            expected: $user->uuid,
-            actual: $response['result']['user_uuid'],
-            message: 'actual user should be the expected one',
-        );
-
-        $project = Project::query()
-            ->where('uuid', $response['result']['uuid'])
-            ->where('user_uuid', $user->uuid)
+        $project = Project::where('uuid', $response->json('result.uuid'))
             ->first();
 
         $this->assertNotNull(
             actual: $project,
-            message: 'the project from response should be found in the database',
+            message: "project has to be in the database",
         );
 
-        $this->assertEquals(
-            expected: $title,
-            actual: $project->title,
-            message: 'actual title should be the same as expected title',
+        $response->assertJson(
+            value: fn (AssertableJson $json) => $json
+                ->where('status', 'success')
+                ->whereType('result', 'array')
+                ->has('result', fn (AssertableJson $result) => $result
+                    ->where('uuid', $project->uuid)
+                    ->where('user_uuid', $user->uuid)
+                    ->where('title', $project->title)
+                    ->where('description', $project->description)
+                    ->where('created_at', $project->created_at->format(CreatedAtValue::format()))
+                    ->where('updated_at', $project->updated_at->format(UpdatedAtValue::format()))
+                ),
+            strict: true,
         );
-
-        $this->assertEquals(
-            expected: $description,
-            actual: $project->description,
-            message: 'actual description should be the same as expected description',
-        );
-    }
-
-    public static function data(): array
-    {
-        return [
-            'all parameters' => [
-                'title',       // title
-                'description', // description
-            ],
-            'null description' => [
-                'title', // title
-                null,    // description
-            ],
-        ];
     }
 
     public function testCreatingProjectWithTooLongTitle(): void
@@ -178,5 +141,19 @@ final class CreateProjectApiEndpointTest extends TestCase
             actual: $response['result'],
             message: 'error should be the same as expected one',
         );
+    }
+
+    public static function inputDataProvider(): array
+    {
+        return [
+            'all parameters' => [
+                'title',       // title
+                'description', // description
+            ],
+            'null description' => [
+                'title', // title
+                null,    // description
+            ],
+        ];
     }
 }

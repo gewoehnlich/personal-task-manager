@@ -2,12 +2,14 @@
 
 namespace App\Containers\Projects\Models;
 
+use App\Containers\Projects\Casts\AsCreatedAtValue;
 use App\Containers\Projects\Factories\ProjectFactory;
 use App\Containers\Projects\Values\CreatedAtValue;
 use App\Containers\Projects\Values\DeletedAtValue;
 use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,23 +43,11 @@ final class Project extends Model
         return $this->hasMany(Task::class);
     }
 
-    public function toArray(): array
-    {
-        return [
-            'uuid'        => $this->uuid,
-            'user_uuid'   => $this->user_uuid,
-            'title'       => $this->title,
-            'description' => $this->description,
-            'created_at'  => $this->created_at,
-            'updated_at'  => $this->updated_at,
-            'deleted_at'  => $this->deleted_at,
-        ];
-    }
-
     protected function casts(): array
     {
         return [
             'created_at' => 'datetime:' . CreatedAtValue::format(),
+            // 'created_at' => AsCreatedAtValue::class,
             'updated_at' => 'datetime:' . UpdatedAtValue::format(),
             'deleted_at' => 'datetime:' . DeletedAtValue::format(),
         ];
