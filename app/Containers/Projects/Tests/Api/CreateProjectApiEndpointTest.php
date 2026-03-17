@@ -11,19 +11,18 @@ use App\Containers\Projects\Values\CreatedAtValue;
 use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Testing\Fluent\AssertableJson;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Large;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(ProjectController::class)]
 #[Large]
 #[UsesClass(CreateProjectAction::class)]
 #[UsesClass(CreateProjectRequest::class)]
 #[UsesClass(CreateProjectDto::class)]
-#[UsesClass(ProjectController::class)]
 final class CreateProjectApiEndpointTest extends TestCase
 {
     public function testSuccessResponseDataStructure(): void

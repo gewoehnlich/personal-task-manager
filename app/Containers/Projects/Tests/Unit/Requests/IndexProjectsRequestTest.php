@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Feature\Requests;
+namespace App\Containers\Projects\Tests\Unit\Requests;
 
 use App\Containers\Projects\Dto\IndexProjectsDto;
 use App\Containers\Projects\Enums\DeletedEnum;
