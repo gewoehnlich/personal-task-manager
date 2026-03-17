@@ -12,7 +12,11 @@ final readonly class CreateProjectAction extends Action
         CreateProjectDto $dto,
     ): Project {
         return Project::create(
-            attributes: $dto->toArray(),
+            attributes: [
+                'user_uuid'   => $dto->userUuid(),
+                'title'       => $dto->title(),
+                'description' => $dto->description(),
+            ],
         );
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Ship\Values;
 
 use App\Ship\Abstracts\Values\Value;
+use App\Ship\Exceptions\RequiredValueIsNotPresentException;
 use App\Ship\Exceptions\StringValueIsTooLongException;
 use Illuminate\Support\Str;
 
@@ -22,8 +23,14 @@ abstract readonly class StringValue extends Value
     }
 
     public static function from(
-        string $string,
+        ?string $string,
     ): static {
+        if ($string === null) {
+            throw new RequiredValueIsNotPresentException(
+                entity: static::class,
+            );
+        }
+
         return new static(
             string: $string,
         );

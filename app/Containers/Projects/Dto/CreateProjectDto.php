@@ -32,15 +32,6 @@ final readonly class CreateProjectDto extends Dto
         return $this->description?->value();
     }
 
-    public function toArray(): array
-    {
-        return [
-            'user_uuid'   => $this->userUuid(),
-            'title'       => $this->title(),
-            'description' => $this->description(),
-        ];
-    }
-
     public static function from(
         array $inputData,
     ): self {

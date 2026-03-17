@@ -100,25 +100,6 @@ final readonly class IndexProjectsDto extends Dto
         return $this->orderByField?->value;
     }
 
-    public function toArray(): array
-    {
-        return [
-            'user_uuid'       => $this->userUuid(),
-            'uuid'            => $this->projectUuid(),
-            'title'           => $this->title(),
-            'description'     => $this->description(),
-            'deleted'         => $this->deleted(),
-            'created_at_from' => $this->createdAtFrom(),
-            'created_at_to'   => $this->createdAtTo(),
-            'updated_at_from' => $this->updatedAtFrom(),
-            'updated_at_to'   => $this->updatedAtTo(),
-            'deleted_at_from' => $this->deletedAtFrom(),
-            'deleted_at_to'   => $this->deletedAtTo(),
-            'order_by'        => $this->orderBy(),
-            'order_by_field'  => $this->orderByField(),
-        ];
-    }
-
     public static function from(
         array $inputData,
     ): self {

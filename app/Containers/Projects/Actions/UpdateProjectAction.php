@@ -10,8 +10,9 @@ final readonly class UpdateProjectAction extends Action
     public function run(
         UpdateProjectDto $dto,
     ): bool {
-        return $dto->project->update(
-            attributes: $dto->toArray(),
-        );
+        return $dto->project->update([
+            'title'       => $dto->title(),
+            'description' => $dto->description(),
+        ]);
     }
 }

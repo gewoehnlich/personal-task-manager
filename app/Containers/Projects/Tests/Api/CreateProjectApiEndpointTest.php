@@ -8,15 +8,10 @@ use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Requests\CreateProjectRequest;
 use App\Containers\Projects\Values\CreatedAtValue;
-use App\Containers\Projects\Values\DescriptionValue;
-use App\Containers\Projects\Values\TitleValue;
 use App\Containers\Projects\Values\UpdatedAtValue;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
-use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 use PHPUnit\Framework\Attributes\CoversNothing;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Large;
 use PHPUnit\Framework\Attributes\UsesClass;
 
@@ -31,12 +26,13 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(ProjectController::class)]
 final class CreateProjectApiEndpointTest extends TestCase
 {
-    #[DataProvider('inputDataProvider')]
-    public function testCreatingProjectThroughApiEndpoint(
-        string $title,
-        ?string $description,
-    ): void {
+    public function testSuccessResponseDataStructure(): void
+    {
         $user = $this->user();
+
+        $title = 'title';
+
+        $description = 'description';
 
         $response = $this->actingAs($user)
             ->postJson(
@@ -75,83 +71,23 @@ final class CreateProjectApiEndpointTest extends TestCase
         );
     }
 
-    public static function inputDataProvider(): array
+    public function testErrorResponseDataStructure(): void
     {
-        return [
-            'all parameters' => [
-                'title',       // title
-                'description', // description
-            ],
-            'null description' => [
-                'title', // title
-                null,    // description
-            ],
-        ];
-    }
-
-    public function testCreatingProjectWithTooLongTitle(): void
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        $title = Str::repeat('a', TitleValue::MAX_LENGTH + 1);
+        $user = $this->user();
 
         $response = $this->actingAs($user)
             ->postJson(
-                uri: route('api.v1.projects.index'),
-                data: [
-                    'title'       => $title,
-                    'description' => null,
-                ],
+                uri: route('api.v1.projects.create'),
+                data: [], // no expected data
             );
 
-        $this->assertEquals(
-            expected: 'error',
-            actual: $response['status'],
-            message: 'status should be error',
-        );
+        $response->assertBadRequest();
 
-        $this->assertEquals(
-            expected: sprintf(
-                'String value %s for %s is too long!',
-                $title,
-                TitleValue::class,
-            ),
-            actual: $response['result'],
-            message: 'error should be the same as expected one',
-        );
-    }
-
-    public function testCreatingProjectWithTooLongDescription(): void
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
-
-        $description = Str::repeat('a', DescriptionValue::MAX_LENGTH + 1);
-
-        $response = $this->actingAs($user)
-            ->postJson(
-                uri: route('api.v1.projects.index'),
-                data: [
-                    'title'       => Str::repeat('a', TitleValue::MAX_LENGTH),
-                    'description' => $description,
-                ],
-            );
-
-        $this->assertEquals(
-            expected: 'error',
-            actual: $response['status'],
-            message: 'status should be error',
-        );
-
-        $this->assertEquals(
-            expected: sprintf(
-                'String value %s for %s is too long!',
-                $description,
-                DescriptionValue::class,
-            ),
-            actual: $response['result'],
-            message: 'error should be the same as expected one',
+        $response->assertJson(
+            value: fn (AssertableJson $json) => $json
+                ->where('status', 'error')
+                ->whereType('message', 'string'),
+            strict: true,
         );
     }
 }

@@ -19,13 +19,6 @@ final readonly class RestoreProjectDto extends Dto
         return $this->project->uuid;
     }
 
-    public function toArray(): array
-    {
-        return [
-            'uuid' => $this->projectUuid(),
-        ];
-    }
-
     public static function from(
         array $inputData,
     ): self {

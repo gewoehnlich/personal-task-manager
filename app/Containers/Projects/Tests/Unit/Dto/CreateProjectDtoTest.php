@@ -49,31 +49,6 @@ final class CreateProjectDtoTest extends TestCase
         );
     }
 
-    #[DataProvider('inputDataProvider')]
-    #[TestDox('dto should be convertable to array with toArray() method')]
-    public function testToArrayReturnsSnakeCaseKeys(
-        string $title,
-        ?string $description,
-    ): void {
-        $user = $this->user();
-
-        $dto = CreateProjectDto::from([
-            'user'        => $user,
-            'title'       => $title,
-            'description' => $description,
-        ]);
-
-        $this->assertSame(
-            expected: [
-                'user_uuid'   => $user->uuid,
-                'title'       => $title,
-                'description' => $description,
-            ],
-            actual: $dto->toArray(),
-            message: 'toArray() method should return expected data',
-        );
-    }
-
     public static function inputDataProvider(): array
     {
         return [

@@ -61,6 +61,20 @@ final class UpdateProjectDtoTest extends TestCase
         );
     }
 
+    public static function inputDataProvider(): array
+    {
+        return [
+            'all parameters' => [
+                'title',       // title
+                'description', // description
+            ],
+            'null description' => [
+                'title', // title
+                null,    // description
+            ],
+        ];
+    }
+
     #[TestDox('from() method should throw an exception with invalid project uuid')]
     public function testFromMethodShouldThrowAnExceptionWithInvalidProjectUuid(): void
     {
@@ -76,49 +90,5 @@ final class UpdateProjectDtoTest extends TestCase
             'title'       => 'title',
             'description' => 'description',
         ]);
-    }
-
-    #[DataProvider('inputDataProvider')]
-    #[TestDox('converts dto properties to snake_case array keys')]
-    public function testToArrayReturnsSnakeCaseKeys(
-        string $title,
-        ?string $description,
-    ): void {
-        $user = $this->user();
-
-        $project = $this->project(
-            user: $user,
-        );
-
-        $dto = UpdateProjectDto::from([
-            'uuid'        => $project->uuid,
-            'user'        => $user,
-            'title'       => $title,
-            'description' => $description,
-        ]);
-
-        $this->assertSame(
-            expected: [
-                'uuid'        => $project->uuid,
-                'user_uuid'   => $user->uuid,
-                'title'       => $title,
-                'description' => $description,
-            ],
-            actual: $dto->toArray(),
-        );
-    }
-
-    public static function inputDataProvider(): array
-    {
-        return [
-            'all parameters' => [
-                'title',       // title
-                'description', // description
-            ],
-            'null description' => [
-                'title', // title
-                null,    // description
-            ],
-        ];
     }
 }

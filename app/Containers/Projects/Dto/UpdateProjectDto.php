@@ -40,16 +40,6 @@ final readonly class UpdateProjectDto extends Dto
         return $this->description?->string;
     }
 
-    public function toArray(): array
-    {
-        return [
-            'uuid'        => $this->projectUuid(),
-            'user_uuid'   => $this->userUuid(),
-            'title'       => $this->title(),
-            'description' => $this->description(),
-        ];
-    }
-
     public static function from(
         array $inputData,
     ): self {

@@ -32,15 +32,6 @@ final readonly class DeleteProjectDto extends Dto
         return $this->force;
     }
 
-    public function toArray(): array
-    {
-        return [
-            'uuid'      => $this->projectUuid(),
-            'user_uuid' => $this->userUuid(),
-            'force'     => $this->force(),
-        ];
-    }
-
     public static function from(
         array $inputData,
     ): self {

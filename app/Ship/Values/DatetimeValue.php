@@ -6,6 +6,7 @@ use App\Ship\Abstracts\Values\Value;
 use App\Ship\Exceptions\DatetimeFormatHasToBeSetInConfigException;
 use App\Ship\Exceptions\DatetimeFormatIsInvalidException;
 use App\Ship\Exceptions\DatetimeValueInvalidInputStringException;
+use App\Ship\Exceptions\RequiredValueIsNotPresentException;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Support\Carbon;
 
@@ -34,8 +35,14 @@ abstract readonly class DatetimeValue extends Value
     }
 
     public static function from(
-        string $value,
+        ?string $value,
     ): static {
+        if ($value === null) {
+            throw new RequiredValueIsNotPresentException(
+                entity: static::class,
+            );
+        }
+
         try {
             $datetime = Carbon::createFromFormat(
                 format: static::format(),

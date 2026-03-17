@@ -50,31 +50,4 @@ final class DeleteProjectDtoTest extends TestCase
             message: 'force should be the same as expected',
         );
     }
-
-    #[TestDox('converts dto properties to snake_case array keys')]
-    public function testToArrayMethodReturnsSnakeCaseKeys(): void
-    {
-        $user = $this->user();
-
-        $project = $this->project(
-            user: $user,
-        );
-
-        $force = false;
-
-        $dto = DeleteProjectDto::from([
-            'uuid'  => $project->uuid,
-            'user'  => $user,
-            'force' => $force,
-        ]);
-
-        $this->assertSame(
-            expected: [
-                'uuid'      => $project->uuid,
-                'user_uuid' => $user->uuid,
-                'force'     => $force,
-            ],
-            actual: $dto->toArray(),
-        );
-    }
 }

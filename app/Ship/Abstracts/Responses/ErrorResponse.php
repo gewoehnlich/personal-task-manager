@@ -19,8 +19,8 @@ final readonly class ErrorResponse extends Response
     {
         return new JsonResponse(
             data: [
-                'status' => self::STATUS_MESSAGE,
-                'result' => $this->message,
+                'status'  => self::STATUS_MESSAGE,
+                'message' => $this->message,
             ],
             status: $this->status,
         );

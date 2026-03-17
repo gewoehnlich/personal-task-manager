@@ -32,25 +32,4 @@ final class RestoreProjectDtoTest extends TestCase
             message: 'projectUuid has to be the same as expected',
         );
     }
-
-    public function testToArrayMethod(): void
-    {
-        $user = $this->user();
-
-        $project = $this->project(
-            user: $user,
-        );
-
-        $dto = RestoreProjectDto::from([
-            'uuid' => $project->uuid,
-        ]);
-
-        $this->assertEquals(
-            expected: [
-                'uuid' => $project->uuid,
-            ],
-            actual: $dto->toArray(),
-            message: 'toArray() output has to be the same as expected',
-        );
-    }
 }
