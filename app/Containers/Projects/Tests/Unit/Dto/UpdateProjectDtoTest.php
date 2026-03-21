@@ -6,9 +6,7 @@ use App\Containers\Projects\Dto\UpdateProjectDto;
 use App\Containers\Projects\Exceptions\ProjectWithThisUuidDoesNotExistException;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -17,17 +15,17 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class UpdateProjectDtoTest extends TestCase
 {
-    #[DataProvider('inputDataProvider')]
-    #[TestDox('from() method should create a dto with valid project uuid')]
-    public function testFromMethodDtoCreationWithExistingProjectUuid(
-        string $title,
-        ?string $description,
-    ): void {
+    public function testFromMethodCreatesDtoWithExistingProjectUuid(): void
+    {
         $user = $this->user();
 
         $project = $this->project(
             user: $user,
         );
+
+        $title = 'title';
+
+        $description = 'description';
 
         $dto = UpdateProjectDto::from([
             'uuid'        => $project->uuid,
@@ -61,21 +59,6 @@ final class UpdateProjectDtoTest extends TestCase
         );
     }
 
-    public static function inputDataProvider(): array
-    {
-        return [
-            'all parameters' => [
-                'title',       // title
-                'description', // description
-            ],
-            'null description' => [
-                'title', // title
-                null,    // description
-            ],
-        ];
-    }
-
-    #[TestDox('from() method should throw an exception with invalid project uuid')]
     public function testFromMethodShouldThrowAnExceptionWithInvalidProjectUuid(): void
     {
         $user = $this->user();

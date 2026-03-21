@@ -17,34 +17,7 @@ use PHPUnit\Framework\Attributes\Small;
 #[Small]
 final class IndexProjectsDtoTest extends TestCase
 {
-    public function testFromMethodWithNullableParametersBeingNullCreatesTheDto(): void
-    {
-        $user = $this->user();
-
-        $dto = IndexProjectsDto::from([
-            'user'            => $user,
-            'uuid'            => null,
-            'title'           => null,
-            'description'     => null,
-            'deleted'         => null,
-            'created_at_from' => null,
-            'created_at_to'   => null,
-            'updated_at_from' => null,
-            'updated_at_to'   => null,
-            'deleted_at_from' => null,
-            'deleted_at_to'   => null,
-            'order_by'        => null,
-            'order_by_field'  => null,
-        ]);
-
-        $this->assertSame(
-            expected: $user->uuid,
-            actual: $dto->user->uuid,
-            message: 'dto user should be the same as expected',
-        );
-    }
-
-    public function testFromMethodWithAllParametersFilledShouldCreateTheDto(): void
+    public function testFromMethodCreatesDtoWithAllParameters(): void
     {
         $user = $this->user();
 
@@ -153,6 +126,33 @@ final class IndexProjectsDtoTest extends TestCase
         $this->assertSame(
             expected: $orderByField,
             actual: $dto->orderByField(),
+        );
+    }
+
+    public function testFromMethodCreatesDtoWithNullableParametersBeingNull(): void
+    {
+        $user = $this->user();
+
+        $dto = IndexProjectsDto::from([
+            'user'            => $user,
+            'uuid'            => null,
+            'title'           => null,
+            'description'     => null,
+            'deleted'         => null,
+            'created_at_from' => null,
+            'created_at_to'   => null,
+            'updated_at_from' => null,
+            'updated_at_to'   => null,
+            'deleted_at_from' => null,
+            'deleted_at_to'   => null,
+            'order_by'        => null,
+            'order_by_field'  => null,
+        ]);
+
+        $this->assertSame(
+            expected: $user->uuid,
+            actual: $dto->user->uuid,
+            message: 'dto user should be the same as expected',
         );
     }
 }

@@ -14,7 +14,7 @@ use PHPUnit\Framework\Attributes\Medium;
 #[Medium]
 final class RestoreProjectDtoTest extends TestCase
 {
-    public function testFromMethodDtoCreation(): void
+    public function testFromMethodCreatesDto(): void
     {
         $user = $this->user();
 

@@ -4,10 +4,10 @@ namespace App\Containers\Projects\Tests\Unit\Dto;
 
 use App\Containers\Projects\Dto\CreateProjectDto;
 use App\Ship\Abstracts\Tests\TestCase;
+use App\Ship\Exceptions\RequiredValueIsNotPresentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -16,10 +16,9 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class CreateProjectDtoTest extends TestCase
 {
-    #[DataProvider('inputDataProvider')]
-    #[TestDox('dto should be creatable with from() method')]
-    public function testFromMethodDtoCreation(
-        string $title,
+    #[DataProvider('validInputDataProvider')]
+    public function testFromMethodCreatesDtoWhenRequiredFieldsArePresent(
+        ?string $title,
         ?string $description,
     ): void {
         $user = $this->user();
@@ -49,16 +48,44 @@ final class CreateProjectDtoTest extends TestCase
         );
     }
 
-    public static function inputDataProvider(): array
+    #[DataProvider('invalidInputDataProvider')]
+    public function testFromMethodThrowsAnExceptionWhenRequiredFieldsAreMissing(
+        ?string $title,
+        ?string $description,
+    ): void {
+        $user = $this->user();
+
+        $this->expectException(
+            RequiredValueIsNotPresentException::class,
+        );
+
+        CreateProjectDto::from([
+            'user'        => $user,
+            'title'       => $title,
+            'description' => $description,
+        ]);
+    }
+
+    public static function validInputDataProvider(): array
     {
         return [
             'all parameters' => [
-                'title',       // title
-                'description', // description
+                'title' => 'title',
+                'description' => 'description',
             ],
             'null description' => [
-                'title', // title
-                null,    // description
+                'title' => 'title',
+                'description' => null,
+            ],
+        ];
+    }
+
+    public static function invalidInputDataProvider(): array
+    {
+        return [
+            'title is null' => [
+                'title' => null,
+                'description' => null,
             ],
         ];
     }

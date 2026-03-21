@@ -6,7 +6,6 @@ use App\Containers\Projects\Dto\DeleteProjectDto;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -15,7 +14,6 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class DeleteProjectDtoTest extends TestCase
 {
-    #[TestDox('dto should be creatable with existing project uuid')]
     public function testFromMethodCreatesDtoWithExistingProjectUuid(): void
     {
         $user = $this->user();

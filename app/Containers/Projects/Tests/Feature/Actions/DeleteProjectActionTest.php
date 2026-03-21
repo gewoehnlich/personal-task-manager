@@ -7,7 +7,6 @@ use App\Containers\Projects\Dto\DeleteProjectDto;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
-use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
@@ -18,7 +17,6 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(DeleteProjectDto::class)]
 final class DeleteProjectActionTest extends TestCase
 {
-    #[TestDox('user can soft-delete his project')]
     public function testActionSoftDeletesTheProject(): void
     {
         $user = $this->user();
@@ -41,7 +39,6 @@ final class DeleteProjectActionTest extends TestCase
         ]);
     }
 
-    #[TestDox('user can forceDelete his project')]
     public function testActionForceDeletesTheProjectIfForceParameterIsTrue(): void
     {
         $user = $this->user();

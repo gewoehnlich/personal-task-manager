@@ -5,17 +5,17 @@ namespace App\Containers\Projects\Tests\Unit\Requests;
 use App\Containers\Projects\Dto\RestoreProjectDto;
 use App\Containers\Projects\Requests\RestoreProjectRequest;
 use App\Ship\Abstracts\Tests\TestCase;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 
 /**
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(RestoreProjectRequest::class)]
 #[Medium]
 final class RestoreProjectRequestTest extends TestCase
 {
-    public function testToDtoMethodDtoCreation(): void
+    public function testToDtoMethodCreatesDto(): void
     {
         $user = $this->user();
 

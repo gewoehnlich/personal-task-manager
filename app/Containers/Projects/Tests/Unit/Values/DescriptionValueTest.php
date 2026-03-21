@@ -8,7 +8,6 @@ use App\Ship\Exceptions\StringValueIsTooLongException;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -17,7 +16,6 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class DescriptionValueTest extends TestCase
 {
-    #[TestDox('description should be creatable if value length shorter than MAX_LENGTH')]
     public function testDescriptionLengthLessThanMaxLengthShouldCreateDescriptionValue(): void
     {
         $value = Str::repeat(
@@ -36,7 +34,6 @@ final class DescriptionValueTest extends TestCase
         );
     }
 
-    #[TestDox('description should be creatable if value length equals MAX_LENGTH')]
     public function testDescriptionLengthEqualMaxLengthShouldCreateDescriptionValue(): void
     {
         $value = Str::repeat(
@@ -55,7 +52,6 @@ final class DescriptionValueTest extends TestCase
         );
     }
 
-    #[TestDox('description should not be creatable if value length more than MAX_LENGTH')]
     public function testDescriptionLengthMoreThanMaxLengthShouldThrowStringValueIsTooLongException(): void
     {
         $value = Str::repeat(

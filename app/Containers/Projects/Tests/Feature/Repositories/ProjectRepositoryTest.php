@@ -7,7 +7,6 @@ use App\Containers\Projects\Exceptions\ProjectWithThisUuidDoesNotExistException;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Medium;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -16,7 +15,6 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Medium]
 final class ProjectRepositoryTest extends TestCase
 {
-    #[TestDox('byUuid() method should return project when the project exists')]
     public function testByUuidMethodWithExistingProjectShouldReturnThisProject(): void
     {
         $user = $this->user();
@@ -36,7 +34,6 @@ final class ProjectRepositoryTest extends TestCase
         );
     }
 
-    #[TestDox('byUuid() method should throw an exception when the project does not exist')]
     public function testByUuidMethodWithNonexistentProjectShouldThrowAnException(): void
     {
         $user = $this->user();
@@ -50,7 +47,6 @@ final class ProjectRepositoryTest extends TestCase
         );
     }
 
-    #[TestDox('byUuid() method should throw an exception when the project belong to another user')]
     public function testByUuidMethodWithProjectThatBelongToAnotherUserShouldThrowAnException(): void
     {
         $user = $this->user();

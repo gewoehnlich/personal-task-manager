@@ -6,14 +6,16 @@ use App\Containers\Projects\Actions\RestoreProjectAction;
 use App\Containers\Projects\Dto\RestoreProjectDto;
 use App\Containers\Projects\Exceptions\ProjectIsNotSoftDeletedException;
 use App\Ship\Abstracts\Tests\TestCase;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
+use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(RestoreProjectAction::class)]
 #[Medium]
+#[UsesClass(RestoreProjectDto::class)]
 final class RestoreProjectActionTest extends TestCase
 {
     public function testActionRestoresProjectWhenProjectIsSoftDeleted(): void
@@ -38,7 +40,7 @@ final class RestoreProjectActionTest extends TestCase
         ]);
     }
 
-    public function testActionsThrowsAnExceptionWhenProjectIsNotSoftDeleted(): void
+    public function testActionThrowsAnExceptionWhenProjectIsNotSoftDeleted(): void
     {
         $user = $this->user();
 

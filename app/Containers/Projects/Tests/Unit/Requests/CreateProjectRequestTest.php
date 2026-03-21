@@ -15,7 +15,7 @@ use PHPUnit\Framework\Attributes\Medium;
 #[Medium]
 final class CreateProjectRequestTest extends TestCase
 {
-    public function testToDtoMethodDtoCreation(): void
+    public function testToDtoMethodCreatesDto(): void
     {
         $user = $this->user();
 

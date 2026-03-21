@@ -18,28 +18,7 @@ use PHPUnit\Framework\Attributes\Medium;
 #[Medium]
 final class IndexProjectsRequestTest extends TestCase
 {
-    public function testToDtoMethodWithNullableParametersBeingNullShouldCreateTheDto(): void
-    {
-        $user = $this->user();
-
-        $request = $this->request(
-            class: IndexProjectsRequest::class,
-            routeName: 'api.v1.projects.index',
-            method: 'GET',
-            parameters: [],
-            user: $user,
-        );
-
-        $dto = $request->toDto();
-
-        $this->assertInstanceOf(
-            expected: IndexProjectsDto::class,
-            actual: $dto,
-            message: 'toDto() method should create IndexProjectsDto',
-        );
-    }
-
-    public function testToDtoMethodWithAllParametersFilledShouldCreateTheDto(): void
+    public function testToDtoMethodCreatesDtoWithAllParameters(): void
     {
         $user = $this->user();
 
@@ -65,6 +44,27 @@ final class IndexProjectsRequestTest extends TestCase
                 'order_by'        => OrderByEnum::ASC->value,
                 'order_by_field'  => OrderByFieldEnum::CREATED_AT->value,
             ],
+            user: $user,
+        );
+
+        $dto = $request->toDto();
+
+        $this->assertInstanceOf(
+            expected: IndexProjectsDto::class,
+            actual: $dto,
+            message: 'toDto() method should create IndexProjectsDto',
+        );
+    }
+
+    public function testToDtoMethodCreatesDtoWithNullableParametersBeingNull(): void
+    {
+        $user = $this->user();
+
+        $request = $this->request(
+            class: IndexProjectsRequest::class,
+            routeName: 'api.v1.projects.index',
+            method: 'GET',
+            parameters: [],
             user: $user,
         );
 

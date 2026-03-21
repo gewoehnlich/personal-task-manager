@@ -8,7 +8,6 @@ use App\Containers\Projects\Models\Project;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
-use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
@@ -19,7 +18,6 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(UpdateProjectDto::class)]
 final class UpdateProjectActionTest extends TestCase
 {
-    #[TestDox('action should update the project')]
     public function testActionUpdatesTheProject(): void
     {
         $user = $this->user();
