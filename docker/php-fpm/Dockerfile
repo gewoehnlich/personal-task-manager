@@ -1,9 +1,9 @@
-FROM php:8.4.13-fpm
+FROM php:8.4.19-fpm
 
 WORKDIR /var/www/html
 
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
         git \
         curl \
         libpng-dev \
@@ -42,12 +42,10 @@ RUN { \
     echo 'pcov.directory = /var/www/html'; \
 } > /usr/local/etc/php/conf.d/strict.ini
 
-COPY --from=composer:2.8.2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.9.5 /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN git config --global --add safe.directory /var/www/html
-
-RUN composer install --no-scripts
+RUN git config --global --add safe.directory /var/www/html && composer install --no-scripts
 
 EXPOSE 80
