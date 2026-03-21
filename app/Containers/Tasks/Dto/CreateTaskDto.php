@@ -2,30 +2,31 @@
 
 namespace App\Containers\Tasks\Dto;
 
-use App\Containers\Projects\Values\ProjectUuidValue;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Projects\Models\Project;
+use App\Containers\Projects\Repositories\ProjectRepository;
 use App\Containers\Tasks\Values\DeadlineValue;
 use App\Containers\Tasks\Values\DescriptionValue;
+use App\Containers\Tasks\Values\StageValue;
 use App\Containers\Tasks\Values\TitleValue;
-use App\Containers\Users\Values\UserUuidValue;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Dto\Dto;
 
 final readonly class CreateTaskDto extends Dto
 {
     public function __construct(
-        public readonly UserUuidValue $userUuid,
+        public readonly User $user,
         public readonly TitleValue $title,
+        public readonly StageValue $stage,
         public readonly ?DescriptionValue $description = null,
-        public readonly Stage $stage,
         public readonly ?DeadlineValue $deadline = null,
-        public readonly ?ProjectUuidValue $projectUuid = null,
+        public readonly ?Project $project = null,
     ) {
         //
     }
 
     public function userUuid(): string
     {
-        return $this->userUuid->uuid;
+        return $this->user->uuid;
     }
 
     public function title(): string
@@ -40,59 +41,39 @@ final readonly class CreateTaskDto extends Dto
 
     public function stage(): string
     {
-        return $this->stage->value;
+        return $this->stage->value();
     }
 
     public function deadline(): ?string
     {
-        return $this->deadline?->carbon->toAtomString();
+        return $this->deadline?->value();
     }
 
     public function projectUuid(): ?string
     {
-        return $this->projectUuid?->uuid;
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'user_uuid'    => $this->userUuid(),
-            'title'        => $this->title(),
-            'description'  => $this->description(),
-            'stage'        => $this->stage(),
-            'deadline'     => $this->deadline(),
-            'project_uuid' => $this->projectUuid(),
-        ];
+        return $this->project?->uuid;
     }
 
     public static function from(
-        array $data,
+        array $inputData,
     ): self {
         return new self(
-            userUuid: new UserUuidValue(
-                uuid: $data['user_uuid'],
+            user: $inputData['user'],
+            title: TitleValue::from(
+                string: $inputData['title'],
             ),
-            title: new TitleValue(
-                string: $data['title'],
+            description: DescriptionValue::fromNullable(
+                input: $inputData['description'],
             ),
-            description: $data['description'] === null
-                ? null
-                : new DescriptionValue(
-                    string: $data['description'],
-                ),
-            stage: Stage::from(
-                value: $data['stage'],
+            stage: StageValue::from(
+                string: $inputData['stage'],
             ),
-            deadline: $data['deadline'] === null
-                ? null
-                : DeadlineValue::from(
-                    value: $data['deadline'],
-                ),
-            projectUuid: $data['project_uuid'] === null
-                ? null
-                : new ProjectUuidValue(
-                    uuid: $data['project_uuid'],
-                ),
+            deadline: DeadlineValue::fromNullable(
+                value: $inputData['deadline'],
+            ),
+            project: ProjectRepository::byNullableUuid(
+                uuid: $inputData['project_uuid'],
+            ),
         );
     }
 }

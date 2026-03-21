@@ -6,6 +6,8 @@ use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Actions\CreateTaskAction;
 use App\Containers\Tasks\Dto\CreateTaskDto;
 use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Values\DeadlineValue;
+use App\Containers\Tasks\Values\StageValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
@@ -22,99 +24,49 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(CreateTaskDto::class)]
 final class CreateTaskActionTest extends TestCase
 {
-    #[TestDox('create task action should create a task with all parameters filled in')]
-    public function testActionWithAllParametersFilledIn(): void
+    public function testActionCreatesTask(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
         $title = 'title';
 
+        $stage = new StageValue(
+            stage: Stage::PENDING,
+        );
+
         $description = 'description';
 
-        $stage = Stage::PENDING;
-
-        $deadline = Carbon::now()
-            ->plus(days: 1);
+        $deadline = new DeadlineValue(
+            carbon: Carbon::now()
+                ->addDay(),
+        );
 
         $project = Project::factory()
             ->for($user)
             ->create();
 
-        $data = [
-            'user_uuid'    => $user->uuid,
-            'title'        => $title,
-            'description'  => $description,
-            'stage'        => $stage->value,
-            'deadline'     => $deadline->toAtomString(),
-            'project_uuid' => $project->uuid,
-        ];
-
-        $dto = CreateTaskDto::from(
-            data: $data,
-        );
-
-        $response = $this->action(
+        $task = $this->action(
             class: CreateTaskAction::class,
-            dto: $dto,
+            dto: CreateTaskDto::from([
+                'user' => $user,
+                'title' => $title,
+                'stage' => $stage->value(),
+                'description' => $description,
+                'deadline' => $deadline->value(),
+                'project_uuid' => $project->uuid,
+            ]),
         );
-
-        $taskUuid = $response->uuid;
 
         $this->assertDatabaseHas(
             table: 'tasks',
             data: [
-                'uuid'         => $taskUuid,
+                'uuid'         => $task->uuid,
                 'user_uuid'    => $user->uuid,
                 'title'        => $title,
                 'description'  => $description,
-                'stage'        => $stage?->value,
-                'deadline'     => $deadline->toAtomString(),
+                'stage'        => $stage->value(),
+                'deadline'     => $deadline->value(),
                 'project_uuid' => $project->uuid,
-            ],
-        );
-    }
-
-    #[TestDox('create task action should create a task with nullable parameters being null')]
-    public function testActionWithNullableParametersBeingNull(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $title = 'title';
-
-        $stage = Stage::PENDING;
-
-        $data = [
-            'user_uuid'    => $user->uuid,
-            'title'        => $title,
-            'description'  => null,
-            'stage'        => $stage->value,
-            'deadline'     => null,
-            'project_uuid' => null,
-        ];
-
-        $dto = CreateTaskDto::from(
-            data: $data,
-        );
-
-        $response = $this->action(
-            class: CreateTaskAction::class,
-            dto: $dto,
-        );
-
-        $taskUuid = $response->uuid;
-
-        $this->assertDatabaseHas(
-            table: 'tasks',
-            data: [
-                'uuid'         => $taskUuid,
-                'user_uuid'    => $user->uuid,
-                'title'        => $title,
-                'description'  => null,
-                'stage'        => $stage?->value,
-                'deadline'     => null,
-                'project_uuid' => null,
             ],
         );
     }

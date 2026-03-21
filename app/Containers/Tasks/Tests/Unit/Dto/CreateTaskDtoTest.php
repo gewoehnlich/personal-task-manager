@@ -5,12 +5,14 @@ namespace App\Containers\Tasks\Tests\Unit\Dto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\CreateTaskDto;
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Users\Models\User;
+use App\Containers\Tasks\Values\DeadlineValue;
+use App\Containers\Tasks\Values\StageValue;
 use App\Ship\Abstracts\Tests\TestCase;
+use App\Ship\Exceptions\RequiredValueIsNotPresentException;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -19,70 +21,151 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class CreateTaskDtoTest extends TestCase
 {
-    #[TestDox('converts dto properties to snake_case array keys with all parameters filled')]
-    public function testToArrayReturnsSnakeCaseKeysWithAllParametersFilled(): void
+    public function testFromMethodCreatesDtoWithAllParameters(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
         $title = 'title';
 
+        $stage = new StageValue(
+            stage: Stage::PENDING,
+        );
+
         $description = 'description';
 
-        $stage = Stage::PENDING;
-
-        $deadline = Carbon::now()
-            ->plus(days: 1);
+        $deadline = new DeadlineValue(
+            carbon: Carbon::now()
+                ->addDay(),
+        );
 
         $project = Project::factory()
             ->for($user)
             ->create();
 
-        $data = [
-            'user_uuid'    => $user->uuid,
-            'title'        => $title,
-            'description'  => $description,
-            'stage'        => $stage->value,
-            'deadline'     => $deadline->toAtomString(),
+        $dto = CreateTaskDto::from([
+            'user' => $user,
+            'title' => $title,
+            'stage' => $stage->value(),
+            'description' => $description,
+            'deadline' => $deadline->value(),
             'project_uuid' => $project->uuid,
-        ];
+        ]);
 
-        $dto = CreateTaskDto::from(
-            data: $data,
+        $this->assertEquals(
+            expected: $user->uuid,
+            actual: $dto->userUuid(),
         );
 
-        $this->assertSame(
-            expected: $data,
-            actual: $dto->toArray(),
+        $this->assertEquals(
+            expected: $title,
+            actual: $dto->title(),
+        );
+
+        $this->assertEquals(
+            expected: $stage->value(),
+            actual: $dto->stage(),
+        );
+
+        $this->assertEquals(
+            expected: $description,
+            actual: $dto->description(),
+        );
+
+        $this->assertEquals(
+            expected: $deadline->value(),
+            actual: $dto->deadline(),
+        );
+
+        $this->assertEquals(
+            expected: $project->uuid,
+            actual: $dto->projectUuid(),
         );
     }
 
-    #[TestDox('converts dto properties to snake_case array keys with nullable parameters being null')]
-    public function testToArrayReturnsSnakeCaseKeysWithNullableParametersBeingNull(): void
+    public function testFromMethodCreatesDtoWithNullableParametersBeingNull(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
         $title = 'title';
 
-        $stage = Stage::PENDING;
+        $stage = new StageValue(
+            stage: Stage::PENDING,
+        );
 
-        $data = [
-            'user_uuid'    => $user->uuid,
-            'title'        => $title,
-            'description'  => null,
-            'stage'        => $stage->value,
-            'deadline'     => null,
+        $dto = CreateTaskDto::from([
+            'user' => $user,
+            'title' => $title,
+            'stage' => $stage->value(),
+            'description' => null,
+            'deadline' => null,
             'project_uuid' => null,
+        ]);
+
+        $this->assertEquals(
+            expected: $user->uuid,
+            actual: $dto->userUuid(),
+        );
+
+        $this->assertEquals(
+            expected: $title,
+            actual: $dto->title(),
+        );
+
+        $this->assertEquals(
+            expected: $stage->value(),
+            actual: $dto->stage(),
+        );
+
+        $this->assertEquals(
+            expected: null,
+            actual: $dto->description(),
+        );
+
+        $this->assertEquals(
+            expected: null,
+            actual: $dto->deadline(),
+        );
+
+        $this->assertEquals(
+            expected: null,
+            actual: $dto->projectUuid(),
+        );
+    }
+
+    #[DataProvider('invalidInputDataProvider')]
+    public function testFromMethodShouldThrowAnExceptionWhenRequiredFieldIsNotPresent(
+        ?string $title,
+        ?StageValue $stage,
+    ): void {
+        $user = $this->user();
+
+        $this->expectException(
+            RequiredValueIsNotPresentException::class,
+        );
+
+        CreateTaskDto::from([
+            'user' => $user,
+            'title' => $title,
+            'stage' => $stage,
+            'description' => null,
+            'deadline' => null,
+            'project_uuid' => null,
+        ]);
+    }
+
+    public static function invalidInputDataProvider(): array
+    {
+        return [
+            'title is null' => [
+                'title' => null,
+                'stage' => new StageValue(
+                    stage: Stage::PENDING,
+                ),
+            ],
+            'stage is null' => [
+                'title' => 'title',
+                'stage' => null,
+            ],
         ];
-
-        $dto = CreateTaskDto::from(
-            data: $data,
-        );
-
-        $this->assertSame(
-            expected: $data,
-            actual: $dto->toArray(),
-        );
     }
 }
