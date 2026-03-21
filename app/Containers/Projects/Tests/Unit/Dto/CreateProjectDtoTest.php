@@ -48,6 +48,20 @@ final class CreateProjectDtoTest extends TestCase
         );
     }
 
+    public static function validInputDataProvider(): array
+    {
+        return [
+            'all parameters' => [
+                'title'       => 'title',
+                'description' => 'description',
+            ],
+            'null description' => [
+                'title'       => 'title',
+                'description' => null,
+            ],
+        ];
+    }
+
     #[DataProvider('invalidInputDataProvider')]
     public function testFromMethodThrowsAnExceptionWhenRequiredFieldsAreMissing(
         ?string $title,
@@ -66,25 +80,11 @@ final class CreateProjectDtoTest extends TestCase
         ]);
     }
 
-    public static function validInputDataProvider(): array
-    {
-        return [
-            'all parameters' => [
-                'title' => 'title',
-                'description' => 'description',
-            ],
-            'null description' => [
-                'title' => 'title',
-                'description' => null,
-            ],
-        ];
-    }
-
     public static function invalidInputDataProvider(): array
     {
         return [
             'title is null' => [
-                'title' => null,
+                'title'       => null,
                 'description' => null,
             ],
         ];
