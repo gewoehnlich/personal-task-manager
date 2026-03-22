@@ -4,21 +4,18 @@ namespace App\Ship\Abstracts\Tests;
 
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Repositories\ProjectRepository;
-use App\Containers\Projects\Values\CreatedAtValue;
-use App\Containers\Projects\Values\DeletedAtValue;
-use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Repositories\TaskRepository;
-use App\Containers\Tasks\Values\CreatedAtValue as TasksCreatedAtValue;
 use App\Containers\Tasks\Values\DeadlineValue;
-use App\Containers\Tasks\Values\DeletedAtValue as TasksDeletedAtValue;
-use App\Containers\Tasks\Values\UpdatedAtValue as TasksUpdatedAtValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Traits\CanCallActionTrait;
 use App\Ship\Traits\CanCallCommandTrait;
 use App\Ship\Traits\CanCallSubactionTrait;
 use App\Ship\Traits\CanCallTaskTrait;
+use App\Ship\Values\CreatedAtValue;
+use App\Ship\Values\DeletedAtValue;
+use App\Ship\Values\UpdatedAtValue;
 use Database\Seeders\TestSeeder;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -94,9 +91,9 @@ abstract class TestCase extends BaseTestCase
     public function task(
         User $user,
         ?Project $project = null,
-        ?TasksCreatedAtValue $createdAt = null,
-        ?TasksUpdatedAtValue $updatedAt = null,
-        ?TasksDeletedAtValue $deletedAt = null,
+        ?CreatedAtValue $createdAt = null,
+        ?UpdatedAtValue $updatedAt = null,
+        ?DeletedAtValue $deletedAt = null,
         ?DeadlineValue $deadline = null,
         ?StageEnum $stage = null,
     ): Task {

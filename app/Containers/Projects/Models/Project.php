@@ -3,11 +3,11 @@
 namespace App\Containers\Projects\Models;
 
 use App\Containers\Projects\Factories\ProjectFactory;
-use App\Containers\Projects\Values\CreatedAtValue;
-use App\Containers\Projects\Values\DeletedAtValue;
-use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
+use App\Ship\Values\CreatedAtValue;
+use App\Ship\Values\DeletedAtValue;
+use App\Ship\Values\UpdatedAtValue;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

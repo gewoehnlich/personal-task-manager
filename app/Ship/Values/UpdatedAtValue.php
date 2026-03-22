@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Containers\Tasks\Values;
-
-use App\Ship\Values\DatetimeValue;
+namespace App\Ship\Values;
 
 final readonly class UpdatedAtValue extends DatetimeValue
 {

@@ -9,15 +9,15 @@ use App\Containers\Tasks\Enums\OrderByEnum;
 use App\Containers\Tasks\Enums\OrderByFieldEnum;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Repositories\TaskRepository;
-use App\Containers\Tasks\Values\CreatedAtValue;
 use App\Containers\Tasks\Values\DeadlineValue;
-use App\Containers\Tasks\Values\DeletedAtValue;
 use App\Containers\Tasks\Values\DescriptionValue;
 use App\Containers\Tasks\Values\StageValue;
 use App\Containers\Tasks\Values\TitleValue;
-use App\Containers\Tasks\Values\UpdatedAtValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Dto\Dto;
+use App\Ship\Values\CreatedAtValue;
+use App\Ship\Values\DeletedAtValue;
+use App\Ship\Values\UpdatedAtValue;
 
 final readonly class IndexTasksDto extends Dto
 {

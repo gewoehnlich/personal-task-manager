@@ -2,9 +2,9 @@
 
 namespace App\Containers\Projects\Tests\Api;
 
-use App\Containers\Projects\Values\CreatedAtValue;
-use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Ship\Abstracts\Tests\TestCase;
+use App\Ship\Values\CreatedAtValue;
+use App\Ship\Values\UpdatedAtValue;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 use PHPUnit\Framework\Attributes\CoversNothing;

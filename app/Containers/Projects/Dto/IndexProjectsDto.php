@@ -7,13 +7,13 @@ use App\Containers\Projects\Enums\OrderByEnum;
 use App\Containers\Projects\Enums\OrderByFieldEnum;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Repositories\ProjectRepository;
-use App\Containers\Projects\Values\CreatedAtValue;
-use App\Containers\Projects\Values\DeletedAtValue;
 use App\Containers\Projects\Values\DescriptionValue;
 use App\Containers\Projects\Values\TitleValue;
-use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Dto\Dto;
+use App\Ship\Values\CreatedAtValue;
+use App\Ship\Values\DeletedAtValue;
+use App\Ship\Values\UpdatedAtValue;
 
 final readonly class IndexProjectsDto extends Dto
 {
