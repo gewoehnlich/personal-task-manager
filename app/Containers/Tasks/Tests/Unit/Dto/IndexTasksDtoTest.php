@@ -4,6 +4,9 @@ namespace App\Containers\Tasks\Tests\Unit\Dto;
 
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\IndexTasksDto;
+use App\Containers\Tasks\Enums\DeletedEnum;
+use App\Containers\Tasks\Enums\OrderBy;
+use App\Containers\Tasks\Enums\OrderByField;
 use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
@@ -20,102 +23,190 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class IndexTasksDtoTest extends TestCase
 {
-    #[TestDox('converts dto properties to snake_case array keys with all parameters filled')]
-    public function testToArrayReturnsSnakeCaseKeysWithAllParametersFilled(): void
+    public function testFromMethodCreatesDtoWithAllParameters(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $project = Project::factory()
-            ->for($user)
-            ->create();
+        $project = $this->project(
+            user: $user,
+        );
 
-        $task = Task::factory()
-            ->for($user)
-            ->for($project)
-            ->create();
+        $task = $this->task(
+            user: $user,
+            project: $project,
+        );
+
+        $title = 'title';
+
+        $description = 'description';
 
         $stage = Stage::PENDING;
 
-        $createdAtFrom = Carbon::now();
+        $createdAtFrom = $this->datetimeString();
 
-        $createdAtTo = Carbon::now();
+        $createdAtTo = $this->datetimeString();
 
-        $updatedAtFrom = Carbon::now();
+        $updatedAtFrom = $this->datetimeString();
 
-        $updatedAtTo = Carbon::now();
+        $updatedAtTo = $this->datetimeString();
 
-        $deadlineFrom = Carbon::now();
+        $deletedAtFrom = $this->datetimeString();
 
-        $deadlineTo = Carbon::now();
+        $deletedAtTo = $this->datetimeString();
 
-        $orderBy = 'asc';
+        $deadlineFrom = $this->datetimeString();
 
-        $orderByField = 'id';
+        $deadlineTo = $this->datetimeString();
 
-        $limit = 1;
+        $orderBy = OrderBy::ASC->value;
 
-        $withDeleted = true;
+        $orderByField = OrderByField::CREATED_AT->value;
 
-        $data = [
-            'user_uuid'       => $user->uuid,
+        $deleted = DeletedEnum::ONLY;
+
+        $limit = 2;
+
+        $dto = IndexTasksDto::from([
+            'user'            => $user,
             'uuid'            => $task->uuid,
-            'stage'           => $stage->value,
+            'title'           => $title,
             'project_uuid'    => $project->uuid,
-            'created_at_from' => $createdAtFrom->toAtomString(),
-            'created_at_to'   => $createdAtTo->toAtomString(),
-            'updated_at_from' => $updatedAtFrom->toAtomString(),
-            'updated_at_to'   => $updatedAtTo->toAtomString(),
-            'deadline_from'   => $deadlineFrom->toAtomString(),
-            'deadline_to'     => $deadlineTo->toAtomString(),
+            'description'     => $description,
+            'stage'           => $stage->value,
+            'created_at_from' => $createdAtFrom,
+            'created_at_to'   => $createdAtTo,
+            'updated_at_from' => $updatedAtFrom,
+            'updated_at_to'   => $updatedAtTo,
+            'deleted_at_from' => $deletedAtFrom,
+            'deleted_at_to'   => $deletedAtTo,
+            'deadline_from'   => $deadlineFrom,
+            'deadline_to'     => $deadlineTo,
             'order_by'        => $orderBy,
             'order_by_field'  => $orderByField,
+            'deleted'         => $deleted->value,
             'limit'           => $limit,
-            'with_deleted'    => $withDeleted,
-        ];
+        ]);
 
-        $dto = IndexTasksDto::from(
-            data: $data,
+        $this->assertSame(
+            expected: $user->uuid,
+            actual: $dto->userUuid(),
         );
 
         $this->assertSame(
-            expected: $data,
-            actual: $dto->toArray(),
-            message: 'arrays should be the same',
+            expected: $task->uuid,
+            actual: $dto->taskUuid(),
+        );
+
+        $this->assertSame(
+            expected: $title,
+            actual: $dto->title(),
+        );
+
+        $this->assertSame(
+            expected: $project->uuid,
+            actual: $dto->projectUuid(),
+        );
+
+        $this->assertSame(
+            expected: $description,
+            actual: $dto->description(),
+        );
+
+        $this->assertSame(
+            expected: $stage->value,
+            actual: $dto->stage(),
+        );
+
+        $this->assertSame(
+            expected: $createdAtFrom,
+            actual: $dto->createdAtFrom(),
+        );
+
+        $this->assertSame(
+            expected: $createdAtTo,
+            actual: $dto->createdAtTo(),
+        );
+
+        $this->assertSame(
+            expected: $updatedAtFrom,
+            actual: $dto->updatedAtFrom(),
+        );
+
+        $this->assertSame(
+            expected: $updatedAtTo,
+            actual: $dto->updatedAtTo(),
+        );
+
+        $this->assertSame(
+            expected: $deletedAtFrom,
+            actual: $dto->deletedAtFrom(),
+        );
+
+        $this->assertSame(
+            expected: $deletedAtTo,
+            actual: $dto->deletedAtTo(),
+        );
+
+        $this->assertSame(
+            expected: $deadlineFrom,
+            actual: $dto->deadlineFrom(),
+        );
+
+        $this->assertSame(
+            expected: $deadlineTo,
+            actual: $dto->deadlineTo(),
+        );
+
+        $this->assertSame(
+            expected: $orderBy,
+            actual: $dto->orderBy(),
+        );
+
+        $this->assertSame(
+            expected: $orderByField,
+            actual: $dto->orderByField(),
+        );
+
+        $this->assertSame(
+            expected: $deleted,
+            actual: $dto->deleted(),
+        );
+
+        $this->assertSame(
+            expected: $limit,
+            actual: $dto->limit(),
         );
     }
 
-    #[TestDox('converts dto properties to snake_case array keys with nullable parameters being null')]
-    public function testToArrayReturnsSnakeCaseKeysWithNullableParametersBeingNull(): void
+    public function testFromMethodCreatesDtoWithNullableParametersBeingNull(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $data = [
-            'user_uuid'       => $user->uuid,
+        $dto = IndexTasksDto::from([
+            'user'            => $user,
             'uuid'            => null,
+            'title'           => null,
+            'description'     => null,
             'stage'           => null,
             'project_uuid'    => null,
             'created_at_from' => null,
             'created_at_to'   => null,
             'updated_at_from' => null,
             'updated_at_to'   => null,
+            'deleted_at_from' => null,
+            'deleted_at_to'   => null,
             'deadline_from'   => null,
             'deadline_to'     => null,
             'order_by'        => null,
             'order_by_field'  => null,
+            'deleted'         => null,
             'limit'           => null,
-            'with_deleted'    => null,
-        ];
-
-        $dto = IndexTasksDto::from(
-            data: $data,
-        );
+        ]);
 
         $this->assertSame(
-            expected: $data,
-            actual: $dto->toArray(),
-            message: 'arrays should be the same',
+            expected: $user->uuid,
+            actual: $dto->user->uuid,
+            message: 'dto user should be the same as expected',
         );
     }
 }

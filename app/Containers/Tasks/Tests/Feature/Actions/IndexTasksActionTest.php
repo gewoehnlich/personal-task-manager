@@ -2,19 +2,23 @@
 
 namespace App\Containers\Tasks\Tests\Feature\Actions;
 
-use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Actions\IndexTasksAction;
 use App\Containers\Tasks\Dto\IndexTasksDto;
+use App\Containers\Tasks\Enums\DeletedEnum;
 use App\Containers\Tasks\Enums\OrderBy;
 use App\Containers\Tasks\Enums\OrderByField;
 use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Models\Task;
-use App\Containers\Users\Models\User;
+use App\Containers\Tasks\Values\CreatedAtValue;
+use App\Containers\Tasks\Values\DeadlineValue;
+use App\Containers\Tasks\Values\DeletedAtValue;
+use App\Containers\Tasks\Values\DescriptionValue;
+use App\Containers\Tasks\Values\StageValue;
+use App\Containers\Tasks\Values\TitleValue;
+use App\Containers\Tasks\Values\UpdatedAtValue;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
-use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
@@ -25,805 +29,623 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(IndexTasksDto::class)]
 final class IndexTasksActionTest extends TestCase
 {
-    #[TestDox('action indexes tasks by user_uuid')]
-    public function testIndexingTasksByUserUuid(): void
+    public function testActionReturnsTasksThatBelongToAuthenticatedUser(): void
     {
-        $user = User::factory()->create();
+        $user1 = $this->user();
 
-        $user2 = User::factory()->create();
+        $task1 = $this->task(
+            user: $user1,
+        );
 
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
+        $task2 = $this->task(
+            user: $user1,
+        );
 
-        Task::factory()
-            ->for($user2)
-            ->count(3)
-            ->create();
+        $user2 = $this->user();
 
-        $response = $this->action(
+        $task3 = $this->task(
+            user: $user2,
+        );
+
+        $result = $this->action(
             class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid' => $user->uuid,
-                ],
+            dto: new IndexTasksDto(
+                user: $user1,
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::where('user_uuid', $user->uuid)->get(),
-            actual: $response,
-            message: 'action should index tasks by user_uuid',
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $result,
+        );
+
+        $this->assertNotNull(
+            actual: $result->where('uuid', $task1->uuid)->first(),
+        );
+
+        $this->assertNotNull(
+            actual: $result->where('uuid', $task2->uuid)->first(),
+        );
+
+        $this->assertNull(
+            actual: $result->where('uuid', $task3->uuid)->first(),
         );
     }
 
-    #[TestDox('action indexes tasks by uuid')]
-    public function testIndexingTasksByUuid(): void
+    public function testActionFiltersTasksByUuid(): void
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
+        $task = $this->task(
+            user: $user,
+        );
 
-        $task = Task::factory()
-            ->for($user)
-            ->create();
+        $this->task(
+            user: $user,
+        );
 
-        $response = $this->action(
+        $result = $this->action(
             class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid' => $user->uuid,
-                    'uuid'      => $task->uuid,
-                ],
+            dto: new IndexTasksDto(
+                user: $user,
+                task: $task,
             ),
         );
 
+        $this->assertCount(
+            expectedCount: 1,
+            haystack: $result,
+            message: 'the expectedCount should be 1, because action should filter by uuid',
+        );
+
         $this->assertEquals(
-            expected: Task::query()
-                ->where('uuid', $task->uuid)
-                ->where('user_uuid', $user->uuid)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by uuid',
+            expected: $task->uuid,
+            actual: $result->first()->uuid,
         );
     }
 
-    #[TestDox('action should not index tasks of one user for another user by task uuid')]
-    public function testIndexingTasksOfOneUserForAnotherUserByUuid(): void
+    public function testActionFiltersTasksByTitle(): void
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
-        $user2 = User::factory()->create();
+        $task = $this->task(
+            user: $user,
+        );
 
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
+        $this->task(
+            user: $user,
+        );
 
-        $task = Task::factory()
-            ->for($user)
-            ->create();
-
-        $response = $this->action(
+        $result = $this->action(
             class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid' => $user2->uuid,
-                    'uuid'      => $task->uuid,
-                ],
+            dto: new IndexTasksDto(
+                user: $user,
+                title: new TitleValue(
+                    string: $task->title,
+                ),
             ),
         );
 
+        $this->assertCount(
+            expectedCount: 1,
+            haystack: $result,
+            message: 'the expectedCount should be 1, because action should filter by title',
+        );
+
         $this->assertEquals(
-            expected: Task::query()
-                ->where('uuid', $task->uuid)
-                ->where('user_uuid', $user2->uuid)
-                ->get(),
-            actual: $response,
-            message: 'action should not index tasks of one user to another user by task uuid',
+            expected: $task->title,
+            actual: $result->first()->title,
         );
     }
 
-    #[TestDox('action should index tasks by stage')]
-    public function testIndexTasksByStage(): void
+    public function testActionFiltersTasksByDescription(): void
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
-        Task::factory()
-            ->for($user)
-            ->sequence(
-                ['stage' => Stage::PENDING->value],
-                ['stage' => Stage::ACTIVE->value],
-                ['stage' => Stage::DONE->value],
-            )
-            ->count(6)
-            ->create();
+        $task = $this->task(
+            user: $user,
+        );
 
-        $response = $this->action(
+        $this->task(
+            user: $user,
+        );
+
+        $result = $this->action(
             class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid' => $user->uuid,
-                    'stage'     => Stage::PENDING->value,
-                ],
+            dto: new IndexTasksDto(
+                user: $user,
+                description: new DescriptionValue(
+                    string: $task->description,
+                ),
             ),
         );
 
+        $this->assertCount(
+            expectedCount: 1,
+            haystack: $result,
+            message: 'the expectedCount should be 1, because action should filter by description',
+        );
+
         $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->where('stage', Stage::PENDING->value)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by stage',
+            expected: $task->description,
+            actual: $result->first()->description,
         );
     }
 
-    #[TestDox('action should index tasks by project_uuid')]
-    public function testIndexTasksByProjectUuid(): void
+    public function testActionFiltersTasksByStage(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $project = Project::factory()
-            ->for($user)
-            ->create();
+        $stage = Stage::DONE;
 
-        $project2 = Project::factory()
-            ->for($user)
-            ->create();
+        $task = $this->task(
+            user: $user,
+            stage: $stage,
+        );
 
-        Task::factory()
-            ->for($user)
-            ->for($project)
-            ->count(3)
-            ->create();
+        $this->task(
+            user: $user,
+            stage: Stage::PENDING,
+        );
 
-        Task::factory()
-            ->for($user)
-            ->for($project2)
-            ->count(3)
-            ->create();
-
-        $response = $this->action(
+        $result = $this->action(
             class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'    => $user->uuid,
-                    'project_uuid' => $project->uuid,
-                ],
+            dto: new IndexTasksDto(
+                user: $user,
+                stage: new StageValue(
+                    stage: $stage,
+                ),
             ),
         );
 
+        $this->assertCount(
+            expectedCount: 1,
+            haystack: $result,
+            message: 'the expectedCount should be 1, because action should filter by stage',
+        );
+
         $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->where('project_uuid', $project->uuid)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by project_uuid',
+            expected: $task->stage,
+            actual: $result->first()->stage,
         );
     }
 
-    #[TestDox('action should index tasks by created_at_from')]
-    public function testIndexTasksByCreatedAtFrom(): void
+    public function testActionFiltersTasksByProjectUuid(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $tasks = Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
+        $project = $this->project(
+            user: $user,
+        );
 
-        $tasks->first()->forceFill([
-            'created_at' => Carbon::now()
-                ->minus(days: 1),
-        ])->save();
+        $task = $this->task(
+            user: $user,
+            project: $project,
+        );
 
-        $createdAtFrom = Carbon::now()
-            ->minus(hours: 1);
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'       => $user->uuid,
-                    'created_at_from' => $createdAtFrom->toAtomString(),
-                ],
+        $this->task(
+            user: $user,
+            project: $this->project(
+                user: $user,
             ),
         );
 
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                project: $project,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: 1,
+            haystack: $result,
+            message: 'the expectedCount should be 1, because action should filter by project uuid',
+        );
+
         $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->where('created_at', '>=', $createdAtFrom)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by created_at_from',
+            expected: $task->project_uuid,
+            actual: $result->first()->project_uuid,
         );
     }
 
-    #[TestDox('action should index tasks by created_at_to')]
-    public function testIndexTasksByCreatedAtTo(): void
+    public function testActionFiltersTasksByCreatedAtFrom(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $tasks = Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $tasks->first()->forceFill([
-            'created_at' => Carbon::now()
-                ->plus(days: 1),
-        ])->save();
-
-        $createdAtTo = Carbon::now()
-            ->plus(hours: 1);
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'     => $user->uuid,
-                    'created_at_to' => $createdAtTo->toAtomString(),
-                ],
+        $this->task(
+            user: $user,
+            createdAt: new CreatedAtValue(
+                carbon: Carbon::now()->subDays(2),
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->where('created_at', '<=', $createdAtTo)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by created_at_to',
+        $createdAtFrom = new CreatedAtValue(
+            carbon: Carbon::now()->subDays(1),
+        );
+
+        $this->task(
+            user: $user,
+            createdAt: $createdAtFrom,
+        );
+
+        $this->task(
+            user: $user,
+            createdAt: new CreatedAtValue(
+                carbon: Carbon::now(),
+            ),
+        );
+
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                createdAtFrom: $createdAtFrom,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $result,
+            message: 'the expectedCount should be 2, because action should filter out 2 tasks',
         );
     }
 
-    #[TestDox('action should index tasks by updated_at_from')]
-    public function testIndexTasksByUpdatedAtFrom(): void
+    public function testActionFiltersTasksByCreatedAtTo(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $tasks = Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $tasks->first()->forceFill([
-            'updated_at' => Carbon::now()
-                ->minus(days: 1),
-        ])->save();
-
-        $updatedAtFrom = Carbon::now()
-            ->minus(hours: 1);
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'       => $user->uuid,
-                    'updated_at_from' => $updatedAtFrom->toAtomString(),
-                ],
+        $this->task(
+            user: $user,
+            createdAt: new CreatedAtValue(
+                carbon: Carbon::now()->subDays(2),
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->where('updated_at', '>=', $updatedAtFrom)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by updated_at_from',
+        $createdAtTo = new CreatedAtValue(
+            carbon: Carbon::now()->subDays(1),
+        );
+
+        $this->task(
+            user: $user,
+            createdAt: $createdAtTo,
+        );
+
+        $this->task(
+            user: $user,
+            createdAt: new CreatedAtValue(
+                carbon: Carbon::now(),
+            ),
+        );
+
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                createdAtTo: $createdAtTo,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $result,
+            message: 'the expectedCount should be 2, because action should filter out 2 tasks',
         );
     }
 
-    #[TestDox('action should index tasks by updated_at_to')]
-    public function testIndexTasksByUpdatedAtTo(): void
+    public function testActionFiltersTasksByUpdatedAtFrom(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $tasks = Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $tasks->first()->forceFill([
-            'updated_at' => Carbon::now()
-                ->plus(days: 1),
-        ])->save();
-
-        $updatedAtTo = Carbon::now()
-            ->plus(hours: 1);
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'     => $user->uuid,
-                    'updated_at_to' => $updatedAtTo->toAtomString(),
-                ],
+        $this->task(
+            user: $user,
+            updatedAt: new UpdatedAtValue(
+                carbon: Carbon::now()->subDays(2),
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->where('updated_at', '<=', $updatedAtTo)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by updated_at_to',
+        $updatedAtFrom = new UpdatedAtValue(
+            carbon: Carbon::now()->subDays(1),
+        );
+
+        $this->task(
+            user: $user,
+            updatedAt: $updatedAtFrom,
+        );
+
+        $this->task(
+            user: $user,
+            updatedAt: new UpdatedAtValue(
+                carbon: Carbon::now(),
+            ),
+        );
+
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                updatedAtFrom: $updatedAtFrom,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $result,
+            message: 'the expectedCount should be 2, because action should filter out 2 tasks',
         );
     }
 
-    #[TestDox('action should index tasks by deadline_from')]
-    public function testIndexTasksByDeadlineFrom(): void
+    public function testActionFiltersTasksByUpdatedAtTo(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $tasks = Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $tasks->first()->forceFill([
-            'deadline' => Carbon::now()
-                ->minus(days: 1),
-        ])->save();
-
-        $deadlineFrom = Carbon::now()
-            ->minus(hours: 1);
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'     => $user->uuid,
-                    'deadline_from' => $deadlineFrom->toAtomString(),
-                ],
+        $this->task(
+            user: $user,
+            updatedAt: new UpdatedAtValue(
+                carbon: Carbon::now()->subDays(2),
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->where('deadline', '>=', $deadlineFrom)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by deadline_from',
+        $updatedAtTo = new UpdatedAtValue(
+            carbon: Carbon::now()->subDays(1),
+        );
+
+        $this->task(
+            user: $user,
+            updatedAt: $updatedAtTo,
+        );
+
+        $this->task(
+            user: $user,
+            updatedAt: new UpdatedAtValue(
+                carbon: Carbon::now(),
+            ),
+        );
+
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                updatedAtTo: $updatedAtTo,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $result,
+            message: 'the expectedCount should be 2, because action should filter out 2 tasks',
         );
     }
 
-    #[TestDox('action should index tasks by deadline_to')]
-    public function testIndexTasksByDeadlineTo(): void
+    public function testActionFiltersTasksByDeletedAtFrom(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $tasks = Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $tasks->first()->forceFill([
-            'deadline' => Carbon::now()
-                ->plus(days: 1),
-        ])->save();
-
-        $deadlineTo = Carbon::now()
-            ->plus(hours: 1);
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'   => $user->uuid,
-                    'deadline_to' => $deadlineTo->toAtomString(),
-                ],
+        $this->task(
+            user: $user,
+            deletedAt: new DeletedAtValue(
+                carbon: Carbon::now()->subDays(2),
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->where('deadline', '<=', $deadlineTo)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by deadline_to',
+        $deletedAtFrom = new DeletedAtValue(
+            carbon: Carbon::now()->subDays(1),
+        );
+
+        $this->task(
+            user: $user,
+            deletedAt: $deletedAtFrom,
+        );
+
+        $this->task(
+            user: $user,
+            deletedAt: new DeletedAtValue(
+                carbon: Carbon::now(),
+            ),
+        );
+
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                deleted: DeletedEnum::WITH,
+                deletedAtFrom: $deletedAtFrom,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $result,
+            message: 'the expectedCount should be 2, because action should filter out 2 tasks',
         );
     }
 
-    #[TestDox('action should index tasks by query_by asc')]
-    public function testIndexTasksByQueryByAsc(): void
+    public function testActionFiltersTasksByDeletedAtTo(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $orderBy = OrderBy::ASC->value;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid' => $user->uuid,
-                    'order_by'  => $orderBy,
-                ],
+        $this->task(
+            user: $user,
+            deletedAt: new DeletedAtValue(
+                carbon: Carbon::now()->subDays(2),
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->orderBy('updated_at', $orderBy)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by query_by asc',
+        $deletedAtTo = new DeletedAtValue(
+            carbon: Carbon::now()->subDays(1),
+        );
+
+        $this->task(
+            user: $user,
+            deletedAt: $deletedAtTo,
+        );
+
+        $this->task(
+            user: $user,
+            deletedAt: new DeletedAtValue(
+                carbon: Carbon::now(),
+            ),
+        );
+
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                deleted: DeletedEnum::WITH,
+                deletedAtTo: $deletedAtTo,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $result,
+            message: 'the expectedCount should be 2, because action should filter out 2 tasks',
         );
     }
 
-    #[TestDox('action should index tasks by query_by desc')]
-    public function testIndexTasksByQueryByDesc(): void
+    public function testActionFiltersTasksByDeadlineFrom(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $orderBy = OrderBy::DESC->value;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid' => $user->uuid,
-                    'order_by'  => $orderBy,
-                ],
+        $this->task(
+            user: $user,
+            deadline: new DeadlineValue(
+                carbon: Carbon::now()->subDays(2),
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->orderBy('updated_at', $orderBy)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by query_by asc',
+        $deadlineFrom = new DeadlineValue(
+            carbon: Carbon::now()->subDays(1),
+        );
+
+        $this->task(
+            user: $user,
+            deadline: $deadlineFrom,
+        );
+
+        $this->task(
+            user: $user,
+            deadline: new DeadlineValue(
+                carbon: Carbon::now(),
+            ),
+        );
+
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                deadlineFrom: $deadlineFrom,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $result,
+            message: 'the expectedCount should be 2, because action should filter out 2 tasks',
         );
     }
 
-    #[TestDox('action should index tasks by query_by desc and query_by_field uuid')]
-    public function testIndexTasksByQueryByAndQueryByFieldUuid(): void
+    public function testActionFiltersTasksByDeadlineTo(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $orderBy = OrderBy::DESC->value;
-
-        $orderByField = OrderByField::UUID->value;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'      => $user->uuid,
-                    'order_by'       => $orderBy,
-                    'order_by_field' => $orderByField,
-                ],
+        $this->task(
+            user: $user,
+            deadline: new DeadlineValue(
+                carbon: Carbon::now()->subDays(2),
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->orderBy($orderByField, $orderBy)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by query_by desc and query_by_field uuid',
+        $deadlineTo = new DeadlineValue(
+            carbon: Carbon::now()->subDays(1),
+        );
+
+        $this->task(
+            user: $user,
+            deadline: $deadlineTo,
+        );
+
+        $this->task(
+            user: $user,
+            deadline: new DeadlineValue(
+                carbon: Carbon::now(),
+            ),
+        );
+
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                deadlineTo: $deadlineTo,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $result,
+            message: 'the expectedCount should be 2, because action should filter out 2 tasks',
         );
     }
 
-    #[TestDox('action should index tasks by query_by desc and query_by_field stage')]
-    public function testIndexTasksByQueryByAndQueryByFieldStage(): void
+    public function testActionSortsTasks(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $orderBy = OrderBy::DESC->value;
-
-        $orderByField = OrderByField::STAGE->value;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'      => $user->uuid,
-                    'order_by'       => $orderBy,
-                    'order_by_field' => $orderByField,
-                ],
+        $this->task(
+            user: $user,
+            updatedAt: new UpdatedAtValue(
+                carbon: Carbon::now()->subDays(1),
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->orderBy($orderByField, $orderBy)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by query_by desc and query_by_field uuid',
+        $this->task(
+            user: $user,
+            updatedAt: new UpdatedAtValue(
+                carbon: Carbon::now(),
+            ),
+        );
+
+        $result = $this->action(
+            class: IndexTasksAction::class,
+            dto: new IndexTasksDto(
+                user: $user,
+                orderBy: OrderBy::DESC,
+                orderByField: OrderByField::UPDATED_AT,
+            ),
+        );
+
+        $this->assertTrue(
+            condition: $result->first()->updated_at > $result->last()->updated_at,
+            message: 'result has to be sorted desc by updated_at',
         );
     }
 
-    #[TestDox('action should index tasks by query_by desc and query_by_field project_uuid')]
-    public function testIndexTasksByQueryByAndQueryByFieldProjectUuid(): void
+    public function testActionFiltersTasksByLimit(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
+        $this->task(
+            user: $user,
+        );
 
-        $orderBy = OrderBy::DESC->value;
+        $this->task(
+            user: $user,
+        );
 
-        $orderByField = OrderByField::PROJECT_UUID->value;
+        $limit = 1;
 
-        $response = $this->action(
+        $result = $this->action(
             class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'      => $user->uuid,
-                    'order_by'       => $orderBy,
-                    'order_by_field' => $orderByField,
-                ],
+            dto: new IndexTasksDto(
+                user: $user,
+                limit: $limit,
             ),
         );
 
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->orderBy($orderByField, $orderBy)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by query_by desc and query_by_field project_uuid',
-        );
-    }
-
-    #[TestDox('action should index tasks by query_by desc and query_by_field created_at')]
-    public function testIndexTasksByQueryByAndQueryByFieldCreatedAt(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $orderBy = OrderBy::DESC->value;
-
-        $orderByField = OrderByField::CREATED_AT->value;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'      => $user->uuid,
-                    'order_by'       => $orderBy,
-                    'order_by_field' => $orderByField,
-                ],
-            ),
-        );
-
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->orderBy($orderByField, $orderBy)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by query_by desc and query_by_field created_at',
-        );
-    }
-
-    #[TestDox('action should index tasks by query_by desc and query_by_field updated_at')]
-    public function testIndexTasksByQueryByAndQueryByFieldUpdatedAt(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $orderBy = OrderBy::DESC->value;
-
-        $orderByField = OrderByField::UPDATED_AT->value;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'      => $user->uuid,
-                    'order_by'       => $orderBy,
-                    'order_by_field' => $orderByField,
-                ],
-            ),
-        );
-
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->orderBy($orderByField, $orderBy)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by query_by desc and query_by_field updated_at',
-        );
-    }
-
-    #[TestDox('action should index tasks by query_by desc and query_by_field deadline')]
-    public function testIndexTasksByQueryByAndQueryByFieldDeadline(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $orderBy = OrderBy::DESC->value;
-
-        $orderByField = OrderByField::DEADLINE->value;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'      => $user->uuid,
-                    'order_by'       => $orderBy,
-                    'order_by_field' => $orderByField,
-                ],
-            ),
-        );
-
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->orderBy($orderByField, $orderBy)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by query_by desc and query_by_field deadline',
-        );
-    }
-
-    #[TestDox('action should index tasks by limit')]
-    public function testIndexTasksByLimit(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $limit = 2;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid' => $user->uuid,
-                    'limit'     => $limit,
-                ],
-            ),
-        );
-
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->limit($limit)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by limit',
-        );
-    }
-
-    #[TestDox('action should index tasks by with_deleted not true')]
-    public function testIndexTasksByWithDeletedNotTrue(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $tasks = Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $tasks->first()->delete();
-
-        $withDeleted = false;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'    => $user->uuid,
-                    'with_deleted' => $withDeleted,
-                ],
-            ),
-        );
-
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->whereNull('deleted_at')
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by with_deleted not true',
-        );
-    }
-
-    #[TestDox('action should index tasks by with_deleted true')]
-    public function testIndexTasksByWithDeletedTrue(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $tasks = Task::factory()
-            ->for($user)
-            ->count(3)
-            ->create();
-
-        $tasks->first()->delete();
-
-        $withDeleted = true;
-
-        $response = $this->action(
-            class: IndexTasksAction::class,
-            dto: IndexTasksDto::from(
-                data: [
-                    'user_uuid'    => $user->uuid,
-                    'with_deleted' => $withDeleted,
-                ],
-            ),
-        );
-
-        $this->assertEquals(
-            expected: Task::query()
-                ->where('user_uuid', $user->uuid)
-                ->get(),
-            actual: $response,
-            message: 'action should index tasks by with_deleted true',
+        $this->assertCount(
+            expectedCount: $limit,
+            haystack: $result,
         );
     }
 }

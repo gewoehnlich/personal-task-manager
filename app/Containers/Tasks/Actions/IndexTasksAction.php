@@ -3,6 +3,7 @@
 namespace App\Containers\Tasks\Actions;
 
 use App\Containers\Tasks\Dto\IndexTasksDto;
+use App\Containers\Tasks\Enums\DeletedEnum;
 use App\Containers\Tasks\Models\Task;
 use App\Ship\Abstracts\Actions\Action;
 use Illuminate\Support\Collection;
@@ -12,11 +13,20 @@ final readonly class IndexTasksAction extends Action
     public function run(
         IndexTasksDto $dto,
     ): Collection {
-        $query = Task::query()
-            ->where('user_uuid', $dto->userUuid());
+        $query = Task::query();
 
-        if ($dto->uuid() !== null) {
-            $query = $query->where('uuid', $dto->uuid());
+        $query = $query->where('user_uuid', $dto->userUuid());
+
+        if ($dto->taskUuid() !== null) {
+            $query = $query->where('uuid', $dto->taskUuid());
+        }
+
+        if ($dto->title() !== null) {
+            $query = $query->where('title', $dto->title());
+        }
+
+        if ($dto->description() !== null) {
+            $query = $query->where('description', $dto->description());
         }
 
         if ($dto->stage() !== null) {
@@ -43,6 +53,14 @@ final readonly class IndexTasksAction extends Action
             $query = $query->where('updated_at', '<=', $dto->updatedAtTo());
         }
 
+        if ($dto->deletedAtFrom() !== null) {
+            $query = $query->where('deleted_at', '>=', $dto->deletedAtFrom());
+        }
+
+        if ($dto->deletedAtTo() !== null) {
+            $query = $query->where('deleted_at', '<=', $dto->deletedAtTo());
+        }
+
         if ($dto->deadlineFrom() !== null) {
             $query = $query->where('deadline', '>=', $dto->deadlineFrom());
         }
@@ -55,12 +73,16 @@ final readonly class IndexTasksAction extends Action
             $query = $query->orderBy($dto->orderByField() ?? 'updated_at', $dto->orderBy());
         }
 
-        if ($dto->limit() !== null) {
-            $query = $query->limit($dto->limit());
+        if ($dto->deleted()) {
+            match ($dto->deleted()) {
+                DeletedEnum::WITHOUT => $query,
+                DeletedEnum::WITH    => $query = $query->withTrashed(),
+                DeletedEnum::ONLY    => $query = $query->onlyTrashed(),
+            };
         }
 
-        if ($dto->withDeleted() !== true) {
-            $query = $query->whereNull('deleted_at');
+        if ($dto->limit() !== null) {
+            $query = $query->limit($dto->limit());
         }
 
         return $query->get();

@@ -2,86 +2,116 @@
 
 namespace App\Containers\Tasks\Dto;
 
-use App\Containers\Projects\Values\ProjectUuidValue;
+use App\Containers\Projects\Models\Project;
+use App\Containers\Projects\Repositories\ProjectRepository;
+use App\Containers\Tasks\Enums\DeletedEnum;
 use App\Containers\Tasks\Enums\OrderBy;
 use App\Containers\Tasks\Enums\OrderByField;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Models\Task;
+use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Containers\Tasks\Values\CreatedAtValue;
 use App\Containers\Tasks\Values\DeadlineValue;
-use App\Containers\Tasks\Values\TaskUuidValue;
+use App\Containers\Tasks\Values\DeletedAtValue;
+use App\Containers\Tasks\Values\DescriptionValue;
+use App\Containers\Tasks\Values\StageValue;
+use App\Containers\Tasks\Values\TitleValue;
 use App\Containers\Tasks\Values\UpdatedAtValue;
-use App\Containers\Users\Values\UserUuidValue;
+use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Dto\Dto;
 
 final readonly class IndexTasksDto extends Dto
 {
     public function __construct(
-        public readonly UserUuidValue $userUuid,
-        public readonly ?TaskUuidValue $uuid = null,
-        public readonly ?Stage $stage = null,
-        public readonly ?ProjectUuidValue $projectUuid = null,
+        public readonly User $user,
+        public readonly ?Task $task = null,
+        public readonly ?TitleValue $title = null,
+        public readonly ?DescriptionValue $description = null,
+        public readonly ?StageValue $stage = null,
+        public readonly ?Project $project = null,
         public readonly ?CreatedAtValue $createdAtFrom = null,
         public readonly ?CreatedAtValue $createdAtTo = null,
         public readonly ?UpdatedAtValue $updatedAtFrom = null,
         public readonly ?UpdatedAtValue $updatedAtTo = null,
+        public readonly ?DeletedAtValue $deletedAtFrom = null,
+        public readonly ?DeletedAtValue $deletedAtTo = null,
         public readonly ?DeadlineValue $deadlineFrom = null,
         public readonly ?DeadlineValue $deadlineTo = null,
         public readonly ?OrderBy $orderBy = null,
         public readonly ?OrderByField $orderByField = null,
+        public readonly ?DeletedEnum $deleted = null,
         public readonly ?int $limit = null,
-        public readonly ?bool $withDeleted = null,
     ) {
         //
     }
 
     public function userUuid(): string
     {
-        return $this->userUuid->uuid;
+        return $this->user->uuid;
     }
 
-    public function uuid(): ?string
+    public function taskUuid(): ?string
     {
-        return $this->uuid?->uuid;
+        return $this->task?->uuid;
+    }
+
+    public function title(): ?string
+    {
+        return $this->title?->value();
+    }
+
+    public function description(): ?string
+    {
+        return $this->description?->value();
     }
 
     public function stage(): ?string
     {
-        return $this->stage?->value;
+        return $this->stage?->value();
     }
 
     public function projectUuid(): ?string
     {
-        return $this->projectUuid?->uuid;
+        return $this->project?->uuid;
     }
 
     public function createdAtFrom(): ?string
     {
-        return $this->createdAtFrom?->carbon->toAtomString();
+        return $this->createdAtFrom?->value();
     }
 
     public function createdAtTo(): ?string
     {
-        return $this->createdAtTo?->carbon->toAtomString();
+        return $this->createdAtTo?->value();
     }
 
     public function updatedAtFrom(): ?string
     {
-        return $this->updatedAtFrom?->carbon->toAtomString();
+        return $this->updatedAtFrom?->value();
     }
 
     public function updatedAtTo(): ?string
     {
-        return $this->updatedAtTo?->carbon->toAtomString();
+        return $this->updatedAtTo?->value();
+    }
+
+    public function deletedAtFrom(): ?string
+    {
+        return $this->deletedAtFrom?->value();
+    }
+
+    public function deletedAtTo(): ?string
+    {
+        return $this->deletedAtTo?->value();
     }
 
     public function deadlineFrom(): ?string
     {
-        return $this->deadlineFrom?->carbon->toAtomString();
+        return $this->deadlineFrom?->value();
     }
 
     public function deadlineTo(): ?string
     {
-        return $this->deadlineTo?->carbon->toAtomString();
+        return $this->deadlineTo?->value();
     }
 
     public function orderBy(): ?string
@@ -94,78 +124,70 @@ final readonly class IndexTasksDto extends Dto
         return $this->orderByField?->value;
     }
 
+    public function deleted(): ?DeletedEnum
+    {
+        return $this->deleted;
+    }
+
     public function limit(): ?int
     {
         return $this->limit;
     }
 
-    public function withDeleted(): ?bool
-    {
-        return $this->withDeleted;
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'user_uuid'       => $this->userUuid(),
-            'uuid'            => $this->uuid(),
-            'stage'           => $this->stage(),
-            'project_uuid'    => $this->projectUuid(),
-            'created_at_from' => $this->createdAtFrom(),
-            'created_at_to'   => $this->createdAtTo(),
-            'updated_at_from' => $this->updatedAtFrom(),
-            'updated_at_to'   => $this->updatedAtTo(),
-            'deadline_from'   => $this->deadlineFrom(),
-            'deadline_to'     => $this->deadlineTo(),
-            'order_by'        => $this->orderBy(),
-            'order_by_field'  => $this->orderByField(),
-            'limit'           => $this->limit(),
-            'with_deleted'    => $this->withDeleted(),
-        ];
-    }
-
     public static function from(
-        array $data,
+        array $inputData,
     ): self {
         return new self(
-            userUuid: new UserUuidValue(
-                uuid: $data['user_uuid'],
+            user: $inputData['user'],
+            task: TaskRepository::byNullableUuid(
+                uuid: $inputData['uuid'],
             ),
-            uuid: array_key_exists('uuid', $data)
-                ? new TaskUuidValue(uuid: $data['uuid'])
-                : null,
-            stage: array_key_exists('stage', $data)
-                ? Stage::from(value: $data['stage'])
-                : null,
-            projectUuid: array_key_exists('project_uuid', $data)
-                ? new ProjectUuidValue(uuid: $data['project_uuid'])
-                : null,
-            createdAtFrom: array_key_exists('created_at_from', $data)
-                ? CreatedAtValue::from(value: $data['created_at_from'])
-                : null,
-            createdAtTo: array_key_exists('created_at_to', $data)
-                ? CreatedAtValue::from(value: $data['created_at_to'])
-                : null,
-            updatedAtFrom: array_key_exists('updated_at_from', $data)
-                ? UpdatedAtValue::from(value: $data['updated_at_from'])
-                : null,
-            updatedAtTo: array_key_exists('updated_at_to', $data)
-                ? UpdatedAtValue::from(value: $data['updated_at_to'])
-                : null,
-            deadlineFrom: array_key_exists('deadline_from', $data)
-                ? DeadlineValue::from(value: $data['deadline_from'])
-                : null,
-            deadlineTo: array_key_exists('deadline_to', $data)
-                ? DeadlineValue::from(value: $data['deadline_to'])
-                : null,
-            orderBy: array_key_exists('order_by', $data)
-                ? OrderBy::from(value: $data['order_by'])
-                : null,
-            orderByField: array_key_exists('order_by_field', $data)
-                ? OrderByField::from(value: $data['order_by_field'])
-                : null,
-            limit: $data['limit'] ?? null,
-            withDeleted: $data['with_deleted'] ?? null,
+            title: TitleValue::fromNullable(
+                input: $inputData['title'],
+            ),
+            description: DescriptionValue::fromNullable(
+                input: $inputData['description'],
+            ),
+            stage: StageValue::fromNullable(
+                string: $inputData['stage'],
+            ),
+            project: ProjectRepository::byNullableUuid(
+                uuid: $inputData['project_uuid'],
+            ),
+            createdAtFrom: CreatedAtValue::fromNullable(
+                value: $inputData['created_at_from'],
+            ),
+            createdAtTo: CreatedAtValue::fromNullable(
+                value: $inputData['created_at_to'],
+            ),
+            updatedAtFrom: UpdatedAtValue::fromNullable(
+                value: $inputData['updated_at_from'],
+            ),
+            updatedAtTo: UpdatedAtValue::fromNullable(
+                value: $inputData['updated_at_to'],
+            ),
+            deletedAtFrom: DeletedAtValue::fromNullable(
+                value: $inputData['deleted_at_from'],
+            ),
+            deletedAtTo: DeletedAtValue::fromNullable(
+                value: $inputData['deleted_at_to'],
+            ),
+            deadlineFrom: DeadlineValue::fromNullable(
+                value: $inputData['deadline_from'],
+            ),
+            deadlineTo: DeadlineValue::fromNullable(
+                value: $inputData['deadline_to'],
+            ),
+            orderBy: OrderBy::tryFrom(
+                value: $inputData['order_by'],
+            ),
+            orderByField: OrderByField::tryFrom(
+                value: $inputData['order_by_field'],
+            ),
+            deleted: DeletedEnum::tryFrom(
+                value: $inputData['deleted'],
+            ),
+            limit: $inputData['limit'],
         );
     }
 }

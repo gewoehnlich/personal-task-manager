@@ -3,10 +3,7 @@
 namespace App\Containers\Tasks\Requests;
 
 use App\Containers\Tasks\Dto\IndexTasksDto;
-use App\Containers\Tasks\Enums\Stage;
 use App\Ship\Abstracts\Requests\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
 
 final class IndexTasksRequest extends Request
 {
@@ -15,75 +12,27 @@ final class IndexTasksRequest extends Request
         return IndexTasksDto::class;
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
+    protected function extract(): array
     {
         return [
-            'user_uuid'       => ['required', 'uuid:7'],
-            'uuid'            => ['nullable', 'uuid:7', 'exists:tasks,uuid'],
-            'stage'           => ['nullable', Rule::enum(Stage::class)],
-            'project_uuid'    => ['nullable', 'uuid:7', 'exists:projects,uuid'],
-            'created_at_from' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
-            'created_at_to'   => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
-            'updated_at_from' => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
-            'updated_at_to'   => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
-            'deadline_from'   => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
-            'deadline_to'     => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
-            'order_by'        => ['nullable', 'string', 'in:asc,desc'],
-            'order_by_field'  => ['nullable', 'string', 'in:id,created_at,updated_at,deadline,stage'],
-            'limit'           => ['nullable', 'integer'],
-            'with_deleted'    => ['nullable', 'boolean'],
+            'user'            => $this->user(),
+            'uuid'            => $this->input('uuid', default: null),
+            'title'           => $this->input('title', default: null),
+            'project_uuid'    => $this->input('project_uuid', default: null),
+            'description'     => $this->input('description', default: null),
+            'stage'           => $this->input('stage', default: null),
+            'created_at_from' => $this->input('created_at_from', default: null),
+            'created_at_to'   => $this->input('created_at_to', default: null),
+            'updated_at_from' => $this->input('updated_at_from', default: null),
+            'updated_at_to'   => $this->input('updated_at_to', default: null),
+            'deleted_at_from' => $this->input('deleted_at_from', default: null),
+            'deleted_at_to'   => $this->input('deleted_at_to', default: null),
+            'deadline_from'   => $this->input('deadline_from', default: null),
+            'deadline_to'     => $this->input('deadline_to', default: null),
+            'order_by'        => $this->input('order_by', default: null),
+            'order_by_field'  => $this->input('order_by_field', default: null),
+            'deleted'         => $this->input('deleted', default: null),
+            'limit'           => $this->input('limit', default: null),
         ];
-    }
-
-    public function after(): array
-    {
-        return [
-            function (Validator $validator) {
-                if (
-                    $this->createdAtFrom
-                    && $this->createdAtTo
-                    && $this->createdAtFrom > $this->createdAtTo
-                ) {
-                    $validator->errors()->add(
-                        'created_at_range',
-                        'created_at_from не может быть позже created_at_to.',
-                    );
-                }
-
-                if (
-                    $this->updatedAtFrom
-                    && $this->updatedAtTo
-                    && $this->updatedAtFrom > $this->updatedAtTo
-                ) {
-                    $validator->errors()->add(
-                        'updated_at_range',
-                        'updated_at_from не может быть позже updated_at_to.',
-                    );
-                }
-
-                if (
-                    $this->deadlineFrom
-                    && $this->deadlineTo
-                    && $this->deadlineFrom > $this->deadlineTo
-                ) {
-                    $validator->errors()->add(
-                        'deadline_range',
-                        'deadline_from не может быть позже deadline_to.',
-                    );
-                }
-            },
-        ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'user_uuid' => $this->user()->uuid,
-        ]);
     }
 }

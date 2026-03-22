@@ -7,8 +7,13 @@ use App\Containers\Projects\Repositories\ProjectRepository;
 use App\Containers\Projects\Values\CreatedAtValue;
 use App\Containers\Projects\Values\DeletedAtValue;
 use App\Containers\Projects\Values\UpdatedAtValue;
+use App\Containers\Tasks\Enums\Stage;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Repositories\TaskRepository;
+use App\Containers\Tasks\Values\CreatedAtValue as TasksCreatedAtValue;
+use App\Containers\Tasks\Values\DeadlineValue;
+use App\Containers\Tasks\Values\DeletedAtValue as TasksDeletedAtValue;
+use App\Containers\Tasks\Values\UpdatedAtValue as TasksUpdatedAtValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Traits\CanCallActionTrait;
 use App\Ship\Traits\CanCallCommandTrait;
@@ -89,6 +94,11 @@ abstract class TestCase extends BaseTestCase
     public function task(
         User $user,
         ?Project $project = null,
+        ?TasksCreatedAtValue $createdAt = null,
+        ?TasksUpdatedAtValue $updatedAt = null,
+        ?TasksDeletedAtValue $deletedAt = null,
+        ?DeadlineValue $deadline = null,
+        ?Stage $stage = null,
     ): Task {
         $data = [
             'user_uuid' => $user->uuid,
@@ -96,6 +106,26 @@ abstract class TestCase extends BaseTestCase
 
         if ($project) {
             $data['project_uuid'] = $project->uuid;
+        }
+
+        if ($createdAt) {
+            $data['created_at'] = $createdAt->value();
+        }
+
+        if ($updatedAt) {
+            $data['updated_at'] = $updatedAt->value();
+        }
+
+        if ($deletedAt) {
+            $data['deleted_at'] = $deletedAt->value();
+        }
+
+        if ($deadline) {
+            $data['deadline'] = $deadline->value();
+        }
+
+        if ($stage) {
+            $data['stage'] = $stage->value;
         }
 
         return Task::factory()
