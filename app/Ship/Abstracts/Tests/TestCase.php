@@ -8,6 +8,7 @@ use App\Containers\Projects\Values\CreatedAtValue;
 use App\Containers\Projects\Values\DeletedAtValue;
 use App\Containers\Projects\Values\UpdatedAtValue;
 use App\Containers\Tasks\Models\Task;
+use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Containers\Users\Models\User;
 use App\Ship\Traits\CanCallActionTrait;
 use App\Ship\Traits\CanCallCommandTrait;
@@ -33,6 +34,8 @@ abstract class TestCase extends BaseTestCase
 
     protected readonly ProjectRepository $projectRepository;
 
+    protected readonly TaskRepository $taskRepository;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -40,6 +43,8 @@ abstract class TestCase extends BaseTestCase
         $this->seed(TestSeeder::class);
 
         $this->projectRepository = app(ProjectRepository::class);
+
+        $this->taskRepository = app(TaskRepository::class);
     }
 
     public function user(): User

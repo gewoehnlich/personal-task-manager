@@ -4,11 +4,10 @@ namespace App\Containers\Tasks\Tests\Unit\Values;
 
 use App\Containers\Tasks\Values\TitleValue;
 use App\Ship\Abstracts\Tests\TestCase;
-use App\Ship\Exceptions\StringValueTooLongException;
+use App\Ship\Exceptions\StringValueIsTooLongException;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -17,42 +16,43 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class TitleValueTest extends TestCase
 {
-    #[TestDox('title should be creatable if value length shorter than MAX_LENGTH')]
-    public function testTitleLengthLessThanMaxLength(): void
+    public function testTitleLengthLessThanMaxLengthShouldCreateTitleValue(): void
     {
         $value = Str::repeat(
             string: 'a',
             times: TitleValue::MAX_LENGTH - 1,
         );
 
-        $title = new TitleValue(string: $value);
+        $title = TitleValue::from(
+            string: $value,
+        );
 
         $this->assertSame(
             expected: $value,
             actual: $title->string,
-            message: 'the value is not the same',
+            message: 'the value should be the same',
         );
     }
 
-    #[TestDox('title should be creatable if value length equals MAX_LENGTH')]
-    public function testTitleLengthEqualMaxLength(): void
+    public function testTitleLengthEqualMaxLengthShouldCreateTitleValue(): void
     {
         $value = Str::repeat(
             string: 'a',
             times: TitleValue::MAX_LENGTH,
         );
 
-        $title = new TitleValue(string: $value);
+        $title = TitleValue::from(
+            string: $value,
+        );
 
         $this->assertSame(
             expected: $value,
             actual: $title->string,
-            message: 'the value is not the same',
+            message: 'the value should be the same',
         );
     }
 
-    #[TestDox('title should not be creatable if value length more than MAX_LENGTH')]
-    public function testTitleLengthMoreThanMaxLength(): void
+    public function testTitleLengthMoreThanMaxLengthShouldThrowStringValueIsTooLongException(): void
     {
         $value = Str::repeat(
             string: 'a',
@@ -60,9 +60,11 @@ final class TitleValueTest extends TestCase
         );
 
         $this->expectException(
-            exception: StringValueTooLongException::class,
+            exception: StringValueIsTooLongException::class,
         );
 
-        new TitleValue(string: $value);
+        TitleValue::from(
+            string: $value,
+        );
     }
 }

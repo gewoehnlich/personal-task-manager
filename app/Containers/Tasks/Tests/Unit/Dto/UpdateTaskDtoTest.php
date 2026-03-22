@@ -5,7 +5,9 @@ namespace App\Containers\Tasks\Tests\Unit\Dto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\UpdateTaskDto;
 use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Exceptions\TaskWithThisUuidDoesNotExistException;
 use App\Containers\Tasks\Models\Task;
+use App\Containers\Tasks\Values\DeadlineValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
@@ -20,80 +22,88 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class UpdateTaskDtoTest extends TestCase
 {
-    #[TestDox('converts dto properties to snake_case array keys with all parameters filled')]
-    public function testToArrayReturnsSnakeCaseKeysWithAllParametersFilled(): void
+    public function testFromMethodCreatesDtoWithExistingTaskUuid(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $task = Task::factory()
-            ->for($user)
-            ->create();
+        $task = $this->task(
+            user: $user,
+        );
+
+        $stage = Stage::PENDING;
 
         $title = 'title';
 
         $description = 'description';
 
-        $stage = Stage::PENDING;
+        $deadline = new DeadlineValue(
+            carbon: Carbon::now(),
+        )
+            ->value();
 
-        $deadline = Carbon::now()
-            ->plus(days: 1);
+        $project = $this->project(
+            user: $user,
+        );
 
-        $project = Project::factory()
-            ->for($user)
-            ->create();
-
-        $data = [
+        $dto = UpdateTaskDto::from([
             'uuid'         => $task->uuid,
-            'user_uuid'    => $user->uuid,
+            'user'         => $user,
             'title'        => $title,
-            'description'  => $description,
             'stage'        => $stage->value,
-            'deadline'     => $deadline->toAtomString(),
+            'description'  => $description,
+            'deadline'     => $deadline,
             'project_uuid' => $project->uuid,
-        ];
+        ]);
 
-        $dto = UpdateTaskDto::from(
-            data: $data,
+        $this->assertSame(
+            expected: $task->uuid,
+            actual: $dto->taskUuid(),
         );
 
         $this->assertSame(
-            expected: $data,
-            actual: $dto->toArray(),
+            expected: $user->uuid,
+            actual: $dto->userUuid(),
+        );
+
+        $this->assertSame(
+            expected: $title,
+            actual: $dto->title(),
+        );
+
+        $this->assertSame(
+            expected: $stage->value,
+            actual: $dto->stage(),
+        );
+
+        $this->assertSame(
+            expected: $description,
+            actual: $dto->description(),
+        );
+
+        $this->assertSame(
+            expected: $deadline,
+            actual: $dto->deadline(),
+        );
+
+        $this->assertSame(
+            expected: $project->uuid,
+            actual: $dto->projectUuid(),
         );
     }
 
-    #[TestDox('converts dto properties to snake_case array keys with nullable parameters being null')]
-    public function testToArrayReturnsSnakeCaseKeysWithNullableParametersBeingNull(): void
+    public function testFromMethodShouldThrowAnExceptionWithInvalidTaskUuid(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $task = Task::factory()
-            ->for($user)
-            ->create();
-
-        $title = 'title';
-
-        $stage = Stage::PENDING;
-
-        $data = [
-            'uuid'         => $task->uuid,
-            'user_uuid'    => $user->uuid,
-            'title'        => $title,
-            'description'  => null,
-            'stage'        => $stage->value,
-            'deadline'     => null,
-            'project_uuid' => null,
-        ];
-
-        $dto = UpdateTaskDto::from(
-            data: $data,
+        $this->expectException(
+            exception: TaskWithThisUuidDoesNotExistException::class,
         );
 
-        $this->assertSame(
-            expected: $data,
-            actual: $dto->toArray(),
-        );
+        UpdateTaskDto::from([
+            'uuid'        => $user->uuid, // not actual task uuid
+            'user'        => $user,
+            'title'       => 'title',
+            'description' => 'description',
+        ]);
     }
 }
