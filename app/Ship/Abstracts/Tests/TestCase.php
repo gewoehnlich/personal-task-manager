@@ -7,6 +7,7 @@ use App\Containers\Projects\Repositories\ProjectRepository;
 use App\Containers\Projects\Values\CreatedAtValue;
 use App\Containers\Projects\Values\DeletedAtValue;
 use App\Containers\Projects\Values\UpdatedAtValue;
+use App\Containers\Tasks\Models\Task;
 use App\Containers\Users\Models\User;
 use App\Ship\Traits\CanCallActionTrait;
 use App\Ship\Traits\CanCallCommandTrait;
@@ -77,6 +78,22 @@ abstract class TestCase extends BaseTestCase
         }
 
         return Project::factory()
+            ->create($data);
+    }
+
+    public function task(
+        User $user,
+        ?Project $project = null,
+    ): Task {
+        $data = [
+            'user_uuid' => $user->uuid,
+        ];
+
+        if ($project) {
+            $data['project_uuid'] = $project->uuid;
+        }
+
+        return Task::factory()
             ->create($data);
     }
 

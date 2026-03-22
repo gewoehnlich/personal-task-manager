@@ -4,12 +4,9 @@ namespace App\Containers\Tasks\Tests\Feature\Actions;
 
 use App\Containers\Tasks\Actions\DeleteTaskAction;
 use App\Containers\Tasks\Dto\DeleteTaskDto;
-use App\Containers\Tasks\Models\Task;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
-use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
@@ -20,28 +17,47 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(DeleteTaskDto::class)]
 final class DeleteTaskActionTest extends TestCase
 {
-    #[TestDox('action deletes a task')]
-    public function testAction(): void
+    public function testActionSoftDeletesTheTask(): void
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
-        $task = Task::factory()->for($user)->create();
-
-        $data = [
-            'uuid'      => $task->uuid,
-            'user_uuid' => $user->uuid,
-        ];
+        $task = $this->task(
+            user: $user,
+        );
 
         $this->action(
             class: DeleteTaskAction::class,
-            dto: DeleteTaskDto::from(
-                data: $data,
-            ),
+            dto: DeleteTaskDto::from([
+                'uuid'  => $task->uuid,
+                'user'  => $user,
+                'force' => false, // force is false
+            ]),
         );
 
-        $this->assertSoftDeleted(
-            table: 'tasks',
-            data: $data,
+        $this->assertSoftDeleted('tasks', [
+            'uuid' => $task->uuid,
+        ]);
+    }
+
+    public function testActionForceDeletesTheTaskIfForceParameterIsTrue(): void
+    {
+        $user = $this->user();
+
+        $task = $this->task(
+            user: $user,
         );
+
+        $this->action(
+            class: DeleteTaskAction::class,
+            dto: DeleteTaskDto::from([
+                'uuid'  => $task->uuid,
+                'user'  => $user,
+                'force' => true, // force is true
+            ]),
+        );
+
+        $this->assertDatabaseMissing('tasks', [
+            'uuid' => $task->uuid,
+        ]);
     }
 }

@@ -4,15 +4,12 @@ namespace App\Containers\Tasks\Dto;
 
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Repositories\TaskRepository;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Dto\Dto;
 
-final readonly class DeleteTaskDto extends Dto
+final readonly class RestoreTaskDto extends Dto
 {
     public function __construct(
         public readonly Task $task,
-        public readonly User $user,
-        public readonly bool $force,
     ) {
         //
     }
@@ -22,16 +19,6 @@ final readonly class DeleteTaskDto extends Dto
         return $this->task->uuid;
     }
 
-    public function userUuid(): string
-    {
-        return $this->user->uuid;
-    }
-
-    public function force(): bool
-    {
-        return $this->force;
-    }
-
     public static function from(
         array $inputData,
     ): self {
@@ -39,8 +26,6 @@ final readonly class DeleteTaskDto extends Dto
             task: TaskRepository::byUuid(
                 uuid: $inputData['uuid'],
             ),
-            user: $inputData['user'],
-            force: $inputData['force'],
         );
     }
 }

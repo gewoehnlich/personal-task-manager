@@ -3,12 +3,9 @@
 namespace App\Containers\Tasks\Tests\Unit\Dto;
 
 use App\Containers\Tasks\Dto\DeleteTaskDto;
-use App\Containers\Tasks\Models\Task;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -17,28 +14,38 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[Small]
 final class DeleteTaskDtoTest extends TestCase
 {
-    #[TestDox('converts dto properties to snake_case array keys')]
-    public function testToArrayReturnsSnakeCaseKeys(): void
+    public function testFromMethodCreatesDtoWithExistingTaskUuid(): void
     {
-        $user = User::factory()
-            ->create();
+        $user = $this->user();
 
-        $task = Task::factory()
-            ->for($user)
-            ->create();
-
-        $data = [
-            'uuid'      => $task->uuid,
-            'user_uuid' => $user->uuid,
-        ];
-
-        $dto = DeleteTaskDto::from(
-            data: $data,
+        $task = $this->task(
+            user: $user,
         );
 
-        $this->assertSame(
-            expected: $data,
-            actual: $dto->toArray(),
+        $force = false;
+
+        $dto = DeleteTaskDto::from([
+            'uuid'  => $task->uuid,
+            'user'  => $user,
+            'force' => $force,
+        ]);
+
+        $this->assertEquals(
+            expected: $task->uuid,
+            actual: $dto->taskUuid(),
+            message: 'task should be the same as expected',
+        );
+
+        $this->assertEquals(
+            expected: $user->uuid,
+            actual: $dto->userUuid(),
+            message: 'user should be the same as expected',
+        );
+
+        $this->assertEquals(
+            expected: $force,
+            actual: $dto->force(),
+            message: 'force should be the same as expected',
         );
     }
 }

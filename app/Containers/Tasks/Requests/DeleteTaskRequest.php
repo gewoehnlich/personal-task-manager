@@ -12,24 +12,12 @@ final class DeleteTaskRequest extends Request
         return DeleteTaskDto::class;
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
+    protected function extract(): array
     {
         return [
-            'uuid'      => ['required', 'uuid:7', 'exists:tasks,uuid'],
-            'user_uuid' => ['required', 'uuid:7', 'exists:users,uuid'],
+            'user'  => $this->user(),
+            'uuid'  => $this->route('uuid', default: null),
+            'force' => $this->input('force', default: false),
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'uuid'      => $this->route('uuid'),
-            'user_uuid' => $this->user()->uuid,
-        ]);
     }
 }
