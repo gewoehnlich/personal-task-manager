@@ -7,7 +7,7 @@ use App\Containers\Projects\Repositories\ProjectRepository;
 use App\Containers\Projects\Values\CreatedAtValue;
 use App\Containers\Projects\Values\DeletedAtValue;
 use App\Containers\Projects\Values\UpdatedAtValue;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Containers\Tasks\Values\CreatedAtValue as TasksCreatedAtValue;
@@ -98,7 +98,7 @@ abstract class TestCase extends BaseTestCase
         ?TasksUpdatedAtValue $updatedAt = null,
         ?TasksDeletedAtValue $deletedAt = null,
         ?DeadlineValue $deadline = null,
-        ?Stage $stage = null,
+        ?StageEnum $stage = null,
     ): Task {
         $data = [
             'user_uuid' => $user->uuid,

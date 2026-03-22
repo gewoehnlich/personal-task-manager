@@ -3,16 +3,16 @@
 namespace App\Containers\Tasks\Tests\Unit\Requests;
 
 use App\Containers\Tasks\Dto\UpdateTaskDto;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Requests\UpdateTaskRequest;
 use App\Ship\Abstracts\Tests\TestCase;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 
 /**
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(UpdateTaskRequest::class)]
 #[Medium]
 final class UpdateTaskRequestTest extends TestCase
 {
@@ -30,7 +30,7 @@ final class UpdateTaskRequestTest extends TestCase
             method: 'PUT',
             parameters: [
                 'title'       => 'title',
-                'stage'       => Stage::PENDING->value,
+                'stage'       => StageEnum::PENDING->value,
                 'description' => 'description',
             ],
             user: $user,

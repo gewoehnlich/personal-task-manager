@@ -29,7 +29,6 @@ final class DeleteTaskActionTest extends TestCase
             class: DeleteTaskAction::class,
             dto: DeleteTaskDto::from([
                 'uuid'  => $task->uuid,
-                'user'  => $user,
                 'force' => false, // force is false
             ]),
         );
@@ -51,7 +50,6 @@ final class DeleteTaskActionTest extends TestCase
             class: DeleteTaskAction::class,
             dto: DeleteTaskDto::from([
                 'uuid'  => $task->uuid,
-                'user'  => $user,
                 'force' => true, // force is true
             ]),
         );

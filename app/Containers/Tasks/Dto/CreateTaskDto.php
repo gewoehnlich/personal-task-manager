@@ -14,12 +14,12 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class CreateTaskDto extends Dto
 {
     public function __construct(
-        public readonly User $user,
-        public readonly TitleValue $title,
-        public readonly StageValue $stage,
-        public readonly ?DescriptionValue $description = null,
-        public readonly ?DeadlineValue $deadline = null,
-        public readonly ?Project $project = null,
+        private readonly User $user,
+        private readonly TitleValue $title,
+        private readonly StageValue $stage,
+        private readonly ?DescriptionValue $description = null,
+        private readonly ?DeadlineValue $deadline = null,
+        private readonly ?Project $project = null,
     ) {
         //
     }

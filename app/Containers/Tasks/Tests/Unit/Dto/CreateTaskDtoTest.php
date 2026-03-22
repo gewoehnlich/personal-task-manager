@@ -4,7 +4,7 @@ namespace App\Containers\Tasks\Tests\Unit\Dto;
 
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\CreateTaskDto;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Values\DeadlineValue;
 use App\Containers\Tasks\Values\StageValue;
 use App\Ship\Abstracts\Tests\TestCase;
@@ -28,7 +28,7 @@ final class CreateTaskDtoTest extends TestCase
         $title = 'title';
 
         $stage = new StageValue(
-            stage: Stage::PENDING,
+            stage: StageEnum::PENDING,
         );
 
         $description = 'description';
@@ -89,7 +89,7 @@ final class CreateTaskDtoTest extends TestCase
         $title = 'title';
 
         $stage = new StageValue(
-            stage: Stage::PENDING,
+            stage: StageEnum::PENDING,
         );
 
         $dto = CreateTaskDto::from([
@@ -159,7 +159,7 @@ final class CreateTaskDtoTest extends TestCase
             'title is null' => [
                 'title' => null,
                 'stage' => new StageValue(
-                    stage: Stage::PENDING,
+                    stage: StageEnum::PENDING,
                 ),
             ],
             'stage is null' => [

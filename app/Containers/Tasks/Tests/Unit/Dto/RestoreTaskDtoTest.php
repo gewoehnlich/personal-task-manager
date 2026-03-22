@@ -4,13 +4,13 @@ namespace App\Containers\Tasks\Tests\Unit\Dto;
 
 use App\Containers\Tasks\Dto\RestoreTaskDto;
 use App\Ship\Abstracts\Tests\TestCase;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
 
 /**
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(RestoreTaskDto::class)]
 #[Medium]
 final class RestoreTaskDtoTest extends TestCase
 {
@@ -28,8 +28,7 @@ final class RestoreTaskDtoTest extends TestCase
 
         $this->assertSame(
             expected: $task->uuid,
-            actual: $dto->taskUuid(),
-            message: 'taskUuid has to be the same as expected',
+            actual: $dto->task()->uuid,
         );
     }
 }

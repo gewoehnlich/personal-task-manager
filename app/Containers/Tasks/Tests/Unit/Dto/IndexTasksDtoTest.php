@@ -2,19 +2,14 @@
 
 namespace App\Containers\Tasks\Tests\Unit\Dto;
 
-use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\IndexTasksDto;
 use App\Containers\Tasks\Enums\DeletedEnum;
-use App\Containers\Tasks\Enums\OrderBy;
-use App\Containers\Tasks\Enums\OrderByField;
-use App\Containers\Tasks\Enums\Stage;
-use App\Containers\Tasks\Models\Task;
-use App\Containers\Users\Models\User;
+use App\Containers\Tasks\Enums\OrderByEnum;
+use App\Containers\Tasks\Enums\OrderByFieldEnum;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Ship\Abstracts\Tests\TestCase;
-use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -40,7 +35,7 @@ final class IndexTasksDtoTest extends TestCase
 
         $description = 'description';
 
-        $stage = Stage::PENDING;
+        $stage = StageEnum::PENDING;
 
         $createdAtFrom = $this->datetimeString();
 
@@ -58,9 +53,9 @@ final class IndexTasksDtoTest extends TestCase
 
         $deadlineTo = $this->datetimeString();
 
-        $orderBy = OrderBy::ASC->value;
+        $orderBy = OrderByEnum::ASC->value;
 
-        $orderByField = OrderByField::CREATED_AT->value;
+        $orderByField = OrderByFieldEnum::CREATED_AT->value;
 
         $deleted = DeletedEnum::ONLY;
 
@@ -205,7 +200,7 @@ final class IndexTasksDtoTest extends TestCase
 
         $this->assertSame(
             expected: $user->uuid,
-            actual: $dto->user->uuid,
+            actual: $dto->userUuid(),
             message: 'dto user should be the same as expected',
         );
     }

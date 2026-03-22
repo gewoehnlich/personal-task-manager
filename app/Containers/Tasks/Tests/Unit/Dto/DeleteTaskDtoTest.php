@@ -26,26 +26,17 @@ final class DeleteTaskDtoTest extends TestCase
 
         $dto = DeleteTaskDto::from([
             'uuid'  => $task->uuid,
-            'user'  => $user,
             'force' => $force,
         ]);
 
         $this->assertEquals(
             expected: $task->uuid,
-            actual: $dto->taskUuid(),
-            message: 'task should be the same as expected',
-        );
-
-        $this->assertEquals(
-            expected: $user->uuid,
-            actual: $dto->userUuid(),
-            message: 'user should be the same as expected',
+            actual: $dto->task()->uuid,
         );
 
         $this->assertEquals(
             expected: $force,
             actual: $dto->force(),
-            message: 'force should be the same as expected',
         );
     }
 }

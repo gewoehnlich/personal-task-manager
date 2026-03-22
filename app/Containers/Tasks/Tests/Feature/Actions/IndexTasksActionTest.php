@@ -5,9 +5,9 @@ namespace App\Containers\Tasks\Tests\Feature\Actions;
 use App\Containers\Tasks\Actions\IndexTasksAction;
 use App\Containers\Tasks\Dto\IndexTasksDto;
 use App\Containers\Tasks\Enums\DeletedEnum;
-use App\Containers\Tasks\Enums\OrderBy;
-use App\Containers\Tasks\Enums\OrderByField;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\OrderByEnum;
+use App\Containers\Tasks\Enums\OrderByFieldEnum;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Values\CreatedAtValue;
 use App\Containers\Tasks\Values\DeadlineValue;
 use App\Containers\Tasks\Values\DeletedAtValue;
@@ -176,7 +176,7 @@ final class IndexTasksActionTest extends TestCase
     {
         $user = $this->user();
 
-        $stage = Stage::DONE;
+        $stage = StageEnum::DONE;
 
         $task = $this->task(
             user: $user,
@@ -185,7 +185,7 @@ final class IndexTasksActionTest extends TestCase
 
         $this->task(
             user: $user,
-            stage: Stage::PENDING,
+            stage: StageEnum::PENDING,
         );
 
         $result = $this->action(
@@ -610,8 +610,8 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: new IndexTasksDto(
                 user: $user,
-                orderBy: OrderBy::DESC,
-                orderByField: OrderByField::UPDATED_AT,
+                orderBy: OrderByEnum::DESC,
+                orderByField: OrderByFieldEnum::UPDATED_AT,
             ),
         );
 

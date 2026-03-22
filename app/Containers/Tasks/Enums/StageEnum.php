@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tasks\Enums;
 
-enum Stage: string
+enum StageEnum: string
 {
     case PENDING = 'pending';
 

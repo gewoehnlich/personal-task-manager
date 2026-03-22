@@ -4,7 +4,7 @@ namespace App\Containers\Projects\Tests\Unit\Requests;
 
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\CreateTaskDto;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Requests\CreateTaskRequest;
 use App\Containers\Tasks\Values\DeadlineValue;
 use App\Ship\Abstracts\Tests\TestCase;
@@ -29,7 +29,7 @@ final class CreateTaskRequestTest extends TestCase
             method: 'POST',
             parameters: [
                 'title'       => 'title',
-                'stage'       => Stage::PENDING->value,
+                'stage'       => StageEnum::PENDING->value,
                 'description' => 'description',
                 'deadline'    => new DeadlineValue(
                     carbon: Carbon::now(),

@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tasks\Enums;
 
-enum OrderBy: string
+enum OrderByEnum: string
 {
     case ASC  = 'asc';
 

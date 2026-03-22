@@ -16,20 +16,20 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class UpdateTaskDto extends Dto
 {
     public function __construct(
-        public readonly Task $task,
-        public readonly User $user,
-        public readonly TitleValue $title,
-        public readonly StageValue $stage,
-        public readonly ?DescriptionValue $description = null,
-        public readonly ?DeadlineValue $deadline = null,
-        public readonly ?Project $project = null,
+        private readonly Task $task,
+        private readonly User $user,
+        private readonly TitleValue $title,
+        private readonly StageValue $stage,
+        private readonly ?DescriptionValue $description = null,
+        private readonly ?DeadlineValue $deadline = null,
+        private readonly ?Project $project = null,
     ) {
         //
     }
 
-    public function taskUuid(): string
+    public function task(): Task
     {
-        return $this->task->uuid;
+        return $this->task;
     }
 
     public function userUuid(): string

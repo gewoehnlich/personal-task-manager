@@ -5,15 +5,13 @@ namespace App\Containers\Tasks\Tests\Feature\Actions;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Actions\CreateTaskAction;
 use App\Containers\Tasks\Dto\CreateTaskDto;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Values\DeadlineValue;
 use App\Containers\Tasks\Values\StageValue;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
-use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
@@ -31,7 +29,7 @@ final class CreateTaskActionTest extends TestCase
         $title = 'title';
 
         $stage = new StageValue(
-            stage: Stage::PENDING,
+            stage: StageEnum::PENDING,
         );
 
         $description = 'description';

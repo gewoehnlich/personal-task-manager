@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tasks\Values;
 
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Exceptions\NoSuchStageValue;
 use App\Ship\Abstracts\Values\Value;
 use App\Ship\Exceptions\RequiredValueIsNotPresentException;
@@ -10,7 +10,7 @@ use App\Ship\Exceptions\RequiredValueIsNotPresentException;
 final readonly class StageValue extends Value
 {
     public function __construct(
-        public readonly Stage $stage,
+        public readonly StageEnum $stage,
     ) {
         $this->validate();
     }
@@ -29,7 +29,7 @@ final readonly class StageValue extends Value
             );
         }
 
-        $stage = Stage::tryFrom(
+        $stage = StageEnum::tryFrom(
             value: $string,
         );
 
@@ -40,7 +40,7 @@ final readonly class StageValue extends Value
         }
 
         return new static(
-            stage: Stage::tryFrom(
+            stage: StageEnum::tryFrom(
                 value: $string,
             ),
         );

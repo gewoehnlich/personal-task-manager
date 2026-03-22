@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tasks\Enums;
 
-enum OrderByField: string
+enum OrderByFieldEnum: string
 {
     case UUID  = 'uuid';
 

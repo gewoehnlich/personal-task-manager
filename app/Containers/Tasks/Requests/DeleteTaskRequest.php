@@ -15,7 +15,6 @@ final class DeleteTaskRequest extends Request
     protected function extract(): array
     {
         return [
-            'user'  => $this->user(),
             'uuid'  => $this->route('uuid', default: null),
             'force' => $this->input('force', default: false),
         ];

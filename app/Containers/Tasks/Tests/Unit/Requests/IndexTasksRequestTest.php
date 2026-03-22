@@ -4,9 +4,9 @@ namespace App\Containers\Tasks\Tests\Unit\Requests;
 
 use App\Containers\Tasks\Dto\IndexTasksDto;
 use App\Containers\Tasks\Enums\DeletedEnum;
-use App\Containers\Tasks\Enums\OrderBy;
-use App\Containers\Tasks\Enums\OrderByField;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\OrderByEnum;
+use App\Containers\Tasks\Enums\OrderByFieldEnum;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Requests\IndexTasksRequest;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -39,7 +39,7 @@ final class IndexTasksRequestTest extends TestCase
                 )
                     ->uuid,
                 'description'     => 'description',
-                'stage'           => Stage::PENDING->value,
+                'stage'           => StageEnum::PENDING->value,
                 'created_at_from' => $this->datetimeString(),
                 'created_at_to'   => $this->datetimeString(),
                 'updated_at_from' => $this->datetimeString(),
@@ -48,8 +48,8 @@ final class IndexTasksRequestTest extends TestCase
                 'deleted_at_to'   => $this->datetimeString(),
                 'deadline_from'   => $this->datetimeString(),
                 'deadline_to'     => $this->datetimeString(),
-                'order_by'        => OrderBy::ASC->value,
-                'order_by_field'  => OrderByField::CREATED_AT->value,
+                'order_by'        => OrderByEnum::ASC->value,
+                'order_by_field'  => OrderByFieldEnum::CREATED_AT->value,
                 'deleted'         => DeletedEnum::ONLY->value,
                 'limit'           => 2,
             ],

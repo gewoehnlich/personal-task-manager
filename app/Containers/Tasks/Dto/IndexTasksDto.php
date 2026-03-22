@@ -5,8 +5,8 @@ namespace App\Containers\Tasks\Dto;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Repositories\ProjectRepository;
 use App\Containers\Tasks\Enums\DeletedEnum;
-use App\Containers\Tasks\Enums\OrderBy;
-use App\Containers\Tasks\Enums\OrderByField;
+use App\Containers\Tasks\Enums\OrderByEnum;
+use App\Containers\Tasks\Enums\OrderByFieldEnum;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Containers\Tasks\Values\CreatedAtValue;
@@ -22,24 +22,24 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class IndexTasksDto extends Dto
 {
     public function __construct(
-        public readonly User $user,
-        public readonly ?Task $task = null,
-        public readonly ?TitleValue $title = null,
-        public readonly ?DescriptionValue $description = null,
-        public readonly ?StageValue $stage = null,
-        public readonly ?Project $project = null,
-        public readonly ?CreatedAtValue $createdAtFrom = null,
-        public readonly ?CreatedAtValue $createdAtTo = null,
-        public readonly ?UpdatedAtValue $updatedAtFrom = null,
-        public readonly ?UpdatedAtValue $updatedAtTo = null,
-        public readonly ?DeletedAtValue $deletedAtFrom = null,
-        public readonly ?DeletedAtValue $deletedAtTo = null,
-        public readonly ?DeadlineValue $deadlineFrom = null,
-        public readonly ?DeadlineValue $deadlineTo = null,
-        public readonly ?OrderBy $orderBy = null,
-        public readonly ?OrderByField $orderByField = null,
-        public readonly ?DeletedEnum $deleted = null,
-        public readonly ?int $limit = null,
+        private readonly User $user,
+        private readonly ?Task $task = null,
+        private readonly ?TitleValue $title = null,
+        private readonly ?DescriptionValue $description = null,
+        private readonly ?StageValue $stage = null,
+        private readonly ?Project $project = null,
+        private readonly ?CreatedAtValue $createdAtFrom = null,
+        private readonly ?CreatedAtValue $createdAtTo = null,
+        private readonly ?UpdatedAtValue $updatedAtFrom = null,
+        private readonly ?UpdatedAtValue $updatedAtTo = null,
+        private readonly ?DeletedAtValue $deletedAtFrom = null,
+        private readonly ?DeletedAtValue $deletedAtTo = null,
+        private readonly ?DeadlineValue $deadlineFrom = null,
+        private readonly ?DeadlineValue $deadlineTo = null,
+        private readonly ?OrderByEnum $orderBy = null,
+        private readonly ?OrderByFieldEnum $orderByField = null,
+        private readonly ?DeletedEnum $deleted = null,
+        private readonly ?int $limit = null,
     ) {
         //
     }
@@ -178,10 +178,10 @@ final readonly class IndexTasksDto extends Dto
             deadlineTo: DeadlineValue::fromNullable(
                 value: $inputData['deadline_to'],
             ),
-            orderBy: OrderBy::tryFrom(
+            orderBy: OrderByEnum::tryFrom(
                 value: $inputData['order_by'],
             ),
-            orderByField: OrderByField::tryFrom(
+            orderByField: OrderByFieldEnum::tryFrom(
                 value: $inputData['order_by_field'],
             ),
             deleted: DeletedEnum::tryFrom(

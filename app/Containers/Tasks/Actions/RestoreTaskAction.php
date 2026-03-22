@@ -11,12 +11,12 @@ final readonly class RestoreTaskAction extends Action
     public function run(
         RestoreTaskDto $dto,
     ): bool {
-        if ($dto->task->trashed() === false) {
+        if ($dto->task()->trashed() === false) {
             throw new TaskIsNotSoftDeletedException(
-                uuid: $dto->task->uuid,
+                uuid: $dto->task()->uuid,
             );
         }
 
-        return $dto->task->restore();
+        return $dto->task()->restore();
     }
 }

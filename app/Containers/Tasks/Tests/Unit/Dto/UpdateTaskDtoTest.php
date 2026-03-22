@@ -2,18 +2,14 @@
 
 namespace App\Containers\Tasks\Tests\Unit\Dto;
 
-use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\UpdateTaskDto;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Exceptions\TaskWithThisUuidDoesNotExistException;
-use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Values\DeadlineValue;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\Attributes\TestDox;
 
 /**
  * @internal
@@ -30,7 +26,7 @@ final class UpdateTaskDtoTest extends TestCase
             user: $user,
         );
 
-        $stage = Stage::PENDING;
+        $stage = StageEnum::PENDING;
 
         $title = 'title';
 
@@ -57,7 +53,7 @@ final class UpdateTaskDtoTest extends TestCase
 
         $this->assertSame(
             expected: $task->uuid,
-            actual: $dto->taskUuid(),
+            actual: $dto->task()->uuid,
         );
 
         $this->assertSame(

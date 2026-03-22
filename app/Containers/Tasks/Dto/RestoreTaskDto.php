@@ -9,14 +9,14 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class RestoreTaskDto extends Dto
 {
     public function __construct(
-        public readonly Task $task,
+        private readonly Task $task,
     ) {
         //
     }
 
-    public function taskUuid(): string
+    public function task(): Task
     {
-        return $this->task->uuid;
+        return $this->task;
     }
 
     public static function from(

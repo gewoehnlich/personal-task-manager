@@ -4,15 +4,13 @@ namespace App\Containers\Tasks\Tests\Feature\Actions;
 
 use App\Containers\Tasks\Actions\UpdateTaskAction;
 use App\Containers\Tasks\Dto\UpdateTaskDto;
-use App\Containers\Tasks\Enums\Stage;
+use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Values\DeadlineValue;
-use App\Containers\Users\Models\User;
 use App\Ship\Abstracts\Tests\TestCase;
 use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Medium;
-use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
@@ -33,7 +31,7 @@ final class UpdateTaskActionTest extends TestCase
 
         $title = 'title';
 
-        $stage = Stage::PENDING;
+        $stage = StageEnum::PENDING;
 
         $description = 'description';
 
