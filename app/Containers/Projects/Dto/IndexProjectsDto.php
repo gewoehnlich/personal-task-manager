@@ -18,19 +18,20 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class IndexProjectsDto extends Dto
 {
     public function __construct(
-        public readonly User $user,
-        public readonly ?Project $project = null,
-        public readonly ?TitleValue $title = null,
-        public readonly ?DescriptionValue $description = null,
-        public readonly ?DeletedEnum $deleted = null,
-        public readonly ?CreatedAtValue $createdAtFrom = null,
-        public readonly ?CreatedAtValue $createdAtTo = null,
-        public readonly ?UpdatedAtValue $updatedAtFrom = null,
-        public readonly ?UpdatedAtValue $updatedAtTo = null,
-        public readonly ?DeletedAtValue $deletedAtFrom = null,
-        public readonly ?DeletedAtValue $deletedAtTo = null,
-        public readonly ?OrderByEnum $orderBy = null,
-        public readonly ?OrderByFieldEnum $orderByField = null,
+        private readonly User $user,
+        private readonly ?Project $project = null,
+        private readonly ?TitleValue $title = null,
+        private readonly ?DescriptionValue $description = null,
+        private readonly ?DeletedEnum $deleted = null,
+        private readonly ?CreatedAtValue $createdAtFrom = null,
+        private readonly ?CreatedAtValue $createdAtTo = null,
+        private readonly ?UpdatedAtValue $updatedAtFrom = null,
+        private readonly ?UpdatedAtValue $updatedAtTo = null,
+        private readonly ?DeletedAtValue $deletedAtFrom = null,
+        private readonly ?DeletedAtValue $deletedAtTo = null,
+        private readonly ?OrderByEnum $orderBy = null,
+        private readonly ?OrderByFieldEnum $orderByField = null,
+        private readonly ?int $limit = null,
     ) {
         //
     }
@@ -55,9 +56,9 @@ final readonly class IndexProjectsDto extends Dto
         return $this->description?->value();
     }
 
-    public function deleted(): ?string
+    public function deleted(): ?DeletedEnum
     {
-        return $this->deleted?->value;
+        return $this->deleted;
     }
 
     public function createdAtFrom(): ?string
@@ -98,6 +99,11 @@ final readonly class IndexProjectsDto extends Dto
     public function orderByField(): ?string
     {
         return $this->orderByField?->value;
+    }
+
+    public function limit(): ?int
+    {
+        return $this->limit;
     }
 
     public static function from(
@@ -141,6 +147,7 @@ final readonly class IndexProjectsDto extends Dto
             orderByField: OrderByFieldEnum::tryFrom(
                 value: $inputData['order_by_field'],
             ),
+            limit: $inputData['limit'],
         );
     }
 }

@@ -457,4 +457,32 @@ final class IndexProjectsActionTest extends TestCase
             message: 'result has to be sorted desc by updated_at',
         );
     }
+
+    public function testActionFiltersProjectsByLimit(): void
+    {
+        $user = $this->user();
+
+        $this->project(
+            user: $user,
+        );
+
+        $this->project(
+            user: $user,
+        );
+
+        $limit = 1;
+
+        $result = $this->action(
+            class: IndexProjectsAction::class,
+            dto: new IndexProjectsDto(
+                user: $user,
+                limit: $limit,
+            ),
+        );
+
+        $this->assertCount(
+            expectedCount: $limit,
+            haystack: $result,
+        );
+    }
 }

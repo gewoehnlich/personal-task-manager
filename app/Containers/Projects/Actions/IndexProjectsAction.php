@@ -29,8 +29,8 @@ final readonly class IndexProjectsAction extends Action
             $query = $query->where('description', $dto->description());
         }
 
-        if ($dto->deleted) {
-            match ($dto->deleted) {
+        if ($dto->deleted()) {
+            match ($dto->deleted()) {
                 DeletedEnum::WITHOUT => $query,
                 DeletedEnum::WITH    => $query = $query->withTrashed(),
                 DeletedEnum::ONLY    => $query = $query->onlyTrashed(),
@@ -63,6 +63,10 @@ final readonly class IndexProjectsAction extends Action
 
         if ($dto->orderBy()) {
             $query = $query->orderBy($dto->orderByField() ?? 'updated_at', $dto->orderBy());
+        }
+
+        if ($dto->limit()) {
+            $query = $query->limit($dto->limit());
         }
 
         return $query->get();

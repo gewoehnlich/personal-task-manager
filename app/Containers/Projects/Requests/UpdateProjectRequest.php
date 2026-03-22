@@ -16,7 +16,6 @@ final class UpdateProjectRequest extends Request
     {
         return [
             'uuid'        => $this->route('uuid', default: null),
-            'user'        => $this->user(),
             'title'       => $this->input('title', default: null),
             'description' => $this->input('description', default: null),
         ];

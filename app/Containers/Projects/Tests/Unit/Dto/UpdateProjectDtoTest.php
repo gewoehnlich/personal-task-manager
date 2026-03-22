@@ -29,20 +29,13 @@ final class UpdateProjectDtoTest extends TestCase
 
         $dto = UpdateProjectDto::from([
             'uuid'        => $project->uuid,
-            'user'        => $user,
             'title'       => $title,
             'description' => $description,
         ]);
 
         $this->assertSame(
             expected: $project->uuid,
-            actual: $dto->projectUuid(),
-            message: 'the value should be the same as expected',
-        );
-
-        $this->assertSame(
-            expected: $user->uuid,
-            actual: $dto->userUuid(),
+            actual: $dto->project()->uuid,
             message: 'the value should be the same as expected',
         );
 
@@ -69,7 +62,6 @@ final class UpdateProjectDtoTest extends TestCase
 
         UpdateProjectDto::from([
             'uuid'        => $user->uuid, // not actual project uuid
-            'user'        => $user,
             'title'       => 'title',
             'description' => 'description',
         ]);

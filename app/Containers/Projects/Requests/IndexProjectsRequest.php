@@ -28,6 +28,7 @@ final class IndexProjectsRequest extends Request
             'deleted_at_to'   => $this->input('deleted_at_to', default: null),
             'order_by'        => $this->input('order_by', default: null),
             'order_by_field'  => $this->input('order_by_field', default: null),
+            'limit'           => $this->input('limit', default: null),
         ];
     }
 }

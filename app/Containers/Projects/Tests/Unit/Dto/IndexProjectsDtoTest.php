@@ -29,7 +29,7 @@ final class IndexProjectsDtoTest extends TestCase
 
         $description = 'description';
 
-        $deleted = DeletedEnum::ONLY->value;
+        $deleted = DeletedEnum::ONLY;
 
         $createdAtFrom = $this->datetimeString();
 
@@ -47,12 +47,14 @@ final class IndexProjectsDtoTest extends TestCase
 
         $orderByField = OrderByFieldEnum::CREATED_AT->value;
 
+        $limit = 2;
+
         $dto = IndexProjectsDto::from([
             'user'            => $user,
             'uuid'            => $project->uuid,
             'title'           => $title,
             'description'     => $description,
-            'deleted'         => $deleted,
+            'deleted'         => $deleted->value,
             'created_at_from' => $createdAtFrom,
             'created_at_to'   => $createdAtTo,
             'updated_at_from' => $updatedAtFrom,
@@ -61,6 +63,7 @@ final class IndexProjectsDtoTest extends TestCase
             'deleted_at_to'   => $deletedAtTo,
             'order_by'        => $orderBy,
             'order_by_field'  => $orderByField,
+            'limit'           => $limit,
         ]);
 
         $this->assertSame(
@@ -127,6 +130,11 @@ final class IndexProjectsDtoTest extends TestCase
             expected: $orderByField,
             actual: $dto->orderByField(),
         );
+
+        $this->assertSame(
+            expected: $limit,
+            actual: $dto->limit(),
+        );
     }
 
     public function testFromMethodCreatesDtoWithNullableParametersBeingNull(): void
@@ -147,12 +155,12 @@ final class IndexProjectsDtoTest extends TestCase
             'deleted_at_to'   => null,
             'order_by'        => null,
             'order_by_field'  => null,
+            'limit'           => null,
         ]);
 
         $this->assertSame(
             expected: $user->uuid,
-            actual: $dto->user->uuid,
-            message: 'dto user should be the same as expected',
+            actual: $dto->userUuid(),
         );
     }
 }

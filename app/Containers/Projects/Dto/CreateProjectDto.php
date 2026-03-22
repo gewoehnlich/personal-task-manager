@@ -10,9 +10,9 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class CreateProjectDto extends Dto
 {
     public function __construct(
-        public readonly User $user,
-        public readonly TitleValue $title,
-        public readonly ?DescriptionValue $description = null,
+        private readonly User $user,
+        private readonly TitleValue $title,
+        private readonly ?DescriptionValue $description = null,
     ) {
         //
     }
