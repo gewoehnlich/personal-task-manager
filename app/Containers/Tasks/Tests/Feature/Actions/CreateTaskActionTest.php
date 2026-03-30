@@ -46,11 +46,11 @@ final class CreateTaskActionTest extends TestCase
         $task = $this->action(
             class: CreateTaskAction::class,
             dto: CreateTaskDto::from([
-                'user' => $user,
-                'title' => $title,
-                'stage' => $stage->value(),
-                'description' => $description,
-                'deadline' => $deadline->value(),
+                'user'         => $user,
+                'title'        => $title,
+                'stage'        => $stage->value(),
+                'description'  => $description,
+                'deadline'     => $deadline->value(),
                 'project_uuid' => $project->uuid,
             ]),
         );

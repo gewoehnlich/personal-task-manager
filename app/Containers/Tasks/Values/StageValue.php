@@ -25,7 +25,7 @@ final readonly class StageValue extends Value
     ): static {
         if ($string === null) {
             throw new RequiredValueIsNotPresentException(
-                entity: static::class,
+                entity: self::class,
             );
         }
 
@@ -39,7 +39,7 @@ final readonly class StageValue extends Value
             );
         }
 
-        return new static(
+        return new self(
             stage: StageEnum::tryFrom(
                 value: $string,
             ),

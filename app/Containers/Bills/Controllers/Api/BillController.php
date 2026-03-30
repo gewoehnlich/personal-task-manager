@@ -11,7 +11,9 @@ use App\Containers\Bills\Requests\DeleteBillRequest;
 use App\Containers\Bills\Requests\IndexBillsRequest;
 use App\Containers\Bills\Requests\UpdateBillRequest;
 use App\Ship\Abstracts\Controllers\ApiController;
+use App\Ship\Abstracts\Exceptions\Exception;
 use App\Ship\Abstracts\Responders\Responder;
+use App\Ship\Abstracts\Responses\Response;
 
 final readonly class BillController extends ApiController
 {
@@ -26,11 +28,21 @@ final readonly class BillController extends ApiController
 
     public function create(
         CreateBillRequest $request,
-    ): Responder {
-        return $this->action(
-            CreateBillAction::class,
-            $request->toDto(),
-        );
+    ): Response {
+        try {
+            $result = $this->action(
+                class: CreateBillAction::class,
+                dto: $request->toDto(),
+            );
+
+            return $this->success(
+                data: $result,
+            );
+        } catch (Exception $exception) {
+            return $this->error(
+                message: $exception->getMessage(),
+            );
+        }
     }
 
     public function update(

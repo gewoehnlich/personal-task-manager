@@ -43,11 +43,11 @@ final class CreateTaskDtoTest extends TestCase
             ->create();
 
         $dto = CreateTaskDto::from([
-            'user' => $user,
-            'title' => $title,
-            'stage' => $stage->value(),
-            'description' => $description,
-            'deadline' => $deadline->value(),
+            'user'         => $user,
+            'title'        => $title,
+            'stage'        => $stage->value(),
+            'description'  => $description,
+            'deadline'     => $deadline->value(),
             'project_uuid' => $project->uuid,
         ]);
 
@@ -93,11 +93,11 @@ final class CreateTaskDtoTest extends TestCase
         );
 
         $dto = CreateTaskDto::from([
-            'user' => $user,
-            'title' => $title,
-            'stage' => $stage->value(),
-            'description' => null,
-            'deadline' => null,
+            'user'         => $user,
+            'title'        => $title,
+            'stage'        => $stage->value(),
+            'description'  => null,
+            'deadline'     => null,
             'project_uuid' => null,
         ]);
 
@@ -144,11 +144,11 @@ final class CreateTaskDtoTest extends TestCase
         );
 
         CreateTaskDto::from([
-            'user' => $user,
-            'title' => $title,
-            'stage' => $stage,
-            'description' => null,
-            'deadline' => null,
+            'user'         => $user,
+            'title'        => $title,
+            'stage'        => $stage,
+            'description'  => null,
+            'deadline'     => null,
             'project_uuid' => null,
         ]);
     }

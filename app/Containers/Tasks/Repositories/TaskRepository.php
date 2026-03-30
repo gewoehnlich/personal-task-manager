@@ -6,13 +6,20 @@ use App\Containers\Tasks\Exceptions\TaskDoesNotBelongToAuthenticatedUserExceptio
 use App\Containers\Tasks\Exceptions\TaskWithThisUuidDoesNotExistException;
 use App\Containers\Tasks\Models\Task;
 use App\Ship\Abstracts\Repositories\Repository;
+use App\Ship\Exceptions\RequiredValueIsNotPresentException;
 use Illuminate\Support\Facades\Auth;
 
 final readonly class TaskRepository extends Repository
 {
     public static function byUuid(
-        string $uuid,
+        ?string $uuid,
     ): Task {
+        if ($uuid === null) {
+            throw new RequiredValueIsNotPresentException(
+                entity: Task::class,
+            );
+        }
+
         /** @var Task|null $task */
         $task = Task::query()
             ->withTrashed()

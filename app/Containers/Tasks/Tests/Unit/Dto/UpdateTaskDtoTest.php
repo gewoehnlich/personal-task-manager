@@ -32,9 +32,9 @@ final class UpdateTaskDtoTest extends TestCase
 
         $description = 'description';
 
-        $deadline = new DeadlineValue(
+        $deadline = (new DeadlineValue(
             carbon: Carbon::now(),
-        )
+        ))
             ->value();
 
         $project = $this->project(

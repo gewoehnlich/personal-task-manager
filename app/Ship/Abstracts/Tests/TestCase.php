@@ -2,6 +2,8 @@
 
 namespace App\Ship\Abstracts\Tests;
 
+use App\Containers\Bills\Models\Bill;
+use App\Containers\Bills\Values\PerformedAtValue;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Repositories\ProjectRepository;
 use App\Containers\Tasks\Enums\StageEnum;
@@ -126,6 +128,22 @@ abstract class TestCase extends BaseTestCase
         }
 
         return Task::factory()
+            ->create($data);
+    }
+
+    public function bill(
+        Task $task,
+        ?PerformedAtValue $performedAt = null,
+    ): Bill {
+        $data = [
+            'task_uuid' => $task->uuid,
+        ];
+
+        if ($performedAt) {
+            $data['performed_at'] = $performedAt->value();
+        }
+
+        return Bill::factory()
             ->create($data);
     }
 
