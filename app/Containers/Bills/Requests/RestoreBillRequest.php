@@ -15,7 +15,7 @@ final class RestoreBillRequest extends Request
     protected function extract(): array
     {
         return [
-            'uuid' => $this->route('uuid', default: null),
+            'uuid'      => $this->route('uuid', default: null),
             'task_uuid' => $this->route('task', default: null),
         ];
     }

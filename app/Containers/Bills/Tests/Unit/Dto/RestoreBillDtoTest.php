@@ -25,7 +25,7 @@ final class RestoreBillDtoTest extends TestCase
         );
 
         $dto = RestoreBillDto::from([
-            'uuid' => $bill->uuid,
+            'uuid'      => $bill->uuid,
             'task_uuid' => $task->uuid,
         ]);
 

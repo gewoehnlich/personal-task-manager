@@ -30,9 +30,9 @@ final class DeleteBillActionTest extends TestCase
         $this->action(
             class: DeleteBillAction::class,
             dto: DeleteBillDto::from([
-                'uuid'  => $bill->uuid,
+                'uuid'      => $bill->uuid,
                 'task_uuid' => $task->uuid,
-                'force' => false, // force is false
+                'force'     => false, // force is false
             ]),
         );
 
@@ -54,9 +54,9 @@ final class DeleteBillActionTest extends TestCase
         $this->action(
             class: DeleteBillAction::class,
             dto: DeleteBillDto::from([
-                'uuid'  => $bill->uuid,
+                'uuid'      => $bill->uuid,
                 'task_uuid' => $task->uuid,
-                'force' => true, // force is true
+                'force'     => true, // force is true
             ]),
         );
 

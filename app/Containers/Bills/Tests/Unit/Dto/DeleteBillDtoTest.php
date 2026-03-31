@@ -27,9 +27,9 @@ final class DeleteBillDtoTest extends TestCase
         $force = false;
 
         $dto = DeleteBillDto::from([
-            'uuid'  => $bill->uuid,
+            'uuid'      => $bill->uuid,
             'task_uuid' => $task->uuid,
-            'force' => $force,
+            'force'     => $force,
         ]);
 
         $this->assertEquals(

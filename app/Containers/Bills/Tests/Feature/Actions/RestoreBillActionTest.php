@@ -33,7 +33,7 @@ final class RestoreBillActionTest extends TestCase
         $this->action(
             class: RestoreBillAction::class,
             dto: RestoreBillDto::from([
-                'uuid' => $bill->uuid,
+                'uuid'      => $bill->uuid,
                 'task_uuid' => $task->uuid,
             ]),
         );
@@ -61,7 +61,7 @@ final class RestoreBillActionTest extends TestCase
         $this->action(
             class: RestoreBillAction::class,
             dto: RestoreBillDto::from([
-                'uuid' => $bill->uuid,
+                'uuid'      => $bill->uuid,
                 'task_uuid' => $task->uuid,
             ]),
         );

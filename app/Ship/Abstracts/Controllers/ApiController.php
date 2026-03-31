@@ -12,9 +12,8 @@ abstract readonly class ApiController extends Controller
     protected function response(
         string $action,
         Request $request,
-    ): Response {
+    ): Response {}
 
-    }
     protected function success(
         mixed $data,
     ): SuccessResponse {
