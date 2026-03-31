@@ -24,7 +24,7 @@ final class CreateBillRequestTest extends TestCase
 
         $request = $this->request(
             class: CreateBillRequest::class,
-            routeName: 'api.v1.tasks.create',
+            routeName: 'api.v1.bills.create',
             method: 'POST',
             parameters: [
                 'description'   => 'description',

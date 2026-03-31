@@ -12,33 +12,12 @@ final class DeleteBillRequest extends Request
         return DeleteBillDto::class;
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
+    protected function extract(): array
     {
         return [
-            'uuid'      => ['required', 'uuid:7'],
-            'user_uuid' => ['required', 'uuid:7'],
-            'task_uuid' => ['required', 'uuid:7'],
-        ];
-    }
-
-    public function after(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
             'uuid'      => $this->route('uuid'),
-            'user_uuid' => $this->user()->uuid,
-            'task_uuid' => $this->route('task_uuid'),
-        ]);
+            'task_uuid' => $this->route('task'),
+            'force'     => $this->input('force', default: false),
+        ];
     }
 }
