@@ -4,8 +4,6 @@ namespace App\Containers\Bills\Requests;
 
 use App\Containers\Bills\Dto\UpdateBillDto;
 use App\Ship\Abstracts\Requests\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Validation\Validator;
 
 final class UpdateBillRequest extends Request
 {
@@ -14,43 +12,14 @@ final class UpdateBillRequest extends Request
         return UpdateBillDto::class;
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
+    protected function extract(): array
     {
         return [
-            'uuid'          => ['required', 'uuid:7'],
-            'user_uuid'     => ['required', 'uuid:7'],
-            'task_uuid'     => ['required', 'uuid:7'],
-            'description'   => ['nullable', 'string', 'max:500'],
-            'minutes_spent' => ['nullable', 'integer', 'max:65535'],
-            'performed_at'  => ['nullable', 'date', 'date_format:Y-m-d H:i:s'],
+            'uuid'          => $this->route('uuid'),
+            'task_uuid'     => $this->route('task'),
+            'description'   => $this->input('description', default: null),
+            'minutes_spent' => $this->input('minutes_spent', default: null),
+            'performed_at'  => $this->input('performed_at', default: null),
         ];
-    }
-
-    public function after(): array
-    {
-        return [
-            function (Validator $validator) {
-                if ($this->performed_at > Carbon::now()) {
-                    $validator->errors()->add(
-                        'performed_at',
-                        'performed_at не должен быть раньше текущего времени.',
-                    );
-                }
-            },
-        ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'uuid'      => $this->route('uuid'),
-            'user_uuid' => $this->user()->uuid,
-            'task_uuid' => $this->route('task_uuid'),
-        ]);
     }
 }
