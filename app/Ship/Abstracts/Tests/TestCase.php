@@ -3,6 +3,7 @@
 namespace App\Ship\Abstracts\Tests;
 
 use App\Containers\Bills\Models\Bill;
+use App\Containers\Bills\Repositories\BillRepository;
 use App\Containers\Bills\Values\PerformedAtValue;
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Repositories\ProjectRepository;
@@ -40,6 +41,8 @@ abstract class TestCase extends BaseTestCase
 
     protected readonly TaskRepository $taskRepository;
 
+    protected readonly BillRepository $billRepository;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -49,6 +52,8 @@ abstract class TestCase extends BaseTestCase
         $this->projectRepository = app(ProjectRepository::class);
 
         $this->taskRepository = app(TaskRepository::class);
+
+        $this->billRepository = app(BillRepository::class);
     }
 
     public function user(): User

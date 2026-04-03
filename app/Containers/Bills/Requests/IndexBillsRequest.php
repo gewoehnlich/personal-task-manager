@@ -12,29 +12,26 @@ final class IndexBillsRequest extends Request
         return IndexBillsDto::class;
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    public function rules(): array
+    protected function extract(): array
     {
         return [
-            'task_uuid' => ['required', 'uuid:7'],
+            'user'              => $this->user(),
+            'uuid'              => $this->input('uuid', default: null),
+            'task_uuid'         => $this->input('task_uuid', default: null),
+            'description'       => $this->input('description', default: null),
+            'minutes_spent'     => $this->input('minutes_spent', default: null),
+            'deleted'           => $this->input('deleted', default: null),
+            'created_at_from'   => $this->input('created_at_from', default: null),
+            'created_at_to'     => $this->input('created_at_to', default: null),
+            'updated_at_from'   => $this->input('updated_at_from', default: null),
+            'updated_at_to'     => $this->input('updated_at_to', default: null),
+            'deleted_at_from'   => $this->input('deleted_at_from', default: null),
+            'deleted_at_to'     => $this->input('deleted_at_to', default: null),
+            'performed_at_from' => $this->input('performed_at_from', default: null),
+            'performed_at_to'   => $this->input('performed_at_to', default: null),
+            'order_by'          => $this->input('order_by', default: null),
+            'order_by_field'    => $this->input('order_by_field', default: null),
+            'limit'             => $this->input('limit', default: null),
         ];
-    }
-
-    public function after(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'task_uuid' => $this->route('task_uuid'),
-        ]);
     }
 }
