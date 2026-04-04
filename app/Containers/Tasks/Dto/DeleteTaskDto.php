@@ -9,20 +9,10 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class DeleteTaskDto extends Dto
 {
     public function __construct(
-        private readonly Task $task,
-        private readonly bool $force,
+        public readonly Task $task,
+        public readonly bool $force,
     ) {
         //
-    }
-
-    public function task(): Task
-    {
-        return $this->task;
-    }
-
-    public function force(): bool
-    {
-        return $this->force;
     }
 
     public static function from(

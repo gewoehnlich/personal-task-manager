@@ -53,37 +53,37 @@ final class UpdateTaskDtoTest extends TestCase
 
         $this->assertSame(
             expected: $task->uuid,
-            actual: $dto->task()->uuid,
+            actual: $dto->task->uuid,
         );
 
         $this->assertSame(
             expected: $user->uuid,
-            actual: $dto->userUuid(),
+            actual: $dto->user->uuid,
         );
 
         $this->assertSame(
             expected: $title,
-            actual: $dto->title(),
+            actual: $dto->title?->value(),
         );
 
         $this->assertSame(
             expected: $stage->value,
-            actual: $dto->stage(),
+            actual: $dto->stage?->value(),
         );
 
         $this->assertSame(
             expected: $description,
-            actual: $dto->description(),
+            actual: $dto->description?->value(),
         );
 
         $this->assertSame(
             expected: $deadline,
-            actual: $dto->deadline(),
+            actual: $dto->deadline?->value(),
         );
 
         $this->assertSame(
             expected: $project->uuid,
-            actual: $dto->projectUuid(),
+            actual: $dto->project?->uuid,
         );
     }
 

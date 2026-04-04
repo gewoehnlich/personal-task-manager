@@ -53,32 +53,32 @@ final class CreateTaskDtoTest extends TestCase
 
         $this->assertEquals(
             expected: $user->uuid,
-            actual: $dto->userUuid(),
+            actual: $dto->user->uuid,
         );
 
         $this->assertEquals(
             expected: $title,
-            actual: $dto->title(),
+            actual: $dto->title->value(),
         );
 
         $this->assertEquals(
             expected: $stage->value(),
-            actual: $dto->stage(),
+            actual: $dto->stage->value(),
         );
 
         $this->assertEquals(
             expected: $description,
-            actual: $dto->description(),
+            actual: $dto->description?->value(),
         );
 
         $this->assertEquals(
             expected: $deadline->value(),
-            actual: $dto->deadline(),
+            actual: $dto->deadline?->value(),
         );
 
         $this->assertEquals(
             expected: $project->uuid,
-            actual: $dto->projectUuid(),
+            actual: $dto->project?->uuid,
         );
     }
 
@@ -103,32 +103,32 @@ final class CreateTaskDtoTest extends TestCase
 
         $this->assertEquals(
             expected: $user->uuid,
-            actual: $dto->userUuid(),
+            actual: $dto->user->uuid,
         );
 
         $this->assertEquals(
             expected: $title,
-            actual: $dto->title(),
+            actual: $dto->title->value(),
         );
 
         $this->assertEquals(
             expected: $stage->value(),
-            actual: $dto->stage(),
+            actual: $dto->stage->value(),
         );
 
         $this->assertEquals(
             expected: null,
-            actual: $dto->description(),
+            actual: $dto->description?->value(),
         );
 
         $this->assertEquals(
             expected: null,
-            actual: $dto->deadline(),
+            actual: $dto->deadline?->value(),
         );
 
         $this->assertEquals(
             expected: null,
-            actual: $dto->projectUuid(),
+            actual: $dto->project?->value(),
         );
     }
 

@@ -28,7 +28,7 @@ final class RestoreTaskDtoTest extends TestCase
 
         $this->assertSame(
             expected: $task->uuid,
-            actual: $dto->task()->uuid,
+            actual: $dto->task->uuid,
         );
     }
 }

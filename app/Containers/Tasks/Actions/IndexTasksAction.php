@@ -15,74 +15,74 @@ final readonly class IndexTasksAction extends Action
     ): Collection {
         $query = Task::query();
 
-        $query = $query->where('user_uuid', $dto->userUuid());
+        $query = $query->where('user_uuid', $dto->user->uuid);
 
-        if ($dto->taskUuid() !== null) {
-            $query = $query->where('uuid', $dto->taskUuid());
+        if ($dto->task) {
+            $query = $query->where('uuid', $dto->task->uuid);
         }
 
-        if ($dto->title() !== null) {
-            $query = $query->where('title', $dto->title());
+        if ($dto->title) {
+            $query = $query->where('title', $dto->title?->value());
         }
 
-        if ($dto->description() !== null) {
-            $query = $query->where('description', $dto->description());
+        if ($dto->description) {
+            $query = $query->where('description', $dto->description?->value());
         }
 
-        if ($dto->stage() !== null) {
-            $query = $query->where('stage', $dto->stage());
+        if ($dto->stage) {
+            $query = $query->where('stage', $dto->stage?->value());
         }
 
-        if ($dto->projectUuid() !== null) {
-            $query = $query->where('project_uuid', $dto->projectUuid());
+        if ($dto->project) {
+            $query = $query->where('project_uuid', $dto->project?->uuid);
         }
 
-        if ($dto->createdAtFrom() !== null) {
-            $query = $query->where('created_at', '>=', $dto->createdAtFrom());
+        if ($dto->createdAtFrom) {
+            $query = $query->where('created_at', '>=', $dto->createdAtFrom?->value());
         }
 
-        if ($dto->createdAtTo() !== null) {
-            $query = $query->where('created_at', '<=', $dto->createdAtTo());
+        if ($dto->createdAtTo) {
+            $query = $query->where('created_at', '<=', $dto->createdAtTo?->value());
         }
 
-        if ($dto->updatedAtFrom() !== null) {
-            $query = $query->where('updated_at', '>=', $dto->updatedAtFrom());
+        if ($dto->updatedAtFrom) {
+            $query = $query->where('updated_at', '>=', $dto->updatedAtFrom?->value());
         }
 
-        if ($dto->updatedAtTo() !== null) {
-            $query = $query->where('updated_at', '<=', $dto->updatedAtTo());
+        if ($dto->updatedAtTo) {
+            $query = $query->where('updated_at', '<=', $dto->updatedAtTo?->value());
         }
 
-        if ($dto->deletedAtFrom() !== null) {
-            $query = $query->where('deleted_at', '>=', $dto->deletedAtFrom());
+        if ($dto->deletedAtFrom) {
+            $query = $query->where('deleted_at', '>=', $dto->deletedAtFrom?->value());
         }
 
-        if ($dto->deletedAtTo() !== null) {
-            $query = $query->where('deleted_at', '<=', $dto->deletedAtTo());
+        if ($dto->deletedAtTo) {
+            $query = $query->where('deleted_at', '<=', $dto->deletedAtTo?->value());
         }
 
-        if ($dto->deadlineFrom() !== null) {
-            $query = $query->where('deadline', '>=', $dto->deadlineFrom());
+        if ($dto->deadlineFrom) {
+            $query = $query->where('deadline', '>=', $dto->deadlineFrom?->value());
         }
 
-        if ($dto->deadlineTo() !== null) {
-            $query = $query->where('deadline', '<=', $dto->deadlineTo());
+        if ($dto->deadlineTo) {
+            $query = $query->where('deadline', '<=', $dto->deadlineTo?->value());
         }
 
-        if ($dto->orderBy() !== null) {
-            $query = $query->orderBy($dto->orderByField() ?? 'updated_at', $dto->orderBy());
+        if ($dto->orderBy) {
+            $query = $query->orderBy($dto->orderByField?->value ?? 'updated_at', $dto->orderBy->value);
         }
 
-        if ($dto->deleted()) {
-            match ($dto->deleted()) {
+        if ($dto->deleted) {
+            match ($dto->deleted) {
                 DeletedEnum::WITHOUT => $query,
                 DeletedEnum::WITH    => $query = $query->withTrashed(),
                 DeletedEnum::ONLY    => $query = $query->onlyTrashed(),
             };
         }
 
-        if ($dto->limit() !== null) {
-            $query = $query->limit($dto->limit());
+        if ($dto->limit) {
+            $query = $query->limit($dto->limit);
         }
 
         return $query->get();

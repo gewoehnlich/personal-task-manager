@@ -53,9 +53,9 @@ final class IndexTasksDtoTest extends TestCase
 
         $deadlineTo = $this->datetimeString();
 
-        $orderBy = OrderByEnum::ASC->value;
+        $orderBy = OrderByEnum::ASC;
 
-        $orderByField = OrderByFieldEnum::CREATED_AT->value;
+        $orderByField = OrderByFieldEnum::CREATED_AT;
 
         $deleted = DeletedEnum::ONLY;
 
@@ -76,100 +76,100 @@ final class IndexTasksDtoTest extends TestCase
             'deleted_at_to'   => $deletedAtTo,
             'deadline_from'   => $deadlineFrom,
             'deadline_to'     => $deadlineTo,
-            'order_by'        => $orderBy,
-            'order_by_field'  => $orderByField,
+            'order_by'        => $orderBy->value,
+            'order_by_field'  => $orderByField->value,
             'deleted'         => $deleted->value,
             'limit'           => $limit,
         ]);
 
         $this->assertSame(
             expected: $user->uuid,
-            actual: $dto->userUuid(),
+            actual: $dto->user->uuid,
         );
 
         $this->assertSame(
             expected: $task->uuid,
-            actual: $dto->taskUuid(),
+            actual: $dto->task?->uuid,
         );
 
         $this->assertSame(
             expected: $title,
-            actual: $dto->title(),
+            actual: $dto->title?->value()
         );
 
         $this->assertSame(
             expected: $project->uuid,
-            actual: $dto->projectUuid(),
+            actual: $dto->project?->uuid,
         );
 
         $this->assertSame(
             expected: $description,
-            actual: $dto->description(),
+            actual: $dto->description?->value(),
         );
 
         $this->assertSame(
             expected: $stage->value,
-            actual: $dto->stage(),
+            actual: $dto->stage?->value(),
         );
 
         $this->assertSame(
             expected: $createdAtFrom,
-            actual: $dto->createdAtFrom(),
+            actual: $dto->createdAtFrom?->value(),
         );
 
         $this->assertSame(
             expected: $createdAtTo,
-            actual: $dto->createdAtTo(),
+            actual: $dto->createdAtTo?->value(),
         );
 
         $this->assertSame(
             expected: $updatedAtFrom,
-            actual: $dto->updatedAtFrom(),
+            actual: $dto->updatedAtFrom?->value(),
         );
 
         $this->assertSame(
             expected: $updatedAtTo,
-            actual: $dto->updatedAtTo(),
+            actual: $dto->updatedAtTo?->value(),
         );
 
         $this->assertSame(
             expected: $deletedAtFrom,
-            actual: $dto->deletedAtFrom(),
+            actual: $dto->deletedAtFrom?->value(),
         );
 
         $this->assertSame(
             expected: $deletedAtTo,
-            actual: $dto->deletedAtTo(),
+            actual: $dto->deletedAtTo?->value(),
         );
 
         $this->assertSame(
             expected: $deadlineFrom,
-            actual: $dto->deadlineFrom(),
+            actual: $dto->deadlineFrom?->value(),
         );
 
         $this->assertSame(
             expected: $deadlineTo,
-            actual: $dto->deadlineTo(),
+            actual: $dto->deadlineTo?->value(),
         );
 
         $this->assertSame(
             expected: $orderBy,
-            actual: $dto->orderBy(),
+            actual: $dto->orderBy,
         );
 
         $this->assertSame(
             expected: $orderByField,
-            actual: $dto->orderByField(),
+            actual: $dto->orderByField,
         );
 
         $this->assertSame(
             expected: $deleted,
-            actual: $dto->deleted(),
+            actual: $dto->deleted,
         );
 
         $this->assertSame(
             expected: $limit,
-            actual: $dto->limit(),
+            actual: $dto->limit,
         );
     }
 
@@ -200,8 +200,7 @@ final class IndexTasksDtoTest extends TestCase
 
         $this->assertSame(
             expected: $user->uuid,
-            actual: $dto->userUuid(),
-            message: 'dto user should be the same as expected',
+            actual: $dto->user->uuid,
         );
     }
 }

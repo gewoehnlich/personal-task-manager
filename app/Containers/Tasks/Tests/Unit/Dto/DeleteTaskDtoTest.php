@@ -31,12 +31,12 @@ final class DeleteTaskDtoTest extends TestCase
 
         $this->assertEquals(
             expected: $task->uuid,
-            actual: $dto->task()->uuid,
+            actual: $dto->task->uuid,
         );
 
         $this->assertEquals(
             expected: $force,
-            actual: $dto->force(),
+            actual: $dto->force,
         );
     }
 }

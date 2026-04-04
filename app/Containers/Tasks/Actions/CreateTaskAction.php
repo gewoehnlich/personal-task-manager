@@ -13,12 +13,12 @@ final readonly class CreateTaskAction extends Action
     ): Task {
         return Task::create(
             attributes: [
-                'user_uuid'    => $dto->userUuid(),
-                'title'        => $dto->title(),
-                'stage'        => $dto->stage(),
-                'description'  => $dto->description(),
-                'deadline'     => $dto->deadline(),
-                'project_uuid' => $dto->projectUuid(),
+                'user_uuid'    => $dto->user->uuid,
+                'title'        => $dto->title->value(),
+                'stage'        => $dto->stage->value(),
+                'description'  => $dto->description?->value(),
+                'deadline'     => $dto->deadline?->value(),
+                'project_uuid' => $dto->project?->uuid,
             ],
         );
     }

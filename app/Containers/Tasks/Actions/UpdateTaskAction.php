@@ -10,12 +10,12 @@ final readonly class UpdateTaskAction extends Action
     public function run(
         UpdateTaskDto $dto,
     ): bool {
-        return $dto->task()->update([
-            'title'        => $dto->title(),
-            'stage'        => $dto->stage(),
-            'description'  => $dto->description(),
-            'deadline'     => $dto->deadline(),
-            'project_uuid' => $dto->projectUuid(),
+        return $dto->task->update([
+            'title'        => $dto->title->value(),
+            'stage'        => $dto->stage->value(),
+            'description'  => $dto->description?->value(),
+            'deadline'     => $dto->deadline?->value(),
+            'project_uuid' => $dto->project?->uuid,
         ]);
     }
 }
