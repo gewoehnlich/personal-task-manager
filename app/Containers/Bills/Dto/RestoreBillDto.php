@@ -9,14 +9,9 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class RestoreBillDto extends Dto
 {
     public function __construct(
-        private readonly Bill $bill,
+        public readonly Bill $bill,
     ) {
         //
-    }
-
-    public function bill(): Bill
-    {
-        return $this->bill;
     }
 
     public static function from(

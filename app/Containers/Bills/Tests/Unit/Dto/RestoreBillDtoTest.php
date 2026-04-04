@@ -31,7 +31,7 @@ final class RestoreBillDtoTest extends TestCase
 
         $this->assertSame(
             expected: $bill->uuid,
-            actual: $dto->bill()->uuid,
+            actual: $dto->bill->uuid,
         );
     }
 }

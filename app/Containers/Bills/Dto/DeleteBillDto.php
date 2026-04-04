@@ -9,20 +9,10 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class DeleteBillDto extends Dto
 {
     public function __construct(
-        private readonly Bill $bill,
-        private readonly bool $force,
+        public readonly Bill $bill,
+        public readonly bool $force,
     ) {
         //
-    }
-
-    public function bill(): Bill
-    {
-        return $this->bill;
-    }
-
-    public function force(): bool
-    {
-        return $this->force;
     }
 
     public static function from(

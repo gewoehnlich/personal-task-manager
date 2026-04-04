@@ -19,7 +19,7 @@ abstract readonly class IntegerValue extends Value
         $this->validate();
     }
 
-    public function value(): string
+    public function value(): int
     {
         return $this->integer;
     }

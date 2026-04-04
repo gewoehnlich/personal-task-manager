@@ -10,10 +10,10 @@ final readonly class DeleteBillAction extends Action
     public function run(
         DeleteBillDto $dto,
     ): bool {
-        if ($dto->force() === true) {
-            return $dto->bill()->forceDelete();
+        if ($dto->force === true) {
+            return $dto->bill->forceDelete();
         }
 
-        return $dto->bill()->delete();
+        return $dto->bill->delete();
     }
 }

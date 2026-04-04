@@ -21,110 +21,25 @@ use App\Ship\Values\UpdatedAtValue;
 final readonly class IndexBillsDto extends Dto
 {
     public function __construct(
-        private readonly User $user,
-        private readonly ?Bill $bill = null,
-        private readonly ?Task $task = null,
-        private readonly ?DescriptionValue $description = null,
-        private readonly ?MinutesSpentValue $minutesSpent = null,
-        private readonly ?DeletedEnum $deleted = null,
-        private readonly ?CreatedAtValue $createdAtFrom = null,
-        private readonly ?CreatedAtValue $createdAtTo = null,
-        private readonly ?UpdatedAtValue $updatedAtFrom = null,
-        private readonly ?UpdatedAtValue $updatedAtTo = null,
-        private readonly ?DeletedAtValue $deletedAtFrom = null,
-        private readonly ?DeletedAtValue $deletedAtTo = null,
-        private readonly ?PerformedAtValue $performedAtFrom = null,
-        private readonly ?PerformedAtValue $performedAtTo = null,
-        private readonly ?OrderByEnum $orderBy = null,
-        private readonly ?OrderByFieldEnum $orderByField = null,
-        private readonly ?int $limit = null,
+        public readonly User $user,
+        public readonly ?Bill $bill = null,
+        public readonly ?Task $task = null,
+        public readonly ?DescriptionValue $description = null,
+        public readonly ?MinutesSpentValue $minutesSpent = null,
+        public readonly ?DeletedEnum $deleted = null,
+        public readonly ?CreatedAtValue $createdAtFrom = null,
+        public readonly ?CreatedAtValue $createdAtTo = null,
+        public readonly ?UpdatedAtValue $updatedAtFrom = null,
+        public readonly ?UpdatedAtValue $updatedAtTo = null,
+        public readonly ?DeletedAtValue $deletedAtFrom = null,
+        public readonly ?DeletedAtValue $deletedAtTo = null,
+        public readonly ?PerformedAtValue $performedAtFrom = null,
+        public readonly ?PerformedAtValue $performedAtTo = null,
+        public readonly ?OrderByEnum $orderBy = null,
+        public readonly ?OrderByFieldEnum $orderByField = null,
+        public readonly ?int $limit = null,
     ) {
         //
-    }
-
-    public function userUuid(): string
-    {
-        return $this->user->uuid;
-    }
-
-    public function billUuid(): ?string
-    {
-        return $this->bill?->uuid;
-    }
-
-    public function taskUuid(): ?string
-    {
-        return $this->task?->uuid;
-    }
-
-    public function description(): ?string
-    {
-        return $this->description?->value();
-    }
-
-    public function minutesSpent(): ?int
-    {
-        return $this->minutesSpent?->value();
-    }
-
-    public function deleted(): ?DeletedEnum
-    {
-        return $this->deleted;
-    }
-
-    public function createdAtFrom(): ?string
-    {
-        return $this->createdAtFrom?->value();
-    }
-
-    public function createdAtTo(): ?string
-    {
-        return $this->createdAtTo?->value();
-    }
-
-    public function updatedAtFrom(): ?string
-    {
-        return $this->updatedAtFrom?->value();
-    }
-
-    public function updatedAtTo(): ?string
-    {
-        return $this->updatedAtTo?->value();
-    }
-
-    public function deletedAtFrom(): ?string
-    {
-        return $this->deletedAtFrom?->value();
-    }
-
-    public function deletedAtTo(): ?string
-    {
-        return $this->deletedAtTo?->value();
-    }
-
-    public function performedAtFrom(): ?string
-    {
-        return $this->performedAtFrom?->value();
-    }
-
-    public function performedAtTo(): ?string
-    {
-        return $this->performedAtTo?->value();
-    }
-
-    public function orderBy(): ?string
-    {
-        return $this->orderBy?->value;
-    }
-
-    public function orderByField(): ?string
-    {
-        return $this->orderByField?->value;
-    }
-
-    public function limit(): ?int
-    {
-        return $this->limit;
     }
 
     public static function from(

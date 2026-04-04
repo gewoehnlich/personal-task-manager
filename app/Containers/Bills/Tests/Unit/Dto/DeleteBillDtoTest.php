@@ -34,12 +34,12 @@ final class DeleteBillDtoTest extends TestCase
 
         $this->assertEquals(
             expected: $bill->uuid,
-            actual: $dto->bill()->uuid,
+            actual: $dto->bill->uuid,
         );
 
         $this->assertEquals(
             expected: $force,
-            actual: $dto->force(),
+            actual: $dto->force,
         );
     }
 }

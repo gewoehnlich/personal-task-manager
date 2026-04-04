@@ -12,32 +12,12 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class CreateBillDto extends Dto
 {
     public function __construct(
-        private readonly Task $task,
-        private readonly ?DescriptionValue $description = null,
-        private readonly ?MinutesSpentValue $minutesSpent = null,
-        private readonly ?PerformedAtValue $performedAt = null,
+        public readonly Task $task,
+        public readonly ?DescriptionValue $description = null,
+        public readonly ?MinutesSpentValue $minutesSpent = null,
+        public readonly ?PerformedAtValue $performedAt = null,
     ) {
         //
-    }
-
-    public function taskUuid(): string
-    {
-        return $this->task->uuid;
-    }
-
-    public function description(): ?string
-    {
-        return $this->description?->value();
-    }
-
-    public function minutesSpent(): ?int
-    {
-        return $this->minutesSpent?->value();
-    }
-
-    public function performedAt(): ?string
-    {
-        return $this->performedAt?->value();
     }
 
     public static function from(

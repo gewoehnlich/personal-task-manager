@@ -12,10 +12,10 @@ final readonly class CreateBillAction extends Action
         CreateBillDto $dto,
     ): Bill {
         return Bill::create([
-            'task_uuid'     => $dto->taskUuid(),
-            'description'   => $dto->description(),
-            'minutes_spent' => $dto->minutesSpent(),
-            'performed_at'  => $dto->performedAt(),
+            'task_uuid'     => $dto->task->uuid,
+            'description'   => $dto->description?->value(),
+            'minutes_spent' => $dto->minutesSpent?->value(),
+            'performed_at'  => $dto->performedAt?->value(),
         ]);
     }
 }

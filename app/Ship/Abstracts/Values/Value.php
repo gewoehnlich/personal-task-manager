@@ -8,5 +8,5 @@ abstract readonly class Value
 {
     use Validatable;
 
-    abstract public function value(): string;
+    abstract public function value();
 }

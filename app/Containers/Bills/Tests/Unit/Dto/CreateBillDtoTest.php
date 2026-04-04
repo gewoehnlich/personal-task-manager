@@ -42,22 +42,22 @@ final class CreateBillDtoTest extends TestCase
 
         $this->assertEquals(
             expected: $task->uuid,
-            actual: $dto->taskUuid(),
+            actual: $dto->task->uuid,
         );
 
         $this->assertEquals(
             expected: $description,
-            actual: $dto->description(),
+            actual: $dto->description?->value(),
         );
 
         $this->assertEquals(
             expected: $minutesSpent,
-            actual: $dto->minutesSpent(),
+            actual: $dto->minutesSpent?->value(),
         );
 
         $this->assertEquals(
             expected: $performedAt->value(),
-            actual: $dto->performedAt(),
+            actual: $dto->performedAt?->value(),
         );
     }
 
@@ -76,22 +76,22 @@ final class CreateBillDtoTest extends TestCase
 
         $this->assertEquals(
             expected: $task->uuid,
-            actual: $dto->taskUuid(),
+            actual: $dto->task->uuid,
         );
 
         $this->assertEquals(
             expected: null,
-            actual: $dto->description(),
+            actual: $dto->description?->value(),
         );
 
         $this->assertEquals(
             expected: null,
-            actual: $dto->minutesSpent(),
+            actual: $dto->minutesSpent?->value(),
         );
 
         $this->assertEquals(
             expected: null,
-            actual: $dto->performedAt(),
+            actual: $dto->performedAt?->value(),
         );
     }
 

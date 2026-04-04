@@ -11,12 +11,12 @@ final readonly class RestoreBillAction extends Action
     public function run(
         RestoreBillDto $dto,
     ): bool {
-        if ($dto->bill()->trashed() === false) {
+        if ($dto->bill->trashed() === false) {
             throw new BillIsNotSoftDeletedException(
-                uuid: $dto->bill()->uuid,
+                uuid: $dto->bill->uuid,
             );
         }
 
-        return $dto->bill()->restore();
+        return $dto->bill->restore();
     }
 }
