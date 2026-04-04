@@ -9,12 +9,12 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'reorder-task', draggedId: number, targetId: number): void;
+    (e: 'reorder-task', draggedUuid: string, targetUuid: string): void;
     (e: 'task-clicked', task: TaskType): void;
 }>();
 
 function handleDragStart(event: DragEvent) {
-    event.dataTransfer?.setData('task-id', String(props.task.id));
+    event.dataTransfer?.setData('task-uuid', String(props.task.uuid));
 }
 
 function handleDragOver(event: DragEvent) {
@@ -22,32 +22,30 @@ function handleDragOver(event: DragEvent) {
 }
 
 function handleDrop(event: DragEvent) {
-    const draggedId = parseInt(
-        event.dataTransfer?.getData('task-id') || '',
-        10,
-    );
-    const targetId = props.task.id;
-    if (!isNaN(draggedId)) {
-        emit('reorder-task', draggedId, targetId);
-    }
+    const draggedUuid = String(event.dataTransfer?.getData('task-uuid'));
+
+    const targetUuid = props.task.uuid;
+
+    emit('reorder-task', draggedUuid, targetUuid);
 }
 
-function openTask() {
+function handleClick(): void {
     emit('task-clicked', props.task);
 }
 </script>
 
 <template>
     <Card
-        id="task"
+        :id="`${task.uuid}`"
         class="px-4 py-3 break-words"
+        entity="task"
         v-border-at-hover
         v-shadow-at-hover
         draggable="true"
         @dragstart="handleDragStart"
         @dragover="handleDragOver"
         @drop="handleDrop"
-        @click="openTask"
+        @click="handleClick"
     >
         <h2 class="text-lg font-bold leading-[1]">
             {{ task.title }}

@@ -28,28 +28,44 @@ function filterTasksByStage(
     );
 }
 
-function handleTaskDrop(taskId: number, newStage: string) {
-    const task = tasks.value.find((task) => task.id === taskId);
+function handleTaskDrop(
+    taskUuid: string,
+    stage: string,
+): void {
+    const task: TaskType = tasks.value.find((task) => task.uuid === taskUuid);
 
     if (task) {
-        task.stage = newStage;
-        router.put(`/tasks/${task.id}`, task);
+        task.stage = stage;
+
+        router.put(`/tasks/${task.uuid}`, task);
     }
 }
 
-function handleCreateTask(task: Omit<TaskType, 'id'>): void {
+function handleCreateTask(task: Omit<TaskType, 'uuid'>): void {
     router.post('/tasks', task);
 }
 
-function handleTaskReorder(draggedId: number, targetId: number) {
-    const draggedTask = tasks.value.find((task) => task.id === draggedId);
+function handleUpdateTask(task: Omit<TaskType, 'uuid'>): void {
+    router.put(`/tasks/${task.uuid}`, task);
+}
 
-    const targetTask = tasks.value.find((task) => task.id === targetId);
+function handleDeleteTask(task: Omit<TaskType, 'uuid'>): void {
+    router.delete(`/tasks/${task.uuid}`);
+}
+
+function handleTaskReorder(
+    draggedUuid: string,
+    targetUuid: string,
+): void {
+    const draggedTask = tasks.value.find((task) => task.uuid === draggedUuid);
+
+    const targetTask = tasks.value.find((task) => task.uuid === targetUuid);
 
     if (!draggedTask || !targetTask) return;
 
     draggedTask.stage = targetTask.stage;
-    router.put(`/tasks/${draggedTask.id}`, draggedTask);
+
+    router.put(`/tasks/${draggedTask.uuid}`, draggedTask);
 }
 
 function openTaskModal(task: TaskType) {
@@ -60,13 +76,6 @@ function closeTaskModal() {
     selectedTask.value = null;
 }
 
-function handleUpdateTask(task: Omit<TaskType, 'id'>): void {
-    router.put(`/tasks/${task.id}`, task);
-}
-
-function handleDeleteTask(task: Omit<TaskType, 'id'>): void {
-    router.delete(`/tasks/${task.id}`);
-}
 </script>
 
 <template>

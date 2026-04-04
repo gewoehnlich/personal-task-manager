@@ -12,9 +12,9 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'task-drop', taskId: number, newStatus: string): void;
-    (e: 'create-task', task: Omit<TaskType, 'id'>): void;
-    (e: 'reorder-task', draggedId: number, targetId: number): void;
+    (e: 'task-drop', taskUuid: string, stage: string): void;
+    (e: 'create-task', task: Omit<TaskType, 'uuid'>): void;
+    (e: 'reorder-task', draggedUuid: string, targetUuid: string): void;
     (e: 'task-clicked', task: TaskType): void;
 }>();
 
@@ -22,10 +22,9 @@ const showForm = ref(false);
 const length = computed(() => props.tasks.length);
 
 function handleDrop(event: DragEvent) {
-    const taskId = parseInt(event.dataTransfer?.getData('task-id') || '', 10);
-    if (!isNaN(taskId)) {
-        emit('task-drop', taskId, props.title);
-    }
+    const taskUuid: string = String(event.dataTransfer?.getData('task-id'));
+
+    emit('task-drop', taskUuid, props.title);
 }
 
 function handleTaskFormSubmit(task: {
@@ -40,6 +39,19 @@ function handleTaskFormSubmit(task: {
 
     showForm.value = false;
 }
+
+function handleReorderTasks(
+    draggedUuid: string,
+    targetUuid: string,
+): void {
+    emit('reorder-task', draggedUuid, targetUuid);
+}
+
+function handleTaskClick(
+    task: TaskType,
+): void {
+    emit('task-clicked', task);
+}
 </script>
 
 <template>
@@ -52,13 +64,21 @@ function handleTaskFormSubmit(task: {
             @dragover.prevent
             @drop="handleDrop"
         >
-            <StageHeader :title="title" :length="length" />
+            <StageHeader
+                :title="title"
+                :length="length"
+            />
 
-            <ButtonBlack @click="showForm = !showForm">
+            <ButtonBlack
+                @click="showForm = !showForm"
+            >
                 ADD A NEW TASK
             </ButtonBlack>
 
-            <TaskCreate v-if="showForm" @submit="handleTaskFormSubmit" />
+            <TaskCreate
+                v-if="showForm"
+                @submit="handleTaskFormSubmit"
+            />
 
             <div
                 id="tasks"
@@ -66,13 +86,10 @@ function handleTaskFormSubmit(task: {
             >
                 <Task
                     v-for="task in tasks"
-                    :key="task.id"
+                    :key="task.uuid"
                     :task="task"
-                    @reorder-task="
-                        (draggedId, targetId) =>
-                            emit('reorder-task', draggedId, targetId)
-                    "
-                    @task-clicked="(task) => emit('task-clicked', task)"
+                    @reorder-task="handleReorderTasks"
+                    @task-clicked="handleTaskClick"
                 />
             </div>
         </div>

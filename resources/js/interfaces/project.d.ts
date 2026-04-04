@@ -1,9 +1,8 @@
-export interface Bill {
+export interface Project {
     uuid: string;
-    task_uuid: string;
+    user_uuid: string;
+    title: string;
     description: string;
-    minutes_spent: number;
-    performed_at: Date;
     created_at: Date;
     updated_at: Date;
     deleted_at: Date;
