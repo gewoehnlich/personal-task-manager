@@ -11,12 +11,12 @@ final readonly class RestoreProjectAction extends Action
     public function run(
         RestoreProjectDto $dto,
     ): bool {
-        if ($dto->project()->trashed() === false) {
+        if ($dto->project->trashed() === false) {
             throw new ProjectIsNotSoftDeletedException(
-                uuid: $dto->project()->uuid,
+                uuid: $dto->project->uuid,
             );
         }
 
-        return $dto->project()->restore();
+        return $dto->project->restore();
     }
 }

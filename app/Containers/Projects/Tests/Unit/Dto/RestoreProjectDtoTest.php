@@ -28,7 +28,7 @@ final class RestoreProjectDtoTest extends TestCase
 
         $this->assertSame(
             expected: $project->uuid,
-            actual: $dto->project()->uuid,
+            actual: $dto->project->uuid,
         );
     }
 }

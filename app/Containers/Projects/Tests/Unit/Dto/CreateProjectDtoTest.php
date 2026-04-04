@@ -31,20 +31,17 @@ final class CreateProjectDtoTest extends TestCase
 
         $this->assertSame(
             expected: $user->uuid,
-            actual: $dto->userUuid(),
-            message: 'userUuid should be the same',
+            actual: $dto->user->uuid,
         );
 
         $this->assertSame(
             expected: $title,
-            actual: $dto->title(),
-            message: 'title should be the same',
+            actual: $dto->title->value(),
         );
 
         $this->assertSame(
             expected: $description,
-            actual: $dto->description(),
-            message: 'description should be the same',
+            actual: $dto->description?->value(),
         );
     }
 

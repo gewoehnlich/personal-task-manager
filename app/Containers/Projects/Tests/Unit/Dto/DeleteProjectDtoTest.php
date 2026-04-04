@@ -31,12 +31,12 @@ final class DeleteProjectDtoTest extends TestCase
 
         $this->assertEquals(
             expected: $project->uuid,
-            actual: $dto->project()->uuid,
+            actual: $dto->project->uuid,
         );
 
         $this->assertEquals(
             expected: $force,
-            actual: $dto->force(),
+            actual: $dto->force,
         );
     }
 }

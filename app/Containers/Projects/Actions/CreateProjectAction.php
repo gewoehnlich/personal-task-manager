@@ -13,9 +13,9 @@ final readonly class CreateProjectAction extends Action
     ): Project {
         return Project::create(
             attributes: [
-                'user_uuid'   => $dto->userUuid(),
-                'title'       => $dto->title(),
-                'description' => $dto->description(),
+                'user_uuid'   => $dto->user->uuid,
+                'title'       => $dto->title->value(),
+                'description' => $dto->description?->value(),
             ],
         );
     }

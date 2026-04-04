@@ -18,92 +18,22 @@ use App\Ship\Values\UpdatedAtValue;
 final readonly class IndexProjectsDto extends Dto
 {
     public function __construct(
-        private readonly User $user,
-        private readonly ?Project $project = null,
-        private readonly ?TitleValue $title = null,
-        private readonly ?DescriptionValue $description = null,
-        private readonly ?DeletedEnum $deleted = null,
-        private readonly ?CreatedAtValue $createdAtFrom = null,
-        private readonly ?CreatedAtValue $createdAtTo = null,
-        private readonly ?UpdatedAtValue $updatedAtFrom = null,
-        private readonly ?UpdatedAtValue $updatedAtTo = null,
-        private readonly ?DeletedAtValue $deletedAtFrom = null,
-        private readonly ?DeletedAtValue $deletedAtTo = null,
-        private readonly ?OrderByEnum $orderBy = null,
-        private readonly ?OrderByFieldEnum $orderByField = null,
-        private readonly ?int $limit = null,
+        public readonly User $user,
+        public readonly ?Project $project = null,
+        public readonly ?TitleValue $title = null,
+        public readonly ?DescriptionValue $description = null,
+        public readonly ?DeletedEnum $deleted = null,
+        public readonly ?CreatedAtValue $createdAtFrom = null,
+        public readonly ?CreatedAtValue $createdAtTo = null,
+        public readonly ?UpdatedAtValue $updatedAtFrom = null,
+        public readonly ?UpdatedAtValue $updatedAtTo = null,
+        public readonly ?DeletedAtValue $deletedAtFrom = null,
+        public readonly ?DeletedAtValue $deletedAtTo = null,
+        public readonly ?OrderByEnum $orderBy = null,
+        public readonly ?OrderByFieldEnum $orderByField = null,
+        public readonly ?int $limit = null,
     ) {
         //
-    }
-
-    public function userUuid(): string
-    {
-        return $this->user->uuid;
-    }
-
-    public function projectUuid(): ?string
-    {
-        return $this->project?->uuid;
-    }
-
-    public function title(): ?string
-    {
-        return $this->title?->value();
-    }
-
-    public function description(): ?string
-    {
-        return $this->description?->value();
-    }
-
-    public function deleted(): ?DeletedEnum
-    {
-        return $this->deleted;
-    }
-
-    public function createdAtFrom(): ?string
-    {
-        return $this->createdAtFrom?->value();
-    }
-
-    public function createdAtTo(): ?string
-    {
-        return $this->createdAtTo?->value();
-    }
-
-    public function updatedAtFrom(): ?string
-    {
-        return $this->updatedAtFrom?->value();
-    }
-
-    public function updatedAtTo(): ?string
-    {
-        return $this->updatedAtTo?->value();
-    }
-
-    public function deletedAtFrom(): ?string
-    {
-        return $this->deletedAtFrom?->value();
-    }
-
-    public function deletedAtTo(): ?string
-    {
-        return $this->deletedAtTo?->value();
-    }
-
-    public function orderBy(): ?string
-    {
-        return $this->orderBy?->value;
-    }
-
-    public function orderByField(): ?string
-    {
-        return $this->orderByField?->value;
-    }
-
-    public function limit(): ?int
-    {
-        return $this->limit;
     }
 
     public static function from(

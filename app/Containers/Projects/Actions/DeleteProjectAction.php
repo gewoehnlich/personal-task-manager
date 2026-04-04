@@ -10,10 +10,10 @@ final readonly class DeleteProjectAction extends Action
     public function run(
         DeleteProjectDto $dto,
     ): bool {
-        if ($dto->force() === true) {
-            return $dto->project()->forceDelete();
+        if ($dto->force === true) {
+            return $dto->project->forceDelete();
         }
 
-        return $dto->project()->delete();
+        return $dto->project->delete();
     }
 }

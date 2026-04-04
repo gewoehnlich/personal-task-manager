@@ -9,14 +9,9 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class RestoreProjectDto extends Dto
 {
     public function __construct(
-        private readonly Project $project,
+        public readonly Project $project,
     ) {
         //
-    }
-
-    public function project(): Project
-    {
-        return $this->project;
     }
 
     public static function from(

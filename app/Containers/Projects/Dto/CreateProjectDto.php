@@ -10,26 +10,11 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class CreateProjectDto extends Dto
 {
     public function __construct(
-        private readonly User $user,
-        private readonly TitleValue $title,
-        private readonly ?DescriptionValue $description = null,
+        public readonly User $user,
+        public readonly TitleValue $title,
+        public readonly ?DescriptionValue $description = null,
     ) {
         //
-    }
-
-    public function userUuid(): string
-    {
-        return $this->user->uuid;
-    }
-
-    public function title(): string
-    {
-        return $this->title->value();
-    }
-
-    public function description(): ?string
-    {
-        return $this->description?->value();
     }
 
     public static function from(

@@ -11,26 +11,11 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class UpdateProjectDto extends Dto
 {
     public function __construct(
-        private readonly Project $project,
-        private readonly TitleValue $title,
-        private readonly ?DescriptionValue $description = null,
+        public readonly Project $project,
+        public readonly TitleValue $title,
+        public readonly ?DescriptionValue $description = null,
     ) {
         //
-    }
-
-    public function project(): Project
-    {
-        return $this->project;
-    }
-
-    public function title(): string
-    {
-        return $this->title->string;
-    }
-
-    public function description(): ?string
-    {
-        return $this->description?->string;
     }
 
     public static function from(

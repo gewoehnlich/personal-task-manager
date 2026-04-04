@@ -9,20 +9,10 @@ use App\Ship\Abstracts\Dto\Dto;
 final readonly class DeleteProjectDto extends Dto
 {
     public function __construct(
-        private readonly Project $project,
-        private readonly bool $force,
+        public readonly Project $project,
+        public readonly bool $force,
     ) {
         //
-    }
-
-    public function project(): Project
-    {
-        return $this->project;
-    }
-
-    public function force(): bool
-    {
-        return $this->force;
     }
 
     public static function from(

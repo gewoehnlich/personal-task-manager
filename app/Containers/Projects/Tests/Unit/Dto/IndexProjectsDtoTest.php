@@ -43,9 +43,9 @@ final class IndexProjectsDtoTest extends TestCase
 
         $deletedAtTo = $this->datetimeString();
 
-        $orderBy = OrderByEnum::ASC->value;
+        $orderBy = OrderByEnum::ASC;
 
-        $orderByField = OrderByFieldEnum::CREATED_AT->value;
+        $orderByField = OrderByFieldEnum::CREATED_AT;
 
         $limit = 2;
 
@@ -61,79 +61,79 @@ final class IndexProjectsDtoTest extends TestCase
             'updated_at_to'   => $updatedAtTo,
             'deleted_at_from' => $deletedAtFrom,
             'deleted_at_to'   => $deletedAtTo,
-            'order_by'        => $orderBy,
-            'order_by_field'  => $orderByField,
+            'order_by'        => $orderBy->value,
+            'order_by_field'  => $orderByField->value,
             'limit'           => $limit,
         ]);
 
         $this->assertSame(
             expected: $user->uuid,
-            actual: $dto->userUuid(),
+            actual: $dto->user->uuid,
         );
 
         $this->assertSame(
             expected: $project->uuid,
-            actual: $dto->projectUuid(),
+            actual: $dto->project?->uuid,
         );
 
         $this->assertSame(
             expected: $title,
-            actual: $dto->title(),
+            actual: $dto->title?->value(),
         );
 
         $this->assertSame(
             expected: $description,
-            actual: $dto->description(),
+            actual: $dto->description?->value(),
         );
 
         $this->assertSame(
             expected: $deleted,
-            actual: $dto->deleted(),
+            actual: $dto->deleted,
         );
 
         $this->assertSame(
             expected: $createdAtFrom,
-            actual: $dto->createdAtFrom(),
+            actual: $dto->createdAtFrom?->value(),
         );
 
         $this->assertSame(
             expected: $createdAtTo,
-            actual: $dto->createdAtTo(),
+            actual: $dto->createdAtTo?->value(),
         );
 
         $this->assertSame(
             expected: $updatedAtFrom,
-            actual: $dto->updatedAtFrom(),
+            actual: $dto->updatedAtFrom?->value(),
         );
 
         $this->assertSame(
             expected: $updatedAtTo,
-            actual: $dto->updatedAtTo(),
+            actual: $dto->updatedAtTo?->value(),
         );
 
         $this->assertSame(
             expected: $deletedAtFrom,
-            actual: $dto->deletedAtFrom(),
+            actual: $dto->deletedAtFrom?->value(),
         );
 
         $this->assertSame(
             expected: $deletedAtTo,
-            actual: $dto->deletedAtTo(),
+            actual: $dto->deletedAtTo?->value(),
         );
 
         $this->assertSame(
             expected: $orderBy,
-            actual: $dto->orderBy(),
+            actual: $dto->orderBy,
         );
 
         $this->assertSame(
             expected: $orderByField,
-            actual: $dto->orderByField(),
+            actual: $dto->orderByField,
         );
 
         $this->assertSame(
             expected: $limit,
-            actual: $dto->limit(),
+            actual: $dto->limit,
         );
     }
 
@@ -160,7 +160,7 @@ final class IndexProjectsDtoTest extends TestCase
 
         $this->assertSame(
             expected: $user->uuid,
-            actual: $dto->userUuid(),
+            actual: $dto->user->uuid,
         );
     }
 }
