@@ -13,7 +13,6 @@ use App\Containers\Projects\Requests\IndexProjectsRequest;
 use App\Containers\Projects\Requests\RestoreProjectRequest;
 use App\Containers\Projects\Requests\UpdateProjectRequest;
 use App\Ship\Abstracts\Controllers\ApiController;
-use App\Ship\Abstracts\Exceptions\Exception;
 use App\Ship\Abstracts\Responses\Response;
 
 final readonly class ProjectController extends ApiController
@@ -21,95 +20,45 @@ final readonly class ProjectController extends ApiController
     public function index(
         IndexProjectsRequest $request,
     ): Response {
-        try {
-            $result = $this->action(
-                class: IndexProjectsAction::class,
-                dto: $request->toDto(),
-            );
-
-            return $this->success(
-                data: $result,
-            );
-        } catch (Exception $exception) {
-            return $this->error(
-                message: $exception->getMessage(),
-            );
-        }
+        return $this->response(
+            action: IndexProjectsAction::class,
+            request: $request,
+        );
     }
 
     public function create(
         CreateProjectRequest $request,
     ): Response {
-        try {
-            $result = $this->action(
-                class: CreateProjectAction::class,
-                dto: $request->toDto(),
-            );
-
-            return $this->success(
-                data: $result,
-            );
-        } catch (Exception $exception) {
-            return $this->error(
-                message: $exception->getMessage(),
-            );
-        }
+        return $this->response(
+            action: CreateProjectAction::class,
+            request: $request,
+        );
     }
 
     public function update(
         UpdateProjectRequest $request,
     ): Response {
-        try {
-            $result = $this->action(
-                class: UpdateProjectAction::class,
-                dto: $request->toDto(),
-            );
-
-            return $this->success(
-                data: $result,
-            );
-        } catch (Exception $exception) {
-            return $this->error(
-                message: $exception->getMessage(),
-            );
-        }
+        return $this->response(
+            action: UpdateProjectAction::class,
+            request: $request,
+        );
     }
 
     public function delete(
         DeleteProjectRequest $request,
     ): Response {
-        try {
-            $result = $this->action(
-                class: DeleteProjectAction::class,
-                dto: $request->toDto(),
-            );
-
-            return $this->success(
-                data: $result,
-            );
-        } catch (Exception $exception) {
-            return $this->error(
-                message: $exception->getMessage(),
-            );
-        }
+        return $this->response(
+            action: DeleteProjectAction::class,
+            request: $request,
+        );
     }
 
     public function restore(
         RestoreProjectRequest $request,
     ): Response {
-        try {
-            $result = $this->action(
-                class: RestoreProjectAction::class,
-                dto: $request->toDto(),
-            );
-
-            return $this->success(
-                data: $result,
-            );
-        } catch (Exception $exception) {
-            return $this->error(
-                message: $exception->getMessage(),
-            );
-        }
+        return $this->response(
+            action: RestoreProjectAction::class,
+            request: $request,
+        );
     }
 }
