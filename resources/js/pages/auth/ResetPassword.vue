@@ -50,7 +50,10 @@ const submit = () => {
                         class="mt-1 block w-full"
                         readonly
                     />
-                    <InputError :message="form.errors.email" class="mt-2" />
+                    <InputError
+                        :message="form.errors.email"
+                        class="mt-2"
+                    />
                 </div>
 
                 <div class="grid gap-2">

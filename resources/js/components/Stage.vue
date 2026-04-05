@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { TaskType } from '@/types/task';
 import { computed, ref } from 'vue';
-import Task from './Task.vue';
-import TaskCreate from './TaskCreate.vue';
 import ButtonBlack from './ButtonBlack.vue';
 import StageHeader from './StageHeader.vue';
+import Task from './Task.vue';
+import TaskCreate from './TaskCreate.vue';
 
 const props = defineProps<{
     title: string;
@@ -40,23 +40,18 @@ function handleTaskFormSubmit(task: {
     showForm.value = false;
 }
 
-function handleReorderTasks(
-    draggedUuid: string,
-    targetUuid: string,
-): void {
+function handleReorderTasks(draggedUuid: string, targetUuid: string): void {
     emit('reorder-task', draggedUuid, targetUuid);
 }
 
-function handleTaskClick(
-    task: TaskType,
-): void {
+function handleTaskClick(task: TaskType): void {
     emit('task-clicked', task);
 }
 </script>
 
 <template>
     <div
-        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl min-w-[245px] max-w-[296px] flex-grow flex-1"
+        class="border-sidebar-border/70 dark:border-sidebar-border max-w-[296px] min-w-[245px] flex-1 flex-grow overflow-hidden rounded-xl"
     >
         <div
             id="stage"
@@ -69,9 +64,7 @@ function handleTaskClick(
                 :length="length"
             />
 
-            <ButtonBlack
-                @click="showForm = !showForm"
-            >
+            <ButtonBlack @click="showForm = !showForm">
                 ADD A NEW TASK
             </ButtonBlack>
 
@@ -82,7 +75,7 @@ function handleTaskClick(
 
             <div
                 id="tasks"
-                class="overflow-y-auto flex flex-col gap-1 h-full"
+                class="flex h-full flex-col gap-1 overflow-y-auto"
             >
                 <Task
                     v-for="task in tasks"

@@ -3,9 +3,7 @@ import { Button } from '@/components/ui/button';
 </script>
 
 <template>
-    <Button
-        class="bg-accent/60 mt-4 w-full shadow-accent shadow-xl/30"
-    >
+    <Button class="bg-accent/60 shadow-accent mt-4 w-full shadow-xl/30">
         <slot />
     </Button>
 </template>

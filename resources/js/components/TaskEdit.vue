@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { TaskType } from '@/types/task';
-import { computed, reactive, ref, watch, nextTick, onMounted } from 'vue';
+import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
 import Deadline from './Deadline.vue';
-import Card from './ui/card/Card.vue';
 import Button from './ui/button/Button.vue';
+import Card from './ui/card/Card.vue';
 
 const props = defineProps<{
     task: TaskType;
@@ -53,78 +53,81 @@ const description = ref(null);
 const title = ref(null);
 
 function autoResize(): void {
-    const descriptionElement = description.value
+    const descriptionElement = description.value;
     if (!descriptionElement) {
-      return;
+        return;
     }
 
-    descriptionElement.style.height = 'auto'
-    descriptionElement.style.height = descriptionElement.scrollHeight + 'px'
+    descriptionElement.style.height = 'auto';
+    descriptionElement.style.height = descriptionElement.scrollHeight + 'px';
 
-    const titleElement = title.value
+    const titleElement = title.value;
     if (!titleElement) {
-      return;
+        return;
     }
 
-    titleElement.style.height = 'auto'
-    titleElement.style.height = titleElement.scrollHeight + 'px'
+    titleElement.style.height = 'auto';
+    titleElement.style.height = titleElement.scrollHeight + 'px';
 }
 
 onMounted(() => {
-    autoResize()
-})
+    autoResize();
+});
 
-watch(() => editableTask.description, async () => {
-    await nextTick()
-    autoResize()
-})
+watch(
+    () => editableTask.description,
+    async () => {
+        await nextTick();
+        autoResize();
+    },
+);
 
-watch(() => editableTask.title, async () => {
-    await nextTick()
-    autoResize()
-})
-
+watch(
+    () => editableTask.title,
+    async () => {
+        await nextTick();
+        autoResize();
+    },
+);
 </script>
 
 <template>
     <div
-        class="fixed inset-0 flex items-center justify-center bg-card/70 backdrop-blur-sm"
+        class="bg-card/70 fixed inset-0 flex items-center justify-center backdrop-blur-sm"
         @click="$emit('close')"
         entity="task-edit"
     >
         <Card
-            class="max-h-[90vh] max-w-md space-y-4 overflow-y-auto p-6 border border-accent shadow-accent shadow-2xl/100"
+            class="border-accent shadow-accent max-h-[90vh] max-w-md space-y-4 overflow-y-auto border p-6 shadow-2xl/100"
             @click.stop
         >
             <div>
                 <textarea
                     ref="title"
                     v-model="editableTask.title"
-                    class="break-words w-full resize-none overflow-hidden text-2xl/[20px] font-bold focus:outline-none"
+                    class="w-full resize-none overflow-hidden text-2xl/[20px] font-bold break-words focus:outline-none"
                     autocomplete="off"
                     autocorrect="off"
                     spellcheck="false"
                     maxlength="100"
                 />
 
-                <p class="text-xs text-muted-foreground">
+                <p class="text-muted-foreground text-xs">
                     Task UUID: {{ task.uuid }}
                 </p>
 
-                <p class="text-xs text-muted-foreground">
+                <p class="text-muted-foreground text-xs">
                     User UUID: {{ task.user_uuid }}
                 </p>
             </div>
 
             <div>
-                <p class="text-xs text-muted-foreground">
-                    Description:
-                </p>
+                <p class="text-muted-foreground text-xs">Description:</p>
 
                 <textarea
                     ref="description"
                     v-model="editableTask.description"
-                    class="break-words w-full focus:ring-none focus:outline-none text-sm/[18px] overflow-hidden resize-none"
+                    class="focus:ring-none w-full resize-none overflow-hidden text-sm/[18px] break-words focus:outline-none"
                     autocomplete="off"
                     autocorrect="off"
                     spellcheck="false"
@@ -133,9 +136,7 @@ watch(() => editableTask.title, async () => {
             </div>
 
             <div>
-                <p class="text-xs text-muted-foreground">
-                    Bills:
-                </p>
+                <p class="text-muted-foreground text-xs">Bills:</p>
 
                 <ul class="bg-card text-sm">
                     <li
@@ -147,12 +148,12 @@ watch(() => editableTask.title, async () => {
                         <input
                             v-model="bill.description"
                             class="focus:ring-none focus:outline-none"
-                        ></input>
+                        />
 
                         <input
                             v-model="bill.minutes_spent"
-                            class="text-right tabular-nums min-w max-w-[4ch] focus:ring-none focus:outline-none"
-                        ></input>
+                            class="min-w focus:ring-none max-w-[4ch] text-right tabular-nums focus:outline-none"
+                        />
 
                         <span>minutes</span>
                     </li>
@@ -168,13 +169,11 @@ watch(() => editableTask.title, async () => {
             <div>
                 <div class="flex flex-wrap justify-center gap-4">
                     <div class="flex-1">
-                        <p class="text-muted-foreground text-xs mb-1">
-                            Stage:
-                        </p>
+                        <p class="text-muted-foreground mb-1 text-xs">Stage:</p>
 
                         <select
                             v-model="editableTask.stage"
-                            class="bg-muted w-full rounded-lg focus:ring-none focus:outline-none text-sm p-1.5 h-8"
+                            class="bg-muted focus:ring-none h-8 w-full rounded-lg p-1.5 text-sm focus:outline-none"
                         >
                             <option value="pending">Pending</option>
                             <option value="active">Active</option>
@@ -184,7 +183,7 @@ watch(() => editableTask.title, async () => {
                     </div>
 
                     <div class="min-w-[140px] flex-1">
-                        <p class="mb-1 text-xs text-muted-foreground">
+                        <p class="text-muted-foreground mb-1 text-xs">
                             Deadline:
                         </p>
 
@@ -193,10 +192,10 @@ watch(() => editableTask.title, async () => {
                 </div>
 
                 <div class="py-2">
-                    <div class="border-t border-muted"></div>
+                    <div class="border-muted border-t"></div>
                 </div>
 
-                <div class="text-xs text-muted-foreground">
+                <div class="text-muted-foreground text-xs">
                     <p>Created at: {{ task.created_at }}</p>
                     <p>Updated at: {{ task.updated_at }}</p>
                 </div>

@@ -14,24 +14,16 @@ const selectedTask = ref<TaskType | null>(null);
 
 const tasks = computed(() => page.props.tasks || []);
 
-const pending = filterTasksByStage(tasks, "pending");
-const active  = filterTasksByStage(tasks, "active");
-const done    = filterTasksByStage(tasks, "done");
-const deleted = filterTasksByStage(tasks, "deleted");
+const pending = filterTasksByStage(tasks, 'pending');
+const active = filterTasksByStage(tasks, 'active');
+const done = filterTasksByStage(tasks, 'done');
+const deleted = filterTasksByStage(tasks, 'deleted');
 
-function filterTasksByStage(
-    tasks: Ref<TaskType[]>,
-    stage: string,
-) {
-    return tasks.value.filter(
-        (task) => task.stage === stage
-    );
+function filterTasksByStage(tasks: Ref<TaskType[]>, stage: string) {
+    return tasks.value.filter((task) => task.stage === stage);
 }
 
-function handleTaskDrop(
-    taskUuid: string,
-    stage: string,
-): void {
+function handleTaskDrop(taskUuid: string, stage: string): void {
     const task: TaskType = tasks.value.find((task) => task.uuid === taskUuid);
 
     if (task) {
@@ -41,31 +33,26 @@ function handleTaskDrop(
     }
 }
 
-function handleCreateTask(
-    task: Omit<TaskType, 'uuid'>,
-): void {
+function handleCreateTask(task: Omit<TaskType, 'uuid'>): void {
     router.post('/tasks', task);
 }
 
-function handleUpdateTask(
-    task: Omit<TaskType, 'uuid'>,
-): void {
+function handleUpdateTask(task: Omit<TaskType, 'uuid'>): void {
     router.put(`/tasks/${task.uuid}`, task);
 }
 
-function handleDeleteTask(
-    task: Omit<TaskType, 'uuid'>,
-): void {
+function handleDeleteTask(task: Omit<TaskType, 'uuid'>): void {
     router.delete(`/tasks/${task.uuid}`);
 }
 
-function handleTaskReorder(
-    draggedUuid: string,
-    targetUuid: string,
-): void {
-    const draggedTask: TaskType = tasks.value.find((task) => task.uuid === draggedUuid);
+function handleTaskReorder(draggedUuid: string, targetUuid: string): void {
+    const draggedTask: TaskType = tasks.value.find(
+        (task) => task.uuid === draggedUuid,
+    );
 
-    const targetTask: TaskType = tasks.value.find((task) => task.uuid === targetUuid);
+    const targetTask: TaskType = tasks.value.find(
+        (task) => task.uuid === targetUuid,
+    );
 
     if (!draggedTask || !targetTask) return;
 
@@ -74,16 +61,13 @@ function handleTaskReorder(
     router.put(`/tasks/${draggedTask.uuid}`, draggedTask);
 }
 
-function openTaskModal(
-    task: TaskType,
-): void {
+function openTaskModal(task: TaskType): void {
     selectedTask.value = task;
 }
 
 function closeTaskModal(): void {
     selectedTask.value = null;
 }
-
 </script>
 
 <template>

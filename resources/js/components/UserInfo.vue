@@ -32,8 +32,10 @@ function getInitials(fullName?: string): string {
 
     <div class="grid flex-1 text-left text-sm leading-tight">
         <span class="truncate font-medium">{{ user.name }}</span>
-        <span v-if="props.showEmail" class="text-muted-foreground truncate text-xs bg-muted">{{
-            user.email
-        }}</span>
+        <span
+            v-if="props.showEmail"
+            class="text-muted-foreground bg-muted truncate text-xs"
+            >{{ user.email }}</span
+        >
     </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { TaskType } from '@/types/task';
 import { vBorderAtHover } from '@/directives/vBorderAtHover';
 import { vShadowAtHover } from '@/directives/vShadowAtHover';
+import { TaskType } from '@/types/task';
 import Card from './ui/card/Card.vue';
 
 const props = defineProps<{
@@ -47,7 +47,7 @@ function handleClick(): void {
         @drop="handleDrop"
         @click="handleClick"
     >
-        <h2 class="text-lg font-bold leading-[1]">
+        <h2 class="text-lg leading-[1] font-bold">
             {{ task.title }}
         </h2>
     </Card>

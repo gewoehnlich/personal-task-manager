@@ -2,7 +2,6 @@
 import ButtonBeige from '@/components/ButtonBeige.vue';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
-import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -42,7 +41,10 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit" class="flex flex-col gap-6">
+        <form
+            @submit.prevent="submit"
+            class="flex flex-col gap-6"
+        >
             <div class="grid gap-6">
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
@@ -84,7 +86,10 @@ const submit = () => {
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <Label for="remember" class="flex items-center space-x-3">
+                    <Label
+                        for="remember"
+                        class="flex items-center space-x-3"
+                    >
                         <Checkbox
                             id="remember"
                             v-model="form.remember"
@@ -109,7 +114,9 @@ const submit = () => {
 
             <div class="text-muted-foreground text-center text-sm">
                 Don't have an account?
-                <TextLink :href="route('register')" :tabindex="5"
+                <TextLink
+                    :href="route('register')"
+                    :tabindex="5"
                     >Sign up</TextLink
                 >
             </div>

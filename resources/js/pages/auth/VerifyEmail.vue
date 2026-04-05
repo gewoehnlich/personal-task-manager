@@ -31,8 +31,14 @@ const submit = () => {
             provided during registration.
         </div>
 
-        <form @submit.prevent="submit" class="space-y-6 text-center">
-            <Button :disabled="form.processing" variant="secondary">
+        <form
+            @submit.prevent="submit"
+            class="space-y-6 text-center"
+        >
+            <Button
+                :disabled="form.processing"
+                variant="secondary"
+            >
                 <LoaderCircle
                     v-if="form.processing"
                     class="h-4 w-4 animate-spin"

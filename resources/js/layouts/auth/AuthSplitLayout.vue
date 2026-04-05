@@ -27,7 +27,10 @@ defineProps<{
                 <AppLogoIcon class="mr-2 size-8 fill-current text-white" />
                 {{ name }}
             </Link>
-            <div v-if="quote" class="relative z-20 mt-auto">
+            <div
+                v-if="quote"
+                class="relative z-20 mt-auto"
+            >
                 <blockquote class="space-y-2">
                     <p class="text-lg">&ldquo;{{ quote.message }}&rdquo;</p>
                     <footer class="text-sm text-neutral-300">
@@ -41,10 +44,16 @@ defineProps<{
                 class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]"
             >
                 <div class="flex flex-col space-y-2 text-center">
-                    <h1 class="text-xl font-medium tracking-tight" v-if="title">
+                    <h1
+                        class="text-xl font-medium tracking-tight"
+                        v-if="title"
+                    >
                         {{ title }}
                     </h1>
-                    <p class="text-muted-foreground text-sm" v-if="description">
+                    <p
+                        class="text-muted-foreground text-sm"
+                        v-if="description"
+                    >
                         {{ description }}
                     </p>
                 </div>
