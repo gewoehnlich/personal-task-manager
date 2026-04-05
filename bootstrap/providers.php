@@ -2,6 +2,7 @@
 
 use App\Containers\Auth\Providers\AuthServiceProvider;
 use App\Containers\Bills\Providers\BillServiceProvider;
+use App\Containers\Dashboard\Providers\DashboardServiceProvider;
 use App\Containers\Projects\Providers\ProjectServiceProvider;
 use App\Containers\Settings\Providers\SettingsServiceProvider;
 use App\Containers\Tasks\Providers\TaskServiceProvider;
@@ -12,6 +13,7 @@ return [
     AppServiceProvider::class,
     AuthServiceProvider::class,
     BillServiceProvider::class,
+    DashboardServiceProvider::class,
     ProjectServiceProvider::class,
     SettingsServiceProvider::class,
     TaskServiceProvider::class,

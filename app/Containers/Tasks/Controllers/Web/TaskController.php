@@ -16,17 +16,6 @@ use Illuminate\Support\Facades\Redirect;
 
 final readonly class TaskController extends WebController
 {
-    public function index(
-        IndexTasksRequest $request,
-    ): RedirectResponse {
-        $this->action(
-            IndexTasksAction::class,
-            $request->toDto(),
-        );
-
-        return Redirect::back();
-    }
-
     public function create(
         CreateTaskRequest $request,
     ): RedirectResponse {
@@ -46,6 +35,7 @@ final readonly class TaskController extends WebController
             $request->toDto(),
         );
 
+        // return redirect()->route('dashboard')->with('success', 'task updated');
         return Redirect::back();
     }
 
