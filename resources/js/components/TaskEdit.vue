@@ -50,24 +50,38 @@ function deleteTask() {
 }
 
 const description = ref(null);
+const title = ref(null);
 
-function autoResize() {
-  const el = description.value
-  if (!el) {
+function autoResize(): void {
+    const descriptionElement = description.value
+    if (!descriptionElement) {
       return;
-  }
+    }
 
-  el.style.height = 'auto'
-  el.style.height = el.scrollHeight + 'px'
+    descriptionElement.style.height = 'auto'
+    descriptionElement.style.height = descriptionElement.scrollHeight + 'px'
+
+    const titleElement = title.value
+    if (!titleElement) {
+      return;
+    }
+
+    titleElement.style.height = 'auto'
+    titleElement.style.height = titleElement.scrollHeight + 'px'
 }
 
 onMounted(() => {
-  autoResize()
+    autoResize()
 })
 
 watch(() => editableTask.description, async () => {
-  await nextTick()
-  autoResize()
+    await nextTick()
+    autoResize()
+})
+
+watch(() => editableTask.title, async () => {
+    await nextTick()
+    autoResize()
 })
 
 </script>
@@ -75,26 +89,30 @@ watch(() => editableTask.description, async () => {
 <template>
     <div
         class="fixed inset-0 flex items-center justify-center bg-card/70 backdrop-blur-sm"
+        @click="$emit('close')"
+        entity="task-edit"
     >
         <Card
             class="max-h-[90vh] max-w-md space-y-4 overflow-y-auto p-6 border border-accent shadow-accent shadow-2xl/100"
+            @click.stop
         >
             <div>
-                <div class="flex items-start justify-between text-2xl gap-1 font-bold">
-                    <input
-                        v-model="editableTask.title"
-                        class="grow-1 font-bold focus:ring-none focus:outline-none truncate"
-                    />
-                    <button
-                        @click="$emit('close')"
-                        class="text-muted-foreground hover:text-destructive transition grow-0 w-8"
-                    >
-                        &times;
-                    </button>
-                </div>
+                <textarea
+                    ref="title"
+                    v-model="editableTask.title"
+                    class="break-words w-full resize-none overflow-hidden text-2xl/[20px] font-bold focus:outline-none"
+                    autocomplete="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    maxlength="100"
+                />
 
                 <p class="text-xs text-muted-foreground">
-                    Task ID: {{ task.id }} | User ID: {{ task.user_id }}
+                    Task UUID: {{ task.uuid }}
+                </p>
+
+                <p class="text-xs text-muted-foreground">
+                    User UUID: {{ task.user_uuid }}
                 </p>
             </div>
 
@@ -110,6 +128,7 @@ watch(() => editableTask.description, async () => {
                     autocomplete="off"
                     autocorrect="off"
                     spellcheck="false"
+                    maxlength="500"
                 ></textarea>
             </div>
 
@@ -122,7 +141,7 @@ watch(() => editableTask.description, async () => {
                     <li
                         v-if="editableTask.bills.length !== 0"
                         v-for="bill in editableTask.bills"
-                        :key="bill.id"
+                        :key="bill.uuid"
                         class="grid grid-cols-[1fr_auto_auto] gap-1 text-xs"
                     >
                         <input
@@ -131,7 +150,7 @@ watch(() => editableTask.description, async () => {
                         ></input>
 
                         <input
-                            v-model="bill.time_spent"
+                            v-model="bill.minutes_spent"
                             class="text-right tabular-nums min-w max-w-[4ch] focus:ring-none focus:outline-none"
                         ></input>
 

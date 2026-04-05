@@ -56,7 +56,7 @@ function handleTaskClick(
 
 <template>
     <div
-        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl min-w-[200px] max-w-2xs flex-grow flex-1"
+        class="border-sidebar-border/70 dark:border-sidebar-border overflow-hidden rounded-xl min-w-[245px] max-w-[296px] flex-grow flex-1"
     >
         <div
             id="stage"

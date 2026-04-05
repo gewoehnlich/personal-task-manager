@@ -41,15 +41,21 @@ function handleTaskDrop(
     }
 }
 
-function handleCreateTask(task: Omit<TaskType, 'uuid'>): void {
+function handleCreateTask(
+    task: Omit<TaskType, 'uuid'>,
+): void {
     router.post('/tasks', task);
 }
 
-function handleUpdateTask(task: Omit<TaskType, 'uuid'>): void {
+function handleUpdateTask(
+    task: Omit<TaskType, 'uuid'>,
+): void {
     router.put(`/tasks/${task.uuid}`, task);
 }
 
-function handleDeleteTask(task: Omit<TaskType, 'uuid'>): void {
+function handleDeleteTask(
+    task: Omit<TaskType, 'uuid'>,
+): void {
     router.delete(`/tasks/${task.uuid}`);
 }
 
@@ -57,9 +63,9 @@ function handleTaskReorder(
     draggedUuid: string,
     targetUuid: string,
 ): void {
-    const draggedTask = tasks.value.find((task) => task.uuid === draggedUuid);
+    const draggedTask: TaskType = tasks.value.find((task) => task.uuid === draggedUuid);
 
-    const targetTask = tasks.value.find((task) => task.uuid === targetUuid);
+    const targetTask: TaskType = tasks.value.find((task) => task.uuid === targetUuid);
 
     if (!draggedTask || !targetTask) return;
 
@@ -68,18 +74,23 @@ function handleTaskReorder(
     router.put(`/tasks/${draggedTask.uuid}`, draggedTask);
 }
 
-function openTaskModal(task: TaskType) {
+function openTaskModal(
+    task: TaskType,
+): void {
     selectedTask.value = task;
 }
 
-function closeTaskModal() {
+function closeTaskModal(): void {
     selectedTask.value = null;
 }
 
 </script>
 
 <template>
-    <div id="kanban" class="flex h-full gap-2">
+    <div
+        id="kanban"
+        class="flex h-full gap-2"
+    >
         <Stage
             title="PENDING"
             :tasks="pending"
