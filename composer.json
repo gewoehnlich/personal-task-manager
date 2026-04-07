@@ -19,7 +19,6 @@
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^4.1",
         "barryvdh/laravel-ide-helper": "^3.7",
         "brianium/paratest": "^7.19",
         "fakerphp/faker": "^1.23",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35a3c0d4b972438d9a3edad924ea7d6e",
+    "content-hash": "adf95b7dd741039e0634678e3e897b55",
     "packages": [
         {
             "name": "brick/math",
@@ -1189,16 +1189,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "4675331c428c0f77b2539684835c5e0fd27ee023"
+                "reference": "25fe835d0fadf988d2cd8974d4a7b64048f84eda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/4675331c428c0f77b2539684835c5e0fd27ee023",
-                "reference": "4675331c428c0f77b2539684835c5e0fd27ee023",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/25fe835d0fadf988d2cd8974d4a7b64048f84eda",
+                "reference": "25fe835d0fadf988d2cd8974d4a7b64048f84eda",
                 "shasum": ""
             },
             "require": {
@@ -1256,9 +1256,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v3.0.1"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v3.0.2"
             },
-            "time": "2026-03-25T21:07:46+00:00"
+            "time": "2026-04-07T14:00:22+00:00"
         },
         {
             "name": "knuckleswtf/scribe",
@@ -1355,16 +1355,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v13.3.0",
+            "version": "v13.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "118b7063c44a2f3421d1646f5ddf08defcfd1db3"
+                "reference": "912de244f88a69742b76e8a2807f6765947776da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/118b7063c44a2f3421d1646f5ddf08defcfd1db3",
-                "reference": "118b7063c44a2f3421d1646f5ddf08defcfd1db3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/912de244f88a69742b76e8a2807f6765947776da",
+                "reference": "912de244f88a69742b76e8a2807f6765947776da",
                 "shasum": ""
             },
             "require": {
@@ -1573,7 +1573,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-01T15:39:53+00:00"
+            "time": "2026-04-07T13:38:26+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -1699,16 +1699,16 @@
         },
         {
             "name": "laravel/serializable-closure",
-            "version": "v2.0.10",
+            "version": "v2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/serializable-closure.git",
-                "reference": "870fc81d2f879903dfc5b60bf8a0f94a1609e669"
+                "reference": "d1af40ac4a6ccc12bd062a7184f63c9995a63bdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/870fc81d2f879903dfc5b60bf8a0f94a1609e669",
-                "reference": "870fc81d2f879903dfc5b60bf8a0f94a1609e669",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/d1af40ac4a6ccc12bd062a7184f63c9995a63bdd",
+                "reference": "d1af40ac4a6ccc12bd062a7184f63c9995a63bdd",
                 "shasum": ""
             },
             "require": {
@@ -1756,7 +1756,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
-            "time": "2026-02-20T19:59:49+00:00"
+            "time": "2026-04-07T13:32:18+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2544,16 +2544,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "3.11.3",
+            "version": "3.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CarbonPHP/carbon.git",
-                "reference": "6a7e652845bb018c668220c2a545aded8594fbbf"
+                "reference": "e890471a3494740f7d9326d72ce6a8c559ffee60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/6a7e652845bb018c668220c2a545aded8594fbbf",
-                "reference": "6a7e652845bb018c668220c2a545aded8594fbbf",
+                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/e890471a3494740f7d9326d72ce6a8c559ffee60",
+                "reference": "e890471a3494740f7d9326d72ce6a8c559ffee60",
                 "shasum": ""
             },
             "require": {
@@ -2645,7 +2645,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-11T17:23:39+00:00"
+            "time": "2026-04-07T09:57:54+00:00"
         },
         {
             "name": "nette/schema",
@@ -2865,16 +2865,16 @@
         },
         {
             "name": "nunomaduro/collision",
-            "version": "v8.9.2",
+            "version": "v8.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/collision.git",
-                "reference": "6eb16883e74fd725ac64dbe81544c961ab448ba5"
+                "reference": "b0d8ab95b29c3189aeeb902d81215231df4c1b64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/6eb16883e74fd725ac64dbe81544c961ab448ba5",
-                "reference": "6eb16883e74fd725ac64dbe81544c961ab448ba5",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/b0d8ab95b29c3189aeeb902d81215231df4c1b64",
+                "reference": "b0d8ab95b29c3189aeeb902d81215231df4c1b64",
                 "shasum": ""
             },
             "require": {
@@ -2957,7 +2957,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2026-03-31T21:51:27+00:00"
+            "time": "2026-04-06T19:25:53+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -6802,105 +6802,6 @@
     ],
     "packages-dev": [
         {
-            "name": "barryvdh/laravel-debugbar",
-            "version": "v4.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fruitcake/laravel-debugbar.git",
-                "reference": "3c70910acfb35850b9304278b4af97fecb1128f4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fruitcake/laravel-debugbar/zipball/3c70910acfb35850b9304278b4af97fecb1128f4",
-                "reference": "3c70910acfb35850b9304278b4af97fecb1128f4",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/routing": "^11|^12|^13.0",
-                "illuminate/session": "^11|^12|^13.0",
-                "illuminate/support": "^11|^12|^13.0",
-                "php": "^8.2",
-                "php-debugbar/php-debugbar": "^3.7",
-                "php-debugbar/symfony-bridge": "^1.1"
-            },
-            "require-dev": {
-                "larastan/larastan": "^3",
-                "laravel/octane": "^2",
-                "laravel/pennant": "^1",
-                "laravel/pint": "^1",
-                "laravel/telescope": "^5.16",
-                "livewire/livewire": "^3.7|^4",
-                "mockery/mockery": "^1.3.3",
-                "orchestra/testbench-dusk": "^9|^10|^11",
-                "php-debugbar/twig-bridge": "^2.0",
-                "phpstan/phpstan-phpunit": "^2",
-                "phpstan/phpstan-strict-rules": "^2.0",
-                "phpunit/phpunit": "^11",
-                "shipmonk/phpstan-rules": "^4.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "Debugbar": "Fruitcake\\LaravelDebugbar\\Facades\\Debugbar"
-                    },
-                    "providers": [
-                        "Fruitcake\\LaravelDebugbar\\ServiceProvider"
-                    ]
-                },
-                "branch-alias": {
-                    "dev-master": "4.2-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
-                "psr-4": {
-                    "Fruitcake\\LaravelDebugbar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fruitcake",
-                    "homepage": "https://fruitcake.nl"
-                },
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "PHP Debugbar integration for Laravel",
-            "keywords": [
-                "barryvdh",
-                "debug",
-                "debugbar",
-                "dev",
-                "laravel",
-                "profiler",
-                "webprofiler"
-            ],
-            "support": {
-                "issues": "https://github.com/fruitcake/laravel-debugbar/issues",
-                "source": "https://github.com/fruitcake/laravel-debugbar/tree/v4.2.4"
-            },
-            "funding": [
-                {
-                    "url": "https://fruitcake.nl",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/barryvdh",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-04-04T08:05:27+00:00"
-        },
-        {
             "name": "barryvdh/laravel-ide-helper",
             "version": "v3.7.0",
             "source": {
@@ -7049,16 +6950,16 @@
         },
         {
             "name": "brianium/paratest",
-            "version": "v7.22.0",
+            "version": "v7.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paratestphp/paratest.git",
-                "reference": "71b06b5f9b61beb01ad1e65b4faa3278167b6ed1"
+                "reference": "c9a417ac6b690de5d31ad32d0675f0b25dd0d58e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/71b06b5f9b61beb01ad1e65b4faa3278167b6ed1",
-                "reference": "71b06b5f9b61beb01ad1e65b4faa3278167b6ed1",
+                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/c9a417ac6b690de5d31ad32d0675f0b25dd0d58e",
+                "reference": "c9a417ac6b690de5d31ad32d0675f0b25dd0d58e",
                 "shasum": ""
             },
             "require": {
@@ -7073,7 +6974,7 @@
                 "phpunit/php-file-iterator": "^7",
                 "phpunit/php-timer": "^9",
                 "phpunit/phpunit": "^13.1",
-                "sebastian/environment": "^9.1",
+                "sebastian/environment": "^9.2.0",
                 "symfony/console": "^7.4.8 || ^8.0.8",
                 "symfony/process": "^7.4.8 || ^8.0.8"
             },
@@ -7126,7 +7027,7 @@
             ],
             "support": {
                 "issues": "https://github.com/paratestphp/paratest/issues",
-                "source": "https://github.com/paratestphp/paratest/tree/v7.22.0"
+                "source": "https://github.com/paratestphp/paratest/tree/v7.22.1"
             },
             "funding": [
                 {
@@ -7138,7 +7039,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2026-04-03T14:44:27+00:00"
+            "time": "2026-04-07T12:48:57+00:00"
         },
         {
             "name": "colinodell/json5",
@@ -8747,174 +8648,6 @@
             "time": "2022-02-21T01:04:05+00:00"
         },
         {
-            "name": "php-debugbar/php-debugbar",
-            "version": "v3.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-debugbar/php-debugbar.git",
-                "reference": "4b920b8aa8198a3b7206842825bf86f43c61606f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-debugbar/php-debugbar/zipball/4b920b8aa8198a3b7206842825bf86f43c61606f",
-                "reference": "4b920b8aa8198a3b7206842825bf86f43c61606f",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.2",
-                "psr/log": "^1|^2|^3",
-                "symfony/var-dumper": "^5.4|^6|^7|^8"
-            },
-            "replace": {
-                "maximebf/debugbar": "self.version"
-            },
-            "require-dev": {
-                "dbrekelmans/bdi": "^1.4",
-                "friendsofphp/php-cs-fixer": "^3.92",
-                "monolog/monolog": "^3.9",
-                "php-debugbar/doctrine-bridge": "^3@dev",
-                "php-debugbar/monolog-bridge": "^1@dev",
-                "php-debugbar/symfony-bridge": "^1@dev",
-                "php-debugbar/twig-bridge": "^2@dev",
-                "phpstan/phpstan": "^2.1",
-                "phpstan/phpstan-phpunit": "^2.0",
-                "phpstan/phpstan-strict-rules": "^2.0",
-                "phpunit/phpunit": "^10",
-                "predis/predis": "^3.3",
-                "shipmonk/phpstan-rules": "^4.3",
-                "symfony/browser-kit": "^6.4|7.0",
-                "symfony/dom-crawler": "^6.4|^7",
-                "symfony/event-dispatcher": "^5.4|^6.4|^7.3|^8.0",
-                "symfony/http-foundation": "^5.4|^6.4|^7.3|^8.0",
-                "symfony/mailer": "^5.4|^6.4|^7.3|^8.0",
-                "symfony/panther": "^1|^2.1",
-                "twig/twig": "^3.11.2"
-            },
-            "suggest": {
-                "php-debugbar/doctrine-bridge": "To integrate Doctrine with php-debugbar.",
-                "php-debugbar/monolog-bridge": "To integrate Monolog with php-debugbar.",
-                "php-debugbar/symfony-bridge": "To integrate Symfony with php-debugbar.",
-                "php-debugbar/twig-bridge": "To integrate Twig with php-debugbar."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DebugBar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maxime Bouroumeau-Fuseau",
-                    "email": "maxime.bouroumeau@gmail.com",
-                    "homepage": "http://maximebf.com"
-                },
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Debug bar in the browser for php application",
-            "homepage": "https://github.com/php-debugbar/php-debugbar",
-            "keywords": [
-                "debug",
-                "debug bar",
-                "debugbar",
-                "dev",
-                "profiler",
-                "toolbar"
-            ],
-            "support": {
-                "issues": "https://github.com/php-debugbar/php-debugbar/issues",
-                "source": "https://github.com/php-debugbar/php-debugbar/tree/v3.7.0"
-            },
-            "funding": [
-                {
-                    "url": "https://fruitcake.nl",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/barryvdh",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-04-04T08:04:02+00:00"
-        },
-        {
-            "name": "php-debugbar/symfony-bridge",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-debugbar/symfony-bridge.git",
-                "reference": "e37d2debe5d316408b00d0ab2688d9c2cf59b5ad"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-debugbar/symfony-bridge/zipball/e37d2debe5d316408b00d0ab2688d9c2cf59b5ad",
-                "reference": "e37d2debe5d316408b00d0ab2688d9c2cf59b5ad",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.2",
-                "php-debugbar/php-debugbar": "^3.1",
-                "symfony/http-foundation": "^5.4|^6.4|^7.3|^8.0"
-            },
-            "require-dev": {
-                "dbrekelmans/bdi": "^1.4",
-                "phpunit/phpunit": "^10",
-                "symfony/browser-kit": "^6|^7",
-                "symfony/dom-crawler": "^6|^7",
-                "symfony/mailer": "^5.4|^6.4|^7.3|^8.0",
-                "symfony/panther": "^1|^2.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DebugBar\\Bridge\\Symfony\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maxime Bouroumeau-Fuseau",
-                    "email": "maxime.bouroumeau@gmail.com",
-                    "homepage": "http://maximebf.com"
-                },
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Symfony bridge for PHP Debugbar",
-            "homepage": "https://github.com/php-debugbar/php-debugbar",
-            "keywords": [
-                "debugbar",
-                "dev",
-                "symfony"
-            ],
-            "support": {
-                "issues": "https://github.com/php-debugbar/symfony-bridge/issues",
-                "source": "https://github.com/php-debugbar/symfony-bridge/tree/v1.1.0"
-            },
-            "time": "2026-01-15T14:47:34+00:00"
-        },
-        {
             "name": "phpstan/phpstan",
             "version": "2.1.46",
             "dist": {
@@ -9785,16 +9518,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "8.0.0",
+            "version": "8.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "29b232ddc29c2b114c0358c69b3084e7c3da0d58"
+                "reference": "e35cd9e8bbc43142bc7d6db53ceb2b01c6ad95a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/29b232ddc29c2b114c0358c69b3084e7c3da0d58",
-                "reference": "29b232ddc29c2b114c0358c69b3084e7c3da0d58",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/e35cd9e8bbc43142bc7d6db53ceb2b01c6ad95a3",
+                "reference": "e35cd9e8bbc43142bc7d6db53ceb2b01c6ad95a3",
                 "shasum": ""
             },
             "require": {
@@ -9813,7 +9546,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "8.0-dev"
+                    "dev-main": "8.1-dev"
                 }
             },
             "autoload": {
@@ -9853,7 +9586,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/8.0.0"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/8.1.0"
             },
             "funding": [
                 {
@@ -9873,7 +9606,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-06T04:40:39+00:00"
+            "time": "2026-04-06T11:57:51+00:00"
         },
         {
             "name": "sebastian/complexity",
