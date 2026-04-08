@@ -3,8 +3,8 @@ networks:
     driver: bridge
 volumes:
   personal-task-manager-data:
-  certbot-etc:
-  certbot-var:
+  # certbot-etc:
+  # certbot-var:
 
 services:
   app:
@@ -48,8 +48,8 @@ services:
     volumes:
       - .:/var/www/html
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
+      # - certbot-etc:/etc/letsencrypt
+      # - certbot-var:/var/lib/letsencrypt
     depends_on:
       - app
     restart: unless-stopped
@@ -83,7 +83,7 @@ services:
       - personal-task-manager-network
     volumes:
       - .:/var/www/html
-      - certbot-etc:/etc/letsencrypt
+      # - certbot-etc:/etc/letsencrypt
     working_dir: /var/www/html
     environment:
       - APP_ENV=${APP_ENV}
@@ -104,16 +104,16 @@ services:
     working_dir: /var/www/html
     restart: unless-stopped
 
-  certbot:
-    container_name: certbot.${APP_NAME}
-    build:
-      context: .
-      dockerfile: ./docker/certbot/Dockerfile
-    profiles:
-      - tools
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - ./public:/var/www/html/public
-    tty: true
-    # command: certonly --webroot --webroot-path=/var/www/html/public --email ${CERTBOT_TLS_CERTIFICATE_EMAIL} --agree-tos --no-eff-email -d ${APP_URL}
+  # certbot:
+  #   container_name: certbot.${APP_NAME}
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/certbot/Dockerfile
+  #   profiles:
+  #     - tools
+  #   volumes:
+  #     - certbot-etc:/etc/letsencrypt
+  #     - certbot-var:/var/lib/letsencrypt
+  #     - ./public:/var/www/html/public
+  #   tty: true
+  #   command: certonly --webroot --webroot-path=/var/www/html/public --email ${CERTBOT_TLS_CERTIFICATE_EMAIL} --agree-tos --no-eff-email -d www.${APP_URI}
