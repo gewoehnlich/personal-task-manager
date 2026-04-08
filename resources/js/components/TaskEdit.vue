@@ -109,6 +109,7 @@ watch(
                     autocomplete="off"
                     autocorrect="off"
                     spellcheck="false"
+                    rows="1"
                     maxlength="100"
                 />
 
@@ -131,11 +132,12 @@ watch(
                     autocomplete="off"
                     autocorrect="off"
                     spellcheck="false"
+                    rows="1"
                     maxlength="500"
                 ></textarea>
             </div>
 
-            <div>
+            <div v-if="editableTask.bills.length !== 0">
                 <p class="text-muted-foreground text-xs">Bills:</p>
 
                 <ul class="bg-card text-sm">

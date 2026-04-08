@@ -8,7 +8,7 @@ import Kanban from '../components/Kanban.vue';
     <Head title="PTM" />
 
     <AppLayout>
-        <div class="bg-background h-full px-15 pt-8">
+        <div class="bg-background h-full px-15 pt-5">
             <Kanban />
         </div>
     </AppLayout>
