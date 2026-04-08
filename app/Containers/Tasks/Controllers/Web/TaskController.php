@@ -35,7 +35,6 @@ final readonly class TaskController extends WebController
             $request->toDto(),
         );
 
-        // return redirect()->route('dashboard')->with('success', 'task updated');
         return Redirect::back();
     }
 

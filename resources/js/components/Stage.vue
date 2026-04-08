@@ -7,12 +7,11 @@ import Task from './Task.vue';
 import TaskCreate from './TaskCreate.vue';
 
 const props = defineProps<{
-    title: string;
-    tasks: Array<TaskType>;
+    stage: string;
+    tasks: TaskType[];
 }>();
 
 const emit = defineEmits<{
-    (e: 'task-drop', taskUuid: string, stage: string): void;
     (e: 'create-task', task: Omit<TaskType, 'uuid'>): void;
     (e: 'reorder-task', draggedUuid: string, targetUuid: string): void;
     (e: 'task-clicked', task: TaskType): void;
@@ -22,26 +21,24 @@ const showForm = ref(false);
 const length = computed(() => props.tasks.length);
 
 function handleDrop(event: DragEvent) {
-    const taskUuid: string = String(event.dataTransfer?.getData('task-id'));
+    const draggedTaskUuid: string = String(event.dataTransfer?.getData('task-uuid'));
 
-    emit('task-drop', taskUuid, props.title);
+    handleReorderTask(draggedTaskUuid, props.stage);
 }
 
 function handleTaskFormSubmit(task: {
     title: string;
+    stage: string;
     description: string;
     deadline: string;
 }): void {
-    emit('create-task', {
-        ...task,
-        stage: props.title,
-    });
+    emit('create-task', task);
 
     showForm.value = false;
 }
 
-function handleReorderTasks(draggedUuid: string, targetUuid: string): void {
-    emit('reorder-task', draggedUuid, targetUuid);
+function handleReorderTask(draggedTaskUuid: string, stage: string): void {
+    emit('reorder-task', draggedTaskUuid, stage);
 }
 
 function handleTaskClick(task: TaskType): void {
@@ -52,6 +49,7 @@ function handleTaskClick(task: TaskType): void {
 <template>
     <div
         class="border-sidebar-border/70 dark:border-sidebar-border max-w-[296px] min-w-[245px] flex-1 flex-grow overflow-hidden rounded-xl"
+        @drop="handleDrop"
     >
         <div
             id="stage"
@@ -60,7 +58,7 @@ function handleTaskClick(task: TaskType): void {
             @drop="handleDrop"
         >
             <StageHeader
-                :title="title"
+                :stage="stage"
                 :length="length"
             />
 
@@ -81,7 +79,7 @@ function handleTaskClick(task: TaskType): void {
                     v-for="task in tasks"
                     :key="task.uuid"
                     :task="task"
-                    @reorder-task="handleReorderTasks"
+                    @reorder-task="handleReorderTask"
                     @task-clicked="handleTaskClick"
                 />
             </div>

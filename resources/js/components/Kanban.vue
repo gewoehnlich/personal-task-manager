@@ -14,10 +14,10 @@ const selectedTask = ref<TaskType | null>(null);
 
 const tasks = computed(() => page.props.tasks || []);
 
-const pending = filterTasksByStage(tasks, 'pending');
-const active = filterTasksByStage(tasks, 'active');
-const done = filterTasksByStage(tasks, 'done');
-const deleted = filterTasksByStage(tasks, 'deleted');
+const pending = computed(() => filterTasksByStage(tasks, 'pending'));
+const active = computed(() => filterTasksByStage(tasks, 'active'));
+const done = computed(() => filterTasksByStage(tasks, 'done'));
+const deleted = computed(() => filterTasksByStage(tasks, 'deleted'));
 
 function filterTasksByStage(tasks: Ref<TaskType[]>, stage: string) {
     return tasks.value.filter((task) => task.stage === stage);
@@ -45,20 +45,18 @@ function handleDeleteTask(task: Omit<TaskType, 'uuid'>): void {
     router.delete(`/tasks/${task.uuid}`);
 }
 
-function handleTaskReorder(draggedUuid: string, targetUuid: string): void {
-    const draggedTask: TaskType = tasks.value.find(
-        (task) => task.uuid === draggedUuid,
+function handleReorderTask(draggedTaskUuid: string, stage: string): void {
+    const task: TaskType = tasks.value.find(
+        (task: TaskType) => task.uuid === draggedTaskUuid
     );
 
-    const targetTask: TaskType = tasks.value.find(
-        (task) => task.uuid === targetUuid,
-    );
+    if (task.stage === stage) {
+        return;
+    }
 
-    if (!draggedTask || !targetTask) return;
+    task.stage = stage;
 
-    draggedTask.stage = targetTask.stage;
-
-    router.put(`/tasks/${draggedTask.uuid}`, draggedTask);
+    router.put(`/tasks/${task.uuid}`, task);
 }
 
 function openTaskModal(task: TaskType): void {
@@ -76,35 +74,35 @@ function closeTaskModal(): void {
         class="flex h-full gap-2"
     >
         <Stage
-            title="PENDING"
+            stage="pending"
             :tasks="pending"
             @task-drop="handleTaskDrop"
             @create-task="handleCreateTask"
-            @reorder-task="handleTaskReorder"
+            @reorder-task="handleReorderTask"
             @task-clicked="openTaskModal"
         />
         <Stage
-            title="ACTIVE"
+            stage="active"
             :tasks="active"
             @task-drop="handleTaskDrop"
             @create-task="handleCreateTask"
-            @reorder-task="handleTaskReorder"
+            @reorder-task="handleReorderTask"
             @task-clicked="openTaskModal"
         />
         <Stage
-            title="DONE"
+            stage="done"
             :tasks="done"
             @task-drop="handleTaskDrop"
             @create-task="handleCreateTask"
-            @reorder-task="handleTaskReorder"
+            @reorder-task="handleReorderTask"
             @task-clicked="openTaskModal"
         />
         <Stage
-            title="DELETED"
+            stage="deleted"
             :tasks="deleted"
             @task-drop="handleTaskDrop"
             @create-task="handleCreateTask"
-            @reorder-task="handleTaskReorder"
+            @reorder-task="handleReorderTask"
             @task-clicked="openTaskModal"
         />
     </div>

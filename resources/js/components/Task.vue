@@ -9,7 +9,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'reorder-task', draggedUuid: string, targetUuid: string): void;
+    (e: 'reorder-task', draggedTaskUuid: string, stage: string): void;
     (e: 'task-clicked', task: TaskType): void;
 }>();
 
@@ -22,11 +22,11 @@ function handleDragOver(event: DragEvent) {
 }
 
 function handleDrop(event: DragEvent) {
-    const draggedUuid = String(event.dataTransfer?.getData('task-uuid'));
+    const draggedTaskUuid = String(event.dataTransfer?.getData('task-uuid'));
 
-    const targetUuid = props.task.uuid;
+    const stage = props.task.stage;
 
-    emit('reorder-task', draggedUuid, targetUuid);
+    emit('reorder-task', draggedTaskUuid, stage);
 }
 
 function handleClick(): void {
