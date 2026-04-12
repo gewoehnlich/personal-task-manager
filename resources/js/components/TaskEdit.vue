@@ -16,21 +16,34 @@ const emit = defineEmits<{
 }>();
 
 const editableTask = reactive({ ...props.task });
+console.dir(editableTask);
+console.dir(new Date(editableTask.deadline));
 
 function formatDate(date: Date): string {
     const pad = (num: number) => num.toString().padStart(2, '0');
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+
+    const year: number = date.getUTCFullYear();
+    const month: string = pad(date.getUTCMonth() + 1);
+    const day: string = pad(date.getUTCDate());
+
+    const hours: string = pad(date.getUTCHours());
+    const minutes: string = pad(date.getUTCMinutes());
+    const seconds: string = pad(date.getUTCSeconds());
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+00:00`;
 }
 
-const deadlineAsDate = computed({
+const deadline = computed({
     get() {
         return editableTask.deadline
-            ? new Date(editableTask.deadline.replace(' ', 'T'))
+            ? new Date(editableTask.deadline)
             : null;
     },
-    set(val) {
+    set(val: Date | null) {
         if (val) {
             editableTask.deadline = formatDate(val);
+        } else {
+            editableTask.deadline = null;
         }
     },
 });
@@ -189,7 +202,7 @@ watch(
                             Deadline:
                         </p>
 
-                        <Deadline />
+                        <Deadline v-model="deadline"/>
                     </div>
                 </div>
 

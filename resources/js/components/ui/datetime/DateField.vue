@@ -24,9 +24,7 @@ import {
 
 <template>
   <div class="flex flex-col gap-2">
-    <DatePickerRoot
-      id="deadline"
-    >
+    <DatePickerRoot id="deadline">
       <DatePickerField
         v-slot="{ segments }"
         class="flex select-none bg-muted items-center rounded-lg shadow-sm text-center justify-between text-green10 p-1 data-[invalid]:border-red-500 text-sm"
