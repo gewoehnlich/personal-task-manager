@@ -9,7 +9,7 @@ const props = defineProps<{
 
 <template>
     <div class="flex-col-2 flex w-full gap-1">
-        <DateField v-model="props.deadline"/>
+        <DateField v-model="deadline"/>
         <TimeField />
     </div>
 </template>
