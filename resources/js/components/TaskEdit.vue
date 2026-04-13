@@ -16,8 +16,6 @@ const emit = defineEmits<{
 }>();
 
 const editableTask = reactive({ ...props.task });
-console.dir(editableTask);
-console.dir(new Date(editableTask.deadline));
 
 function formatDate(date: Date): string {
     const pad = (num: number) => num.toString().padStart(2, '0');
@@ -39,12 +37,8 @@ const deadline = computed({
             ? new Date(editableTask.deadline)
             : null;
     },
-    set(val: Date | null) {
-        if (val) {
-            editableTask.deadline = formatDate(val);
-        } else {
-            editableTask.deadline = null;
-        }
+    set(date: Date) {
+        editableTask.deadline = date;
     },
 });
 
@@ -202,7 +196,7 @@ watch(
                             Deadline:
                         </p>
 
-                        <Deadline v-model="deadline"/>
+                        <!-- <Deadline v-model="deadline"/> -->
                     </div>
                 </div>
 

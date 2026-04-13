@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
+import { Icon } from '@iconify/vue';
 import {
   DatePickerArrow,
   DatePickerCalendar,
@@ -19,17 +19,29 @@ import {
   DatePickerPrev,
   DatePickerRoot,
   DatePickerTrigger,
-} from 'reka-ui'
-</script>
+} from 'reka-ui';
+
+import { computed } from 'vue';
 
 const props = defineProps<{
-    deadline: Date;
+  modelValue: Date | null;
 }>();
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: Date | null): void;
+}>();
+
+const deadline = computed({
+  get: () => props.modelValue,
+  set: (val) => emit('update:modelValue', val),
+});
+</script>
 
 <template>
   <div class="flex flex-col gap-2">
     <DatePickerRoot
-        :model-value="deadline"
+      :model-value="deadline"
+      @update:model-value="deadline = $event"
     >
       <DatePickerField
         v-slot="{ segments }"
