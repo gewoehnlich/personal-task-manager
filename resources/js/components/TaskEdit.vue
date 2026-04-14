@@ -34,11 +34,9 @@ function formatDate(date: Date): string {
 
 const deadline = computed({
     get() {
-        console.dir(editableTask.deadline);
         return parseDate(editableTask.deadline.split('T')[0]) ?? null;
     },
     set(date: DateValue) {
-        console.dir("set", formatDate(date.toDate('+00:00')));
         editableTask.deadline = formatDate(date.toDate('+00:00'));
     },
 });
@@ -113,7 +111,7 @@ watch(
                 <textarea
                     ref="title"
                     v-model="editableTask.title"
-                    class="w-full resize-none overflow-hidden text-2xl/[20px] font-bold break-words focus:outline-none"
+                    class="w-full resize-none overflow-hidden text-2xl/[23px] font-bold break-words focus:outline-none"
                     autocomplete="off"
                     autocorrect="off"
                     spellcheck="false"
