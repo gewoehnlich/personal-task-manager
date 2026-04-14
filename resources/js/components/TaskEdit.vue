@@ -4,6 +4,7 @@ import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
 import Deadline from './Deadline.vue';
 import Button from './ui/button/Button.vue';
 import Card from './ui/card/Card.vue';
+import { DateValue, parseDate } from '@internationalized/date'
 
 const props = defineProps<{
     task: TaskType;
@@ -33,12 +34,12 @@ function formatDate(date: Date): string {
 
 const deadline = computed({
     get() {
-        return editableTask.deadline
-            ? new Date(editableTask.deadline)
-            : null;
+        console.dir(editableTask.deadline);
+        return parseDate(editableTask.deadline.split('T')[0]) ?? null;
     },
-    set(date: Date) {
-        editableTask.deadline = date;
+    set(date: DateValue) {
+        console.dir("set", formatDate(date.toDate('+00:00')));
+        editableTask.deadline = formatDate(date.toDate('+00:00'));
     },
 });
 
@@ -105,7 +106,7 @@ watch(
         entity="task-edit"
     >
         <Card
-            class="border-accent shadow-accent max-h-[90vh] max-w-md space-y-4 overflow-y-auto border p-6 shadow-2xl/100"
+            class="border-accent shadow-accent max-h-[90vh] max-w-sm space-y-4 overflow-y-auto border p-6 shadow-2xl/100"
             @click.stop
         >
             <div>
@@ -196,7 +197,7 @@ watch(
                             Deadline:
                         </p>
 
-                        <!-- <Deadline v-model="deadline"/> -->
+                        <Deadline v-model="deadline"/>
                     </div>
                 </div>
 
