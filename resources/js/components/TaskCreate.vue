@@ -43,38 +43,55 @@ function formatDateForInput(date: Date): string {
 </script>
 
 <template>
-    <form
-        @submit.prevent="submitForm"
-        class="bg-popup flex flex-col gap-2 rounded rounded-xl p-4"
+    <div
+        class="bg-card/70 inset-0 flex items-center justify-center backdrop-blur-sm"
+        entity="task-create"
     >
-        <input
-            v-model="title"
-            type="text"
-            placeholder="title"
-            class="rounded border p-2"
-            required
-        />
-
-        <textarea
-            v-model="description"
-            placeholder="description"
-            class="rounded border p-2"
-            required
-        ></textarea>
-
-        <input
-            v-model="deadline"
-            type="datetime-local"
-            placeholder="deadline"
-            class="rounded border p-2"
-            required
-        />
-
-        <button
-            type="submit"
-            class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+        <Card
+            class="border-accent shadow-accent max-h-[90vh] max-w-sm space-y-4 overflow-y-auto border px-4 py-3 shadow-2xl/100"
+            @click.stop
         >
-            save
-        </button>
-    </form>
+            <div>
+                <p class="text-muted-foreground text-xs">Title:</p>
+
+                <textarea
+                    ref="title"
+                    v-model="title.value"
+                    class="w-full resize-none overflow-hidden text-2xl/[23px] font-bold break-words focus:outline-none"
+                    autocomplete="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    rows="1"
+                    maxlength="100"
+                />
+            </div>
+
+            <div>
+                <p class="text-muted-foreground text-xs">Description:</p>
+
+                <textarea
+                    ref="description"
+                    v-model="description.value"
+                    class="focus:ring-none w-full resize-none overflow-hidden text-sm/[18px] break-words focus:outline-none"
+                    autocomplete="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    rows="1"
+                    maxlength="500"
+                ></textarea>
+            </div>
+
+            <Deadline v-model="deadline"/>
+
+            <div class="flex justify-end gap-1 pt-2">
+                <Button
+                    @click="submitForm"
+                    variant="confirmative"
+                    size="sm"
+                >
+                    Save
+                </Button>
+            </div>
+        </Card>
+    </div>
 </template>

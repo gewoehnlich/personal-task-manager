@@ -119,13 +119,13 @@ watch(
                     maxlength="100"
                 />
 
-                <p class="text-muted-foreground text-xs">
-                    Task UUID: {{ task.uuid }}
-                </p>
-
-                <p class="text-muted-foreground text-xs">
-                    User UUID: {{ task.user_uuid }}
-                </p>
+                <!-- <p class="text-muted-foreground text-xs"> -->
+                <!--     Task UUID: {{ task.uuid }} -->
+                <!-- </p> -->
+                <!---->
+                <!-- <p class="text-muted-foreground text-xs"> -->
+                <!--     User UUID: {{ task.user_uuid }} -->
+                <!-- </p> -->
             </div>
 
             <div>
