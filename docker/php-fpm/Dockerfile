@@ -1,4 +1,4 @@
-FROM php:8.4.19-fpm
+FROM php:8.5.7-fpm
 
 WORKDIR /var/www/html
 
@@ -42,7 +42,7 @@ RUN { \
     echo 'pcov.directory = /var/www/html'; \
 } > /usr/local/etc/php/conf.d/strict.ini
 
-COPY --from=composer:2.9.5 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.10.1 /usr/bin/composer /usr/bin/composer
 
 COPY . .
 

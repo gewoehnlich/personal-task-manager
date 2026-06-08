@@ -1,4 +1,4 @@
-FROM node:25.8.1
+FROM node:26.3.0
 
 WORKDIR /var/www/html
 
