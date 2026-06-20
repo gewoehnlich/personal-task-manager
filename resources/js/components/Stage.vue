@@ -26,13 +26,15 @@ function handleDrop(event: DragEvent) {
     handleReorderTask(draggedTaskUuid, props.stage);
 }
 
-function handleTaskFormSubmit(task: {
-    title: string;
-    stage: string;
-    description: string;
-    deadline: string;
-}): void {
-    emit('create-task', task);
+function handleTaskFormSubmit(
+    title: string,
+    description: string,
+): void {
+    emit('create-task', {
+        title: title,
+        description: description,
+        stage: props.stage,
+    });
 
     showForm.value = false;
 }

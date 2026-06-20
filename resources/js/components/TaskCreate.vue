@@ -1,45 +1,29 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-
-const defaultDeadline = new Date();
-defaultDeadline.setDate(defaultDeadline.getDate() + 7);
+import Button from './ui/button/Button.vue';
+import Card from './ui/card/Card.vue';
 
 const title = ref('');
 const description = ref('');
-const deadline = ref(formatDateForInput(defaultDeadline));
 
 const emit = defineEmits<{
     (
         e: 'submit',
-        task: {
-            title: string;
-            description: string;
-            deadline: string;
-        },
+        title: string,
+        description: string,
     ): void;
 }>();
 
 function submitForm() {
-    emit('submit', {
-        title: title.value,
-        description: description.value,
-        deadline: deadline.value.replace('T', ' ') + ':00',
-    });
+    emit('submit',
+        title.value,
+        description.value,
+    );
 
     title.value = '';
     description.value = '';
-    deadline.value = '';
 }
 
-function formatDateForInput(date: Date): string {
-    const pad = (n: number) => String(n).padStart(2, '0');
-    const year = date.getFullYear();
-    const month = pad(date.getMonth() + 1);
-    const day = pad(date.getDate());
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
 </script>
 
 <template>
@@ -55,8 +39,7 @@ function formatDateForInput(date: Date): string {
                 <p class="text-muted-foreground text-xs">Title:</p>
 
                 <textarea
-                    ref="title"
-                    v-model="title.value"
+                    v-model="title"
                     class="w-full resize-none overflow-hidden text-2xl/[23px] font-bold break-words focus:outline-none"
                     autocomplete="off"
                     autocorrect="off"
@@ -70,8 +53,7 @@ function formatDateForInput(date: Date): string {
                 <p class="text-muted-foreground text-xs">Description:</p>
 
                 <textarea
-                    ref="description"
-                    v-model="description.value"
+                    v-model="description"
                     class="focus:ring-none w-full resize-none overflow-hidden text-sm/[18px] break-words focus:outline-none"
                     autocomplete="off"
                     autocorrect="off"
@@ -80,8 +62,6 @@ function formatDateForInput(date: Date): string {
                     maxlength="500"
                 ></textarea>
             </div>
-
-            <Deadline v-model="deadline"/>
 
             <div class="flex justify-end gap-1 pt-2">
                 <Button

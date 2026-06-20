@@ -34,7 +34,11 @@ function formatDate(date: Date): string {
 
 const deadline = computed({
     get() {
-        return parseDate(editableTask.deadline.split('T')[0]) ?? null;
+        if (! editableTask.deadline) {
+            return null;
+        }
+
+        return parseDate(editableTask.deadline.split('T')[0]);
     },
     set(date: DateValue) {
         editableTask.deadline = formatDate(date.toDate('+00:00'));
