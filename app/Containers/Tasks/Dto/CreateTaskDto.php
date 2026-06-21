@@ -32,11 +32,11 @@ final readonly class CreateTaskDto extends Dto
             title: TitleValue::from(
                 string: $inputData['title'],
             ),
-            description: DescriptionValue::fromNullable(
-                input: $inputData['description'],
-            ),
             stage: StageValue::from(
                 string: $inputData['stage'],
+            ),
+            description: DescriptionValue::fromNullable(
+                input: $inputData['description'],
             ),
             deadline: DeadlineValue::fromNullable(
                 value: $inputData['deadline'],

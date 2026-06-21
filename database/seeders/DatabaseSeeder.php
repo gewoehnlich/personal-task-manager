@@ -20,22 +20,27 @@ final class DatabaseSeeder extends Seeder
                 'password' => Hash::make('qwerqwer'),
             ]);
 
-        $project = Project::factory()
-            ->for($user)
-            ->create();
+        // $project = Project::factory()
+        //     ->for($user)
+        //     ->create();
+        //
+        // Task::factory()
+        //     ->for($user)
+        //     ->for($project)
+        //     ->count(10)
+        //     ->has(Bill::factory()->count(3))
+        //     ->create();
+        //
+        // Task::factory()
+        //     ->for($user)
+        //     ->withoutProject()
+        //     ->count(10)
+        //     ->has(Bill::factory()->count(3))
+        //     ->create();
 
         Task::factory()
             ->for($user)
-            ->for($project)
             ->count(10)
-            ->has(Bill::factory()->count(3))
-            ->create();
-
-        Task::factory()
-            ->for($user)
-            ->withoutProject()
-            ->count(10)
-            ->has(Bill::factory()->count(3))
             ->create();
     }
 }

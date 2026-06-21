@@ -29,6 +29,26 @@ final readonly class StageValue extends Value
             );
         }
 
+        return self::create(
+            string: $string,
+        );
+    }
+
+    public static function fromNullable(
+        ?string $string,
+    ): ?static {
+        if ($string === null) {
+            return null;
+        }
+
+        return self::create(
+            string: $string,
+        );
+    }
+
+    private static function create(
+        string $string,
+    ): static {
         $stage = StageEnum::tryFrom(
             value: $string,
         );
@@ -43,18 +63,6 @@ final readonly class StageValue extends Value
             stage: StageEnum::tryFrom(
                 value: $string,
             ),
-        );
-    }
-
-    public static function fromNullable(
-        ?string $string,
-    ): ?static {
-        if ($string === null) {
-            return null;
-        }
-
-        return self::from(
-            string: $string,
         );
     }
 

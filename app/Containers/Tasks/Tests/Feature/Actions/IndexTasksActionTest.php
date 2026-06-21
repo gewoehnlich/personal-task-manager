@@ -142,8 +142,13 @@ final class IndexTasksActionTest extends TestCase
     {
         $user = $this->user();
 
+        $description = new DescriptionValue(
+            string: 'description',
+        );
+
         $task = $this->task(
             user: $user,
+            description: $description,
         );
 
         $this->task(
@@ -154,9 +159,7 @@ final class IndexTasksActionTest extends TestCase
             class: IndexTasksAction::class,
             dto: new IndexTasksDto(
                 user: $user,
-                description: new DescriptionValue(
-                    string: $task->description,
-                ),
+                description: $description,
             ),
         );
 

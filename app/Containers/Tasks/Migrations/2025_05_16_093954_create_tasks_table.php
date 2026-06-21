@@ -19,12 +19,7 @@ return new class extends Migration {
             $table->string('description', length: 500)
                 ->nullable();
 
-            $table->enum('stage', [
-                'pending',
-                'active',
-                'done',
-                'deleted',
-            ]);
+            $table->string('stage');
 
             $table->timestamp('deadline')
                 ->nullable();

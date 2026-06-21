@@ -11,6 +11,7 @@ use App\Containers\Tasks\Enums\StageEnum;
 use App\Containers\Tasks\Models\Task;
 use App\Containers\Tasks\Repositories\TaskRepository;
 use App\Containers\Tasks\Values\DeadlineValue;
+use App\Containers\Tasks\Values\DescriptionValue;
 use App\Containers\Users\Models\User;
 use App\Ship\Traits\CanCallActionTrait;
 use App\Ship\Traits\CanCallCommandTrait;
@@ -103,6 +104,7 @@ abstract class TestCase extends BaseTestCase
         ?DeletedAtValue $deletedAt = null,
         ?DeadlineValue $deadline = null,
         ?StageEnum $stage = null,
+        ?DescriptionValue $description = null,
     ): Task {
         $data = [
             'user_uuid' => $user->uuid,
@@ -130,6 +132,10 @@ abstract class TestCase extends BaseTestCase
 
         if ($stage) {
             $data['stage'] = $stage->value;
+        }
+
+        if ($description) {
+            $data['description'] = $description->value();
         }
 
         return Task::factory()

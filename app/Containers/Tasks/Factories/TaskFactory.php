@@ -13,13 +13,13 @@ final class TaskFactory extends Factory
     {
         return [
             'title'       => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
+            // 'description' => $this->faker->paragraph,
             'stage'       => $this->faker->randomElement([
                 'pending',
                 'active',
                 'done',
             ]),
-            'deadline'    => $this->faker->dateTimeBetween('now', '+10 days'),
+            // 'deadline'    => $this->faker->dateTimeBetween('now', '+10 days'),
         ];
     }
 
