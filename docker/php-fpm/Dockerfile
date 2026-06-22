@@ -9,10 +9,11 @@ RUN apt-get update && \
         libpng-dev \
         libonig-dev \
         libxml2-dev \
+        libpq-dev \
         zip \
         unzip \
     && docker-php-ext-install -j$(nproc) \
-        pdo_mysql \
+        pdo_pgsql \
         mbstring \
         exif \
         pcntl \

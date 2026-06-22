@@ -16,15 +16,15 @@ services:
       - .:/var/www/html
     working_dir: /var/www/html
     environment:
-      - DB_HOST=mysql
+      - DB_HOST=pgsql
       - DB_NAME=${DB_DATABASE}
       - DB_USER=${DB_USERNAME}
       - DB_PASS=${DB_PASSWORD}
-      - DB_PORT=3306
+      - DB_PORT=${DB_PORT}
     networks:
       - personal-task-manager-network
     depends_on:
-      - mysql
+      - pgsql
     command: >
       sh -c "
       chown -R www-data:www-data /var/www/html/storage/ &&
@@ -54,22 +54,39 @@ services:
       - app
     restart: unless-stopped
 
-  mysql:
-    container_name: mysql.${APP_NAME}
+  # mysql:
+  #   container_name: mysql.${APP_NAME}
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/mysql/Dockerfile
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_DATABASE: ${DB_DATABASE}
+  #     MYSQL_USER:     ${DB_USERNAME}
+  #     MYSQL_PASSWORD: ${DB_PASSWORD}
+  #   ports:
+  #     - "3306:3306"
+  #   networks:
+  #     - personal-task-manager-network
+  #   volumes:
+  #     - personal-task-manager-data:/var/lib/mysql/
+  #   restart: unless-stopped
+
+  pgsql:
+    container_name: pgsql.${APP_NAME}
     build:
       context: .
-      dockerfile: ./docker/mysql/Dockerfile
+      dockerfile: ./docker/pgsql/Dockerfile
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER:     ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "3306:3306"
+      - "5432:5432"
     networks:
       - personal-task-manager-network
     volumes:
-      - personal-task-manager-data:/var/lib/mysql/
+      - personal-task-manager-data:/var/lib/postgresql
     restart: unless-stopped
 
   node:

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Tests\Unit\Requests;
+namespace App\Containers\Tasks\Tests\Unit\Requests;
 
 use App\Containers\Projects\Models\Project;
 use App\Containers\Tasks\Dto\CreateTaskDto;
