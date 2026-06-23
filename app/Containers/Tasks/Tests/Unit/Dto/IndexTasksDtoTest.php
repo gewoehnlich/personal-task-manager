@@ -94,7 +94,7 @@ final class IndexTasksDtoTest extends TestCase
 
         $this->assertSame(
             expected: $title,
-            actual: $dto->title?->value()
+            actual: $dto->title?->value(),
         );
 
         $this->assertSame(

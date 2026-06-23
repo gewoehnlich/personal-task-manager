@@ -2,7 +2,7 @@
     "preset": "empty",
     "exclude": [
         "vendor/",
-        "node_modules"
+        "public/"
     ],
     "rules": {
         "align_multiline_comment": true,
@@ -145,7 +145,7 @@
         "magic_method_casing": true,
         "method_argument_space": {
             "keep_multiple_spaces_after_comma": false,
-            "on_multiline": "ensure_fully_multiline",
+            "on_multiline": "ignore",
             "attribute_placement": "standalone"
         },
         "method_chaining_indentation": true,
@@ -277,55 +277,7 @@
         "ordered_attributes": {
             "sort_algorithm": "alpha"
         },
-        "ordered_class_elements": {
-            "case_sensitive": true,
-            "order": [
-                "use_trait",
-
-                "case",
-
-                "constant_public",
-                "constant_protected",
-                "constant_private",
-
-                "property_public",
-                "property_public_readonly",
-                "property_public_static",
-
-                "property_protected",
-                "property_protected_readonly",
-                "property_protected_static",
-
-                "property_private",
-                "property_private_readonly",
-                "property_private_static",
-
-                "method_public_abstract",
-                "method_public_abstract_static",
-
-                "method_protected_abstract",
-                "method_protected_abstract_static",
-
-                "method_private_abstract",
-                "method_private_abstract_static",
-
-                "construct",
-                "destruct",
-
-                "magic",
-                "phpunit",
-
-                "method_public",
-                "method_public_static",
-
-                "method_protected",
-                "method_protected_static",
-
-                "method_private",
-                "method_private_static"
-            ],
-            "sort_algorithm": "none"
-        },
+        "ordered_class_elements": false,
         "ordered_imports": {
             "case_sensitive": true,
             "imports_order": [
@@ -352,20 +304,12 @@
             "placement": "after"
         },
         "php_unit_fqcn_annotation": true,
-        "php_unit_internal_class": {
-            "types": [
-                "abstract",
-                "final",
-                "normal"
-            ]
-        },
+        "php_unit_internal_class": false,
         "php_unit_method_casing": {
             "case": "camel_case"
         },
-        "php_unit_size_class": {
-            "group": "medium"
-        },
-        "php_unit_test_class_requires_covers": true,
+        "php_unit_size_class": false,
+        "php_unit_test_class_requires_covers": false,
         "phpdoc_add_missing_param_annotation": {
             "only_untyped": false
         },
@@ -595,7 +539,7 @@
                 "hash"
             ]
         },
-        "single_line_empty_body": true,
+        "single_line_empty_body": false,
         "single_line_throw": false,
         "single_quote": {
             "strings_containing_single_quote_chars": false

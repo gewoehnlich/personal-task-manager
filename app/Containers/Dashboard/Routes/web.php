@@ -9,7 +9,7 @@ Route::middleware('web')
             uri: '/dashboard',
             action: [
                 DashboardController::class,
-                'index'
+                'index',
             ],
         )
             ->middleware([

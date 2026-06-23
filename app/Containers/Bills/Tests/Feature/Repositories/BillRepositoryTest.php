@@ -2,8 +2,6 @@
 
 namespace App\Containers\Bills\Tests\Feature\Repositories;
 
-use App\Containers\Bills\Exceptions\BillDoesNotBelongToAuthenticatedUserException;
-use App\Containers\Bills\Exceptions\BillWithThisUuidDoesNotExistException;
 use App\Ship\Abstracts\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Medium;

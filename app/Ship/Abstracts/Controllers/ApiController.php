@@ -7,6 +7,8 @@ use App\Ship\Abstracts\Requests\Request;
 use App\Ship\Abstracts\Responses\ErrorResponse;
 use App\Ship\Abstracts\Responses\Response;
 use App\Ship\Abstracts\Responses\SuccessResponse;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 abstract readonly class ApiController extends Controller
 {
@@ -24,8 +26,26 @@ abstract readonly class ApiController extends Controller
                 data: $result,
             );
         } catch (Exception $exception) {
+            Log::error(
+                message: $exception->getMessage(),
+                context: [
+                    'class' => $this::class,
+                ],
+            );
+
             return $this->error(
                 message: $exception->getMessage(),
+            );
+        } catch (Throwable $exception) {
+            Log::error(
+                message: $exception->getMessage(),
+                context: [
+                    'class' => $this::class,
+                ],
+            );
+
+            return $this->error(
+                message: 'Неожиданная ошибка',
             );
         }
     }
