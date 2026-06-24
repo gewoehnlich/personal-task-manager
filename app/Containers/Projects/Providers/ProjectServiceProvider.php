@@ -2,25 +2,9 @@
 
 namespace App\Containers\Projects\Providers;
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
+use App\Ship\Abstracts\Providers\ServiceProvider;
 
 final class ProjectServiceProvider extends ServiceProvider
 {
-    public function register(): void
-    {
-        //
-    }
-
-    public function boot(): void
-    {
-        $this->loadMigrationsFrom(
-            paths: [__DIR__ . '/../Migrations'],
-        );
-
-        Route::prefix('api')
-            ->name('api.')
-            ->middleware('api')
-            ->group(__DIR__ . '/../Routes/api.php');
-    }
+    protected const string DIRECTORY = __DIR__;
 }
