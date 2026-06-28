@@ -38,11 +38,11 @@ abstract class TestCase extends BaseTestCase
     use CanCallTaskTrait;
     use RefreshDatabase;
 
-    protected readonly ProjectRepository $projectRepository;
+    protected ProjectRepository $projectRepository;
 
-    protected readonly TaskRepository $taskRepository;
+    protected TaskRepository $taskRepository;
 
-    protected readonly BillRepository $billRepository;
+    protected BillRepository $billRepository;
 
     public function setUp(): void
     {

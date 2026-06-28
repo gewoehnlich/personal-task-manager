@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 
 abstract readonly class DatetimeValue extends Value
 {
-    public function __construct(
+    final public function __construct(
         public readonly Carbon $carbon,
     ) {
         $this->validate();

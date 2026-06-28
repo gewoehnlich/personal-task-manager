@@ -11,7 +11,7 @@ abstract readonly class StringValue extends Value
 {
     public const int MAX_LENGTH = self::MAX_LENGTH;
 
-    public function __construct(
+    final public function __construct(
         public readonly string $string,
     ) {
         $this->validate();

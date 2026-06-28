@@ -13,7 +13,7 @@ abstract readonly class IntegerValue extends Value
 
     public const int MAX_VALUE = self::MAX_VALUE;
 
-    public function __construct(
+    final public function __construct(
         public readonly int $integer,
     ) {
         $this->validate();
