@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { TaskType } from '@/types/task';
+import type { Task } from '@/types/task';
 import { computed, ref } from 'vue';
 import ButtonBlack from './ButtonBlack.vue';
 import StageHeader from './StageHeader.vue';
-import Task from './Task.vue';
+import TaskView from './TaskView.vue';
 import TaskCreate from './TaskCreate.vue';
 
 const props = defineProps<{
     stage: string;
-    tasks: TaskType[];
+    tasks: Task[];
 }>();
 
 const emit = defineEmits<{
-    (e: 'create-task', task: Omit<TaskType, 'uuid'>): void;
+    (e: 'create-task', task: Omit<Task, 'uuid'>): void;
     (e: 'reorder-task', draggedUuid: string, targetUuid: string): void;
-    (e: 'task-clicked', task: TaskType): void;
+    (e: 'task-clicked', task: Task): void;
 }>();
 
 const showForm = ref(false);
 const length = computed(() => props.tasks.length);
 
 function handleDrop(event: DragEvent) {
-    const draggedTaskUuid: string = String(event.dataTransfer?.getData('task-uuid'));
+    const taskUuid: string = String(event.dataTransfer?.getData('task-uuid'));
 
-    handleReorderTask(draggedTaskUuid, props.stage);
+    handleReorderTask(taskUuid, props.stage);
 }
 
 function handleTaskFormSubmit(
@@ -39,11 +39,11 @@ function handleTaskFormSubmit(
     showForm.value = false;
 }
 
-function handleReorderTask(draggedTaskUuid: string, stage: string): void {
-    emit('reorder-task', draggedTaskUuid, stage);
+function handleReorderTask(taskUuid: string, stage: string): void {
+    emit('reorder-task', taskUuid, stage);
 }
 
-function handleTaskClick(task: TaskType): void {
+function handleTaskClick(task: Task): void {
     emit('task-clicked', task);
 }
 </script>
@@ -77,7 +77,7 @@ function handleTaskClick(task: TaskType): void {
                 id="tasks"
                 class="flex h-full flex-col gap-1 overflow-y-auto"
             >
-                <Task
+                <TaskView
                     v-for="task in tasks"
                     :key="task.uuid"
                     :task="task"

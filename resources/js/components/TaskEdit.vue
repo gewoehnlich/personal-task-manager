@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TaskType } from '@/types/task';
+import type { Task } from '@/types/task';
 import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
 import Deadline from './Deadline.vue';
 import Button from './ui/button/Button.vue';
@@ -7,13 +7,13 @@ import Card from './ui/card/Card.vue';
 import { DateValue, parseDate } from '@internationalized/date'
 
 const props = defineProps<{
-    task: TaskType;
+    task: Task;
 }>();
 
 const emit = defineEmits<{
     (e: 'close'): void;
-    (e: 'update', updatedTask: TaskType): void;
-    (e: 'delete', task: TaskType): void;
+    (e: 'update', updatedTask: Task): void;
+    (e: 'delete', task: Task): void;
 }>();
 
 const editableTask = reactive({ ...props.task });

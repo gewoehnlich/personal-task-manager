@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { vBorderAtHover } from '@/directives/vBorderAtHover';
 import { vShadowAtHover } from '@/directives/vShadowAtHover';
-import { TaskType } from '@/types/task';
+import type { Task } from '@/types/task';
 import Card from './ui/card/Card.vue';
 
 const props = defineProps<{
-    task: TaskType;
+    task: Task;
 }>();
 
 const emit = defineEmits<{
-    (e: 'reorder-task', draggedTaskUuid: string, stage: string): void;
-    (e: 'task-clicked', task: TaskType): void;
+    (e: 'reorder-task', taskUuid: string, stage: string): void;
+    (e: 'task-clicked', task: Task): void;
 }>();
 
 function handleDragStart(event: DragEvent) {
@@ -22,11 +22,11 @@ function handleDragOver(event: DragEvent) {
 }
 
 function handleDrop(event: DragEvent) {
-    const draggedTaskUuid = String(event.dataTransfer?.getData('task-uuid'));
+    const taskUuid = String(event.dataTransfer?.getData('task-uuid'));
 
     const stage = props.task.stage;
 
-    emit('reorder-task', draggedTaskUuid, stage);
+    emit('reorder-task', taskUuid, stage);
 }
 
 function handleClick(): void {
