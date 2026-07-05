@@ -20,7 +20,7 @@ const done = computed(() => filterTasksByStage(tasks, 'done'));
 const deleted = computed(() => filterTasksByStage(tasks, 'deleted'));
 
 function filterTasksByStage(tasks: Ref<Task[]>, stage: string): Task[] {
-    return tasks.value.filter((task) => task.stage === stage);
+    return tasks.value.filter((task: Task) => task.stage === stage);
 }
 
 function handleTaskDrop(taskUuid: string, stage: string): void {
@@ -33,15 +33,19 @@ function handleTaskDrop(taskUuid: string, stage: string): void {
     }
 }
 
-function handleCreateTask(task: Omit<Task, 'uuid'>): void {
-    router.post('/tasks', task);
+function handleCreateTask(title: string, description: string | null, stage: string): void {
+    router.post('/tasks', {
+        title: title,
+        description: description,
+        stage: stage,
+    });
 }
 
-function handleUpdateTask(task: Omit<Task, 'uuid'>): void {
+function handleUpdateTask(task: Task): void {
     router.put(`/tasks/${task.uuid}`, task);
 }
 
-function handleDeleteTask(task: Omit<Task, 'uuid'>): void {
+function handleDeleteTask(task: Task): void {
     router.delete(`/tasks/${task.uuid}`);
 }
 

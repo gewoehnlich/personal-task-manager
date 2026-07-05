@@ -12,7 +12,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'create-task', task: Omit<Task, 'uuid'>): void;
+    (e: 'create-task', title: string, description: string | null, stage: string): void;
     (e: 'reorder-task', draggedUuid: string, targetUuid: string): void;
     (e: 'task-clicked', task: Task): void;
 }>();
@@ -30,11 +30,11 @@ function handleTaskFormSubmit(
     title: string,
     description: string,
 ): void {
-    emit('create-task', {
-        title: title,
-        description: description,
-        stage: props.stage,
-    });
+    emit('create-task',
+        title,
+        description,
+        props.stage,
+    );
 
     showForm.value = false;
 }
