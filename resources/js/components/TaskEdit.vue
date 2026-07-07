@@ -108,7 +108,7 @@ watch(
         entity="task-edit"
     >
         <Card
-            class="border-accent shadow-accent max-h-[90vh] max-w-sm space-y-4 overflow-y-auto border p-6 shadow-2xl/100"
+            class="border-accent shadow-accent max-h-[90vh] max-w-sm space-y-2 overflow-y-auto border p-6 shadow-2xl/100"
             @click.stop
         >
             <div>
@@ -122,14 +122,6 @@ watch(
                     rows="1"
                     maxlength="100"
                 />
-
-                <!-- <p class="text-muted-foreground text-xs"> -->
-                <!--     Task UUID: {{ task.uuid }} -->
-                <!-- </p> -->
-                <!---->
-                <!-- <p class="text-muted-foreground text-xs"> -->
-                <!--     User UUID: {{ task.user_uuid }} -->
-                <!-- </p> -->
             </div>
 
             <div>
@@ -178,39 +170,40 @@ watch(
                 </ul>
             </div>
 
-            <div>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <div class="flex-1">
-                        <p class="text-muted-foreground mb-1 text-xs">Stage:</p>
+            <div class="flex-1">
+                <p class="text-muted-foreground mb-1 text-xs">Stage:</p>
 
-                        <select
-                            v-model="editableTask.stage"
-                            class="bg-muted focus:ring-none h-8 w-full rounded-lg p-1.5 text-sm focus:outline-none"
-                        >
-                            <option value="pending">Pending</option>
-                            <option value="active">Active</option>
-                            <option value="delayed">Delayed</option>
-                            <option value="done">Done</option>
-                        </select>
-                    </div>
+                <select
+                    v-model="editableTask.stage"
+                    class="bg-muted focus:ring-none h-8 w-full rounded-lg p-1.5 text-sm focus:outline-none"
+                >
+                    <option value="pending">Pending</option>
+                    <option value="active">Active</option>
+                    <option value="delayed">Delayed</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
 
-                    <div class="min-w-[140px] flex-1">
-                        <p class="text-muted-foreground mb-1 text-xs">
-                            Deadline:
-                        </p>
+            <div class="min-w-[140px] flex-1">
+                <p class="text-muted-foreground mb-1 text-xs">
+                    Deadline:
+                </p>
 
-                        <Deadline v-model="deadline"/>
-                    </div>
-                </div>
+                <Deadline v-model="deadline"/>
+            </div>
 
-                <div class="py-2">
-                    <div class="border-muted border-t"></div>
-                </div>
+            <div class="py-2">
+                <div class="border-muted border-t"></div>
+            </div>
 
-                <div class="text-muted-foreground text-xs">
-                    <p>Created at: {{ task.created_at }}</p>
-                    <p>Updated at: {{ task.updated_at }}</p>
-                </div>
+            <div class="text-muted-foreground text-xs">
+                <p>Created at: {{ task.created_at }}</p>
+                <p>Updated at: {{ task.updated_at }}</p>
+
+                <div class="py-1"></div>
+
+                <p>Task UUID: {{ task.uuid }}</p>
+                <p>User UUID: {{ task.user_uuid }}</p>
             </div>
 
             <div class="flex justify-end gap-1 pt-2">
