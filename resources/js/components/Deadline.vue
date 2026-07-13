@@ -21,10 +21,10 @@ import {
   DatePickerRoot,
   DatePickerTrigger,
 } from 'reka-ui';
-import { CalendarDate, DateValue, parseDate } from '@internationalized/date'
+import { DateValue } from '@internationalized/date'
 
 const props = defineProps<{
-    modelValue: CalendarDate;
+    modelValue: DateValue;
 }>();
 
 const emit = defineEmits<{
@@ -35,16 +35,6 @@ const deadline = computed({
   get: () => props.modelValue,
   set: (val) => emit('update:modelValue', val),
 });
-
-function updateDate(newDate: Date) {
-  const current = deadline.value ?? new Date();
-
-  newDate.setHours(current.getHours());
-  newDate.setMinutes(current.getMinutes());
-
-  deadline.value = newDate;
-}
-
 </script>
 
 <template>
@@ -52,6 +42,9 @@ function updateDate(newDate: Date) {
     <DatePickerRoot
         :model-value="deadline"
         @update:model-value="emit('update:modelValue', $event)"
+        :week-starts-on="1"
+        :close-on-select=true
+        weekday-format="short"
     >
       <DatePickerField
         v-slot="{ segments }"
