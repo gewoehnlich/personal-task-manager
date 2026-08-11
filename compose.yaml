@@ -54,24 +54,6 @@ services:
       - app
     restart: unless-stopped
 
-  # mysql:
-  #   container_name: mysql.${APP_NAME}
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/mysql/Dockerfile
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #     MYSQL_DATABASE: ${DB_DATABASE}
-  #     MYSQL_USER:     ${DB_USERNAME}
-  #     MYSQL_PASSWORD: ${DB_PASSWORD}
-  #   ports:
-  #     - "3306:3306"
-  #   networks:
-  #     - personal-task-manager-network
-  #   volumes:
-  #     - personal-task-manager-data:/var/lib/mysql/
-  #   restart: unless-stopped
-
   pgsql:
     container_name: pgsql.${APP_NAME}
     build:
