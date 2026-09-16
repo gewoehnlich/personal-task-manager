@@ -59,14 +59,21 @@ function handleTaskClick(task: Task): void {
             @dragover.prevent
             @drop="handleDrop"
         >
-            <StageHeader
-                :stage="stage"
-                :length="length"
-            />
+            <div
+                class="flex w-full gap-1"
+            >
+                <StageHeader
+                    class="min-w-0 flex-1"
+                    :stage="stage"
+                    :length="length"
+                />
 
-            <ButtonBlack @click="showForm = !showForm">
-                ADD A NEW TASK
-            </ButtonBlack>
+                <ButtonBlack
+                    class="w-13"
+                    @click="showForm = !showForm"
+                >
+                </ButtonBlack>
+            </div>
 
             <TaskCreate
                 v-if="showForm"

@@ -8,8 +8,8 @@ const props = defineProps<{
 </script>
 
 <template>
-    <Card class="flex items-center justify-between gap-5 px-4 py-2">
-        <h2 class="text-lg font-bold">{{ props.stage.toUpperCase() }}</h2>
+    <Card class="flex items-center justify-between gap-5 px-4 py-2 w-full">
+        <h2 class="text-lg font-bold min-w-0 truncate flex-1">{{ props.stage.toUpperCase() }}</h2>
         <h2 class="text-lg font-bold">{{ props.length }}</h2>
     </Card>
 </template>
