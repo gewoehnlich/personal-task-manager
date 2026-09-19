@@ -3,11 +3,11 @@ export type Task = {
     user_uuid: string;
     title: string;
     description?: string;
-    stage: Stage;
-    deadline?: Date;
-    created_at?: Date;
-    updated_at?: Date;
-    deleted_at?: Date;
+    stage: string;
+    deadline?: string;
+    created_at?: string;
+    updated_at?: string;
+    deleted_at?: string;
     project_uuid?: string;
     bills?: Bill[];
 }

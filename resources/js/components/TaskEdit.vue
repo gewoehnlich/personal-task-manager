@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { Task } from '@/types/task';
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
-import Deadline from './Deadline.vue';
+import { reactive } from 'vue';
 import Button from './ui/button/Button.vue';
 import Card from './ui/card/Card.vue';
-import { DateValue, parseDate } from '@internationalized/date'
+import TaskTitle from './ui/task/TaskTitle.vue';
+import TaskDescription from './ui/task/TaskDescription.vue';
+import TaskDeadline from './ui/task/TaskDeadline.vue';
 
 const props = defineProps<{
     task: Task;
@@ -16,89 +17,17 @@ const emit = defineEmits<{
     (e: 'delete', task: Task): void;
 }>();
 
-const editableTask = reactive({ ...props.task });
-
-function formatDate(date: Date): string {
-    const pad = (num: number) => num.toString().padStart(2, '0');
-
-    const year: number = date.getUTCFullYear();
-    const month: string = pad(date.getUTCMonth() + 1);
-    const day: string = pad(date.getUTCDate());
-
-    const hours: string = pad(date.getUTCHours());
-    const minutes: string = pad(date.getUTCMinutes());
-    const seconds: string = pad(date.getUTCSeconds());
-
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+00:00`;
-}
-
-const deadline = computed({
-    get() {
-        if (! editableTask.deadline) {
-            return null;
-        }
-
-        return parseDate(editableTask.deadline.split('T')[0]);
-    },
-    set(date: DateValue) {
-        editableTask.deadline = formatDate(date.toDate('+00:00'));
-    },
-});
+const task: Task = reactive({ ...props.task });
 
 function saveChanges() {
-    emit('update', {
-        ...editableTask,
-    });
+    emit('update', { ...task });
     emit('close');
 }
 
 function deleteTask() {
-    emit('delete', {
-        ...editableTask,
-    });
+    emit('delete', { ...task });
     emit('close');
 }
-
-const description = ref(null);
-const title = ref(null);
-
-function autoResize(): void {
-    const descriptionElement = description.value;
-    if (!descriptionElement) {
-        return;
-    }
-
-    descriptionElement.style.height = 'auto';
-    descriptionElement.style.height = descriptionElement.scrollHeight + 'px';
-
-    const titleElement = title.value;
-    if (!titleElement) {
-        return;
-    }
-
-    titleElement.style.height = 'auto';
-    titleElement.style.height = titleElement.scrollHeight + 'px';
-}
-
-onMounted(() => {
-    autoResize();
-});
-
-watch(
-    () => editableTask.description,
-    async () => {
-        await nextTick();
-        autoResize();
-    },
-);
-
-watch(
-    () => editableTask.title,
-    async () => {
-        await nextTick();
-        autoResize();
-    },
-);
 </script>
 
 <template>
@@ -112,40 +41,22 @@ watch(
             @click.stop
         >
             <div>
-                <textarea
-                    ref="title"
-                    v-model="editableTask.title"
-                    class="w-full resize-none overflow-hidden text-2xl/[23px] font-bold break-words focus:outline-none"
-                    autocomplete="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                    rows="1"
-                    maxlength="100"
-                />
+                <TaskTitle v-model:title="task.title"/>
             </div>
 
             <div>
                 <p class="text-muted-foreground text-xs">Description:</p>
 
-                <textarea
-                    ref="description"
-                    v-model="editableTask.description"
-                    class="focus:ring-none w-full resize-none overflow-hidden text-sm/[18px] break-words focus:outline-none"
-                    autocomplete="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                    rows="1"
-                    maxlength="500"
-                ></textarea>
+                <TaskDescription v-model:description="task.description"/>
             </div>
 
-            <div v-if="editableTask.bills.length !== 0">
+            <div v-if="task.bills.length !== 0">
                 <p class="text-muted-foreground text-xs">Bills:</p>
 
                 <ul class="bg-card text-sm">
                     <li
-                        v-if="editableTask.bills.length !== 0"
-                        v-for="bill in editableTask.bills"
+                        v-if="task.bills.length !== 0"
+                        v-for="bill in task.bills"
                         :key="bill.uuid"
                         class="grid grid-cols-[1fr_auto_auto] gap-1 text-xs"
                     >
@@ -174,7 +85,7 @@ watch(
                 <p class="text-muted-foreground mb-1 text-xs">Stage:</p>
 
                 <select
-                    v-model="editableTask.stage"
+                    v-model="task.stage"
                     class="bg-muted focus:ring-none h-8 w-full rounded-lg p-1.5 text-sm focus:outline-none"
                 >
                     <option value="pending">Pending</option>
@@ -185,11 +96,9 @@ watch(
             </div>
 
             <div class="min-w-[140px] flex-1">
-                <p class="text-muted-foreground mb-1 text-xs">
-                    Deadline:
-                </p>
+                <p class="text-muted-foreground mb-1 text-xs">Deadline:</p>
 
-                <Deadline v-model="deadline"/>
+                <TaskDeadline v-model:deadline="task.deadline"/>
             </div>
 
             <div class="py-2">
