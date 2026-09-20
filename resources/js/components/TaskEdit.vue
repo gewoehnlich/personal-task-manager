@@ -6,6 +6,11 @@ import Card from './ui/card/Card.vue';
 import TaskTitle from './ui/task/TaskTitle.vue';
 import TaskDescription from './ui/task/TaskDescription.vue';
 import TaskDeadline from './ui/task/TaskDeadline.vue';
+import TaskBills from './ui/task/TaskBills.vue';
+import TaskStage from './ui/task/TaskStage.vue';
+import TaskFieldLabel from './ui/task/TaskFieldLabel.vue';
+import TaskBorderline from './ui/task/TaskBorderline.vue';
+import TaskMetadata from './ui/task/TaskMetadata.vue';
 
 const props = defineProps<{
     task: Task;
@@ -40,80 +45,32 @@ function deleteTask() {
             class="border-accent shadow-accent max-h-[90vh] max-w-sm space-y-2 overflow-y-auto border p-6 shadow-2xl/100"
             @click.stop
         >
-            <div>
-                <TaskTitle v-model:title="task.title"/>
-            </div>
+            <TaskTitle v-model:title="task.title" />
 
-            <div>
-                <p class="text-muted-foreground text-xs">Description:</p>
+            <TaskFieldLabel label="Description:" />
 
-                <TaskDescription v-model:description="task.description"/>
-            </div>
+            <TaskDescription v-model:description="task.description"/>
 
-            <div v-if="task.bills.length !== 0">
-                <p class="text-muted-foreground text-xs">Bills:</p>
+            <TaskFieldLabel label="Bills:" />
 
-                <ul class="bg-card text-sm">
-                    <li
-                        v-if="task.bills.length !== 0"
-                        v-for="bill in task.bills"
-                        :key="bill.uuid"
-                        class="grid grid-cols-[1fr_auto_auto] gap-1 text-xs"
-                    >
-                        <input
-                            v-model="bill.description"
-                            class="focus:ring-none focus:outline-none"
-                        />
+            <TaskBills v-model:bills="task.bills" />
 
-                        <input
-                            v-model="bill.minutes_spent"
-                            class="min-w focus:ring-none max-w-[4ch] text-right tabular-nums focus:outline-none"
-                        />
+            <TaskFieldLabel label="Stage:" />
 
-                        <span>minutes</span>
-                    </li>
+            <TaskStage v-model:stage="task.stage" />
 
-                    <li v-else>
-                        <p class="text-gray-500 dark:text-gray-400">
-                            No bills for this task.
-                        </p>
-                    </li>
-                </ul>
-            </div>
+            <TaskFieldLabel label="Deadline:" />
 
-            <div class="flex-1">
-                <p class="text-muted-foreground mb-1 text-xs">Stage:</p>
+            <TaskDeadline v-model:deadline="task.deadline"/>
 
-                <select
-                    v-model="task.stage"
-                    class="bg-muted focus:ring-none h-8 w-full rounded-lg p-1.5 text-sm focus:outline-none"
-                >
-                    <option value="pending">Pending</option>
-                    <option value="active">Active</option>
-                    <option value="delayed">Delayed</option>
-                    <option value="done">Done</option>
-                </select>
-            </div>
+            <TaskBorderline />
 
-            <div class="min-w-[140px] flex-1">
-                <p class="text-muted-foreground mb-1 text-xs">Deadline:</p>
-
-                <TaskDeadline v-model:deadline="task.deadline"/>
-            </div>
-
-            <div class="py-2">
-                <div class="border-muted border-t"></div>
-            </div>
-
-            <div class="text-muted-foreground text-xs">
-                <p>Created at: {{ task.created_at }}</p>
-                <p>Updated at: {{ task.updated_at }}</p>
-
-                <div class="py-1"></div>
-
-                <p>Task UUID: {{ task.uuid }}</p>
-                <p>User UUID: {{ task.user_uuid }}</p>
-            </div>
+            <TaskMetadata
+                :created_at="task.created_at"
+                :updated_at="task.updated_at"
+                :task_uuid="task.uuid"
+                :user_uuid="task.user_uuid"
+            />
 
             <div class="flex justify-end gap-1 pt-2">
                 <Button
