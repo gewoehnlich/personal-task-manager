@@ -5,7 +5,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <p class="text-muted-foreground text-xs">
+    <p class="text-muted-foreground text-xs mb-1">
         {{ props.label }}
     </p>
 </template>

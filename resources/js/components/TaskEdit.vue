@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Task } from '@/types/task';
 import { reactive } from 'vue';
-import Button from './ui/button/Button.vue';
 import Card from './ui/card/Card.vue';
 import TaskTitle from './ui/task/TaskTitle.vue';
 import TaskDescription from './ui/task/TaskDescription.vue';
@@ -11,6 +10,9 @@ import TaskStage from './ui/task/TaskStage.vue';
 import TaskFieldLabel from './ui/task/TaskFieldLabel.vue';
 import TaskBorderline from './ui/task/TaskBorderline.vue';
 import TaskMetadata from './ui/task/TaskMetadata.vue';
+import TaskButtonCancel from './ui/task/TaskButtonCancel.vue';
+import TaskButtonSave from './ui/task/TaskButtonSave.vue';
+import TaskButtonDelete from './ui/task/TaskButtonDelete.vue';
 
 const props = defineProps<{
     task: Task;
@@ -73,29 +75,11 @@ function deleteTask() {
             />
 
             <div class="flex justify-end gap-1 pt-2">
-                <Button
-                    @click="$emit('close')"
-                    variant="cancel"
-                    size="sm"
-                >
-                    Cancel
-                </Button>
+                <TaskButtonCancel @click="$emit('close')" />
 
-                <Button
-                    @click="saveChanges"
-                    variant="confirmative"
-                    size="sm"
-                >
-                    Save
-                </Button>
+                <TaskButtonSave @click="saveChanges" />
 
-                <Button
-                    @click="deleteTask"
-                    variant="destructive"
-                    size="sm"
-                >
-                    Delete
-                </Button>
+                <TaskButtonDelete @click="deleteTask" />
             </div>
         </Card>
     </div>
