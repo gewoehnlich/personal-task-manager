@@ -1,76 +1,68 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Button from './ui/button/Button.vue';
 import Card from './ui/card/Card.vue';
+import TaskTitle from './ui/task/TaskTitle.vue';
+import TaskDescription from './ui/task/TaskDescription.vue';
+import TaskDeadline from './ui/task/TaskDeadline.vue';
+import TaskStage from './ui/task/TaskStage.vue';
+import TaskFieldLabel from './ui/task/TaskFieldLabel.vue';
+import TaskBorderline from './ui/task/TaskBorderline.vue';
+import TaskButtonCancel from './ui/task/TaskButtonCancel.vue';
+import TaskButtonSave from './ui/task/TaskButtonSave.vue';
 
-const title = ref('');
-const description = ref('');
-
-const emit = defineEmits<{
-    (
-        e: 'submit',
-        title: string,
-        description: string,
-    ): void;
+const props = defineProps<{
+    stage: string;
 }>();
 
-function submitForm() {
-    emit('submit',
-        title.value,
-        description.value,
-    );
+const title = ref<string>('');
+const description = ref<string>('');
+const stage = ref<string>(props.stage);
+const deadline = ref<string | null>(null);
+
+const emit = defineEmits<{
+    (e: 'submit', title: string, description: string, stage: string, deadline: string | null): void;
+    (e: 'close'): void;
+}>();
+
+function saveChanges() {
+    emit('submit', title.value, description.value, stage.value, deadline.value);
 
     title.value = '';
     description.value = '';
+    emit('close');
 }
-
 </script>
 
 <template>
     <div
-        class="bg-card/70 inset-0 flex items-center justify-center backdrop-blur-sm"
-        entity="task-create"
+        class="bg-card/70 fixed inset-0 flex items-center justify-center backdrop-blur-sm"
+        @click="$emit('close')"
+        entity="task-edit"
     >
         <Card
-            class="border-accent shadow-accent max-h-[90vh] max-w-sm space-y-4 overflow-y-auto border px-4 py-3 shadow-2xl/100"
+            class="border-accent shadow-accent max-h-[90vh] max-w-sm space-y-2 overflow-y-auto border p-6 shadow-2xl/100"
             @click.stop
         >
-            <div>
-                <p class="text-muted-foreground text-xs">Title:</p>
+            <TaskTitle v-model:title="title" />
 
-                <textarea
-                    v-model="title"
-                    class="w-full resize-none overflow-hidden text-2xl/[23px] font-bold break-words focus:outline-none"
-                    autocomplete="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                    rows="1"
-                    maxlength="100"
-                />
-            </div>
+            <TaskFieldLabel label="Description:" />
 
-            <div>
-                <p class="text-muted-foreground text-xs">Description:</p>
+            <TaskDescription v-model:description="description"/>
 
-                <textarea
-                    v-model="description"
-                    class="focus:ring-none w-full resize-none overflow-hidden text-sm/[18px] break-words focus:outline-none"
-                    autocomplete="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                    rows="1"
-                    maxlength="500"
-                ></textarea>
-            </div>
+            <TaskFieldLabel label="Stage:" />
+
+            <TaskStage v-model:stage="stage" />
+
+            <TaskFieldLabel label="Deadline:" />
+
+            <TaskDeadline v-model:deadline="deadline"/>
+
+            <TaskBorderline />
 
             <div class="flex justify-end gap-1 pt-2">
-                <Button
-                    @click="submitForm"
-                    variant="confirmative"
-                    size="sm"
-                >
-                    Save
-                </Button>
+                <TaskButtonCancel @click="$emit('close')" />
+
+                <TaskButtonSave @click="saveChanges" />
             </div>
         </Card>
     </div>

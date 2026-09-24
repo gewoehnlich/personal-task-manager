@@ -20,11 +20,11 @@ const props = defineProps<{
 
 const emit = defineEmits<{
     (e: 'close'): void;
-    (e: 'update', updatedTask: Task): void;
+    (e: 'update', task: Task): void;
     (e: 'delete', task: Task): void;
 }>();
 
-const task: Task = reactive({ ...props.task });
+const task: Task = reactive<Task>({ ...props.task });
 
 function saveChanges() {
     emit('update', { ...task });

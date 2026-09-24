@@ -12,7 +12,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'create-task', title: string, description: string | null, stage: string): void;
+    (e: 'create-task', title: string, description: string, stage: string, deadline: string | null): void;
     (e: 'reorder-task', draggedUuid: string, targetUuid: string): void;
     (e: 'task-clicked', task: Task): void;
 }>();
@@ -29,12 +29,10 @@ function handleDrop(event: DragEvent) {
 function handleTaskFormSubmit(
     title: string,
     description: string,
+    stage: string,
+    deadline: string | null,
 ): void {
-    emit('create-task',
-        title,
-        description,
-        props.stage,
-    );
+    emit('create-task', title, description, stage, deadline);
 
     showForm.value = false;
 }
@@ -77,6 +75,7 @@ function handleTaskClick(task: Task): void {
 
             <TaskCreate
                 v-if="showForm"
+                :stage="stage"
                 @submit="handleTaskFormSubmit"
             />
 

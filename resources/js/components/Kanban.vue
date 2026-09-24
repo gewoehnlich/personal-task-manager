@@ -33,11 +33,12 @@ function handleTaskDrop(taskUuid: string, stage: string): void {
     }
 }
 
-function handleCreateTask(title: string, description: string | null, stage: string): void {
+function handleCreateTask(title: string, description: string, stage: string, deadline: string | null): void {
     router.post('/tasks', {
         title: title,
         description: description,
         stage: stage,
+        deadline: deadline,
     });
 }
 
