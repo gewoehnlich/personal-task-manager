@@ -44,6 +44,10 @@ function handleReorderTask(taskUuid: string, stage: string): void {
 function handleTaskClick(task: Task): void {
     emit('task-clicked', task);
 }
+
+function closeTaskModal(): void {
+    showForm.value = false;
+}
 </script>
 
 <template>
@@ -76,6 +80,7 @@ function handleTaskClick(task: Task): void {
             <TaskCreate
                 v-if="showForm"
                 :stage="stage"
+                @close="closeTaskModal"
                 @submit="handleTaskFormSubmit"
             />
 

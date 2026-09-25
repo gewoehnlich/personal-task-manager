@@ -42,7 +42,7 @@
     --background: var(--__black__);
     --foreground: var(--__white__);
     --card: var(--__darker-black__);
-    --muted: var(--__brighter-black__);
+    --muted: var(--__black__);
     --muted-foreground: var(--__gray__);
     --accent: var(--__beige__);
     --destructive: var(--__red__);

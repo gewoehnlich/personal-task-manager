@@ -47,6 +47,8 @@ function deleteTask() {
             class="border-accent shadow-accent max-h-[90vh] max-w-sm space-y-2 overflow-y-auto border p-6 shadow-2xl/100"
             @click.stop
         >
+            <TaskFieldLabel label="Title:" />
+
             <TaskTitle v-model:title="task.title" />
 
             <TaskFieldLabel label="Description:" />
