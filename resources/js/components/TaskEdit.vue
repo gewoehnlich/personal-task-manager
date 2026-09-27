@@ -55,10 +55,6 @@ function deleteTask() {
 
             <TaskDescription v-model:description="task.description"/>
 
-            <TaskFieldLabel label="Bills:" />
-
-            <TaskBills v-model:bills="task.bills" />
-
             <TaskFieldLabel label="Stage:" />
 
             <TaskStage v-model:stage="task.stage" />
@@ -66,6 +62,12 @@ function deleteTask() {
             <TaskFieldLabel label="Deadline:" />
 
             <TaskDeadline v-model:deadline="task.deadline"/>
+
+            <TaskBorderline />
+
+            <TaskFieldLabel label="Bills:" />
+
+            <TaskBills v-model:bills="task.bills" />
 
             <TaskBorderline />
 

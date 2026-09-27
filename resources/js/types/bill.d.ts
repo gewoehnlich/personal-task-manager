@@ -1,5 +1,5 @@
 export type Bill = {
-    uuid: string;
+    uuid?: string;
     task_uuid: string;
     description: string;
     minutes_spent?: number;

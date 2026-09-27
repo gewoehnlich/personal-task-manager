@@ -1,34 +1,69 @@
 <script setup lang="ts">
-import { Bill } from '@/types/bill';
+import ButtonBlack from '@/components/ButtonBlack.vue';
+import type { Bill } from '@/types/bill';
 
-const bills = defineModel<Bill[] | null>('bills');
+const props = defineProps<{
+    task_uuid: string;
+}>();
+
+
+const bills = defineModel<Bill[]>('bills', {
+    default: () => [],
+});
+
+function add(): void {
+    bills.value.push({
+        task_uuid: props.task_uuid,
+        description: '',
+        minutes_spent: 0,
+    });
+}
+
+function remove(uuid: string): void {
+    bills.value = bills.value.filter(
+        (bill) => bill.uuid !== uuid,
+    );
+}
 </script>
 
 <template>
-    <ul class="bg-card text-sm">
-        <li
-            v-if="bills?.length !== 0"
-            v-for="bill in bills"
-            :key="bill.uuid"
-            class="grid grid-cols-[1fr_auto_auto] gap-1 text-xs"
-        >
-            <input
-                v-model="bill.description"
-                class="focus:ring-none focus:outline-none"
-            />
+    <div class="bg-card text-sm">
+        <ul v-if="bills.length">
+            <li
+                v-for="bill in bills"
+                class="grid grid-cols-[1fr_auto_auto_auto] gap-1 text-xs"
+            >
+                <input
+                    v-model="bill.description"
+                    class="min-w-0 focus:outline-none"
+                    placeholder="Description"
+                />
 
-            <input
-                v-model="bill.minutes_spent"
-                class="min-w focus:ring-none max-w-[4ch] text-right tabular-nums focus:outline-none"
-            />
+                <input
+                    v-model.number="bill.minutes_spent"
+                    class="min-w focus:ring-none max-w-[4ch] text-right tabular-nums focus:outline-none"
+                />
 
-            <span>minutes</span>
-        </li>
+                <ButtonBlack
+                    @click="remove(bill.uuid)"
+                />
+            </li>
+        </ul>
 
-        <li v-else>
-            <p class="text-gray-500 dark:text-gray-400">
+        <div class="flex justify-between">
+            <p
+                v-if="!bills.length"
+                class="text-gray-500 dark:text-gray-400"
+            >
                 No bills for this task.
             </p>
-        </li>
-    </ul>
+        </div>
+
+        <ButtonBlack
+            class="w-full"
+            @click="add"
+        >
+            Add
+        </ButtonBlack>
+    </div>
 </template>
