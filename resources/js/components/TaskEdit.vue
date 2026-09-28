@@ -67,7 +67,7 @@ function deleteTask() {
 
             <TaskFieldLabel label="Bills:" />
 
-            <TaskBills v-model:bills="task.bills" />
+            <TaskBills :task_uuid="task.uuid" v-model:bills="task.bills" />
 
             <TaskBorderline />
 
