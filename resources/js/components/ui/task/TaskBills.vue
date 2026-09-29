@@ -44,9 +44,7 @@ function save(): void {
         minutes_spent: minutes_spent.value,
     });
 
-    description.value = '';
-
-    minutes_spent.value = 0;
+    close();
 }
 </script>
 
@@ -65,7 +63,6 @@ function save(): void {
 
                 <input
                     v-model.number="bill.minutes_spent"
-                    type="number"
                     class="min-w focus:ring-none max-w-[4ch] text-right tabular-nums focus:outline-none"
                 />
 
@@ -84,12 +81,7 @@ function save(): void {
             </p>
         </div>
 
-        <ButtonBlack
-            class="w-full"
-            @click="add"
-        >
-            Add
-        </ButtonBlack>
+        <ButtonBlack class="w-full" @click="add" />
 
         <div v-if="showCreateBillPopup">
             <input
